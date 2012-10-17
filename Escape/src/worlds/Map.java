@@ -49,21 +49,30 @@ import com.sun.org.apache.xpath.internal.operations.Variable;
 			/*
 			 * Sort de l'écran
 			 */
+			int screenW = Variables.SCREEN_WIDTH;
+			int screenH = Variables.SCREEN_HEIGHT;
+			
+			if(screenW>width)
+				screenW=width;
+			if(screenH>height)
+				screenH=height;
+			
+			//Notre subImage dépasse les bords de notre Image (droite ou bas)
+			if(posX+screenW>=width)
+				posX=width-screenW-1;
+			if(posY+screenH>=height)
+				posY=height-screenH-1;
+			
+			//SubImage dépasse (haut ou gauche)
 			if(posX<=0)
 				posX=0;
 			if(posY<=0)
 				posY=0;
+		
 			
-			int w = Variables.SCREEN_WIDTH;
-			int h = Variables.SCREEN_HEIGHT;
-			
-			if(w>=width)
-				w=width;
-			if(h>=height)
-				h=height;
 			
 			try{
-				graphics.drawImage(image.getSubimage(posX, posY, w, h), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
+				graphics.drawImage(image.getSubimage(posX, posY, screenW, screenH), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
 			}
 			catch(Exception e){
 				System.out.println("bug!");

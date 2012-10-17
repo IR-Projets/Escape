@@ -23,12 +23,12 @@ import fr.umlv.zen2.ApplicationContext;
 import fr.umlv.zen2.ApplicationRenderCode;
 import fr.umlv.zen2.MotionEvent;
 
-public class MyApplication {
+public class Game {
 
 	Map map;
 	Ship ship;
 	
-	public MyApplication() throws IOException{
+	public Game() throws IOException{
 		map = new Map();
 		ship = new Ship();
 	}
