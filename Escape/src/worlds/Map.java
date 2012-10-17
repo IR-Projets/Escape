@@ -23,8 +23,8 @@ import com.sun.org.apache.xpath.internal.operations.Variable;
 		private final BufferedImage image;
 		private final int width;
 		private final int height;
-		private int vectorX;
-		private int vectorY;
+		private int posX;
+		private int posY;
 		
 		
 
@@ -37,31 +37,36 @@ import com.sun.org.apache.xpath.internal.operations.Variable;
 			
 			width = image.getWidth();
 			height = image.getHeight();
-			vectorX=0;
-			vectorY=image.getHeight();
+			posX=0;
+			posY=image.getHeight();
 		}
 
 
 		public void render(Graphics2D graphics){
-			if(vectorX>=width)
-				vectorX=width-1;
-			if(vectorY>=height)
-				vectorY=height-1;
 			
-			int w = vectorX+Variables.SCREEN_WIDTH;
+			posY--;
+			
+			/*
+			 * Sort de l'écran
+			 */
+			if(posX<=0)
+				posX=0;
+			if(posY<=0)
+				posY=0;
+			
+			int w = Variables.SCREEN_WIDTH;
+			int h = Variables.SCREEN_HEIGHT;
+			
 			if(w>=width)
-				w=width-1;
-			int h = vectorY+Variables.SCREEN_HEIGHT;
+				w=width;
 			if(h>=height)
-				h=height-1;
-			
-			vectorY--;
+				h=height;
 			
 			try{
-				graphics.drawImage(image.getSubimage(vectorX, vectorY, w, h), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
+				graphics.drawImage(image.getSubimage(posX, posY, w, h), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
 			}
 			catch(Exception e){
-				System.out.println("");
+				System.out.println("bug!");
 			}
 		}
 

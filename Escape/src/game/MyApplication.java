@@ -13,6 +13,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import ships.Ship;
+
 import worlds.Map;
 
 import fr.umlv.zen2.Application;
@@ -24,9 +26,11 @@ import fr.umlv.zen2.MotionEvent;
 public class MyApplication {
 
 	Map map;
+	Ship ship;
 	
 	public MyApplication() throws IOException{
 		map = new Map();
+		ship = new Ship();
 	}
 	
 	
@@ -37,6 +41,7 @@ public class MyApplication {
 
 	public void run(Graphics2D graphics) {
 		map.render(graphics);
+		ship.render(graphics);
 	}
 
 

@@ -1,5 +1,57 @@
 package ships;
 
-public abstract class Ship {
+import game.Variables;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class Ship{
+
+	private final String font = "images\\ship.png";
+
+
+	private final BufferedImage image;
+	private final int width;
+	private final int height;
+	private int posX;
+	private int posY;
+	
+	
+
+	public Ship() throws IOException{			                
+		try {                
+			image = ImageIO.read(new File(font));
+		} catch (IOException ex) {
+			throw new IOException("Map initialisation fail: can't open " + font);
+		}
+		
+		width = image.getWidth();
+		height = image.getHeight();
+		posX = 250;
+		posY = 300;
+	}
+
+
+	public void render(Graphics2D graphics){
+		
+		/*
+		 * Sort de l'ecran
+		 */
+		if(posX<=0)
+			posX = 0;
+		if(posY<=0)
+			posY = 0;
+		
+		if(posX+width >= Variables.SCREEN_WIDTH)
+			posX = Variables.SCREEN_WIDTH - width-2;
+		if(posY+height >= Variables.SCREEN_HEIGHT)
+			posY = Variables.SCREEN_HEIGHT - height-2;
+		
+		graphics.drawImage(image, posX, posY, width, height, null );
+	}
 
 }
