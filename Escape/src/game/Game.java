@@ -13,9 +13,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import Maps.Map;
+
 import ships.Ship;
 
-import worlds.Map;
 
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.ApplicationCode;

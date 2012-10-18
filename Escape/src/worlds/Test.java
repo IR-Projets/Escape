@@ -1,4 +1,6 @@
-package game;
+package worlds;
+
+import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 
@@ -16,46 +18,36 @@ import org.jbox2d.testbed.framework.TestbedSetting.SettingType;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
+
 public class Test extends TestbedTest {
 
-
+	@Override
 	public void initTest(boolean argDeserialized) {
-		setTitle("Couple of Things Test");
-
+		setTitle("#### TEST #####");
 		getWorld().setGravity(new Vec2());
 
-		for (int i = 0; i < 2; i++) {
-			PolygonShape polygonShape = new PolygonShape();
-			polygonShape.setAsBox(1, 1);
-
-			BodyDef bodyDef = new BodyDef();
-			bodyDef.type = BodyType.DYNAMIC;
-			bodyDef.position.set(5 * i, 0);
-			bodyDef.angle = (float) (Math.PI / 4 * i);
-			bodyDef.allowSleep = false;
-			Body body = getWorld().createBody(bodyDef);
-			body.createFixture(polygonShape, 5.0f);
-
-			body.applyForce(new Vec2(-10000 * (i - 1), 0), new Vec2());
-		}
+		Environnement.get(getWorld());
+		Entity entity = new Entity();
+		entity.init(0, 0, 5, 5);
+		Environnement.get().addEntity(entity);
 	}
 
-
+	@Override
 	public String getTestName() {
-		return "Couple of Things";
+		return "#### TEST #####";
 	}
 	
-	
+
 	public static void main(String args[]){
-		TestbedModel model = new TestbedModel();         // create our model
+		TestbedModel model = new TestbedModel();         	// create our model
 
 		// add tests
-		TestList.populateModel(model);                   // populate the provided testbed tests
-		model.addCategory("My Super Tests");             // add a category
-		model.addTest(new Test());                // add our test
+		//TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
+		model.addCategory("Tests personnels");             // add a category
+		model.addTest(new Test());                		   // add our test
 
 		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
-		model.getSettings().addSetting(new TestbedSetting("My Range Setting", SettingType.ENGINE, 10, 0, 20));
+		model.getSettings().addSetting(new TestbedSetting("Test1", SettingType.ENGINE, 10, 0, 20));
 
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
 

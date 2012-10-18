@@ -3,8 +3,6 @@ package game;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.ApplicationCode;
 import fr.umlv.zen2.ApplicationContext;
