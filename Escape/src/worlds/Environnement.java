@@ -42,8 +42,8 @@ public class Environnement {
 	
 	private Environnement(World world){		
 		if(world==null){
-			world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
-			world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
+			this.world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
+			this.world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
 		}
 		else{
 			this.world = world;
