@@ -51,9 +51,9 @@ public class Main {
 					 * Events
 					 */
 					final MotionEvent event = context.pollMotion();
-					/*if (event != null) {
+					if (event != null) {
 						app.event(event);
-					}	*/
+					}
 					
 					/*
 					 * L'affichage
@@ -62,7 +62,7 @@ public class Main {
 							new ApplicationRenderCode() {
 								@Override
 								public void render(Graphics2D graphics) {
-									app.run(graphics, event);
+									app.run(graphics);
 								}
 							}
 					);

@@ -42,7 +42,7 @@ public class Test extends TestbedTest {
 		TestbedModel model = new TestbedModel();         	// create our model
 
 		// add tests
-		//TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
+		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 		model.addCategory("Tests personnels");             // add a category
 		model.addTest(new Test());                		   // add our test
 

@@ -1,6 +1,7 @@
 package gestures;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,24 +10,43 @@ import fr.umlv.zen2.MotionEvent.Kind;
 
 public class Gesture {
 	
-	List<Point> trace;
+	private Point position;
+	private List<Point> trace;
+	private boolean show;
+	
 	
 	public Gesture(){
 		this.trace = new LinkedList<>();
+		show = false;
 	}
 	
-	public void event(MotionEvent event, Graphics2D graphics){
-		trace.add(new Point(event.getX(), event.getY()));
+	/*
+	 * Séparer les fonction!
+	 * la fonction render se charge de l'affichage uniquement (on peut afficher même quand on ne clique pas... effet de rémanence avec timer par exemple)
+	 */
+	public void render(Graphics2D graphics){
 		for(Point p : trace)
 			graphics.drawOval(p.x, p.y, 5, 5);
 		
-		if(event.getKind()==Kind.ACTION_UP)
-			trace =  new LinkedList<>();
+		show = false;
 	}
 	
-	class Point{
+	/*
+	 * Début de l'event 
+	 */
+	public void event(MotionEvent event){		
+		if(event.getKind()==Kind.ACTION_UP)
+			trace =  new LinkedList<>();
 		
-		private final int x,y;
+		trace.add(new Point(event.getX(), event.getY()));
+			
+		show = true;
+		
+	}
+	
+
+	class Point{		
+		public final int x,y;
 		public Point(int x, int y){
 			this.x=x;
 			this.y=y;

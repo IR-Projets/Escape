@@ -28,17 +28,15 @@ public class Game {
 
 	}
 
-	public void run(Graphics2D graphics, MotionEvent event) {
+	public void run(Graphics2D graphics) {
 		map.render(graphics);
 		ship.render(graphics);
-		if(event != null)
-			gesture.event(event, graphics);
-		
+		gesture.render(graphics);
 	}
 
 
-	/*public void event(MotionEvent event) {
-				
-	}*/
+	public void event(MotionEvent event) {
+		gesture.event(event);
+	}
 
 }
