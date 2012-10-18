@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="Escape/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/jbox2d-testbed"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-sources.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2.jar"/>
