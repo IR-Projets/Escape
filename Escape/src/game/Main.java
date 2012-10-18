@@ -14,12 +14,12 @@ import fr.umlv.zen2.MotionEvent;
 public class Main {
 
 	public static void main(String[] args) {
-		final MyApplication app;
+		final Game app;
 
 
 
 		try {
-			app = new MyApplication();
+			app = new Game();
 		} catch (IOException e1) {
 			System.out.println("Lanch failure");
 			e1.printStackTrace();
