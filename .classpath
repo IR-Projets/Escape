@@ -10,7 +10,9 @@
 	<classpathentry kind="lib" path="libs/jbox2d-serialization-1.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-testbed-2.1.2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-testbed-2.1.2.2-sources.jar"/>
-	<classpathentry kind="lib" path="libs/jbox2d-testbed-2.1.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/jbox2d-testbed-2.1.2.2.jar" sourcepath="libs/jbox2d-testbed-2.1.2.2-sources.jar"/>
 	<classpathentry kind="lib" path="libs/zen2.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-simple-1.7.2.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-api-1.7.2.jar"/>
 	<classpathentry kind="output" path="Escape/bin"/>
 </classpath>
