@@ -15,7 +15,9 @@ public class Main {
 		final Game app;
 
 
-
+/*
+ * Ceci est mon environnement de travail :)  
+ * */
 		try {
 			app = new Game();
 		} catch (IOException e1) {
