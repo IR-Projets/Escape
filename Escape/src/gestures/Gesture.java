@@ -38,8 +38,10 @@ public class Gesture {
 				trace.remove(0);	
 		}
 		
-		for(Point p : trace)
-			graphics.fillOval(p.getX(), p.getY(), 10, 10);
+		for(int i=1;i<trace.size();i++)
+			graphics.drawLine(trace.get(i-1).getX(), trace.get(i-1).getY(), trace.get(i).getX(), trace.get(i).getY());
+		/*for(Point p : trace)
+			graphics.fillOval(p.getX(), p.getY(), 10, 10);*/
 	}
 
 	/*
