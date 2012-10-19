@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.jbox2d.dynamics.World;
+
 import worlds.Entity;
 
 public class Ship extends Entity{
@@ -25,7 +27,6 @@ public class Ship extends Entity{
 	
 
 	public Ship() throws IOException{
-
 		
 		try {                
 			image = ImageIO.read(new File(font));
@@ -45,7 +46,7 @@ public class Ship extends Entity{
 	}
 	
 	public void render(Graphics2D graphics){
-		
+		move(5,5);
 		/*
 		 * Sort de l'ecran
 		 *

@@ -29,16 +29,7 @@ public class Test extends TestbedTest {
 		setTitle("#### TEST #####");
 		getWorld().setGravity(new Vec2());
 
-		Environnement.get(getWorld());
-		Entity entity = null;
-		try {
-			entity = new Ship();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		entity.init(0, 0, 5, 5);
-		Environnement.get().addEntity(entity);
+		Environnement env = EnvironnementFactory.factory(getWorld());
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package worlds;
 
+import java.awt.Graphics2D;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -7,20 +9,22 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
-public class Entity {
+public abstract class Entity {
 
 	World world;
 	Body body;
 	
-	public Entity(World world) {
+	public Entity() {
+	}
+	
+	public void setWorld(World world){
 		this.world = world;
 	}
 	
-	public Entity(){
-		this(Environnement.get().getWorld());
-	}
-	
 	public void init(float x, float y, float w, float h){
+		if(world==null)
+			throw new IllegalStateException("Add this entity to an environnement first!");
+		
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(w, h);
 
@@ -45,4 +49,6 @@ public class Entity {
 	public void move(float x, float y){
 		body.setLinearVelocity(new Vec2(x,y));
 	}	
+	
+	public abstract void render(Graphics2D graphics);
 }
