@@ -17,13 +17,9 @@ public abstract class Entity {
 	public Entity() {
 	}
 	
-	public void setWorld(World world){
-		this.world = world;
-	}
 	
-	public void init(float x, float y, float w, float h){
-		if(world==null)
-			throw new IllegalStateException("Add this entity to an environnement first!");
+	public void init(World world, float x, float y, float w, float h){
+		this.world = world;
 		
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(w, h);
