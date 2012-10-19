@@ -1,4 +1,4 @@
-package worlds;
+package Maps;
 
 public class MapFactory {
 

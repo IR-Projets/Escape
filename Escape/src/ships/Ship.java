@@ -9,7 +9,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Ship{
+import worlds.Entity;
+
+public class Ship extends Entity{
 
 	private final String font = "images\\ship.png";
 
@@ -22,7 +24,9 @@ public class Ship{
 	
 	
 
-	public Ship() throws IOException{			                
+	public Ship() throws IOException{
+
+		
 		try {                
 			image = ImageIO.read(new File(font));
 		} catch (IOException ex) {

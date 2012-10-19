@@ -3,8 +3,6 @@ package game;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.ApplicationCode;
 import fr.umlv.zen2.ApplicationContext;
@@ -14,12 +12,14 @@ import fr.umlv.zen2.MotionEvent;
 public class Main {
 
 	public static void main(String[] args) {
-		final Game game;
+		final Game app;
 
 
-
+/*
+ * Ceci est mon environnement de travail :)  
+ * */
 		try {
-			game = new Game();
+			app = new Game();
 		} catch (IOException e1) {
 			System.out.println("Lanch failure");
 			e1.printStackTrace();
@@ -38,7 +38,7 @@ public class Main {
 						new ApplicationRenderCode() {  
 							@Override
 							public void render(Graphics2D graphics) {
-								game.init(graphics);
+								app.init(graphics);
 							}
 						}
 				);
@@ -54,8 +54,8 @@ public class Main {
 					 */
 					final MotionEvent event = context.pollMotion();
 					if (event != null) {
-						game.event(event);
-					}	
+						app.event(event);
+					}
 					
 					/*
 					 * L'affichage
@@ -64,7 +64,7 @@ public class Main {
 							new ApplicationRenderCode() {
 								@Override
 								public void render(Graphics2D graphics) {
-									game.run(graphics);
+									app.run(graphics);
 								}
 							}
 					);
