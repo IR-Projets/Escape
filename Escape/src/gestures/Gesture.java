@@ -26,19 +26,20 @@ public class Gesture {
 	 * la fonction render se charge de l'affichage uniquement (on peut afficher même quand on ne clique pas... effet de rémanence avec timer par exemple)
 	 */
 	public void render(Graphics2D graphics){
-		Random rand = new Random();
-		
+
 		if(show == false && !trace.isEmpty()){
 			if(validGesture())
 				graphics.setColor(new Color(0,255,0));
 			else
 				graphics.setColor(new Color(255,0,0));
+			
+			Random rand = new Random();
 			if(rand.nextInt()%3 == 0)
 				trace.remove(0);	
 		}
 		
 		for(Point p : trace)
-			graphics.fillOval(p.getX(), p.getY(), 5, 5);
+			graphics.fillOval(p.getX(), p.getY(), 10, 10);
 	}
 
 	/*
