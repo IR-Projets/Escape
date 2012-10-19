@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.jbox2d.dynamics.World;
+
 import worlds.Entity;
 
 public class Ship extends Entity{
@@ -25,7 +27,6 @@ public class Ship extends Entity{
 	
 
 	public Ship() throws IOException{
-
 		
 		try {                
 			image = ImageIO.read(new File(font));
@@ -39,18 +40,16 @@ public class Ship extends Entity{
 		posY = 300;
 	}
 
-	
-	public void init(){
-		
-	}
 
+	public void init(int x, int y){
+		super.init(x, y, width, height);
+	}
+	
 	public void render(Graphics2D graphics){
-		
+		move(5,5);
 		/*
 		 * Sort de l'ecran
-		 */
-		/*
-		 * Useless with jbox2d
+		 *
 		if(posX<=0)
 			posX = 0;
 		if(posY<=0)

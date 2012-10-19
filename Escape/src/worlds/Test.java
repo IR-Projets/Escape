@@ -1,6 +1,7 @@
 package worlds;
 
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -18,6 +19,8 @@ import org.jbox2d.testbed.framework.TestbedSetting.SettingType;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
+import ships.Ship;
+
 
 public class Test extends TestbedTest {
 
@@ -26,10 +29,7 @@ public class Test extends TestbedTest {
 		setTitle("#### TEST #####");
 		//getWorld().setGravity(new Vec2());
 
-		Environnement.get(getWorld());
-		Entity entity = new Entity();
-		entity.init(0, 0, 5, 5);
-		Environnement.get().addEntity(entity);
+		Environnement env = EnvironnementFactory.factory(getWorld());
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class Test extends TestbedTest {
 		TestbedModel model = new TestbedModel();         	// create our model
 
 		// add tests
-		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
+		//TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 		model.addCategory("Tests personnels");             // add a category
 		model.addTest(new Test());                		   // add our test
 
