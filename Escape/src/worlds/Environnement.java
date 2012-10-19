@@ -25,8 +25,8 @@ public class Environnement {
 	
 
 	
-	public void addEntity(Entity entity){
-		entity.setWorld(world);
+	public void addEntity(Entity entity, int x, int y){
+		entity.init(world, x, y);
 		entities.add(entity);
 	}
 	

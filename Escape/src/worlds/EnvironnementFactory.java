@@ -54,9 +54,9 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture());
-		env.addEntity(ship);
+		env.addEntity(ship, 1, 1);
 		
-		ship.init(1, 1);
+		//ship.init(1, 1);
 		
 		
 		return env;

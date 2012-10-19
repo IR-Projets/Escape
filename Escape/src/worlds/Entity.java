@@ -18,11 +18,11 @@ public abstract class Entity {
 	}
 	
 	
-	public void init(World world, float x, float y, float w, float h){
+	public void init(World world, float x, float y){
 		this.world = world;
 		
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(w, h);
+		polygonShape.setAsBox(getWidth(), getHeight());
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
@@ -45,6 +45,9 @@ public abstract class Entity {
 	public void move(float x, float y){
 		body.setLinearVelocity(new Vec2(x,y));
 	}	
+	
+	public abstract int getHeight();
+	public abstract int getWidth();
 	
 	public abstract void render(Graphics2D graphics);
 }

@@ -40,10 +40,6 @@ public class Ship extends Entity{
 		posY = 300;
 	}
 
-
-	public void init(int x, int y){
-		super.init(x, y, width, height);
-	}
 	
 	public void render(Graphics2D graphics){
 		move(5,5);
@@ -61,6 +57,17 @@ public class Ship extends Entity{
 			posY = Variables.SCREEN_HEIGHT - height-2;
 		*/
 		graphics.drawImage(image, getX(), getY(), width, height, null );
+	}
+
+
+	@Override
+	public int getWidth() {
+		return width;
+	}
+	
+	@Override
+	public int getHeight() {
+		return height;
 	}
 
 }
