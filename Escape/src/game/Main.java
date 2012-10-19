@@ -14,12 +14,12 @@ import fr.umlv.zen2.MotionEvent;
 public class Main {
 
 	public static void main(String[] args) {
-		final MyApplication app;
+		final Game game;
 
 
 
 		try {
-			app = new MyApplication();
+			game = new Game();
 		} catch (IOException e1) {
 			System.out.println("Lanch failure");
 			e1.printStackTrace();
@@ -38,7 +38,7 @@ public class Main {
 						new ApplicationRenderCode() {  
 							@Override
 							public void render(Graphics2D graphics) {
-								app.init(graphics);
+								game.init(graphics);
 							}
 						}
 				);
@@ -54,7 +54,7 @@ public class Main {
 					 */
 					final MotionEvent event = context.pollMotion();
 					if (event != null) {
-						app.event(event);
+						game.event(event);
 					}	
 					
 					/*
@@ -64,7 +64,7 @@ public class Main {
 							new ApplicationRenderCode() {
 								@Override
 								public void render(Graphics2D graphics) {
-									app.run(graphics);
+									game.run(graphics);
 								}
 							}
 					);
