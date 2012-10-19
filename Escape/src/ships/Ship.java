@@ -39,12 +39,18 @@ public class Ship extends Entity{
 		posY = 300;
 	}
 
+	
+	public void init(){
+		
+	}
 
 	public void render(Graphics2D graphics){
 		
 		/*
 		 * Sort de l'ecran
 		 */
+		/*
+		 * Useless with jbox2d
 		if(posX<=0)
 			posX = 0;
 		if(posY<=0)
@@ -54,8 +60,8 @@ public class Ship extends Entity{
 			posX = Variables.SCREEN_WIDTH - width-2;
 		if(posY+height >= Variables.SCREEN_HEIGHT)
 			posY = Variables.SCREEN_HEIGHT - height-2;
-		
-		graphics.drawImage(image, posX, posY, width, height, null );
+		*/
+		graphics.drawImage(image, getX(), getY(), width, height, null );
 	}
 
 }

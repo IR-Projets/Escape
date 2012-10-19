@@ -34,12 +34,12 @@ public class Entity {
 		//body.applyForce(new Vec2(-10000 * (- 1), 0), new Vec2());
 	}
 	
-	public float getX(){
-		return body.getLocalCenter().x;
+	public int getX(){
+		return (int) body.getLocalCenter().x;
 	}
 	
-	public float getY(){
-		return body.getLocalCenter().y;
+	public int getY(){
+		return (int) body.getLocalCenter().y;
 	}
 	
 	public void move(float x, float y){

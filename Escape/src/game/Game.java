@@ -24,7 +24,7 @@ public class Game {
 	
 	
 	public void init(Graphics2D graphics) {
-		//map.init(graphics);
+		ship.init();
 
 	}
 

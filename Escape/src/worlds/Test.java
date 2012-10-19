@@ -24,7 +24,7 @@ public class Test extends TestbedTest {
 	@Override
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
-		getWorld().setGravity(new Vec2());
+		//getWorld().setGravity(new Vec2());
 
 		Environnement.get(getWorld());
 		Entity entity = new Entity();
