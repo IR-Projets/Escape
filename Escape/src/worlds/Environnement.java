@@ -13,8 +13,8 @@ import org.jbox2d.collision.shapes.PolygonShape;;
 public class Environnement {
 
 	
-	private static final float GRAVITY_X = 0;
-	private static final float GRAVITY_Y = 0;
+	private static final float GRAVITY_X = 10;
+	private static final float GRAVITY_Y = 10;
 	private static final boolean DO_SLEEP = false;
 	private static final float TIME_STEP = 1.0f / 60.f;
 	private static final int VELOCITY_ITERATION = 10;
