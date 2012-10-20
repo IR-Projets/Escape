@@ -10,18 +10,19 @@ public class Drift implements Filter{
 		Objects.requireNonNull(trace);
 
 		int size=trace.size(), nbPointsValid=0;
-		Point pLast = trace.get(0);
 
-		for(int i=0;i<size-1;i++){
+		for(int i=1;i<size-1;i++){
+			Point pLast = trace.get(i-1);
 			Point pActual = trace.get(i);
 			if(pActual.getX() < pLast.getX() && pActual.getX() > trace.get(i+1).getX()  ||   /*Left Drift*/
 					pActual.getX() > pLast.getX() && pActual.getX() < trace.get(i+1).getX()	)  /*Right Drift*/
-				if(pActual.getY() < pLast.getY() && pActual.getY() > trace.get(i+1).getY())
+				if(pActual.getY() <= pLast.getY() && pActual.getY() >= trace.get(i+1).getY())
 					nbPointsValid++;
-			System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
+			//System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
 		}
 
-		if(nbPointsValid>=trace.size()*0.8)
+		System.out.println("Pts valide : "+nbPointsValid+ " sur "+ trace.size());
+		if(nbPointsValid>=trace.size()*0.75)
 			return true;
 		return false;
 		/*
