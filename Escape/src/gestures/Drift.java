@@ -19,7 +19,7 @@ public class Drift implements Filter{
 					nbPointsValid++;
 		}
 		System.out.println(nbPointsValid+" et "+trace.size());
-		if(nbPointsValid>=trace.size()*0.7)
+		if(nbPointsValid>=trace.size()*0.8)
 			return true;
 		return false;
 		/*
