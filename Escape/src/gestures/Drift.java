@@ -1,24 +1,26 @@
 package gestures;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Drift implements Filter{
-	
+
 	@Override
 	public boolean checkGesture(List<Point> trace){
-		/*int bornes=25;*/
+		Objects.requireNonNull(trace);
+
 		int size=trace.size(), nbPointsValid=0;
-		Point pBegin = trace.get(0);
-		Point pEnd = trace.get(size-1);
-		
-		
-		for(int i=0;i<size;i++){
+		Point pLast = trace.get(0);
+
+		for(int i=0;i<size-1;i++){
 			Point pActual = trace.get(i);
-			if(pActual.getX()<pEnd.getX() && pActual.getX()>pBegin.getX())
-				if(pActual.getY()<pBegin.getY() && pActual.getY()>pEnd.getY())
+			if(pActual.getX() < pLast.getX() && pActual.getX() > trace.get(i+1).getX()  ||   /*Left Drift*/
+					pActual.getX() > pLast.getX() && pActual.getX() < trace.get(i+1).getX()	)  /*Right Drift*/
+				if(pActual.getY() < pLast.getY() && pActual.getY() > trace.get(i+1).getY())
 					nbPointsValid++;
+			System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
 		}
-		System.out.println(nbPointsValid+" et "+trace.size());
+
 		if(nbPointsValid>=trace.size()*0.8)
 			return true;
 		return false;
@@ -30,4 +32,11 @@ public class Drift implements Filter{
 		}
 		return true;*/
 	}
+
+
+
+
+
+
+
 }
