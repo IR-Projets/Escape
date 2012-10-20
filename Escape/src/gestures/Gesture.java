@@ -43,7 +43,7 @@ public class Gesture {
 			graphics.setColor(colorCheck);
 			Random rand = new Random();
 			
-			
+			/*PROBLEM O NIVO DE LA COULEUR*/
 			if(rand.nextInt()%3 == 0){/*We remove by order : Last, then trace*/
 				if(last!=null && !last.isEmpty())
 					last.remove(0);
@@ -79,6 +79,8 @@ public class Gesture {
 				last = trace;
 				trace = new LinkedList<>();
 			}
+			if(last != null && !last.isEmpty())/* If we have a third movement, the first dissapear, and our last colour become our current for displays the second movement  */
+				lastcolorCheck=colorCheck;
 			show = true;
 			check = false;
 		}
