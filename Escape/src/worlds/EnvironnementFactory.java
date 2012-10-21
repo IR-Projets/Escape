@@ -18,9 +18,12 @@ import Maps.Map;
 
 public class EnvironnementFactory {
 	
+	/*
+	 * TODO: set the gravity to 0 (set to 10 for test only)
+	 */
 	private static final float GRAVITY_X = 10;
 	private static final float GRAVITY_Y = 10;
-	private static final boolean DO_SLEEP = true;
+	private static final boolean DO_SLEEP = false;
 
 	
 	public static Environnement WORLD1(World world){
@@ -36,7 +39,7 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(ship));
-		env.addEntity(ship, 1, 1);
+		env.addEntity(ship, 10, 10);
 		
 		return env;
 	}
@@ -44,8 +47,10 @@ public class EnvironnementFactory {
 	
 	public static Environnement factory(World world){
 		if(world==null){
-			world = createDefaultWorld();
+			world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
 		}
+		setWorldLimit(world);
+		
 		
 		/*
 		 * TODO: Mettre ICI tout les niveaux du jeu!
@@ -65,15 +70,6 @@ public class EnvironnementFactory {
 	
 	
 	
-	
-	/*
-	 * Create a default world with no gravity
-	 */
-	private static World createDefaultWorld(){
-		World world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
-		setWorldLimit(world);
-		return world;
-	}
 	/*
 	 * Set the limit of our world
 	 */
