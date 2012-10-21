@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import ships.Ship;
+
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 
@@ -15,8 +17,10 @@ public class Gesture {
 	private boolean show;
 	private boolean check;
 	private Color colorCheck, lastcolorCheck;/* For saving the color to display after a movement check*/
-
-	public Gesture(){
+	Ship ship;
+	
+	public Gesture(Ship controlledShip){
+		this.ship = controlledShip;
 		trace = new LinkedList<>();
 		last = null;
 		show = check = false;
@@ -29,6 +33,15 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 
+		/*
+		 * La faut faire sa plus propre... A toi de voir jle fais juste pour tester...
+		 * mais c'est comme sa que l'on doit déplacer un vaisseau...
+		 * A voir si on peut refactoriser... le code fait mal au cranes...
+		 */
+		if(!trace.isEmpty()){
+			ship.move(-10, -10);
+		}
+		
 		if(show == false && !trace.isEmpty()){/* We have finished a movement */
 			if(check == false){/* So we checked it */
 				if(validGesture())

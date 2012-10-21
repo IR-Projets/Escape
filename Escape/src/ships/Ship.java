@@ -42,7 +42,7 @@ public class Ship extends Entity{
 
 	
 	public void render(Graphics2D graphics){
-		move(5,5);
+		//move(5,5);
 		/*
 		 * Sort de l'ecran
 		 *
@@ -56,18 +56,19 @@ public class Ship extends Entity{
 		if(posY+height >= Variables.SCREEN_HEIGHT)
 			posY = Variables.SCREEN_HEIGHT - height-2;
 		*/
+		debug();
 		graphics.drawImage(image, getX(), getY(), width, height, null );
 	}
 
 
 	@Override
 	public int getWidth() {
-		return width;
+		return 10;
 	}
 	
 	@Override
 	public int getHeight() {
-		return height;
+		return 10;
 	}
 
 }
