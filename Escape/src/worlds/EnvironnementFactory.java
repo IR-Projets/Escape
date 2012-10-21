@@ -23,12 +23,60 @@ public class EnvironnementFactory {
 	private static final boolean DO_SLEEP = true;
 
 	
-	private static World createDefaultWorld(){
-		World world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
-		//world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
-		return world;
+	public static Environnement WORLD1(World world){
+		Environnement env = new Environnement(world);
+		Map map;
+		Ship ship;
+		try {
+			map = new Map();
+			ship = new Ship();
+		} catch (IOException e) {
+			throw new IllegalStateException("Impossible de créer le monde 1", e);
+		}
+		
+		env.setMap(map);
+		env.setGesture(new Gesture(ship));
+		env.addEntity(ship, 1, 1);
+		
+		return env;
 	}
 	
+	
+	public static Environnement factory(World world){
+		if(world==null){
+			world = createDefaultWorld();
+		}
+		
+		/*
+		 * TODO: Mettre ICI tout les niveaux du jeu!
+		 * 
+		 * if(lvl1)
+		 * 		return world1()
+		 * ...
+		 *  
+		 */		
+		return WORLD1(world);
+	}
+	
+	public static Environnement factory(){
+		return factory(null);
+	}
+	
+	
+	
+	
+	
+	/*
+	 * Create a default world with no gravity
+	 */
+	private static World createDefaultWorld(){
+		World world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
+		setWorldLimit(world);
+		return world;
+	}
+	/*
+	 * Set the limit of our world
+	 */
 	private static void setWorldLimit(World world){
 		BodyDef bd = new BodyDef();
 		Body ground = world.createBody(bd);
@@ -46,43 +94,6 @@ public class EnvironnementFactory {
 		//0,height->0,0
 		shape.setAsEdge(new Vec2(0, Variables.SCREEN_HEIGHT), new Vec2(0, 0));
 		ground.createFixture(shape, 0.0f);
-	}
-	
-	
-	public static Environnement WORLD1(World world){
-		Environnement env = new Environnement(world);
-		Map map;
-		Ship ship;
-		try {
-			map = new Map();
-			ship = new Ship();
-		} catch (IOException e) {
-			throw new IllegalStateException("Impossible de créer le monde 1", e);
-		}
-		
-		env.setMap(map);
-		env.setGesture(new Gesture(ship));
-		env.addEntity(ship, 1, 1);
-				
-		setWorldLimit(world);
-		
-		return env;
-	}
-	
-	
-	public static Environnement factory(World world){
-		if(world==null){
-			world = createDefaultWorld();
-		}
-		
-		/*
-		 * Mettre ICI tout les niveaux du jeu!
-		 */		
-		return WORLD1(world);
-	}
-	
-	public static Environnement factory(){
-		return factory(null);
 	}
 	
 }

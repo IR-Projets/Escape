@@ -63,12 +63,12 @@ public class Ship extends Entity{
 
 	@Override
 	public int getWidth() {
-		return 10;
+		return width;
 	}
 	
 	@Override
 	public int getHeight() {
-		return 10;
+		return height;
 	}
 
 }

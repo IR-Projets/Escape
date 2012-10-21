@@ -28,8 +28,6 @@ public class Environnement {
 		entities = new LinkedList<>();
 	}
 	
-
-	
 	public void addEntity(Entity entity, int x, int y){
 		entity.init(world, x, y);
 		entities.add(entity);
@@ -52,8 +50,7 @@ public class Environnement {
 	}
 
 	public void event(MotionEvent event) {
-		gesture.event(event);
-		
+		gesture.event(event);		
 	}
 
 	public void setGesture(Gesture gesture) {
