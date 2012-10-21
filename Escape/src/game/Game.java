@@ -16,6 +16,10 @@ public class Game {
 
 	Environnement env;
 	
+	/*
+	 * TODO: C'est ici que va être gérer tout les evenements du jeux (mort, gagné, ...)
+	 */
+	
 	public Game() throws IOException{		
 		env = EnvironnementFactory.factory();
 	}

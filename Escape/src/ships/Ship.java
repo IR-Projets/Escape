@@ -42,20 +42,7 @@ public class Ship extends Entity{
 
 	
 	public void render(Graphics2D graphics){
-		move(5,5);
-		/*
-		 * Sort de l'ecran
-		 *
-		if(posX<=0)
-			posX = 0;
-		if(posY<=0)
-			posY = 0;
-		
-		if(posX+width >= Variables.SCREEN_WIDTH)
-			posX = Variables.SCREEN_WIDTH - width-2;
-		if(posY+height >= Variables.SCREEN_HEIGHT)
-			posY = Variables.SCREEN_HEIGHT - height-2;
-		*/
+		debug();
 		graphics.drawImage(image, getX(), getY(), width, height, null );
 	}
 

@@ -35,11 +35,11 @@ public abstract class Entity {
 	}
 	
 	public int getX(){
-		return (int) body.getLocalCenter().x;
+		return (int) body.getPosition().x;
 	}
 	
 	public int getY(){
-		return (int) body.getLocalCenter().y;
+		return (int) body.getPosition().y;
 	}
 	
 	public void move(float x, float y){
@@ -50,4 +50,13 @@ public abstract class Entity {
 	public abstract int getWidth();
 	
 	public abstract void render(Graphics2D graphics);
+	
+	
+	public void debug(){
+	     //world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
+	     Vec2 position = body.getPosition();
+	     float angle = body.getAngle();
+	     System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", position.x, position.y, angle);
+	     //System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", getX(), getY(), angle);
+	}
 }

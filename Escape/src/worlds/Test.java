@@ -42,9 +42,9 @@ public class Test extends TestbedTest {
 		TestbedModel model = new TestbedModel();         	// create our model
 
 		// add tests
-		//TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 		model.addCategory("Tests personnels");             // add a category
 		model.addTest(new Test());                		   // add our test
+		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 
 		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
 		model.getSettings().addSetting(new TestbedSetting("Test1", SettingType.ENGINE, 10, 0, 20));

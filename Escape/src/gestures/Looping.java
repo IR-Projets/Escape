@@ -1,6 +1,8 @@
 package gestures;
 
+public class Looping extends Gesture {
 import java.util.List;
+
 
 public class Looping implements Filter {
 

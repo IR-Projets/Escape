@@ -2,6 +2,7 @@ package worlds;
 
 import java.io.IOException;
 
+import game.Variables;
 import gestures.Gesture;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -10,36 +11,20 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.testbed.tests.EdgeShapes;
 
 import ships.Ship;
 import Maps.Map;
 
 public class EnvironnementFactory {
 	
+	/*
+	 * TODO: set the gravity to 0 (set to 10 for test only)
+	 */
 	private static final float GRAVITY_X = 10;
 	private static final float GRAVITY_Y = 10;
 	private static final boolean DO_SLEEP = false;
-	private static final float TIME_STEP = 1.0f / 60.f;
-	private static final int VELOCITY_ITERATION = 10;
-	private static final int POSITION_ITERATION = 8;
-	
-	private static World createDefaultWorld(){
-		World world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
-		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
-		return world;
-	}
-	
-	private static void setWorldLimit(World world){
-		PolygonShape polygon = new PolygonShape();
-		polygon.setAsBox(5, 5);
-		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.STATIC;
-		bodyDef.position.set(0, 0);
-		Body body = world.createBody(bodyDef);
-		body.createFixture(polygon, 5.0f);
-	}
-	
+
 	
 	public static Environnement WORLD1(World world){
 		Environnement env = new Environnement(world);
@@ -53,11 +38,8 @@ public class EnvironnementFactory {
 		}
 		
 		env.setMap(map);
-		env.setGesture(new Gesture());
-		env.addEntity(ship, 1, 1);
-		
-		//ship.init(1, 1);
-		
+		env.setGesture(new Gesture(ship));
+		env.addEntity(ship, 10, 10);
 		
 		return env;
 	}
@@ -65,18 +47,49 @@ public class EnvironnementFactory {
 	
 	public static Environnement factory(World world){
 		if(world==null){
-			world = createDefaultWorld();
+			world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
 		}
 		setWorldLimit(world);
 		
+		
 		/*
-		 * Mettre ICI tout les niveaux du jeu!
+		 * TODO: Mettre ICI tout les niveaux du jeu!
+		 * 
+		 * if(lvl1)
+		 * 		return world1()
+		 * ...
+		 *  
 		 */		
 		return WORLD1(world);
 	}
 	
 	public static Environnement factory(){
 		return factory(null);
+	}
+	
+	
+	
+	
+	/*
+	 * Set the limit of our world
+	 */
+	private static void setWorldLimit(World world){
+		BodyDef bd = new BodyDef();
+		Body ground = world.createBody(bd);
+
+		PolygonShape shape = new PolygonShape();
+		//0,0->width,0
+		shape.setAsEdge(new Vec2(0f, 0f), new Vec2(Variables.SCREEN_WIDTH, 0.0f));
+		ground.createFixture(shape, 0.0f);
+		//Width,0->width,height
+		shape.setAsEdge(new Vec2(Variables.SCREEN_WIDTH, 0f), new Vec2(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT));
+		ground.createFixture(shape, 0.0f);
+		//width,height->0,height
+		shape.setAsEdge(new Vec2(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT), new Vec2(0, Variables.SCREEN_HEIGHT));
+		ground.createFixture(shape, 0.0f);
+		//0,height->0,0
+		shape.setAsEdge(new Vec2(0, Variables.SCREEN_HEIGHT), new Vec2(0, 0));
+		ground.createFixture(shape, 0.0f);
 	}
 	
 }
