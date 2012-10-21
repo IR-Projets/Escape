@@ -88,13 +88,15 @@ public class Gesture {
 	}
 
 
-	/*Lui il ne pren pa une liste Normalement vu ke c un de ces champ, on f komen la ???*/
 	public boolean validGesture() {
 		/*
 		 * Faire un factory?
 		 */
-		Filter filter = new Drift();
-		return filter.checkGesture(trace);
+		Filter drift = new Drift();
+		Filter backoff = new Backoff();
+		Filter looping = new Looping();
+		
+		return drift.checkGesture(trace) || backoff.checkGesture(trace) || looping.checkGesture(trace);
 	}
 
 
