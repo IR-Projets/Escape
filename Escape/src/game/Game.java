@@ -9,6 +9,7 @@ import worlds.Environnement;
 import worlds.EnvironnementFactory;
 
 
+import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
 
@@ -25,7 +26,6 @@ public class Game {
 	public Game() throws IOException{		
 		env = EnvironnementFactory.factory();
 	}
-	
 	
 	public void init(Graphics2D graphics) {
 		Runnable run = new Runnable(){

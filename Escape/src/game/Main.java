@@ -28,7 +28,6 @@ public class Main {
 
 			@Override
 			public void run(final ApplicationContext context) {   
-
 				/*
 				 * Initialisation
 				 */

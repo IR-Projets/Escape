@@ -27,8 +27,8 @@ public class EnvironnementFactory {
 	/*
 	 * TODO: set the gravity to 0 (set to 10 for test only)
 	 */
-	private static final float GRAVITY_X = 10;
-	private static final float GRAVITY_Y = 10;
+	private static final float GRAVITY_X = 0;
+	private static final float GRAVITY_Y = 0;
 	private static final boolean DO_SLEEP = false;
 	private static Lancher lancher;
 	

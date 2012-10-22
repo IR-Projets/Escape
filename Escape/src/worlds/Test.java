@@ -36,7 +36,7 @@ public class Test extends TestbedTest {
 		setTitle("#### TEST #####");
 
 		final Environnement env = EnvironnementFactory.factory(getWorld());
-		this.setCamera(new Vec2(Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/2), 1);
+		this.setCamera(new Vec2(Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/2), 0.5f);
 		
 		Runnable run = new Runnable(){
 			@Override

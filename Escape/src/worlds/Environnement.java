@@ -29,6 +29,8 @@ public class Environnement {
 		Testbed
 	}
 	private Lancher lancher;
+	
+	
 	/**
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world

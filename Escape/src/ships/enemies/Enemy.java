@@ -1,11 +1,15 @@
 package ships.enemies;
 
 import java.io.IOException;
+import java.util.Random;
 
 import ships.Ship;
 
 public class Enemy extends Ship{
 
+	double lastExecution=0;
+	Random rand = new Random();
+	
 	public Enemy() throws IOException {
 		super();
 	}
@@ -17,7 +21,11 @@ public class Enemy extends Ship{
 
 	@Override
 	public void compute() {
-		// TODO Auto-generated method stub
+		double now = System.currentTimeMillis();
+		if(now-lastExecution>1000+rand.nextInt(5000)){
+			lastExecution=now;
+			move(rand.nextInt(100)-50, rand.nextInt(100)-50);
+		}
 		
 	}
 
