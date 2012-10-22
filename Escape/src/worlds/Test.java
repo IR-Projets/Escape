@@ -35,8 +35,26 @@ public class Test extends TestbedTest {
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
 
-		Environnement env = EnvironnementFactory.factory(getWorld());
+		final Environnement env = EnvironnementFactory.factory(getWorld());
 		this.setCamera(new Vec2(Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/2), 1);
+		
+		Runnable run = new Runnable(){
+			@Override
+			public void run() {
+				for(;;){
+					env.compute();
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						Thread.currentThread().interrupt();
+					}
+				}
+			}
+		};
+		Thread thread = new Thread(run);
+		thread.start();
+		
+		
 	}
 
 	@Override

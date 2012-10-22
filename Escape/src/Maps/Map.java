@@ -46,6 +46,18 @@ import javax.imageio.ImageIO;
 			int screenW = Variables.SCREEN_WIDTH;
 			int screenH = Variables.SCREEN_HEIGHT;
 			
+			//Notre subImage dépasse les bords de notre Image (droite ou bas)
+			if(posX+screenW>=width)
+				posX=width-screenW-1;
+			if(posY+screenH>=height)
+				posY=height-screenH-1;
+			
+			//SubImage dépasse (haut ou gauche)
+			if(posX<=0)
+				posX=0;
+			if(posY<=0)
+				posY=0;		
+			
 			//try{
 				graphics.drawImage(image.getSubimage(posX, posY, screenW, screenH), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
 			//}catch(Exception e){
@@ -69,17 +81,7 @@ import javax.imageio.ImageIO;
 			if(screenH>height)
 				screenH=height;
 			
-			//Notre subImage dépasse les bords de notre Image (droite ou bas)
-			if(posX+screenW>=width)
-				posX=width-screenW-1;
-			if(posY+screenH>=height)
-				posY=height-screenH-1;
-			
-			//SubImage dépasse (haut ou gauche)
-			if(posX<=0)
-				posX=0;
-			if(posY<=0)
-				posY=0;			
+	
 		}
 
 	}

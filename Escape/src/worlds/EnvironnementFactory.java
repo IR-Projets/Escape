@@ -1,6 +1,9 @@
 package worlds;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import game.Variables;
 import gestures.Gesture;
@@ -13,7 +16,10 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.testbed.tests.EdgeShapes;
 
+import ships.Player;
 import ships.Ship;
+import ships.enemies.Enemy;
+import worlds.Environnement.Lancher;
 import Maps.Map;
 
 public class EnvironnementFactory {
@@ -24,22 +30,33 @@ public class EnvironnementFactory {
 	private static final float GRAVITY_X = 10;
 	private static final float GRAVITY_Y = 10;
 	private static final boolean DO_SLEEP = false;
-
+	private static Lancher lancher;
 	
 	public static Environnement WORLD1(World world){
-		Environnement env = new Environnement(world);
+		Environnement env = new Environnement(lancher, world);
 		Map map;
-		Ship ship;
+		Ship playerShip;
+		List<Entity> entityList = new LinkedList<>();
 		try {
 			map = new Map();
-			ship = new Ship();
+			playerShip = new Player();
+			
+			for(int i=0;i<10; i++){
+				entityList.add(new Enemy());
+			}
+			
 		} catch (IOException e) {
 			throw new IllegalStateException("Impossible de créer le monde 1", e);
 		}
 		
 		env.setMap(map);
-		env.setGesture(new Gesture(ship));
-		env.addEntity(ship, 75, 86);
+		env.setGesture(new Gesture(playerShip));
+		env.addEntity(playerShip, 75, 86);
+		
+		Random rand = new Random();
+		for(Entity entity : entityList){
+			env.addEntity(entity, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT));
+		}
 		
 		return env;
 	}
@@ -47,12 +64,15 @@ public class EnvironnementFactory {
 	
 	public static Environnement factory(World world){
 		if(world==null){
+			lancher = Lancher.Main;
 			world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
 		}
 		else{
+			lancher = lancher.Testbed;
 			world.setGravity(new Vec2(GRAVITY_X, GRAVITY_Y));
 			world.setAllowSleep(DO_SLEEP);
 		}
+
 		setWorldLimit(world);
 		
 		

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="Escape/src"/>
+	<classpathentry excluding="ships/enemies/Enemy1.java|ships/enemies/Enemy2.java|ships/enemies/Enemy3.java" kind="src" path="Escape/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-sources.jar"/>

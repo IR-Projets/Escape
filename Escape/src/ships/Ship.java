@@ -3,6 +3,8 @@ package ships;
 import game.Variables;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +15,7 @@ import org.jbox2d.dynamics.World;
 
 import worlds.Entity;
 
-public class Ship extends Entity{
-
-	private final String font = "images\\ship.png";
-
+public abstract class Ship extends Entity{
 
 	private final BufferedImage image;
 	private final int width;
@@ -29,32 +28,35 @@ public class Ship extends Entity{
 	public Ship() throws IOException{
 		
 		try {                
-			image = ImageIO.read(new File(font));
+			image = ImageIO.read(new File(getImageURL()));
 		} catch (IOException ex) {
-			throw new IOException("Map initialisation fail: can't open " + font);
+			throw new IOException("Ship initialisation fail: can't open " + getImageURL());
 		}
 		
 		width = image.getWidth();
 		height = image.getHeight();
-		posX = 250;
-		posY = 300;
 	}
 
 	
 	public void render(Graphics2D graphics){
-		//debug();
-		graphics.drawImage(image, getX(), Variables.SCREEN_HEIGHT-getY(), width, height, null );
+		AffineTransform tx = new AffineTransform();
+		tx.rotate(getRotate(), image.getWidth()/2, image.getHeight()/2);
+		
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BICUBIC);
+
+		graphics.drawImage(op.filter(image, null), getX(), Variables.SCREEN_HEIGHT-getY(), width, height, null );
 	}
 
+	protected abstract String getImageURL();
 
 	@Override
 	public int getWidth() {
-		return width;
+		return width/2;
 	}
 	
 	@Override
 	public int getHeight() {
-		return height;
+		return height/2;
 	}
 
 }

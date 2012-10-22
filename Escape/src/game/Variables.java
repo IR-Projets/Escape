@@ -10,7 +10,7 @@ public class Variables {
 	
 	public final static String APPLICATION_NAME = "Escape IR";
 	public final static int SCREEN_WIDTH = 500;
-	public final static int SCREEN_HEIGHT = 500;
+	public final static int SCREEN_HEIGHT = 1000;
 	
 	public final static Color GREEN = new Color(0,255,0);
 	public final static Color RED = new Color(255,0,0);

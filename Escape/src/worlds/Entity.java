@@ -33,21 +33,31 @@ public abstract class Entity {
 	}
 	
 	public int getX(){
-		return (int) body.getPosition().x;
+		return (int) body.getPosition().x - getWidth();
 	}
 	
 	public int getY(){
 		return (int) body.getPosition().y;
 	}
 	
+	public float getRotate(){
+		return body.getAngle();
+	}
+	
 	public void move(float x, float y){
 		body.setLinearVelocity(new Vec2(x,y));
 	}	
 	
+	
+	/*
+	 * Methodes abstraites
+	 */
 	public abstract int getHeight();
 	public abstract int getWidth();
 	
 	public abstract void render(Graphics2D graphics);
+	public abstract void compute();
+	
 	
 	
 	public void debug(){
