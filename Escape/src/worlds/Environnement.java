@@ -65,10 +65,7 @@ public class Environnement {
 	 * Render all entities associated
 	 * @param graphics draw area
 	 */
-	public void render(Graphics2D graphics){
-		//First we compute the movement with JBox2d
-		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);
-		
+	public void render(Graphics2D graphics){	
 		//Then we render all: map, entities and the gesture
 		map.render(graphics);
 		for(Entity entity : entities)
@@ -83,5 +80,16 @@ public class Environnement {
 	 */
 	public void event(MotionEvent event) {
 		gesture.event(event);		
+	}
+
+	public void compute() {
+		//First we compute the movement with JBox2d
+		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
+		map.compute();
+		gesture.compute();
 	}	
 }
+
+
+
+

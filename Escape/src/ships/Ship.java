@@ -42,8 +42,8 @@ public class Ship extends Entity{
 
 	
 	public void render(Graphics2D graphics){
-		debug();
-		graphics.drawImage(image, getX(), getY(), width, height, null );
+		//debug();
+		graphics.drawImage(image, getX(), Variables.SCREEN_HEIGHT-getY(), width, height, null );
 	}
 
 

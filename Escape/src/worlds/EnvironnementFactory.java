@@ -39,7 +39,7 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(ship));
-		env.addEntity(ship, 10, 10);
+		env.addEntity(ship, 75, 86);
 		
 		return env;
 	}
@@ -48,6 +48,10 @@ public class EnvironnementFactory {
 	public static Environnement factory(World world){
 		if(world==null){
 			world = new World(new Vec2(GRAVITY_X, GRAVITY_Y), DO_SLEEP);
+		}
+		else{
+			world.setGravity(new Vec2(GRAVITY_X, GRAVITY_Y));
+			world.setAllowSleep(DO_SLEEP);
 		}
 		setWorldLimit(world);
 		

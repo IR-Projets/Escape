@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 	public class Map{
 
-		private final String font = "images\\earth.png";
+		private final String font = "images\\earth_w500.png";
 
 
 		private final BufferedImage image;
@@ -37,11 +37,25 @@ import javax.imageio.ImageIO;
 			height = image.getHeight();
 			posX=0;
 			posY=image.getHeight();
+			
+			compute(); //evite les bugs
 		}
 
 
-		public void render(Graphics2D graphics){
+		public void render(Graphics2D graphics){	
+			int screenW = Variables.SCREEN_WIDTH;
+			int screenH = Variables.SCREEN_HEIGHT;
 			
+			//try{
+				graphics.drawImage(image.getSubimage(posX, posY, screenW, screenH), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
+			//}catch(Exception e){
+			//	System.out.println("bug!");
+			//}
+		}
+
+
+		public void compute() {
+
 			posY--;
 			
 			/*
@@ -65,16 +79,7 @@ import javax.imageio.ImageIO;
 			if(posX<=0)
 				posX=0;
 			if(posY<=0)
-				posY=0;
-		
-			
-			
-			try{
-				graphics.drawImage(image.getSubimage(posX, posY, screenW, screenH), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
-			}
-			catch(Exception e){
-				System.out.println("bug!");
-			}
+				posY=0;			
 		}
 
 	}

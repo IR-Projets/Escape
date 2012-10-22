@@ -29,9 +29,7 @@ public abstract class Entity {
 		bodyDef.position.set(x, y);
 		bodyDef.allowSleep = false;
 		body = world.createBody(bodyDef);
-		body.createFixture(polygonShape, 5.0f);
-
-		//body.applyForce(new Vec2(-10000 * (- 1), 0), new Vec2());
+		body.createFixture(polygonShape, 1.0f);
 	}
 	
 	public int getX(){

@@ -147,5 +147,14 @@ public class Gesture {
 	}
 
 
+	public void compute() {
+		/*
+		 * LF:
+		 * C'est la qu'on fait tout les calculs! 
+		 * render se charge uniquement de l'affichage!!!		
+		 */
+	}
+
+
 
 }
