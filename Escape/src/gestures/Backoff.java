@@ -1,5 +1,6 @@
 package gestures;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,15 +15,18 @@ public class Backoff implements Filter {
 		if(trace.size()<=2)
 			return false;
 		
-		int size=trace.size(), nbPoints=0;
-		Point pLast=trace.get(0), pActual=trace.get(1), pNext=trace.get(2);
 		
-		for(int i=2;i<size-1;i++){
+		int size=trace.size(), nbPoints=0;
+		
+		Iterator<Point> it = trace.iterator();
+		Point pLast=it.next(), pActual=it.next(), pNext=it.next();
+		
+		while(it.hasNext()){
 			if(pActual.getY() >= pLast.getY() && pActual.getY() <= pNext.getY())
 				nbPoints++;
 			pLast = pActual;
 			pActual=pNext;
-			pNext = trace.get(i+1);
+			pNext = it.next();
 			//System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
 		}
 		

@@ -1,5 +1,6 @@
 package gestures;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,10 +13,11 @@ public class Drift implements Filter{
 			return false;
 
 		int size=trace.size(), nbLeft=0, nbRight=0;
-		Point pLast=trace.get(0), pActual=trace.get(1), pNext=trace.get(2);
+		Iterator<Point> it = trace.iterator();
+		Point pLast=it.next(), pActual=it.next(), pNext=it.next();
 
-		for(int i=1;i<size-1;i++){
-			if(pActual.getY() <= pLast.getY() && pActual.getY() >= pNext.getY()){/*Are we correctly moved up? */
+		for(int i=1;it.hasNext();i++){
+			if(pActual.getY() <= pLast.getY() && pActual.getY() >= pNext.getY()){
 				if(i<10 || (i>10 && nbLeft>= rate_error*i))		/* At 10, we checks in what drift we are, for saving operations*/
 					if( pActual.getX() <= pLast.getX() && pActual.getX() >= pNext.getX())  /*Left Drift*/
 						nbLeft++;
@@ -27,7 +29,7 @@ public class Drift implements Filter{
 
 			pLast = pActual;
 			pActual=pNext;
-			pNext = trace.get(i+1);
+			pNext = it.next();
 			//System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
 		}
 
