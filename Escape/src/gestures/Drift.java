@@ -1,67 +1,52 @@
 package gestures;
 
+import game.Variables;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import org.jbox2d.common.Vec2;
+
 public class Drift implements Filter{
 
+
+
 	@Override
-	public boolean checkGesture(List<Point> trace){
+	public boolean checkGesture(List<Vec2> trace){
 		Objects.requireNonNull(trace);
-		if(trace.size()<=2)
+		if(trace.size()<2)
 			return false;
 
-		int size=trace.size(), nbLeft=0, nbRight=0;
-		Iterator<Point> it = trace.iterator();
-		Point pLast=it.next(), pActual=it.next(), pNext=it.next();
+		int size=trace.size(), nbPoints=0;//The bornes is the borne for accept the drift, to compensate the approximation of the coefficient with 2 points 
+		Iterator<Vec2> it = trace.iterator();
+		
+		Vec2 pBeg = trace.get(0);
+		Vec2 pEnd = trace.get(size-1);
 
-		for(int i=1;it.hasNext();i++){
-			if(pActual.getY() <= pLast.getY() && pActual.getY() >= pNext.getY()){
-				if(i<10 || (i>10 && nbLeft>= rate_error*i))		/* At 10, we checks in what drift we are, for saving operations*/
-					if( pActual.getX() <= pLast.getX() && pActual.getX() >= pNext.getX())  /*Left Drift*/
-						nbLeft++;
-				if(i<10 || (i>10 && nbRight>= rate_error*i))
-					if(	pActual.getX() >= pLast.getX() && pActual.getX() <= pNext.getX())  /*Right Drift*/
-						nbRight++;
-			}
-			/* Don't unified them them or we can have a curbic courbe that can be allow*/
+		if(pBeg.x==pEnd.x)// Avoid the division by 0
+			return false;
+		double coef = -((double)(pBeg.y-pEnd.y) / (pBeg.x-pEnd.x));
 
-			pLast = pActual;
-			pActual=pNext;
-			pNext = it.next();
-			//System.out.println("Point : ("+pActual.getX()+", "+pActual.getY());
+		/*System.out.println("PointBeg : ("+pBeg.getX()+", "+pBeg.getY());
+		System.out.println("PointMid : ("+pEnd.getX()+", "+pEnd.getY());
+		System.out.println("coef :"+coef);*/
+
+		while(it.hasNext()){
+			Vec2 pActual = it.next();
+			Vec2 pActualCenter = new Vec2(pActual.x-pBeg.x, pActual.y-pBeg.y);
+
+			int yNorm = (int) -((pActualCenter.x)*coef);
+			//System.out.println(yNorm+" et "+pActualCenter.getY()+" et x "+pActualCenter.getX());
+			if(yNorm <= pActualCenter.y+Variables.BORNES_GESTURE_TRACE && yNorm >= pActualCenter.y-Variables.BORNES_GESTURE_TRACE && yNorm<0)
+				nbPoints++;
 		}
-
-		int difX = trace.get(0).getX()-trace.get(size-1).getX();
-		int difY = trace.get(0).getY()-trace.get(size-1).getY();
-		difX=(difX>0)?difX:-difX;
-		difY=(difY>0)?difY:-difY;
-		if(difX <diffLimits || difY < diffLimits )/* Don't allow vertical and horizontal movement */
-			return false;
-
-
-		/*A SUPPRIMER une fois move implemente (affiche juste kel drift est reconnu)
-		/*System.out.println("Pts valide left: "+nbLeft+ " sur "+ trace.size());
-		System.out.println("Pts valide right: "+nbRight+ " sur "+ trace.size());*/
-		boolean left;
-		if((left = (nbLeft>=trace.size()*rate_error)) || nbRight>=trace.size()*rate_error){
-			String posDrift = (left==true)?" left":" right";
+		//System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
+		if(nbPoints >= trace.size()*Variables.RATE_ACCEPT_TRACE){
+			String posDrift = (coef>0)?" right":" left";
 			System.out.println("Drift"+posDrift);
 			return true;
 		}
 		return false;
-
-		/* Faudra metre juste ca a la place
-		/*if(nbLeft>=trace.size()*rate_error || nbRight>=trace.size()*rate_error)
-			return true;
-		return false;*/
 	}
-
-
-
-
-
-
-
 }
