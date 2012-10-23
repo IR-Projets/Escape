@@ -19,6 +19,12 @@ public class Variables {
 	public final static int SPEED_MAIN_SHIP = 15;/* Speed of the main ship */
 	
 	
+	public final static float WORLD_SCALE = 20;
+	public static final float WORLD_GRAVITY_X = 0;
+	public static final float WORLD_GRAVITY_Y = 0;
+	
+	public static float LINK_FREQUENCY = 0.3f;	//Duretée
+	public static float LINK_DAMPING = 0.5f;	//Ressort
 	
 	
 	/*
