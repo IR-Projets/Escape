@@ -12,7 +12,13 @@ import org.jbox2d.common.Vec2;
 
 public class Backoff implements Filter {
 
+	@Override
+	public boolean checkGesture(List<Vec2> trace) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
+/*
 	@Override
 	public boolean checkGesture(List<Vec2> trace){
 		Objects.requireNonNull(trace);
@@ -30,18 +36,18 @@ public class Backoff implements Filter {
 			pLast = pActual;
 			pActual=pNext;
 			pNext = it.next();
-			System.out.println("Point : ("+pActual.x+", "+pActual.y);
+			//System.out.println("Point : ("+pActual.x+", "+pActual.y);
 		}
 		
 		double difX = trace.get(0).x-trace.get(size-1).x;
 		difX=(difX>0)?difX:-difX;
-		/*System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
+		System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
 		if(nbPoints >= Variables.RATE_ACCEPT_TRACE*size && difX < Variables.BORNES_GESTURE_TRACE){
 			System.out.println("Backoff");
 			return true;
-		}*/
+		}
 			
 		return false;
-	}
+	}*/
 
 }
