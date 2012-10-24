@@ -7,9 +7,14 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import ships.Player;
+import ships.Ship;
+
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
 
+import Entity.CollisionListener;
+import Entity.Entity;
 import Maps.Map;
 
 public class Environnement {
@@ -22,6 +27,7 @@ public class Environnement {
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
+	private Ship player;
 
 	
 	
@@ -47,9 +53,23 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
+	public void setPlayer(Ship player){
+		this.player = player;
+		player.setCollisionListener(new CollisionListener() {
+			@Override
+			public void collide(Entity entity) {
+				playerCollision(entity);
+			}
+		});
+	}
 	
 	
 	
+	
+	protected void playerCollision(Entity entity) {
+		entities.remove(entity);
+	}
+
 	/**
 	 * Add an entity to the Environnement at the specified position
 	 * @param entity the entity to add
@@ -71,6 +91,7 @@ public class Environnement {
 	public void render(Graphics2D graphics){	
 		//Then we render all: map, entities and the gesture
 		map.render(graphics);
+		player.render(graphics);
 		for(Entity entity : entities)
 			entity.render(graphics);
 		gesture.render(graphics);

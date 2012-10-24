@@ -19,6 +19,7 @@ import org.jbox2d.testbed.tests.EdgeShapes;
 import ships.Player;
 import ships.Ship;
 import ships.enemies.Enemy;
+import Entity.Entity;
 import Maps.Map;
 
 public class EnvironnementFactory {
@@ -48,7 +49,7 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(playerShip));
-		env.addEntity(playerShip, 75, 86);
+		env.setPlayer(playerShip);
 		
 		Random rand = new Random();
 		for(Entity entity : entityList){
