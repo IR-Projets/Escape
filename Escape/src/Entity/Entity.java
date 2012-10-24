@@ -85,8 +85,8 @@ public abstract class Entity {
 	
 
 
-	public void move(int x, int y){
-		body.setLinearVelocity(new Vec2(toWorldSize(x), toWorldSize(-y)));
+	public void move(float speedX, float speedY){
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(-speedY)));
 	}	
 	
 	public void render(Graphics2D graphics){
@@ -109,8 +109,8 @@ public abstract class Entity {
 		return (int) (val * Variables.WORLD_SCALE);
 	}
 	
-	protected float toWorldSize(int val){
-		return val / Variables.WORLD_SCALE;
+	protected float toWorldSize(float speedX){
+		return speedX / Variables.WORLD_SCALE;
 	}
 	
 	protected float getRotate(){

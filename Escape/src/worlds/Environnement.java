@@ -61,6 +61,7 @@ public class Environnement {
 				playerCollision(entity);
 			}
 		});
+		addEntity(player, 0, 0);
 	}
 	
 	
