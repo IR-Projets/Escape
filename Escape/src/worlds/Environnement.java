@@ -22,21 +22,15 @@ public class Environnement {
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
+
 	
-	
-	public enum Lancher{
-		Main,
-		Testbed
-	}
-	private Lancher lancher;
 	
 	
 	/**
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Lancher lancher, World world){
-		this.lancher = lancher;
+	public Environnement(World world){
 		this.world = world;
 		entities = new LinkedList<>();
 	}
@@ -83,6 +77,11 @@ public class Environnement {
 	}
 
 	
+	public void step(){
+		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
+		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
+	}
+	
 	/**
 	 * Send the event to the gesture manager
 	 * @param event the event to be handled
@@ -91,11 +90,7 @@ public class Environnement {
 		gesture.event(event);		
 	}
 
-	public void compute() {
-		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
-		if(lancher==Lancher.Main)
-			world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
-		
+	public void compute() {		
 		map.compute();
 		for(Entity entity : entities)
 			entity.compute();

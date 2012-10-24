@@ -11,42 +11,56 @@ import org.jbox2d.common.Vec2;
 public class Drift implements Filter{
 
 
+	public double coefDirecteur(Vec2 pA, Vec2 pB){
+		if(pB.x == pA.x)
+			throw new IllegalArgumentException("erreur "+pB.x+" et "+pA.x);
+		return -((double)(pB.y-pA.y) / (pB.x-pA.x));
+	}
+
 
 	@Override
 	public boolean checkGesture(List<Vec2> trace){
 		Objects.requireNonNull(trace);
-		if(trace.size()<2)
+		if(trace.size()<Variables.TRACE_LENGTH_MIN)
 			return false;
 
-		int size=trace.size(), nbPoints=0;//The bornes is the borne for accept the drift, to compensate the approximation of the coefficient with 2 points 
 		Iterator<Vec2> it = trace.iterator();
-		
-		Vec2 pBeg = trace.get(0);
-		Vec2 pEnd = trace.get(size-1);
-
-		if(pBeg.x==pEnd.x)// Avoid the division by 0
-			return false;
-		double coef = -((double)(pBeg.y-pEnd.y) / (pBeg.x-pEnd.x));
-
-		/*System.out.println("PointBeg : ("+pBeg.getX()+", "+pBeg.getY());
-		System.out.println("PointMid : ("+pEnd.getX()+", "+pEnd.getY());
-		System.out.println("coef :"+coef);*/
+		boolean firstLoop = true;
+		double coefMin = 0, coefMax = 0;
+		int error = 0;
+		Vec2 pActual = null, pLast = it.next();
 
 		while(it.hasNext()){
-			Vec2 pActual = it.next();
-			Vec2 pActualCenter = new Vec2(pActual.x-pBeg.x, pActual.y-pBeg.y);
+			int i;
+			for(i=0; i<3 && it.hasNext(); i++){
+				pActual = it.next();
+			}
+			if(i<3)
+				return true;
 
-			int yNorm = (int) -((pActualCenter.x)*coef);
-			//System.out.println(yNorm+" et "+pActualCenter.getY()+" et x "+pActualCenter.getX());
-			if(yNorm <= pActualCenter.y+Variables.BORNES_GESTURE_TRACE && yNorm >= pActualCenter.y-Variables.BORNES_GESTURE_TRACE && yNorm<0)
-				nbPoints++;
+			double coefActual;
+			try {
+				coefActual = coefDirecteur(pLast, pActual);
+				pLast = pActual;
+
+				if(firstLoop){
+					coefMin = coefMax = coefActual;
+					firstLoop = false;
+				}
+				if(coefActual > coefMax)
+					coefMax = coefActual;
+				if(coefActual < coefMin)
+					coefMin = coefActual;
+
+				if(coefMax - coefMin >= Variables.TRACE_VARIATION_MAX)
+					return false;
+
+			} catch (IllegalArgumentException e) {
+				if(error++>Variables.TRACE_ERROR_MAX)
+					return false;
+			}
 		}
-		//System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
-		if(nbPoints >= trace.size()*Variables.RATE_ACCEPT_TRACE){
-			String posDrift = (coef>0)?" right":" left";
-			System.out.println("Drift"+posDrift);
-			return true;
-		}
-		return false;
+		
+		return true;
 	}
 }

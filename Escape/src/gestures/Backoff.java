@@ -35,11 +35,11 @@ public class Backoff implements Filter {
 		
 		double difX = trace.get(0).x-trace.get(size-1).x;
 		difX=(difX>0)?difX:-difX;
-		System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
+		/*System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
 		if(nbPoints >= Variables.RATE_ACCEPT_TRACE*size && difX < Variables.BORNES_GESTURE_TRACE){
 			System.out.println("Backoff");
 			return true;
-		}
+		}*/
 			
 		return false;
 	}
