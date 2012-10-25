@@ -20,10 +20,9 @@ public class Variables {
 	public final static int SPEED_MAIN_SHIP = 30;/* Speed of the main ship */
 	
 	public final static int TRACE_DELETE_RATE = 10;/*If we increase the value, the delete time of Trace become lower*/
-	public final static double TRACE_VARIATION_MAX = 1.5;/* The limit intervalle to accept movement */
+	public final static double TRACE_VARIATION_MAX = 1;/* The limit intervalle to accept movement -> CoefDirector Bornes */
 	public static final int TRACE_ERROR_MAX = 5;/* Number of division by 0 permitted with coefficent calcul */
 	public static final int TRACE_LENGTH_MIN = 4;
-	public final static double RATE_ACCEPT_TRACE = 1;/* the pourcentage of Points which can be in the TRACE Variation for being accepted */
 	
 	
 	public final static float WORLD_SCALE = 20;

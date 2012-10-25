@@ -76,7 +76,7 @@ public class Gesture {
 			float speedX = trace.getTrace().get(0).x-trace.getTrace().get(3).x;
 			speedX=(speedX>0)?-Variables.SPEED_MAIN_SHIP:Variables.SPEED_MAIN_SHIP;
 			float speedY = trace.getTrace().get(0).y-trace.getTrace().get(3).y;
-			speedY=(speedY>0)?Variables.SPEED_MAIN_SHIP:-Variables.SPEED_MAIN_SHIP;
+			speedY=(speedY>0)?-Variables.SPEED_MAIN_SHIP:Variables.SPEED_MAIN_SHIP;
 			controlledShip.move(speedX, speedY);
 		}
 

@@ -16,12 +16,29 @@ public class Filters{
 		return -((double)(pB.y-pA.y) / (pB.x-pA.x));
 	}
 	
+	public static double getAngle(Vec2 pBegin, Vec2 pEnd){
+		Vec2 pReal = pEnd.sub(pBegin);
+		double angle = Math.atan2(pReal.y, pReal.x);
+		if(angle < 0)
+			angle = Math.abs(angle);
+		else
+			angle = 2*Math.PI - angle;
+		
+		//System.out.println(Math.toDegrees(angle));
+		return Math.toDegrees(angle);
+	}
+	
 	public static double getAngle(List<Vec2> trace){
-		Vec2 pBegin = trace.get(0);
-		Vec2 pEnd = trace.get(trace.size()-1);
-		double adj = pEnd.x-pBegin.x;
-		double opp = pEnd.y-pBegin.y;
-		return Math.atan(opp/adj);
+		Vec2 pBegin = trace.get(0), pEnd = trace.get(trace.size()-1);
+		Vec2 pReal = pEnd.sub(pBegin);
+		double angle = Math.atan2(pReal.y, pReal.x);
+		if(angle < 0)
+			angle = Math.abs(angle);
+		else
+			angle = 2*Math.PI - angle;
+		
+		//System.out.println(Math.toDegrees(angle));
+		return Math.toDegrees(angle);
 	}
 	
 	public static boolean isAffine(List<Vec2> trace){
@@ -40,20 +57,25 @@ public class Filters{
 			for(i=0; i<3 && it.hasNext(); i++){
 				pActual = it.next();
 			}
-			if(i<3)
-				return true;
+			/*if(i<3)
+				return true;*/
 
 			double coefActual;
 			try {
 				coefActual = coefDirecteur(pLast, pActual);
-				
+				System.out.println("Coef actual"+coefActual);
 
-				if(firstLoop){
-					coefMin = coefMax = coefActual;
+			} catch (IllegalArgumentException e) {
+				if(error++>Variables.TRACE_ERROR_MAX)
+					return false;
+				coefActual = coefMin;
+			}
+			if(firstLoop){
+				coefMin = coefMax = coefActual;
 					firstLoop = false;
 				}
 				
-				//System.out.println("coef min "+coefMin+"et coef Max"+coefMax);
+				System.out.println("coef min "+coefMin+"et coef Max"+coefMax);
 				if(coefActual > coefMax)
 					coefMax = coefActual;
 				if(coefActual < coefMin)
@@ -62,17 +84,11 @@ public class Filters{
 				//System.out.println("pActual "+pActual.x+"et pLast"+pLast.x);
 				if(coefMax - coefMin >= Variables.TRACE_VARIATION_MAX)
 					return false;
-
 				pLast = pActual;
-				
-			} catch (IllegalArgumentException e) {
-				if(error++>Variables.TRACE_ERROR_MAX)
-					return false;
-			}
+
 		}
-		
+		if(coefMax>0 && coefMin<0)
+			return false;
 		return true;
-	}
-	
-	
+	}	
 }
