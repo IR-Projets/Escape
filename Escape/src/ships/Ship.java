@@ -18,7 +18,8 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
-import worlds.Entity;
+import Entity.Entity;
+
 
 public abstract class Ship extends Entity{
 
