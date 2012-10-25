@@ -2,13 +2,11 @@ package game;
 
 import java.awt.Graphics2D;
 import java.io.IOException;
-import Maps.Map;
-
-import ships.Ship;
-import worlds.Environnement;
-import worlds.EnvironnementFactory;
 
 
+
+import entities.maps.Map;
+import entities.ships.Ship;
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;

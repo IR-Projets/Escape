@@ -1,8 +1,11 @@
 package gestures;
 
+import entities.ships.Ship;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Variables;
+import gestures.filters.Drift;
+import gestures.filters.Filter;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -11,7 +14,6 @@ import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
-import ships.Ship;
 
 /*
  * LF:
@@ -44,6 +46,7 @@ public class Gesture {
 
 	/*
 	 * Pourait être implémenté dans une factory...
+	 * Il faut trouver un moyen d'initialier la liste
 	 */
 	public List <Filter> initFilters(){
 		List<Filter> filtersList = new ArrayList<>();
@@ -77,7 +80,7 @@ public class Gesture {
 		case ACTION_UP : 			
 			for(Filter filter : filters){
 				if(traceStack.check(filter)){
-					System.out.println("ok!");
+					filter.apply(controlledShip);
 				}
 			}
 			traceStack.finishCurrentTrace();
