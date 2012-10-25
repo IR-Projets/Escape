@@ -1,4 +1,4 @@
-package worlds;
+package Entity;
 
 import game.Variables;
 
@@ -6,21 +6,33 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Hashtable;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 
 public abstract class Entity {
 
+	//Sauvegarde une association entre body et entity
+	protected static Hashtable<Body, Entity> entities;
+	
 	protected World world;
 	protected Body body;
 	protected BufferedImage image;
+	protected CollisionListener collisionListener;
+	
 	
 	public Entity() {
+		entities = new Hashtable<>();
 	}
 	
 	
@@ -45,11 +57,36 @@ public abstract class Entity {
 		bodyDef.fixedRotation = true;
 		body = world.createBody(bodyDef);
 		body.createFixture(polygonShape, 1.0f);
+		entities.put(body, this);
+		world.setContactListener(new ContactListener() {
+			
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+				if(contact.getFixtureA().getBody() == body){
+					contact(contact.getFixtureB().getBody());
+				}
+			}
+			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+			}			
+			@Override
+			public void endContact(Contact contact) {
+			}			
+			@Override
+			public void beginContact(Contact contact) {
+			}
+		});
 	}
 	
+	public void setCollisionListener(CollisionListener listener){
+		this.collisionListener = listener;
+	}
 	
-	public void move(float x, float y){
-		body.setLinearVelocity(new Vec2(toWorldSize(x), toWorldSize(-y)));
+
+
+	public void move(float speedX, float speedY){
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(-speedY)));
 	}	
 	
 	public void render(Graphics2D graphics){
@@ -72,8 +109,8 @@ public abstract class Entity {
 		return (int) (val * Variables.WORLD_SCALE);
 	}
 	
-	protected float toWorldSize(float val){
-		return val / Variables.WORLD_SCALE;
+	protected float toWorldSize(float speedX){
+		return speedX / Variables.WORLD_SCALE;
 	}
 	
 	protected float getRotate(){
@@ -90,7 +127,6 @@ public abstract class Entity {
 	
 	
 	
-	
 	/*
 	 * Private
 	 */
@@ -100,5 +136,10 @@ public abstract class Entity {
 	     float angle = body.getAngle();
 	     System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", position.x, position.y, angle);
 	     //System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", getX(), getY(), angle);
+	}
+	
+	protected void contact(Body contact){
+		if(collisionListener!=null)
+			collisionListener.collide(entities.get(contact));	//On le convertit en Entity (pour la classe Environnement)
 	}
 }

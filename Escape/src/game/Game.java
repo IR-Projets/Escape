@@ -32,6 +32,7 @@ public class Game {
 			@Override
 			public void run() {
 				for(;;){
+					env.step();
 					env.compute();
 					try {
 						Thread.sleep(10);

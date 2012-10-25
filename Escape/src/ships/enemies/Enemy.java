@@ -3,6 +3,8 @@ package ships.enemies;
 import java.io.IOException;
 import java.util.Random;
 
+import org.jbox2d.dynamics.Body;
+
 import ships.Ship;
 
 public class Enemy extends Ship{
@@ -28,5 +30,4 @@ public class Enemy extends Ship{
 		}
 		
 	}
-
 }

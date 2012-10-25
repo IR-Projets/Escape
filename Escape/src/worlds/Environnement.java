@@ -7,9 +7,14 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import ships.Player;
+import ships.Ship;
+
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
 
+import Entity.CollisionListener;
+import Entity.Entity;
 import Maps.Map;
 
 public class Environnement {
@@ -22,21 +27,16 @@ public class Environnement {
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
+	private Ship player;
+
 	
-	
-	public enum Lancher{
-		Main,
-		Testbed
-	}
-	private Lancher lancher;
 	
 	
 	/**
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Lancher lancher, World world){
-		this.lancher = lancher;
+	public Environnement(World world){
 		this.world = world;
 		entities = new LinkedList<>();
 	}
@@ -53,9 +53,24 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
+	public void setPlayer(Ship player){
+		this.player = player;
+		player.setCollisionListener(new CollisionListener() {
+			@Override
+			public void collide(Entity entity) {
+				playerCollision(entity);
+			}
+		});
+		addEntity(player, 0, 0);
+	}
 	
 	
 	
+	
+	protected void playerCollision(Entity entity) {
+		entities.remove(entity);
+	}
+
 	/**
 	 * Add an entity to the Environnement at the specified position
 	 * @param entity the entity to add
@@ -77,11 +92,17 @@ public class Environnement {
 	public void render(Graphics2D graphics){	
 		//Then we render all: map, entities and the gesture
 		map.render(graphics);
+		player.render(graphics);
 		for(Entity entity : entities)
 			entity.render(graphics);
 		gesture.render(graphics);
 	}
 
+	
+	public void step(){
+		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
+		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
+	}
 	
 	/**
 	 * Send the event to the gesture manager
@@ -91,11 +112,7 @@ public class Environnement {
 		gesture.event(event);		
 	}
 
-	public void compute() {
-		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
-		if(lancher==Lancher.Main)
-			world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
-		
+	public void compute() {		
 		map.compute();
 		for(Entity entity : entities)
 			entity.compute();
