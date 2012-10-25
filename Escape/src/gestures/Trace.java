@@ -57,9 +57,9 @@ public class Trace {
 		 * Faire un factory?
 		 */
 		Filter drift = new Drift();
-		Filter backoff = new Backoff();
-		//new Looping();
-		valid = drift.checkGesture(trace); //|| backoff.checkGesture(trace) /*|| looping.checkGesture(trace)*/;
+		//Filter backoff = new Backoff();
+		Filter looping = new Looping();
+		valid = drift.checkGesture(trace) ;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
 	}
 
 }
