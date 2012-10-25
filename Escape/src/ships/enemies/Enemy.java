@@ -16,7 +16,7 @@ public class Enemy extends Ship{
 
 	@Override
 	protected String getImageURL() {
-		return "images\\dirtyDick.png";
+		return "images/dirtyDick.png";
 	}
 
 	@Override

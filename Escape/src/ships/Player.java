@@ -18,7 +18,7 @@ public class Player extends Ship {
 
 	@Override
 	protected String getImageURL() {
-		return "images\\ship.png";
+		return "images/ship.png";
 	}
 
 }
