@@ -69,7 +69,10 @@ public class Trace {
 	 */
 	
 	public boolean checkTrace(Filter filter) {
-		return filter.checkGesture(trace) ;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
+		if(filter.check(trace)){
+			valid = true;
+		}
+		return false;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
 	}
 
 }

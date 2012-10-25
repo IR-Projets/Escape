@@ -13,7 +13,7 @@ import org.jbox2d.common.Vec2;
 public class Backoff implements Filter {
 
 	@Override
-	public boolean checkGesture(List<Vec2> trace) {
+	public boolean check(List<Vec2> trace) {
 		// TODO Auto-generated method stub
 		return false;
 	}

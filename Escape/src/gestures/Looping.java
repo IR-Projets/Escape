@@ -35,7 +35,7 @@ public class Looping implements Filter {
 	
 	
 	@Override
-	public boolean checkGesture(List<Vec2> trace) {
+	public boolean check(List<Vec2> trace) {
 		Vec2 pDeb = trace.get(0), pMid = trace.get(trace.size()/2);
 		Vec2 pCenter = pMid.sub(pDeb);
 		double rayon = pCenter.normalize();

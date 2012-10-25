@@ -46,6 +46,10 @@ public class TraceStack {
 		return currentTrace;
 	}
 
+	public boolean check(Filter filter){
+		return currentTrace.checkTrace(filter);		
+	}
+	
 	/**
 	 * Test la trace courante avec une liste de filtre (l'ordre des filtres a une importance)
 	 * @param filters

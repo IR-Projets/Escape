@@ -49,7 +49,7 @@ public class Gesture {
 		List<Filter> filtersList = new ArrayList<>();
 		//filtersList.add(new Backoff());
 		filtersList.add(new Drift());
-		filtersList.add(new Looping());
+		//filtersList.add(new Looping());
 		return filtersList;
 	}
 	
@@ -85,11 +85,17 @@ public class Gesture {
 	 */
 	public void event(MotionEvent event){
 		switch(event.getKind()){	
-			filters.
+		case ACTION_UP : 			
+			for(Filter filter : filters){
+				if(traceStack.check(filter)){
+					System.out.println("ok!");
+				}
+			}
 			traceStack.finishCurrentTrace();
 			break;
 
 		case ACTION_DOWN :
+			/*Normalement besoin de rien mais dès fois il semble que que la trace se finit mal au bouton up*/
 			break;
 
 		case ACTION_MOVE :
