@@ -39,7 +39,7 @@ public class TraceStack {
 	}
 
 	public boolean isEmpty() {
-		return oldTraces.isEmpty();
+		return currentTrace.isEmpty() && oldTraces.isEmpty();
 	}
 	
 	public Trace getCurrentTrace(){

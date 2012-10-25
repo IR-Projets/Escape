@@ -53,23 +53,12 @@ public class Gesture {
 		return filtersList;
 	}
 	
-	/**
-	 * Display all Traces : The current, and all which are not finish to been removed
-	 * @param Graphics2D graphics
-	 * @see Trace
-	 */
-	private void displayTraces(Graphics2D graphics){
-		traceStack.render(graphics);
-	}
-
-
 
 	/**
 	 * Display the Gesture, which is a trace of the movement printing by the mouse
 	 * @param Graphics2D graphics
 	 */
 	public void render(Graphics2D graphics){
-		displayTraces(graphics);//Display all traces
 		if(traceStack.isEmpty())
 			return;
 		
