@@ -11,6 +11,7 @@ import ships.Player;
 import ships.Ship;
 
 import fr.umlv.zen2.MotionEvent;
+import game.Variables;
 import gestures.Gesture;
 
 import Entity.CollisionListener;
@@ -19,9 +20,7 @@ import Maps.Map;
 
 public class Environnement {
 	
-	private static final float TIME_STEP = 1.0f / 60.f;
-	private static final int VELOCITY_ITERATION = 10;
-	private static final int POSITION_ITERATION = 8;
+
 	
 	private World world;			//The Jbox2D world
 	private Map map;				//The background map
@@ -101,7 +100,7 @@ public class Environnement {
 	
 	public void step(){
 		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
-		world.step(TIME_STEP, VELOCITY_ITERATION, POSITION_ITERATION);	
+		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);	
 	}
 	
 	/**

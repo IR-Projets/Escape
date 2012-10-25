@@ -30,7 +30,11 @@ public class Variables {
 	public static final float WORLD_GRAVITY_X = 0;
 	public static final float WORLD_GRAVITY_Y = 0;
 
-
+	public static final float WORLD_TIME_STEP = 1.0f / 60.f;
+	public static final int WORLD_VELOCITY_ITERATION = 10;
+	public static final int WORLD_POSITION_ITERATION = 8;
+	
+	
 	public static float LINK_FREQUENCY = 0.3f;	//Duretée
 	public static float LINK_DAMPING = 0.5f;	//Ressort
 	

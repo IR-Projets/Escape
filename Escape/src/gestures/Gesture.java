@@ -108,6 +108,7 @@ public class Gesture {
 
 		case ACTION_DOWN :
 			remove = false;
+			controlledShip.move(0, 0);
 			break;
 
 		case ACTION_MOVE :
