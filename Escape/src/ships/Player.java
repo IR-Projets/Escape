@@ -19,8 +19,10 @@ public class Player extends Ship {
 
 	@Override
 	public void compute() {
-		// TODO Auto-generated method stub
-		
+		Vec2 position = getScreenPostion();
+		if(position.y>Variables.SCREEN_HEIGHT/3){
+			setVelocity(0, 0);
+		}		
 	}
 
 	@Override
@@ -33,6 +35,8 @@ public class Player extends Ship {
 	@Override
 	public void init(World world, float x, float y){
 		super.init(world, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
+		body.setFixedRotation(true);
+		
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
 		
@@ -51,7 +55,7 @@ public class Player extends Ship {
 		p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
 		p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
 		d = p2.sub(p1);
-		jd.length = d.length();
+		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
 		
 	}

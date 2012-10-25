@@ -5,6 +5,7 @@ import fr.umlv.zen2.MotionEvent.Kind;
 import game.Variables;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import ships.Ship;
 /*
  * LF:
  * TODO: JAVADOC
- * TODO: Améliorer lisibilité !!
+ * TODO: Amï¿½liorer lisibilitï¿½ !!
  * 
  * QB:
  * DO : Lisibilite & debut javadoc
@@ -30,33 +31,35 @@ import ships.Ship;
 
 public class Gesture {
 
-	private final List<Trace> traces;
-	private Trace traceHandle;
+	private TraceStack traceStack;
+	private List<Filter> filters;
 	private final Ship controlledShip;
-	private boolean remove;
+	
 
 	public Gesture(Ship controlledShip){
-		traces = new LinkedList<>();
-		traceHandle = new Trace();
 		this.controlledShip = controlledShip;
-		remove = false;
+		traceStack = new TraceStack();
+		filters = initFilters();
 	}
 
+	/*
+	 * Pourait Ãªtre implÃ©mentÃ© dans une factory...
+	 */
+	public List <Filter> initFilters(){
+		List<Filter> filtersList = new ArrayList<>();
+		//filtersList.add(new Backoff());
+		filtersList.add(new Drift());
+		filtersList.add(new Looping());
+		return filtersList;
+	}
+	
 	/**
 	 * Display all Traces : The current, and all which are not finish to been removed
 	 * @param Graphics2D graphics
 	 * @see Trace
 	 */
 	private void displayTraces(Graphics2D graphics){
-		graphics.setColor(Variables.BLUE);
-		traceHandle.render(graphics);
-		for(Trace trace : traces){
-			if(trace.getValid()==true)
-				graphics.setColor(Variables.GREEN);
-			else
-				graphics.setColor(Variables.RED);
-			trace.render(graphics);
-		}
+		traceStack.render(graphics);
 	}
 
 
@@ -67,27 +70,10 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 		displayTraces(graphics);//Display all traces
-		if(traces.isEmpty())
+		if(traceStack.isEmpty())
 			return;
-
 		
-		Trace trace = traces.get(0);
-		if(trace.getTrace().size()>4 && trace.getValid()){//Do the movement
-			float speedX = trace.getTrace().get(0).x-trace.getTrace().get(3).x;
-			speedX=(speedX>0)?-Variables.SPEED_MAIN_SHIP:Variables.SPEED_MAIN_SHIP;
-			float speedY = trace.getTrace().get(0).y-trace.getTrace().get(3).y;
-			speedY=(speedY>0)?-Variables.SPEED_MAIN_SHIP:Variables.SPEED_MAIN_SHIP;
-			controlledShip.move(speedX, speedY);
-		}
-
-		if(remove){
-			Trace traceToRemove = traces.get(0);
-			if(traceToRemove.getValid() == false && !traceToRemove.getTrace().isEmpty())
-				traceToRemove.getTrace().remove(0);//Remove more fast Trace which aren't been validate
-			else
-				if(traces.get(0).removeHeadSlowly() == false)//One path is finish, so we remove it from our List
-					traces.remove(0);
-		}
+		traceStack.render(graphics);
 	}
 
 
@@ -98,20 +84,16 @@ public class Gesture {
 	 * @see Kind
 	 */
 	public void event(MotionEvent event){
-		switch(event.getKind()){
-		case ACTION_UP :
-			traceHandle.checkTrace();
-			traces.add(traceHandle);
-			traceHandle = new Trace();
-			remove = true;
+		switch(event.getKind()){	
+			filters.
+			traceStack.finishCurrentTrace();
 			break;
 
 		case ACTION_DOWN :
-			remove = false;
 			break;
 
 		case ACTION_MOVE :
-			traceHandle.getTrace().add(new Vec2(event.getX(), event.getY()));
+			traceStack.getCurrentTrace().addPoint(new Vec2(event.getX(), event.getY()));
 			break;
 
 		default:

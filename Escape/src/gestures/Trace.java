@@ -3,6 +3,7 @@ package gestures;
 import game.Variables;
 
 import java.awt.Graphics2D;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -11,38 +12,53 @@ import org.jbox2d.common.Vec2;
 
 public class Trace {
 	private final List<Vec2> trace;
-	private Boolean valid;
+	private boolean valid;
 
 	public Trace() {
 		trace = new LinkedList<>();
-		valid = null;
+		valid = false;
 	}
 
-	public Boolean getValid() {
+	public boolean isValid() {
 		return valid;
+	}
+
+	public boolean isEmpty(){
+		return trace.isEmpty();
 	}
 	
 	public List<Vec2> getTrace() {
 		return trace;
 	}
 	
-	public boolean removeHeadSlowly(){
-		if(trace.isEmpty())
-			return false;
+	public void removeLastPoint(){
 		Random rand = new Random();// Removing the queue, point by point
 		if(rand.nextInt()%Variables.TRACE_DELETE_RATE == 0)//RATE_DELETE_TRACE is the speed Rate for delete the trace
 			trace.remove(0);
-		return true;
 	}
 	
+	public void addPoint(Vec2 vec){
+		trace.add(vec);
+	}
 	
 	/**
 	 * Display a Trace, which represents by a List of Vec2
 	 * @see Vec2
 	 */
 	public void render(Graphics2D graphics){
-		for(int i=1;i<trace.size();i++)// Print a Movement reprents by the trace
-			graphics.drawLine((int)trace.get(i-1).x, (int)trace.get(i-1).y, (int)trace.get(i).x, (int)trace.get(i).y);
+		Iterator <Vec2> traceIte = trace.iterator();
+		
+		if(!traceIte.hasNext())
+			return;
+		
+		Vec2 currentPoint = traceIte.next();
+		Vec2 lastPoint = null;
+		
+		while(traceIte.hasNext()){
+			lastPoint = currentPoint;
+			currentPoint = traceIte.next();
+			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);
+		}
 	}
 
 	/**
@@ -52,14 +68,8 @@ public class Trace {
 	 * @see Gesture
 	 */
 	
-	public void checkTrace() {
-		/*
-		 * Faire un factory?
-		 */
-		Filter drift = new Drift();
-		//Filter backoff = new Backoff();
-		Filter looping = new Looping();
-		valid = drift.checkGesture(trace) ;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
+	public boolean checkTrace(Filter filter) {
+		return filter.checkGesture(trace) ;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
 	}
 
 }

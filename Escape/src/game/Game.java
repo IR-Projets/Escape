@@ -20,7 +20,7 @@ public class Game {
 	private double time = 0;
 	
 	/*
-	 * TODO: C'est ici que va être gérer tout les evenements du jeux (mort, gagné, ...)
+	 * TODO: C'est ici que va ï¿½tre gï¿½rer tout les evenements du jeux (mort, gagnï¿½, ...)
 	 */
 	
 	public Game() throws IOException{		
@@ -28,22 +28,6 @@ public class Game {
 	}
 	
 	public void init(Graphics2D graphics) {
-		Runnable run = new Runnable(){
-			@Override
-			public void run() {
-				for(;;){
-					env.step();
-					env.compute();
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						Thread.currentThread().interrupt();
-					}
-				}
-			}
-		};
-		Thread thread = new Thread(run);
-		thread.start();
 	}
 	
 
@@ -51,7 +35,10 @@ public class Game {
 		double now = System.nanoTime();
 		double fps = 1000000000 / (now-time);
 		time = now;
-				
+			
+		env.step();
+		env.compute();
+		
 		if(Variables.DEBUG){
 			graphics.setColor(Variables.RED);
 			graphics.scale(2, 2);

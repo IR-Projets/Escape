@@ -26,7 +26,7 @@ public class Enemy extends Ship{
 		double now = System.currentTimeMillis();
 		if(now-lastExecution>1000+rand.nextInt(5000)){
 			lastExecution=now;
-			move(rand.nextInt(100)-50, rand.nextInt(100)-50);
+			setVelocity(rand.nextInt(100)-50, rand.nextInt(100)-50);
 		}
 		
 	}
