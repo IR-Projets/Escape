@@ -54,7 +54,6 @@ public abstract class Entity {
 		bodyDef.type = BodyType.DYNAMIC;
 		bodyDef.position.set(x / Variables.WORLD_SCALE, y / Variables.WORLD_SCALE);
 		bodyDef.allowSleep = false;
-		bodyDef.fixedRotation = true;
 		body = world.createBody(bodyDef);
 		body.createFixture(polygonShape, 1.0f);
 		entities.put(body, this);
@@ -83,12 +82,6 @@ public abstract class Entity {
 		this.collisionListener = listener;
 	}
 	
-
-
-	public void move(float speedX, float speedY){
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(-speedY)));
-	}	
-	
 	public void render(Graphics2D graphics){
 
 		AffineTransform tx = new AffineTransform();
@@ -99,7 +92,22 @@ public abstract class Entity {
 		graphics.drawImage(op.filter(image, null), toScreenSize(body.getPosition().x) - image.getWidth()/2, Variables.SCREEN_HEIGHT - toScreenSize(body.getPosition().y) - image.getHeight()/2, image.getWidth(), image.getHeight(), null );
 	}
 	
+
+	public float getRotate(){
+		return body.getAngle();
+	}	
 	
+	public Vec2 getScreenPostion(){
+		return new Vec2(toScreenSize(body.getPosition().x), toScreenSize(body.getPosition().y));
+	}
+
+	public void setVelocity(float speedX, float speedY){
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(-speedY)));
+	}	
+	
+	public void stop(){
+		setVelocity(0,0);
+	}
 	
 	
 	/*
@@ -113,9 +121,7 @@ public abstract class Entity {
 		return speedX / Variables.WORLD_SCALE;
 	}
 	
-	protected float getRotate(){
-		return body.getAngle();
-	}	
+	
 
 
 	

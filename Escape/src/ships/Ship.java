@@ -43,6 +43,7 @@ public abstract class Ship extends Entity{
 		height = image.getHeight();
 	}
 
+	
 	protected abstract String getImageURL();
 
 	@Override

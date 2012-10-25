@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 	public class Map{
 
-		private final String font = "images\\earth_w500.png";
+		private final String font = "images/earth_w500.png";
 
 
 		private final BufferedImage image;
@@ -46,13 +46,13 @@ import javax.imageio.ImageIO;
 			int screenW = Variables.SCREEN_WIDTH;
 			int screenH = Variables.SCREEN_HEIGHT;
 			
-			//Notre subImage dépasse les bords de notre Image (droite ou bas)
+			//Notre subImage dï¿½passe les bords de notre Image (droite ou bas)
 			if(posX+screenW>=width)
 				posX=width-screenW-1;
 			if(posY+screenH>=height)
 				posY=height-screenH-1;
 			
-			//SubImage dépasse (haut ou gauche)
+			//SubImage dï¿½passe (haut ou gauche)
 			if(posX<=0)
 				posX=0;
 			if(posY<=0)
@@ -71,7 +71,7 @@ import javax.imageio.ImageIO;
 			posY--;
 			
 			/*
-			 * Sort de l'écran
+			 * Sort de l'ï¿½cran
 			 */
 			int screenW = Variables.SCREEN_WIDTH;
 			int screenH = Variables.SCREEN_HEIGHT;
