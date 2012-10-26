@@ -3,13 +3,12 @@ package gestures;
 import entities.ships.Ship;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
-import game.Variables;
+import gestures.filters.Backoff;
 import gestures.filters.Drift;
 import gestures.filters.Filter;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
@@ -50,7 +49,7 @@ public class Gesture {
 	 */
 	public List <Filter> initFilters(){
 		List<Filter> filtersList = new ArrayList<>();
-		//filtersList.add(new Backoff());
+		filtersList.add(new Backoff());
 		filtersList.add(new Drift());
 		//filtersList.add(new Looping());
 		return filtersList;

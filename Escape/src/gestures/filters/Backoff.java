@@ -1,53 +1,55 @@
-package gestures;
+package gestures.filters;
 
-import game.Variables;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import org.jbox2d.common.Vec2;
+
+import entities.ships.Ship;
+import game.Variables;
 
 
 
 public class Backoff implements Filter {
-
+	
+	/**
+	 * The vertical bound tilt angle that the drift refuse (180 +- this variable)
+	 */
+	public static final int TRACE_DRIFT_BORNES_BOT = 10;/* We refuse affine courbe which increase perpendiculary, with this bornes*/
+	
+	/**
+	 * Check if the angle of the Right is correct for backoff
+	 * @param angle
+	 * @return true if the angle is correct
+	 */
+	public boolean checkAngle(double angle){
+		System.out.println(angle);
+		if((angle >= 270-TRACE_DRIFT_BORNES_BOT && angle <= 270+TRACE_DRIFT_BORNES_BOT ))
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Check if a list of Vec2 is correctly set, with the angle calcul (Point by point)
+	 */
 	@Override
-	public boolean check(List<Vec2> trace) {
-		// TODO Auto-generated method stub
+	public boolean check(List<Vec2> trace){
+		if(!trace.isEmpty()){
+			double angle = Filters.getAngle(trace);
+			if(Filters.isAffine(trace) && checkAngle(angle))
+				return true;
+			return false;
+		}
 		return false;
 	}
 
-/*
+	/**
+	 * Move the ship in the good direction, the bottom
+	 */
 	@Override
-	public boolean checkGesture(List<Vec2> trace){
-		Objects.requireNonNull(trace);
-		if(trace.size()<=2)
-			return false;
+	public void apply(Ship ship) {
+		ship.setVelocity(0, Variables.SPEED_MAIN_SHIP);
+		System.out.println("Backup OK");
 		
-		int size=trace.size(), nbPoints=0;
-		
-		Iterator<Vec2> it = trace.iterator();
-		Vec2 pLast=it.next(), pActual=it.next(), pNext=it.next();
-		
-		while(it.hasNext()){
-			if(pActual.y >= pLast.y && pActual.y <= pNext.y)
-				nbPoints++;
-			pLast = pActual;
-			pActual=pNext;
-			pNext = it.next();
-			//System.out.println("Point : ("+pActual.x+", "+pActual.y);
-		}
-		
-		double difX = trace.get(0).x-trace.get(size-1).x;
-		difX=(difX>0)?difX:-difX;
-		System.out.println("Pts valide : "+nbPoints+ " sur "+ trace.size());
-		if(nbPoints >= Variables.RATE_ACCEPT_TRACE*size && difX < Variables.BORNES_GESTURE_TRACE){
-			System.out.println("Backoff");
-			return true;
-		}
-			
-		return false;
-	}*/
-
+	}
+	
 }
