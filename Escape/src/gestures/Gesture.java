@@ -6,6 +6,7 @@ import fr.umlv.zen2.MotionEvent.Kind;
 import gestures.filters.Backoff;
 import gestures.filters.Drift;
 import gestures.filters.Filter;
+import gestures.filters.Looping;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Gesture {
 		List<Filter> filtersList = new ArrayList<>();
 		filtersList.add(new Backoff());
 		filtersList.add(new Drift());
-		//filtersList.add(new Looping());
+		filtersList.add(new Looping());
 		return filtersList;
 	}
 	
