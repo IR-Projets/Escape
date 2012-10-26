@@ -48,7 +48,7 @@ public class TraceStack {
 	}
 
 	public boolean check(Filter filter){
-		return currentTrace.checkTrace(filter);		
+		return currentTrace.checkTrace(filter);
 	}
 	
 	/**

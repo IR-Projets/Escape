@@ -17,10 +17,10 @@ public class Variables {
 	public final static Color BLUE = new Color(0,0,255);
 	
 	
-	public final static int SPEED_MAIN_SHIP = 60;/* Speed of the main ship */
+	public final static int SPEED_MAIN_SHIP = 40;/* Speed of the main ship */
 	
 	public final static int TRACE_DELETE_RATE = 10;/*If we increase the value, the delete time of Trace become lower*/
-	public final static double TRACE_VARIATION_MAX = 2;/* The limit intervalle to accept movement -> CoefDirector Bornes */
+	public final static double TRACE_VARIATION_MAX = 18;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_ERROR_MAX = 5;/* Number of division by 0 permitted with coefficent calcul */
 	public static final int TRACE_LENGTH_MIN = 4;
 	
@@ -34,8 +34,8 @@ public class Variables {
 	public static final int WORLD_POSITION_ITERATION = 8;
 	
 	
-	public static float LINK_FREQUENCY = .5f;	//Duret?e
-	public static float LINK_DAMPING = 1f;	//Ressort
+	public static float LINK_FREQUENCY = .005f;	//Duret?e plus c'est petit, plus c'est dur
+	public static float LINK_DAMPING = 0.001f;	//Ressort plus c'est petit, moins ia de ressort
 	
 	
 	/*

@@ -74,7 +74,7 @@ public class Trace {
 			valid = true;
 			return true;
 		}
-		return false;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
+		return false;
 	}
 
 }
