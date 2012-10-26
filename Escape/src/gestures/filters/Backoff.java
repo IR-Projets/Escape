@@ -47,7 +47,7 @@ public class Backoff implements Filter {
 	 */
 	@Override
 	public void apply(Ship ship) {
-		ship.setVelocity(0, Variables.SPEED_MAIN_SHIP);
+		ship.setVelocity(0, -Variables.SPEED_MAIN_SHIP);
 		System.out.println("Backup OK");
 		
 	}

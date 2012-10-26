@@ -102,8 +102,12 @@ public abstract class Entity {
 	}
 
 	public void setVelocity(float speedX, float speedY){
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(-speedY)));
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(speedY)));
 	}	
+	
+	public Vec2 getVelocity(){
+		return body.getLinearVelocity();
+	}
 	
 	public void stop(){
 		setVelocity(0,0);

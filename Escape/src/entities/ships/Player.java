@@ -21,7 +21,7 @@ public class Player extends Ship {
 	public void compute() {
 		Vec2 position = getScreenPostion();
 		if(position.y>Variables.SCREEN_HEIGHT/3){
-			setVelocity(0, 0);
+			setVelocity(getVelocity().x, -50);
 		}		
 	}
 
