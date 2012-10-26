@@ -57,8 +57,6 @@ public class Drift implements Filter{
 			vitX = Variables.SPEED_MAIN_SHIP;
 		else
 			vitX = -Variables.SPEED_MAIN_SHIP;
-		ship.setVelocity(vitX, -Variables.SPEED_MAIN_SHIP);
-		System.out.println("Drift OK");
-		
+		ship.setVelocity(vitX, -Variables.SPEED_MAIN_SHIP);		
 	}
 }

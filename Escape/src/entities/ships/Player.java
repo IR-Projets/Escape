@@ -37,6 +37,7 @@ public class Player extends Ship {
 		super.init(world, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
 		body.setFixedRotation(true);
 		
+		/*
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
 		
@@ -57,6 +58,7 @@ public class Player extends Ship {
 		d = p2.sub(p1);
 		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
+		*/
 		
 	}
 }
