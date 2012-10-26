@@ -72,6 +72,7 @@ public class Trace {
 	public boolean checkTrace(Filter filter) {
 		if(filter.check(trace)){
 			valid = true;
+			return true;
 		}
 		return false;//|| looping.checkGesture(trace); //|| backoff.checkGesture(trace) || looping.checkGesture(trace);
 	}
