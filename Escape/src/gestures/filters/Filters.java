@@ -17,7 +17,7 @@ public class Filters{
 	 * @return double value
 	 */
 	public static double LengthNormalize(Vec2 pA, Vec2 pB){
-		return Math.sqrt(Math.pow(pB.x-pA.x, 2)+Math.pow(pB.y-pA.y, 2));
+		return Math.sqrt(Math.pow(pA.x-pB.x, 2)+Math.pow(pA.y-pB.y, 2));
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class Backoff implements Filter {
 	 * @return true if the angle is correct
 	 */
 	public boolean checkAngle(double angle){
-		System.out.println(angle);
+		//System.out.println(angle);
 		if((angle >= 270-TRACE_DRIFT_BORNES_BOT && angle <= 270+TRACE_DRIFT_BORNES_BOT ))
 			return true;
 		return false;
@@ -48,7 +48,7 @@ public class Backoff implements Filter {
 	@Override
 	public void apply(Ship ship) {
 		ship.setVelocity(0, -Variables.SPEED_MAIN_SHIP);
-		System.out.println("Backup OK");
+		//System.out.println("Backup OK");
 		
 	}
 	

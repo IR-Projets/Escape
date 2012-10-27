@@ -3,7 +3,6 @@ package gestures.filters;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import org.jbox2d.common.Vec2;
 
@@ -12,20 +11,36 @@ import entities.ships.Ship;
 
 public class Looping implements Filter {
 
-	public static final int TRACE_CIRCLE_BORNES = 50;/* bornes of the diameter that we accept */
-	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.1;/* bornes of the diameter that we accept */
-	private List<Vec2> traceCircle = null;
+	public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
+	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
+	public static final double TRACE_CIRCLE_RATE_CLOSED = 20;/* number of coordate of difference we accept between the begin and end of the circle */
+	private enum direction {LEFT, RIGHT};
+	
 
-	public Vec2 vecDistMax(List<Vec2> trace, Vec2 point){
+	public direction getDirection(List<Vec2> trace){
+		if(trace.size() < 1)
+			return null;
+		double angle = Filters.getAngle(trace.get(0), trace.get(1));
+		if(angle <= 90 || angle >= 270)
+			return direction.RIGHT;
+		else
+			return direction.LEFT;
+	}
+	
+	
+	public Vec2 vecDistMax(List<Vec2> trace){
 		Iterator<Vec2> it = trace.iterator();
-		Vec2 vecMax = null;
+		Vec2 vecBegin = null, vecMax = null;
+		if(it.hasNext())
+			vecBegin = it.next();
+		
 		double lengthMax = 0;
 		while(it.hasNext()){
 			Vec2 vecActual = it.next();
 			if(vecMax == null)
 				vecMax = vecActual;
-			if(Filters.LengthNormalize(vecActual, vecMax) >= lengthMax){
-				lengthMax = Filters.LengthNormalize(vecActual, vecMax);
+			if(Filters.LengthNormalize(vecBegin, vecActual) >= lengthMax){
+				lengthMax = Filters.LengthNormalize(vecBegin, vecActual);
 				vecMax=vecActual;
 			}
 		}
@@ -34,30 +49,46 @@ public class Looping implements Filter {
 
 	@Override
 	public boolean check(List<Vec2> trace) {
-		traceCircle=trace;
-		Vec2 pDeb = trace.get(0), pDistMax = vecDistMax(trace, pDeb);
-		Vec2 pCenter = pDistMax.sub(pDeb);
-		double rayon = Filters.LengthNormalize(pCenter, pDeb)/2;
+		
+		Vec2 pDeb = trace.get(0), pDistMax = vecDistMax(trace);
+		
+		Vec2 pCenterOrigin = new Vec2((pDistMax.x+pDeb.x)/2, (pDistMax.y+pDeb.y)/2);//pDistMax.sub(pDeb);
+		double rayon = Filters.LengthNormalize(pCenterOrigin, pDeb);
 		int nbErreur=0;
 
-		for(Vec2 p : trace){
-			Vec2 pActual = p.sub(pCenter);
-			double rayonActual = Filters.LengthNormalize(pCenter, pActual)/2;
-			System.out.println("Rayon actual"+rayonActual+" et rayon"+rayon);
-			//Filters.getAngle(pCenter, pActual)
+		Iterator<Vec2> it = trace.iterator();
+
+		while(it.hasNext()){
+			//Vec2 pActual = p.sub(pCenterOrigin);
+			Vec2 vecActual = it.next();
+			double rayonActual = Filters.LengthNormalize(pCenterOrigin, vecActual);
+			//System.out.println("Rayon actual"+rayonActual+" et rayon"+rayon);
+
 			if(rayonActual > rayon+TRACE_CIRCLE_BORNES || rayonActual < rayon-TRACE_CIRCLE_BORNES )
 				nbErreur++;
-
-			if(nbErreur>trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE)
+			
+			if(nbErreur>trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE){
+				//System.out.println(nbErreur+" sur  "+trace.size()+ "donc "+(trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE));
 				return false;	
+			}
+			if(!it.hasNext())
+				if(Filters.LengthNormalize(pDeb,vecActual) >= TRACE_CIRCLE_RATE_CLOSED)// If we don"t finish properly the circle
+					return false;
+			
 		}
+		if(getDirection(trace)==direction.LEFT)
+			System.out.println("Cercle gauche");
+		else
+			System.out.println("Cercle droit");
 		return true;
 	}
 
-
+/*
+ * TODO : le deplacement en fonction du rotate :) avec le rotate de limage bien sur!
+ */
 	@Override
 	public void apply(Ship ship) {
-		Objects.requireNonNull(traceCircle);
+		//double angle = Filters.getAngle(traceCircle.)
 		/*if()
 		if(Filters.getAngle(trace.))*/
 		// TODO Auto-generated method stub
