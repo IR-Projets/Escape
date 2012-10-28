@@ -32,7 +32,7 @@ public class EnvironnementFactory {
 	public static Environnement WORLD1(World world){
 		Environnement env = new Environnement(world);
 		Map map;
-		Ship playerShip;
+		Player playerShip;
 		List<Entity> entityList = new LinkedList<>();
 		try {
 			map = new Map();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
+import entities.ships.Player;
 import entities.ships.Ship;
 import game.Variables;
 
@@ -46,7 +47,7 @@ public class Backoff implements Filter {
 	 * Move the ship in the good direction, the bottom
 	 */
 	@Override
-	public void apply(Ship ship) {
+	public void apply(Player ship) {
 		ship.setVelocity(0, -Variables.SPEED_MAIN_SHIP);
 		//System.out.println("Backup OK");
 		

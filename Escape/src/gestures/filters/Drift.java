@@ -1,5 +1,6 @@
 package gestures.filters;
 
+import entities.ships.Player;
 import entities.ships.Ship;
 import game.Variables;
 
@@ -51,7 +52,7 @@ public class Drift implements Filter{
 	 * Move the ship in the good direction, depending on the angle of drift
 	 */
 	@Override
-	public void apply(Ship ship) {
+	public void apply(Player ship) {
 		int vitX;
 		if(angle < 90)
 			vitX = Variables.SPEED_MAIN_SHIP;

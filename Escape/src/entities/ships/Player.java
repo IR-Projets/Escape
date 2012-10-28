@@ -2,7 +2,11 @@ package entities.ships;
 
 import game.Variables;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -13,8 +17,34 @@ import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
 	
+	private final static int SLOW = 5;
+	
+	private BufferedImage[] loopingImage;
+	
+	public enum Looping{
+		NONE,
+		LEFT,
+		RIGHT;
+		
+		int frame = 0;
+		int count = 0;
+	}
+	private Looping looping;
+	
+	
+	
 	public Player() throws IOException {
-		// TODO Auto-generated constructor stub
+		looping = Looping.NONE;
+		
+		loopingImage = new BufferedImage[12];
+		
+		for(int i=0; i<loopingImage.length; i++){
+			try {  
+				loopingImage[i] = ImageIO.read(new File("images/Player/Joueur"+(i+1)+".png"));				
+			} catch (IOException ex) {
+				throw new IOException("Ship initialisation fail: can't open images/Player/Joueur"+(i+1)+".png");
+			}
+		}
 	}
 
 	@Override
@@ -27,7 +57,7 @@ public class Player extends Ship {
 
 	@Override
 	protected String getImageURL() {
-		return "images/ship.png";
+		return "images/Originaux/Joueur.png";
 	}
 
 	
@@ -35,9 +65,73 @@ public class Player extends Ship {
 	@Override
 	public void init(World world, float x, float y){
 		super.init(world, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
-		body.setFixedRotation(true);
+		body.setFixedRotation(true);		
+	}
+	
+	
+	@Override
+	public BufferedImage getImage(){
+		switch(looping){
+			case NONE:		
+				return image;
+			case LEFT:
+				if(looping.count==0)
+					looping.frame++;
+				return loopRender();
+			case RIGHT:
+				if(looping.count==0)
+					looping.frame++;
+				return loopRender();
+		}
+		return null;
+	}
+	
+	
+	private BufferedImage loopRender(){
+		if(looping.count<SLOW)
+			looping.count++;
+		else
+			looping.count=0;
 		
-		/*
+		if(looping.frame<0 || looping.frame>=loopingImage.length){
+			looping.frame = 0;
+			looping = Looping.NONE;
+			return image;
+		}
+		
+		switch(looping){
+			case LEFT:
+				return loopingImage[looping.frame];
+			case RIGHT:
+				return loopingImage[looping.frame];
+		}
+		return image;
+		
+	}
+	
+	public void looping(Looping loop){
+		looping = loop;
+		switch(looping){
+			case NONE:
+				looping.frame=0;
+			case LEFT:
+				looping.frame= loopingImage.length-1;
+			case RIGHT:
+				looping.frame = 0;
+		} 
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Used to join the Ship to the origin point
+	 * Non used
+	 */
+	private void initJoin(){
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
 		
@@ -58,7 +152,5 @@ public class Player extends Ship {
 		d = p2.sub(p1);
 		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
-		*/
-		
 	}
 }

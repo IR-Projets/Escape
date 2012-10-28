@@ -1,5 +1,6 @@
 package gestures;
 
+import entities.ships.Player;
 import entities.ships.Ship;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
@@ -35,10 +36,10 @@ public class Gesture {
 
 	private TraceStack traceStack;
 	private List<Filter> filters;
-	private final Ship controlledShip;
+	private final Player controlledShip;
 	
 
-	public Gesture(Ship controlledShip){
+	public Gesture(Player controlledShip){
 		this.controlledShip = controlledShip;
 		traceStack = new TraceStack();
 		filters = initFilters();

@@ -27,7 +27,6 @@ public abstract class Entity {
 	
 	protected World world;
 	protected Body body;
-	protected BufferedImage image;
 	protected CollisionListener collisionListener;
 	
 	
@@ -45,10 +44,8 @@ public abstract class Entity {
 	public void init(World world, float x, float y){
 		this.world = world;
 		
-		image = getImage();
-		
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(toWorldSize(image.getWidth()/2), toWorldSize(image.getHeight()/2));
+		polygonShape.setAsBox(toWorldSize(getImage().getWidth()/2), toWorldSize(getImage().getHeight()/2));
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
@@ -84,6 +81,8 @@ public abstract class Entity {
 	
 	public void render(Graphics2D graphics){
 
+		BufferedImage image = getImage();
+		
 		AffineTransform tx = new AffineTransform();
 		tx.rotate(getRotate(), image.getWidth()/2, image.getHeight()/2);
 		

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
+import entities.ships.Player;
 import entities.ships.Ship;
 
 public interface Filter {
@@ -19,6 +20,6 @@ public interface Filter {
 	 * @param ship
 	 * @see Ship
 	 */
-	public void apply(Ship ship);
+	public void apply(Player ship);
 }
 

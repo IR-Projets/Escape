@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
+import entities.ships.Player;
 import entities.ships.Ship;
 
 
@@ -14,17 +15,17 @@ public class Looping implements Filter {
 	public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
 	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
 	public static final double TRACE_CIRCLE_RATE_CLOSED = 20;/* number of coordate of difference we accept between the begin and end of the circle */
-	private enum direction {LEFT, RIGHT};
-	
+	private enum Direction {LEFT, RIGHT};
+	private Direction direction;
 
-	public direction getDirection(List<Vec2> trace){
+	public Direction getDirection(List<Vec2> trace){
 		if(trace.size() < 1)
 			return null;
 		double angle = Filters.getAngle(trace.get(0), trace.get(1));
 		if(angle <= 90 || angle >= 270)
-			return direction.RIGHT;
+			return Direction.RIGHT;
 		else
-			return direction.LEFT;
+			return Direction.LEFT;
 	}
 	
 	
@@ -76,10 +77,10 @@ public class Looping implements Filter {
 					return false;
 			
 		}
-		if(getDirection(trace)==direction.LEFT)
-			System.out.println("Cercle gauche");
+		if(getDirection(trace)==Direction.LEFT)
+			direction = Direction.LEFT;
 		else
-			System.out.println("Cercle droit");
+			direction = Direction.RIGHT;
 		return true;
 	}
 
@@ -87,12 +88,16 @@ public class Looping implements Filter {
  * TODO : le deplacement en fonction du rotate :) avec le rotate de limage bien sur!
  */
 	@Override
-	public void apply(Ship ship) {
-		//double angle = Filters.getAngle(traceCircle.)
-		/*if()
-		if(Filters.getAngle(trace.))*/
-		// TODO Auto-generated method stub
-
+	public void apply(Player ship) {
+		switch(direction){
+		case LEFT:
+			ship.looping(Player.Looping.LEFT);
+			break;
+		case RIGHT:
+			ship.looping(Player.Looping.RIGHT);
+			break;
+			
+		}
 	}
 
 }
