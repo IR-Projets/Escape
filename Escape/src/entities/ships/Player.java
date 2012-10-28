@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
 	
-	private final static int SLOW = 50;
+	private final static int SLOW = 10;
 	
 	private BufferedImage[] loopingImage;
 	

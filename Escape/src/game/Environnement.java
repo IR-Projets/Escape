@@ -1,8 +1,12 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageTypeSpecifier;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -26,6 +30,12 @@ public class Environnement {
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Ship player;
+	
+	/*
+	 * For the double buffered method
+	 */
+	private BufferedImage offscreen;
+	private Graphics2D bufferGraphics; 
 
 	
 	
@@ -37,6 +47,8 @@ public class Environnement {
 	public Environnement(World world){
 		this.world = world;
 		entities = new LinkedList<>();
+		offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		bufferGraphics = offscreen.createGraphics();
 	}
 	
 	/**
@@ -88,12 +100,17 @@ public class Environnement {
 	 * @param graphics draw area
 	 */
 	public void render(Graphics2D graphics){	
-		//Then we render all: map, entities and the gesture
-		map.render(graphics);
-		player.render(graphics);
+		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
+		bufferGraphics.setBackground(new Color(0));
+		
+		//render all: map, entities and the gesture
+		map.render(bufferGraphics);
+		player.render(bufferGraphics);
 		for(Entity entity : entities)
-			entity.render(graphics);
-		gesture.render(graphics);
+			entity.render(bufferGraphics);
+		gesture.render(bufferGraphics);
+		
+		graphics.drawImage(offscreen, 0, 0, null);
 	}
 
 	
