@@ -26,6 +26,7 @@ public class Player extends Ship {
 		LEFT,
 		RIGHT;
 		
+		BufferedImage currentImage;
 		int frame = 0;
 		int count = 0;
 	}
@@ -74,9 +75,10 @@ public class Player extends Ship {
 		switch(looping){
 			case NONE:		
 				return image;
+				
 			case LEFT:
 				if(looping.count==0)
-					looping.frame++;
+					looping.frame--;
 				return loopRender();
 			case RIGHT:
 				if(looping.count==0)
@@ -87,11 +89,9 @@ public class Player extends Ship {
 	}
 	
 	
-	private BufferedImage loopRender(){
-		if(looping.count<SLOW)
-			looping.count++;
-		else
-			looping.count=0;
+	private BufferedImage loopRender(){		
+		looping.count = ++looping.count % SLOW;
+		
 		
 		if(looping.frame<0 || looping.frame>=loopingImage.length){
 			looping.frame = 0;
@@ -114,10 +114,13 @@ public class Player extends Ship {
 		switch(looping){
 			case NONE:
 				looping.frame=0;
+				break;
 			case LEFT:
 				looping.frame= loopingImage.length-1;
+				break;
 			case RIGHT:
 				looping.frame = 0;
+				break;
 		} 
 	}
 	
