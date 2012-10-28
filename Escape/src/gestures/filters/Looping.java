@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2;
 
 import entities.ships.Player;
 import entities.ships.Ship;
+import game.Variables;
 
 
 public class Looping implements Filter {
@@ -50,6 +51,8 @@ public class Looping implements Filter {
 
 	@Override
 	public boolean check(List<Vec2> trace) {
+		if(trace.size() < Variables.TRACE_LENGTH_MIN)
+			return false;
 		
 		Vec2 pDeb = trace.get(0), pDistMax = vecDistMax(trace);
 		
