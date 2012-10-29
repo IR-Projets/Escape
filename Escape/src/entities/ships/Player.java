@@ -24,7 +24,6 @@ public class Player extends Ship {
 	private final static int SLOW = 20;
 	
 	private BufferedImage[] loopingImage;
-	BufferedImageOp colorizeFilter;
 	
 	//Utilise sa pour charger les images !!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -49,7 +48,6 @@ public class Player extends Ship {
 	public Player() throws IOException {
 		looping = Looping.NONE;
 		
-		colorizeFilter = createColorizeOp((short)1, (short)0, (short)0);
 		loopingImage = new BufferedImage[12];
 		
 		for(int i=0; i<loopingImage.length; i++){
@@ -99,7 +97,7 @@ public class Player extends Ship {
 				looping.count = ++looping.count % SLOW;
 				if(looping.count==0)
 					looping.frame++;
-				return colorizeFilter.filter(loopRender(), null);
+				return loopRender();
 		}
 		return null;
 	}
@@ -148,28 +146,6 @@ public class Player extends Ship {
 		
 	}
 	
-	
-	
-	protected LookupOp createColorizeOp(short R1, short G1, short B1) {
-	    short[] alpha = new short[256];
-	    short[] red = new short[256];
-	    short[] green = new short[256];
-	    short[] blue = new short[256];
-
-	    for (short i = 0; i < 256; i++) {
-	        alpha[i] = i;
-	        red[i] = (short) ((R1 + i*.3)/2);
-	        green[i] = (short) ((G1 + i*.59)/2);
-	        blue[i] = (short) ((B1 + i*.11)/2);
-	    }
-
-	    short[][] data = new short[][] {
-	            red, green, blue, alpha
-	    };
-
-	    LookupTable lookupTable = new ShortLookupTable(0, data);
-	    return new LookupOp(lookupTable, null);
-	}
 	
 	/**
 	 * Used to join the Ship to the origin point
