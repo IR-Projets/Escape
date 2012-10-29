@@ -12,7 +12,7 @@ public class Variables {
 	public final static int SCREEN_WIDTH = 400;
 	public final static int SCREEN_HEIGHT = 600;
 	
-	public final static Color GREEN = new Color(0,255,0);
+	public final static Color GREEN = new Color(0,155,0);
 	public final static Color RED = new Color(255,0,0);
 	public final static Color BLUE = new Color(0,0,255);
 	
@@ -20,7 +20,7 @@ public class Variables {
 	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
 	
 	public final static int TRACE_DELETE_RATE = 5;/*If we increase the value, the delete time of Trace become lower*/
-	public final static double TRACE_VARIATION_MAX = 18;/* The limit intervalle to accept movement -> Angle Bornes */
+	public final static double TRACE_VARIATION_MAX = 30;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_ERROR_MAX = 5;/* Number of division by 0 permitted with coefficent calcul */
 	public static final int TRACE_LENGTH_MIN = 4;
 	

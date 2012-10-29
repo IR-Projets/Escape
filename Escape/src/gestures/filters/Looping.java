@@ -73,7 +73,7 @@ public class Looping implements Filter {
 			
 			if(nbErreur>trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE){
 				//System.out.println(nbErreur+" sur  "+trace.size()+ "donc "+(trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE));
-				return false;	
+				return false;
 			}
 			if(!it.hasNext())
 				if(Filters.LengthNormalize(pDeb,vecActual) >= TRACE_CIRCLE_RATE_CLOSED)// If we don"t finish properly the circle

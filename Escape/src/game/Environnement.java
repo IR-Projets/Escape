@@ -34,6 +34,7 @@ public class Environnement {
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Ship player;
+	private Hud hud;
 	
 	/*
 	 * For the double buffered method
@@ -89,6 +90,11 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
+	public void setHud(Hud hud){
+		this.hud = hud;
+	}
+	
+	
 	public void setPlayer(Ship player){
 		this.player = player;
 		player.setCollisionListener(new CollisionListener() {
@@ -140,6 +146,7 @@ public class Environnement {
 		gesture.render(bufferGraphics);
 		
 		graphics.drawImage(offscreen, 0, 0, null);
+		hud.render(graphics);
 	}
 
 	
