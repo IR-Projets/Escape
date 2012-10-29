@@ -29,7 +29,7 @@ public class Hud {
 	 * @param Graphics2D graphics, which represents the world to draw on
 	 */
 	public void render(Graphics2D graphics){
-		graphics.drawImage(hud, 0, 0, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/4, null);
+		graphics.drawImage(hud, 0, 0, hud.getWidth(), hud.getHeight(), null);
 		graphics.setColor(Variables.GREEN);
 		
 		graphics.fillRect(2*Variables.SCREEN_WIDTH/8, Variables.SCREEN_HEIGHT/10, life, Variables.SCREEN_HEIGHT/40);
