@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
 	
-	private final static int SLOW = 10;
+	private final static int SLOW = 20;
 	
 	private BufferedImage[] loopingImage;
 	
@@ -77,10 +77,12 @@ public class Player extends Ship {
 				return image;
 				
 			case LEFT:
+				looping.count = ++looping.count % SLOW;
 				if(looping.count==0)
 					looping.frame--;
 				return loopRender();
 			case RIGHT:
+				looping.count = ++looping.count % SLOW;
 				if(looping.count==0)
 					looping.frame++;
 				return loopRender();
@@ -89,10 +91,7 @@ public class Player extends Ship {
 	}
 	
 	
-	private BufferedImage loopRender(){		
-		looping.count = ++looping.count % SLOW;
-		
-		
+	private BufferedImage loopRender(){				
 		if(looping.frame<0 || looping.frame>=loopingImage.length){
 			looping.frame = 0;
 			looping = Looping.NONE;

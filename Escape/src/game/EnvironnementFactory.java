@@ -40,7 +40,7 @@ public class EnvironnementFactory {
 			
 			for(int i=0;i<10; i++){
 				entityList.add(new Enemy());
-			}
+			}	
 			
 		} catch (IOException e) {
 			throw new IllegalStateException("Impossible de créer le monde 1", e);

@@ -8,8 +8,12 @@ import java.util.List;
 
 import javax.imageio.ImageTypeSpecifier;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 
 
 import entities.CollisionListener;
@@ -46,6 +50,28 @@ public class Environnement {
 	 */
 	public Environnement(World world){
 		this.world = world;
+		
+		world.setContactListener(new ContactListener() {
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+			}			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+			}			
+			@Override
+			public void endContact(Contact contact) {
+			}			
+			@Override
+			public void beginContact(Contact contact) {
+				if(contact.getFixtureA().getBody() == player.getBody()){
+					playerCollision(Entity.getEntity(contact.getFixtureB().getBody()));
+				}
+				else if(contact.getFixtureB().getBody() == player.getBody()){
+					playerCollision(Entity.getEntity(contact.getFixtureA().getBody()));
+				}
+			}
+		});
+		
 		entities = new LinkedList<>();
 		offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		bufferGraphics = offscreen.createGraphics();

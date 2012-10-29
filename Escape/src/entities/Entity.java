@@ -54,25 +54,6 @@ public abstract class Entity {
 		body = world.createBody(bodyDef);
 		body.createFixture(polygonShape, 1.0f);
 		entities.put(body, this);
-		world.setContactListener(new ContactListener() {
-			
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-				if(contact.getFixtureA().getBody() == body){
-					contact(contact.getFixtureB().getBody());
-				}
-			}
-			
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}			
-			@Override
-			public void endContact(Contact contact) {
-			}			
-			@Override
-			public void beginContact(Contact contact) {
-			}
-		});
 	}
 	
 	public void setCollisionListener(CollisionListener listener){
@@ -112,6 +93,13 @@ public abstract class Entity {
 		setVelocity(0,0);
 	}
 	
+	public Body getBody(){
+		return body;
+	}
+	
+	public static Entity getEntity(Body body){
+		return entities.get(body);
+	}
 	
 	/*
 	 * Methodes protected
