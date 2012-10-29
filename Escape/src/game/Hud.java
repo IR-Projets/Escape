@@ -32,7 +32,7 @@ public class Hud {
 		graphics.drawImage(hud, 0, 0, hud.getWidth(), hud.getHeight(), null);
 		graphics.setColor(Variables.GREEN);
 		
-		graphics.fillRect(2*Variables.SCREEN_WIDTH/8, Variables.SCREEN_HEIGHT/10, life, Variables.SCREEN_HEIGHT/40);
+		graphics.fillRect(3*Variables.SCREEN_WIDTH/17, Variables.SCREEN_HEIGHT/21, life, Variables.SCREEN_HEIGHT/40);
 		//life--;
 		}
 	
