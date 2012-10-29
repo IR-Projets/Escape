@@ -119,7 +119,6 @@ public class Environnement {
 	public void addEntity(Entity entity, int x, int y){
 		entity.init(world, x, y);
 		entities.add(entity);
-		entitiesToDelete.add(entity);
 	}
 	
 	public void removeEntity(Entity entity){
@@ -132,6 +131,7 @@ public class Environnement {
 	 * @param graphics draw area
 	 */
 	public void render(Graphics2D graphics){	
+		//BUFFER GRAPHICS PAS LA!!!!!!
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 		
@@ -141,18 +141,15 @@ public class Environnement {
 		for(Entity entity : entities)
 			entity.render(bufferGraphics);
 		gesture.render(bufferGraphics);
+		hud.render(bufferGraphics);
 		
 		graphics.drawImage(offscreen, 0, 0, null);
-		hud.render(graphics);
 	}
 
 	
-	public void step(){
+	public void step(){	
 		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
 		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);	
-		
-		for(Entity entity : entitiesToDelete)
-			removeEntity(entity);
 	}
 	
 	/**
@@ -164,6 +161,14 @@ public class Environnement {
 	}
 
 	public void compute() {		
+		
+		/*
+		 * Delete entities that were collided
+		 */
+		for(Entity entity : entitiesToDelete)
+			removeEntity(entity);
+		entitiesToDelete.clear();
+		
 		map.compute();
 		for(Entity entity : entities)
 			entity.compute();
