@@ -30,23 +30,28 @@ public class Game {
 	
 
 	public void run(Graphics2D graphics) {
-		double now = System.nanoTime();
-		double fps = 1000000000 / (now-time);
-		time = now;
-			
+
 		env.step();
 		env.compute();
 		
 		if(Variables.DEBUG){
-			graphics.setColor(Variables.RED);
-			graphics.scale(2, 2);
-			graphics.drawString("fps: " + (int)fps, 10, 10);
-			graphics.scale(0.5, 0.5);
+			drawFPS(graphics);
 		}
 		
 		env.render(graphics);
 	}
 
+	
+	
+	public void drawFPS(Graphics2D graphics){
+		double now = System.nanoTime();
+		double fps = 1000000000 / (now-time);
+		time = now;
+		graphics.setColor(Variables.RED);
+		graphics.scale(2, 2);
+		graphics.drawString("fps: " + (int)fps, 10, 10);
+		graphics.scale(0.5, 0.5);		
+	}
 
 	public void event(MotionEvent event) {
 		env.event(event);
