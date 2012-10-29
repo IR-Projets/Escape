@@ -104,7 +104,8 @@ public class Environnement {
 	
 	
 	protected void playerCollision(Entity entity) {
-		entities.remove(entity);
+		if(entity!=null)
+			removeEntity(entity);
 	}
 
 	/**
@@ -118,8 +119,10 @@ public class Environnement {
 		entities.add(entity);
 	}
 	
-	
-	
+	public void removeEntity(Entity entity){
+		entities.remove(entity);
+		Entity.removeEntity(entity);
+	}
 	
 	/**
 	 * Render all entities associated
