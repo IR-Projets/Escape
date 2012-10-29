@@ -33,7 +33,8 @@ public class Environnement {
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
-	private Ship player;
+	private Player player;
+	
 	
 	/*
 	 * For the double buffered method
@@ -89,7 +90,7 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
-	public void setPlayer(Ship player){
+	public void setPlayer(Player player){
 		this.player = player;
 		player.setCollisionListener(new CollisionListener() {
 			@Override
@@ -104,6 +105,7 @@ public class Environnement {
 	
 	
 	protected void playerCollision(Entity entity) {
+		player.touched(1);
 		entities.remove(entity);
 	}
 
