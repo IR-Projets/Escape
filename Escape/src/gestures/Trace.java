@@ -33,6 +33,8 @@ public class Trace {
 	}
 	
 	public void removeLastPoint(){
+		if(trace.isEmpty())
+			return;
 		Random rand = new Random();// Removing the queue, point by point
 		if(rand.nextInt()%Variables.TRACE_DELETE_RATE == 0)//RATE_DELETE_TRACE is the speed Rate for delete the trace
 			trace.remove(0);

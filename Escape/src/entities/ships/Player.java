@@ -26,6 +26,13 @@ public class Player extends Ship {
 	private BufferedImage[] loopingImage;
 	BufferedImageOp colorizeFilter;
 	
+	//Utilise sa pour charger les images !!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//Class loader
+	//getRessourceAsStream(String name)
+	//FAIRE NOTRE CLASS LOADER
+	
+	
 	public enum Looping{
 		NONE,
 		LEFT,

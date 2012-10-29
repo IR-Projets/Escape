@@ -34,6 +34,7 @@ public class Environnement {
 	private List<Entity> entities;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
+	private Hud hud;
 	
 	
 	/*
@@ -90,6 +91,10 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
+	public void setHud(Hud hud){
+		this.hud = hud;
+	}
+	
 	public void setPlayer(Player player){
 		this.player = player;
 		player.setCollisionListener(new CollisionListener() {
@@ -105,8 +110,8 @@ public class Environnement {
 	
 	
 	protected void playerCollision(Entity entity) {
-		player.touched(1);
-		entities.remove(entity);
+		if(entity!=null)
+			removeEntity(entity);
 	}
 
 	/**
@@ -120,8 +125,10 @@ public class Environnement {
 		entities.add(entity);
 	}
 	
-	
-	
+	public void removeEntity(Entity entity){
+		entities.remove(entity);
+		Entity.removeEntity(entity);
+	}
 	
 	/**
 	 * Render all entities associated
@@ -139,6 +146,7 @@ public class Environnement {
 		gesture.render(bufferGraphics);
 		
 		graphics.drawImage(offscreen, 0, 0, null);
+		hud.render(graphics);
 	}
 
 	

@@ -22,10 +22,14 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 public abstract class Entity {
 
-	//Sauvegarde une association entre body et entity
+	/*
+	 * Sauvegarde une association entre body et entity
+	 * Un seul World et une seule liste d'entity
+	 */
 	protected static Hashtable<Body, Entity> entities;
+	protected static World world;
 	
-	protected World world;
+	
 	protected Body body;
 	protected CollisionListener collisionListener;
 	
@@ -42,7 +46,7 @@ public abstract class Entity {
 	 * @param y position y on the screen
 	 */
 	public void init(World world, float x, float y){
-		this.world = world;
+		Entity.world = world;
 		
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(toWorldSize(getImage().getWidth()/2), toWorldSize(getImage().getHeight()/2));
@@ -99,6 +103,11 @@ public abstract class Entity {
 	
 	public static Entity getEntity(Body body){
 		return entities.get(body);
+	}
+	
+	public static void removeEntity(Entity entity){
+		world.destroyBody(entity.getBody());
+		entities.remove(entity.getBody());		
 	}
 	
 	/*
