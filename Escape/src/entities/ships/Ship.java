@@ -22,33 +22,11 @@ import org.jbox2d.dynamics.joints.Joint;
 
 
 public abstract class Ship extends Entity{
-
-	protected final BufferedImage image;
-	private final int width;
-	private final int height;
 	private int posX;
 	private int posY;
 	
 	
 
 	public Ship() throws IOException{
-		
-		try {                
-			image = ImageIO.read(new File(getImageURL()));
-		} catch (IOException ex) {
-			throw new IOException("Ship initialisation fail: can't open " + getImageURL());
-		}
-		
-		width = image.getWidth();
-		height = image.getHeight();
 	}
-
-	
-	protected abstract String getImageURL();
-
-	@Override
-	public BufferedImage getImage(){
-		return image;
-	}
-
 }

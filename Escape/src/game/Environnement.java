@@ -3,6 +3,7 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
 
+import effects.Effects;
+import effects.Explosion;
 import entities.CollisionListener;
 import entities.Entity;
 import entities.maps.Map;
@@ -36,15 +39,7 @@ public class Environnement {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
-	
-	
-	/*
-	 * For the double buffered method
-	 */
-	private BufferedImage offscreen;
-	private Graphics2D bufferGraphics; 
 
-	
 	
 	
 	/**
@@ -77,8 +72,6 @@ public class Environnement {
 		
 		entities = new LinkedList<>();
 		entitiesToDelete = new LinkedList<>();
-		offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		bufferGraphics = offscreen.createGraphics();
 	}
 	
 	/**
@@ -106,8 +99,16 @@ public class Environnement {
 	
 	
 	protected void playerCollision(Entity entity) {
-		if(entity!=null)
-			entitiesToDelete.add(entity);
+		if(entity!=null){
+			Vec2 pos = entity.getScreenPostion();
+			
+			try {
+				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			entitiesToDelete.add(entity);			
+		}
 	}
 
 	/**
@@ -130,20 +131,15 @@ public class Environnement {
 	 * Render all entities associated
 	 * @param graphics draw area
 	 */
-	public void render(Graphics2D graphics){	
-		//BUFFER GRAPHICS PAS LA!!!!!!
-		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
-		bufferGraphics.setBackground(new Color(0));
-		
+	public void render(Graphics2D graphics){			
 		//render all: map, entities and the gesture
-		map.render(bufferGraphics);
-		player.render(bufferGraphics);
+		map.render(graphics);
+		player.render(graphics);
 		for(Entity entity : entities)
-			entity.render(bufferGraphics);
-		gesture.render(bufferGraphics);
-		hud.render(bufferGraphics);
-		
-		graphics.drawImage(offscreen, 0, 0, null);
+			entity.render(graphics);
+		gesture.render(graphics);
+		Effects.render(graphics);
+		hud.render(graphics);
 	}
 
 	
