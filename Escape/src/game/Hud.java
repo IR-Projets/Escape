@@ -53,7 +53,7 @@ public class Hud {
 			graphics.drawImage(it.next().getIcon(), xDeb+i*echelle, 5, 4*echelle, 3*hudLeft.getHeight()/5, null);
 			i+=5;
 		}
-		System.out.println(" e i"+i);
+		//System.out.println(" e i"+i);
 		}
 
 
