@@ -32,6 +32,7 @@ public class Environnement {
 	private World world;			//The Jbox2D world
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
+	private List<Entity> entitiesToDelete;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
@@ -75,6 +76,7 @@ public class Environnement {
 		});
 		
 		entities = new LinkedList<>();
+		entitiesToDelete = new LinkedList<>();
 		offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		bufferGraphics = offscreen.createGraphics();
 	}
@@ -97,12 +99,6 @@ public class Environnement {
 	
 	public void setPlayer(Player player){
 		this.player = player;
-		player.setCollisionListener(new CollisionListener() {
-			@Override
-			public void collide(Entity entity) {
-				playerCollision(entity);
-			}
-		});
 		addEntity(player, 0, 0);
 	}
 	
@@ -111,7 +107,7 @@ public class Environnement {
 	
 	protected void playerCollision(Entity entity) {
 		if(entity!=null)
-			removeEntity(entity);
+			entitiesToDelete.add(entity);
 	}
 
 	/**
@@ -123,6 +119,7 @@ public class Environnement {
 	public void addEntity(Entity entity, int x, int y){
 		entity.init(world, x, y);
 		entities.add(entity);
+		entitiesToDelete.add(entity);
 	}
 	
 	public void removeEntity(Entity entity){
@@ -154,6 +151,9 @@ public class Environnement {
 	public void step(){
 		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
 		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);	
+		
+		for(Entity entity : entitiesToDelete)
+			removeEntity(entity);
 	}
 	
 	/**

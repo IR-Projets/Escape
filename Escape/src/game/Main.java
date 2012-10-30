@@ -3,6 +3,8 @@ package game;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
+import javax.swing.JFrame;
+
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.ApplicationCode;
 import fr.umlv.zen2.ApplicationContext;
@@ -35,6 +37,7 @@ public class Main {
 						new ApplicationRenderCode() {  
 							@Override
 							public void render(Graphics2D graphics) {
+								JFrame.getFrames()[0].setLocationRelativeTo(null);
 								game.init(graphics);
 							}
 						}

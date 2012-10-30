@@ -31,7 +31,6 @@ public abstract class Entity {
 	
 	
 	protected Body body;
-	protected CollisionListener collisionListener;
 	
 	
 	public Entity() {
@@ -58,10 +57,6 @@ public abstract class Entity {
 		body = world.createBody(bodyDef);
 		body.createFixture(polygonShape, 1.0f);
 		entities.put(body, this);
-	}
-	
-	public void setCollisionListener(CollisionListener listener){
-		this.collisionListener = listener;
 	}
 	
 	public void render(Graphics2D graphics){
@@ -142,10 +137,5 @@ public abstract class Entity {
 	     float angle = body.getAngle();
 	     System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", position.x, position.y, angle);
 	     //System.out.printf("X:%4.2f, Y:%4.2f, Angle:%4.2f\n", getX(), getY(), angle);
-	}
-	
-	protected void contact(Body contact){
-		if(collisionListener!=null)
-			collisionListener.collide(entities.get(contact));	//On le convertit en Entity (pour la classe Environnement)
 	}
 }
