@@ -1,5 +1,11 @@
 package entities.weapons;
 
-public abstract class Weapon {
+import java.awt.image.BufferedImage;
 
+public abstract class Weapon {
+	protected BufferedImage currentImage;
+
+	public BufferedImage getIcon(){
+		return currentImage;
+	}
 }

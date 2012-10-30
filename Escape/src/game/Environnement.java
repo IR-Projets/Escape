@@ -128,6 +128,7 @@ public class Environnement {
 	public void removeEntity(Entity entity){
 		entities.remove(entity);
 		Entity.removeEntity(entity);
+		
 	}
 	
 	/**
