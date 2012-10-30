@@ -55,7 +55,7 @@ public class EnvironnementFactory {
 		
 		Random rand = new Random();
 		for(Entity entity : entityList){
-			env.addEntity(entity, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT));
+			env.addEntity(entity, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3);
 		}
 		
 		return env;

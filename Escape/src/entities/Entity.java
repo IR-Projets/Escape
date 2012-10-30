@@ -68,7 +68,15 @@ public abstract class Entity {
 		
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BICUBIC);
 
-		graphics.drawImage(op.filter(image, null), toScreenSize(body.getPosition().x) - image.getWidth()/2, Variables.SCREEN_HEIGHT - toScreenSize(body.getPosition().y) - image.getHeight()/2, image.getWidth(), image.getHeight(), null );
+		Vec2 pos = getScreenPostion();
+		
+		
+		graphics.drawImage(op.filter(image, null),
+								(int)pos.x,
+								(int)pos.y,
+								image.getWidth(), 
+								image.getHeight(),
+								null );
 	}
 	
 
@@ -77,7 +85,15 @@ public abstract class Entity {
 	}	
 	
 	public Vec2 getScreenPostion(){
-		return new Vec2(toScreenSize(body.getPosition().x), toScreenSize(body.getPosition().y));
+		BufferedImage image = getImage();
+		return new Vec2(toScreenSize(body.getPosition().x) - image.getWidth()/2, 
+						Variables.SCREEN_HEIGHT - (toScreenSize(body.getPosition().y) + image.getHeight()/2));
+	}
+	
+	public Vec2 getPositionNormalized(){
+		BufferedImage image = getImage();
+		return new Vec2(toScreenSize(body.getPosition().x) - image.getWidth()/2, 
+						toScreenSize(body.getPosition().y) + image.getHeight()/2);
 	}
 
 	public void setVelocity(float speedX, float speedY){

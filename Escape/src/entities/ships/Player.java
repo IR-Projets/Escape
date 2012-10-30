@@ -20,6 +20,8 @@ import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
+		
+	BufferedImage image;
 	
 	private final static int SLOW = 20;
 	
@@ -48,30 +50,34 @@ public class Player extends Ship {
 	public Player() throws IOException {
 		looping = Looping.NONE;
 		
+		String imageURL = "images/Ships/Player/Joueur.png";
+		
+		try {                
+			image = ImageIO.read(new File(imageURL));
+		} catch (IOException ex) {
+			throw new IOException("Ship initialisation fail: can't open " + imageURL);
+		}
+				
 		loopingImage = new BufferedImage[12];
+		String image = "";
 		
 		for(int i=0; i<loopingImage.length; i++){
 			try {  
-				loopingImage[i] = ImageIO.read(new File("images/Player/Joueur"+(i+1)+".png"));				
+				image = "images/Ships/Player/Joueur"+(i+1)+".png";
+				loopingImage[i] = ImageIO.read(new File(image));				
 			} catch (IOException ex) {
-				throw new IOException("Ship initialisation fail: can't open images/Player/Joueur"+(i+1)+".png");
+				throw new IOException("Ship initialisation fail: can't open :" + image);
 			}
 		}
 	}
 
 	@Override
 	public void compute() {
-		Vec2 position = getScreenPostion();
-		if(position.y>Variables.SCREEN_HEIGHT/3){
+		Vec2 position = getPositionNormalized();
+		if(position.y > image.getHeight()/2 + Variables.SCREEN_HEIGHT/3 ){
 			setVelocity(getVelocity().x, -50);
 		}		
 	}
-
-	@Override
-	protected String getImageURL() {
-		return "images/Player/Joueur.png";
-	}
-
 	
 	
 	@Override

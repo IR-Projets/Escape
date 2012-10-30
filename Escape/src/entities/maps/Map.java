@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 	public class Map{
 
-		private final String font = "images/earth_w500.png";
+		private final String font = "images/Maps/earth_w500.png";
 
 
 		private final BufferedImage image;
