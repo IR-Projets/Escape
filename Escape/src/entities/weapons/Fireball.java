@@ -7,12 +7,12 @@ import javax.imageio.ImageIO;
 
 public class Fireball extends Weapon {
 
-	public Fireball() throws IOException{
+	public Fireball(){
 		try {
 			currentImage = ImageIO.read(new File("images/weapon/fire.png"));
 		} catch (IOException e) {
-			throw new IOException("Weapon initialisation fail: can't open images fire.png");
-			//e.printStackTrace();
+			e.printStackTrace();
+			System.exit(0);
 		}
 		
 	}

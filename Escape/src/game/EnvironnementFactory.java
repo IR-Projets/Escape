@@ -38,7 +38,7 @@ public class EnvironnementFactory {
 		try {
 			map = new Map();
 			playerShip = new Player();
-			hud = new Hud();
+			env.setPlayer(playerShip);
 			
 			for(int i=0;i<10; i++){
 				entityList.add(new Enemy());
@@ -50,8 +50,7 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(playerShip));
-		env.setHud(hud);
-		env.setPlayer(playerShip);
+
 		
 		
 		Random rand = new Random();

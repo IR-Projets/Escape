@@ -12,25 +12,34 @@ import javax.imageio.ImageIO;
 import entities.ships.LifeListener;
 import entities.weapons.Fireball;
 import entities.weapons.Weapon;
+import fr.umlv.zen2.Application;
 
 public class Hud implements LifeListener {
 
-/*
- * Singleton a faire
- */
-	private final BufferedImage hudLeft, hudRight;
+	/*
+	 * Singleton
+	 */
+	private static Hud instance = null;
+	public static Hud get(){
+		if(instance==null)
+			instance = new Hud();
+		return instance;
+	}
+	
+	
+	private BufferedImage hudLeft=null, hudRight=null;
 	private final List<Weapon> weapons;
 	private int posX[], posY[], score;//Position of the life, because it's not a rectangle regular, so we have to update the points when losing life
 
 	private int sizeLife;// The total size for display the size Polygon
 
-	public Hud () throws IOException{
+	private Hud(){
 		try {
 			hudLeft = ImageIO.read(new File("images/hud3.png"));
 			hudRight = ImageIO.read(new File("images/hud2.png"));
 		} catch (IOException e) {
-			throw new IOException("HUD initialisation fail: can't open images hud.png");
-			//e.printStackTrace();
+			e.printStackTrace();//("HUD initialisation fail: can't open images hud.png");
+			System.exit(0);
 		}
 		score = 0;
 		posX = new int[4];

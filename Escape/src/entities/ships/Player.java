@@ -149,10 +149,7 @@ public class Player extends Ship {
 		} 
 	}
 		
-	public void touched(int i) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	
 	/**

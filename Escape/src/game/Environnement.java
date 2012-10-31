@@ -39,7 +39,6 @@ public class Environnement {
 	private List<Entity> entitiesToDelete;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
-	private Hud hud;
 
 	
 	
@@ -87,13 +86,10 @@ public class Environnement {
 		this.gesture = gesture;		
 	}
 	
-	public void setHud(Hud hud){
-		this.hud = hud;
-	}
-	
 	/* Bien init le hud avant le player!!!*/
-	public void setPlayer(Player player){
+	public void setPlayer(Player player) throws IOException{
 		this.player = player;
+		player.addListener(Hud.get());
 		addEntity(player, 0, 0);
 	}
 	
@@ -110,8 +106,7 @@ public class Environnement {
 				e.printStackTrace();
 			}
 			//Test
-			if(player.getLifeListener() != null)
-				this.player.setLife(player.getLife()-5);
+			player.setLife(player.getLife()-5);
 			entitiesToDelete.add(entity);
 		}
 	}
@@ -145,7 +140,7 @@ public class Environnement {
 			entity.render(graphics);
 		gesture.render(graphics);
 		Effects.render(graphics);
-		hud.render(graphics);
+		Hud.get().render(graphics);
 	}
 
 	
