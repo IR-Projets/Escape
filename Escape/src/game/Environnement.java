@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.imageio.ImageTypeSpecifier;
 
@@ -90,6 +91,7 @@ public class Environnement {
 		this.hud = hud;
 	}
 	
+	/* Bien init le hud avant le player!!!*/
 	public void setPlayer(Player player){
 		this.player = player;
 		addEntity(player, 0, 0);
@@ -107,7 +109,10 @@ public class Environnement {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			entitiesToDelete.add(entity);			
+			//Test
+			if(player.getLifeListener() != null)
+				this.player.setLife(player.getLife()-5);
+			entitiesToDelete.add(entity);
 		}
 	}
 

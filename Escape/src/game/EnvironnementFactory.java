@@ -50,8 +50,9 @@ public class EnvironnementFactory {
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(playerShip));
-		env.setPlayer(playerShip);
 		env.setHud(hud);
+		env.setPlayer(playerShip);
+		
 		
 		Random rand = new Random();
 		for(Entity entity : entityList){

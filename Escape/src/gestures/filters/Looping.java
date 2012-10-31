@@ -7,15 +7,18 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 
 import entities.ships.Player;
-import entities.ships.Ship;
 import game.Variables;
 
 
 public class Looping implements Filter {
 
-	public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
+	//public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
+	
+	public static final int TRACE_CIRCLE_BORNES_MAX = 100;/* bornes of the diameter Max */
+	public static final int TRACE_CIRCLE_BORNES_MIN = 35;/* bornes of the diameter Min */
+	
 	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
-	public static final double TRACE_CIRCLE_RATE_CLOSED = 20;/* number of coordate of difference we accept between the begin and end of the circle */
+	public static final double TRACE_CIRCLE_RATE_CLOSED = 35;/* number of coordate of difference we accept between the begin and end of the circle */
 	private enum Direction {LEFT, RIGHT};
 	private Direction direction;
 
@@ -68,7 +71,7 @@ public class Looping implements Filter {
 			double rayonActual = Filters.LengthNormalize(pCenterOrigin, vecActual);
 			//System.out.println("Rayon actual"+rayonActual+" et rayon"+rayon);
 
-			if(rayonActual > rayon+TRACE_CIRCLE_BORNES || rayonActual < rayon-TRACE_CIRCLE_BORNES )
+			if(rayonActual > TRACE_CIRCLE_BORNES_MAX || rayonActual < TRACE_CIRCLE_BORNES_MIN )
 				nbErreur++;
 			
 			if(nbErreur>trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE){

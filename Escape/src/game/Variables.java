@@ -15,7 +15,7 @@ public class Variables {
 	public final static Color GREEN = new Color(0,125,0);
 	public final static Color RED = new Color(255,0,0);
 	public final static Color BLUE = new Color(0,0,255);
-	
+	public final static Color ORANGE = new Color(240,80,40);
 	
 	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
 	
@@ -37,7 +37,7 @@ public class Variables {
 	public static float LINK_FREQUENCY = .005f;	//Duret?e plus c'est petit, plus c'est dur
 	public static float LINK_DAMPING = 0.001f;	//Ressort plus c'est petit, moins ia de ressort
 	
-	
+	public final static int MAX_LIFE = 100;
 	/*
 	 * 
 	 */
