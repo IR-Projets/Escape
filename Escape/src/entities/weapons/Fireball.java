@@ -1,5 +1,7 @@
 package entities.weapons;
 
+import game.Ressources;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -8,12 +10,6 @@ import javax.imageio.ImageIO;
 public class Fireball extends Weapon {
 
 	public Fireball(){
-		try {
-			currentImage = ImageIO.read(new File("images/weapon/fire.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
+		currentImage = Ressources.getImage("images/weapons/fire.png");		
 	}
 }

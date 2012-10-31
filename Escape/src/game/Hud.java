@@ -35,13 +35,9 @@ public class Hud implements LifeListener {
 	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
 	
 	private Hud(){
-		try {
-			hudLeft = ImageIO.read(new File("images/hud3.png"));
-			hudRight = ImageIO.read(new File("images/hud4.png"));
-		} catch (IOException e) {
-			e.printStackTrace();//("HUD initialisation fail: can't open images hud.png");
-			System.exit(0);
-		}
+		hudLeft = Ressources.getImage("images/hud/hud3.png");
+		hudRight = Ressources.getImage("images/hud/hud4.png");
+	
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;

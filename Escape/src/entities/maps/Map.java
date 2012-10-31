@@ -1,5 +1,6 @@
 package entities.maps;
 
+import game.Ressources;
 import game.Variables;
 
 import java.awt.Graphics2D;
@@ -26,12 +27,8 @@ import javax.imageio.ImageIO;
 		
 		
 
-		public Map() throws IOException{			                
-			try {                
-				image = ImageIO.read(new File(font));
-			} catch (IOException ex) {
-				throw new IOException("Map initialisation fail: can't open " + font);
-			}
+		public Map(){			                               
+			image = Ressources.getImage(font);
 			
 			width = image.getWidth();
 			height = image.getHeight();

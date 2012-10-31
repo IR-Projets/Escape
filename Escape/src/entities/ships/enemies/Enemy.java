@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import org.jbox2d.dynamics.Body;
 
 import entities.ships.Ship;
+import game.Ressources;
 
 
 public class Enemy extends Ship{
@@ -19,7 +20,7 @@ public class Enemy extends Ship{
 	double lastExecution=0;
 	Random rand = new Random();
 	
-	public Enemy() throws IOException {
+	public Enemy(){
 		super();
 		
 		Random rand = new Random();
@@ -29,12 +30,8 @@ public class Enemy extends Ship{
 			imageURL = "images/Ships/ship.png";
 		else
 			imageURL = "images/Ships/dirtyDick.png";
-			
-		try {                
-			image = ImageIO.read(new File(imageURL));
-		} catch (IOException ex) {
-			throw new IOException("Ship initialisation fail: can't open " + imageURL);
-		}		
+			              
+		image = Ressources.getImage(imageURL);	
 	}
 
 	@Override
