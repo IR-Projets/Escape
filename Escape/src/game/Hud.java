@@ -73,7 +73,7 @@ public class Hud implements LifeListener {
 	}
 
 	public void drawScore(Graphics2D graphics){
-		graphics.setColor(Variables.ORANGE);
+		graphics.setColor(Variables.WHITE);
 		graphics.drawString("SCORE", Variables.SCREEN_WIDTH/16, Variables.SCREEN_HEIGHT/26);
 		graphics.drawString(Integer.toString(score), Variables.SCREEN_WIDTH/5, Variables.SCREEN_HEIGHT/26);
 	}
