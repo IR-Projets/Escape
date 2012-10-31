@@ -43,7 +43,7 @@ public class Hud implements LifeListener {
 			System.exit(0);
 		}
 		score = 0;
-		sizeLife = hudLeft.getWidth()/2;
+		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		
 		weapons = new ArrayList<>();
@@ -67,19 +67,20 @@ public class Hud implements LifeListener {
 
 	public void drawLife(Graphics2D graphics){
 		graphics.setColor(Variables.GREEN);
-		graphics.fillRect(2*hudLeft.getWidth()/5, hudLeft.getHeight()/3, sizeLife, hudLeft.getHeight()/6);
+		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, sizeLife, hudLeft.getHeight()/4);
 		//graphics.fillPolygon(posX,posY, 4);
 		score++;
 	}
 
 	public void drawScore(Graphics2D graphics){
 		graphics.setColor(Variables.ORANGE);
-		graphics.drawString("SCORE", Variables.SCREEN_WIDTH/23, Variables.SCREEN_HEIGHT/26);
-		graphics.drawString(Integer.toString(score), Variables.SCREEN_WIDTH/12, Variables.SCREEN_HEIGHT/15);
+		graphics.drawString("SCORE", Variables.SCREEN_WIDTH/16, Variables.SCREEN_HEIGHT/26);
+		graphics.drawString(Integer.toString(score), Variables.SCREEN_WIDTH/5, Variables.SCREEN_HEIGHT/26);
 	}
 
 
 	//TODO
+	
 	public void drawWeapons(Graphics2D graphics){
 		int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
 		int yDeb = Variables.SCREEN_WIDTH/30;
