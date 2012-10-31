@@ -74,8 +74,10 @@ public class Player extends Ship {
 	@Override
 	public void compute() {
 		Vec2 position = getPositionNormalized();
-		if(position.y > image.getHeight()/2 + Variables.SCREEN_HEIGHT/3 ){
-			setVelocity(getVelocity().x, -50);
+		Vec2 velocity = getVelocity();
+		
+		if(position.y > image.getHeight() + Variables.SCREEN_HEIGHT/3 ){
+			setVelocity(velocity.x*20, -10);
 		}		
 	}
 	

@@ -22,8 +22,14 @@ public class Enemy extends Ship{
 	public Enemy() throws IOException {
 		super();
 		
-		String imageURL = "images/Ships/dirtyDick.png";
+		Random rand = new Random();
 		
+		String imageURL;
+		if(rand.nextInt()%2==0)
+			imageURL = "images/Ships/ship.png";
+		else
+			imageURL = "images/Ships/dirtyDick.png";
+			
 		try {                
 			image = ImageIO.read(new File(imageURL));
 		} catch (IOException ex) {
