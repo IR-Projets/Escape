@@ -106,7 +106,7 @@ public class Environnement {
 				e.printStackTrace();
 			}
 			//Test
-			player.setLife(player.getLife()-5);
+			player.setLife(player.getLife()-20);
 			entitiesToDelete.add(entity);
 		}
 	}
