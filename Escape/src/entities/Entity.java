@@ -45,8 +45,6 @@ public abstract class Entity {
 	 * @param y position y on the screen
 	 */
 	public void init(float x, float y){
-		Entity.world = world;
-		
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(toWorldSize(getImage().getWidth()/2), toWorldSize(getImage().getHeight()/2));
 

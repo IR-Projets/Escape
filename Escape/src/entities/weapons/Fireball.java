@@ -13,8 +13,8 @@ public class Fireball extends Weapon {
 	protected BufferedImage image;
 	
 	public Fireball(int x, int y){
-		super(x,y);
 		image = Ressources.getImage("images/weapons/fire.png");
+		init(x,y);
 	}
 
 	@Override
