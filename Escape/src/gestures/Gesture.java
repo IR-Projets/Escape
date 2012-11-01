@@ -63,8 +63,10 @@ public class Gesture {
 	 * @param Graphics2D graphics
 	 */
 	public void render(Graphics2D graphics){
-		if(traceStack.isEmpty())
+		if(traceStack.isEmpty()){
+			controlledShip.setVelocity(0, 0);
 			return;
+		}
 		
 		traceStack.render(graphics);
 	}

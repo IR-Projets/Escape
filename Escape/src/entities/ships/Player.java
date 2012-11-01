@@ -24,7 +24,7 @@ public class Player extends Ship {
 		
 	BufferedImage image;
 	
-	private final static int SLOW = 35;
+	private final static int SLOW = 45;
 	
 	private BufferedImage[] loopingImage;
 	

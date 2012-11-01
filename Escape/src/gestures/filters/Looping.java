@@ -14,11 +14,11 @@ public class Looping implements Filter {
 
 	//public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
 	
-	public static final int TRACE_CIRCLE_BORNES_MAX = 100;/* bornes of the diameter Max */
-	public static final int TRACE_CIRCLE_BORNES_MIN = 35;/* bornes of the diameter Min */
+	public static final int TRACE_CIRCLE_BORNES_MAX = 125;/* bornes of the diameter Max */
+	public static final int TRACE_CIRCLE_BORNES_MIN = 30;/* bornes of the diameter Min */
 	
 	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
-	public static final double TRACE_CIRCLE_RATE_CLOSED = 35;/* number of coordate of difference we accept between the begin and end of the circle */
+	public static final double TRACE_CIRCLE_RATE_CLOSED = 40;/* number of coordate of difference we accept between the begin and end of the circle */
 	private enum Direction {LEFT, RIGHT};
 	private Direction direction;
 

@@ -36,7 +36,7 @@ public class TraceStack {
 			trace.removeLastPoint();
 			if(trace.isEmpty())
 				tracesIte.remove();		//Plus rien a supprimer
-		}		
+		}
 	}
 
 	public boolean isEmpty() {

@@ -37,8 +37,8 @@ public class Hud implements LifeListener {
 	private Hud(){
 		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
 		hudRight = Ressources.getImage("images/hud/hudRight.png");
-		cadreSup = Ressources.getImage("images/hud/fontWeapon.png");
-		cadreInf = Ressources.getImage("images/hud/fontWeapon.png");
+		cadreSup = Ressources.getImage("images/hud/fontWeaponTop.png");
+		cadreInf = Ressources.getImage("images/hud/fontWeaponBot.png");
 		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
 
 
@@ -86,19 +86,33 @@ public class Hud implements LifeListener {
 		int yDeb = Variables.SCREEN_WIDTH/30;
 		int echelle = (xEnd-xDeb) / (5*nbWeapon), i=1;*/
 
-		int bordX = Variables.SCREEN_WIDTH-hudRight.getWidth();
-		int echelleY = hudRight.getHeight()/4;
-		graphics.drawImage(hudRight, bordX, 0, hudRight.getWidth(), hudRight.getHeight(), null);
-		graphics.drawImage(cadreSup, Variables.SCREEN_WIDTH-4*hudRight.getWidth()/5, hudRight.getHeight()/2, cadreSup.getWidth(), cadreSup.getHeight(), null);
-		//graphics.drawImage(cadreBor, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5, cadreBor.getWidth(), cadreBor.getHeight(), null);
-		//graphics.drawImage(cadreInf, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5+echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+		int debHudX = Variables.SCREEN_WIDTH-hudRight.getWidth();
+		int debWeaponX = debHudX + 1*hudRight.getWidth()/4;
+		int debWeaponY = 6*hudRight.getHeight()/11;
+		
+		int echelleY = cadreBor.getHeight();
+		graphics.drawImage(hudRight, debHudX, 0, hudRight.getWidth(), hudRight.getHeight(), null);
+		
+		
+		/* 1er cadre */
+		graphics.drawImage(cadreSup, debWeaponX, debWeaponY, cadreSup.getWidth(), cadreSup.getHeight(), null);
+		graphics.drawImage(cadreBor, debWeaponX, debWeaponY+echelleY, cadreBor.getWidth(), cadreBor.getHeight(), null);
+		//graphics.drawImage(cadreBor, debWeaponX, debWeaponY+2*echelleY, cadreBor.getWidth(), cadreBor.getHeight(), null);
+		graphics.drawImage(cadreInf, debWeaponX, debWeaponY+3*echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+			
+		
+		/* rectangle test pour encadrer les differentes images*/
+		graphics.setColor(Variables.WHITE);
+		graphics.drawRect(debWeaponX, debWeaponY, cadreSup.getWidth(), cadreSup.getHeight());
+		graphics.drawRect(debWeaponX, debWeaponY+echelleY, cadreBor.getWidth(), cadreBor.getHeight());
+		graphics.drawRect(debWeaponX, debWeaponY+3*echelleY, cadreInf.getWidth(), cadreInf.getHeight());
+		
+		
+		
+		
+		
+		
 
-		/*Iterator<Weapon> it = weapons.iterator();
-
-		while(it.hasNext()){
-			graphics.drawImage(it.next().getIcon(), xDeb+i*echelle, yDeb, 3*echelle, 3*hudLeft.getHeight()/8, null);
-			i+=3;
-		}*/
 	}
 
 
