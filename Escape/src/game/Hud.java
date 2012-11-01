@@ -25,39 +25,34 @@ public class Hud implements LifeListener {
 			instance = new Hud();
 		return instance;
 	}
-	
-	
+
+
 	private BufferedImage hudLeft=null, hudRight=null, cadreSup, cadreInf, cadreBor;
 	private final List<Weapon> weapons;
 	private int score;//Position of the life, because it's not a rectangle regular, so we have to update the points when losing life
 
 	private int sizeLife;// The total size for display the life
 	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
-	
+
 	private Hud(){
-		try {
-			hudLeft = ImageIO.read(new File("images/hud/hudLeft.png"));
-			hudRight = ImageIO.read(new File("images/hud/hudRight.png"));
-			cadreSup = ImageIO.read(new File("images/hud/fontWeapon.png"));
-			cadreInf = ImageIO.read(new File("images/hud/fontWeapon.png"));
-			cadreBor = ImageIO.read(new File("images/hud/fontWeapon.png"));
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();//("HUD initialisation fail: can't open images hud.png");
-			System.exit(0);
-		}
+		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
+		hudRight = Ressources.getImage("images/hud/hudRight.png");
+		cadreSup = Ressources.getImage("images/hud/fontWeapon.png");
+		cadreInf = Ressources.getImage("images/hud/fontWeapon.png");
+		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
+
+
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
-		
+
 		weapons = new ArrayList<>();
 		//Factory???
 		weapons.add(new Fireball());
 		weapons.add(new Fireball());
 		//weapons.add(new Fireball());
 		weapons.add(new Fireball());
-		
+
 	}
 
 
@@ -85,19 +80,19 @@ public class Hud implements LifeListener {
 
 
 	//TODO
-	
+
 	public void drawWeapons(Graphics2D graphics){
 		/*int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
 		int yDeb = Variables.SCREEN_WIDTH/30;
 		int echelle = (xEnd-xDeb) / (5*nbWeapon), i=1;*/
-		
+
 		int bordX = Variables.SCREEN_WIDTH-hudRight.getWidth();
 		int echelleY = hudRight.getHeight()/4;
 		graphics.drawImage(hudRight, bordX, 0, hudRight.getWidth(), hudRight.getHeight(), null);
 		graphics.drawImage(cadreSup, Variables.SCREEN_WIDTH-4*hudRight.getWidth()/5, hudRight.getHeight()/2, cadreSup.getWidth(), cadreSup.getHeight(), null);
 		//graphics.drawImage(cadreBor, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5, cadreBor.getWidth(), cadreBor.getHeight(), null);
 		//graphics.drawImage(cadreInf, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5+echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
-		
+
 		/*Iterator<Weapon> it = weapons.iterator();
 
 		while(it.hasNext()){
@@ -110,7 +105,7 @@ public class Hud implements LifeListener {
 	public void drawHud(Graphics2D graphics){
 		//Draw the life
 		drawLife(graphics);
-				
+
 		//Draw the HUD
 		graphics.drawImage(hudLeft, 0, 0, hudLeft.getWidth(), hudLeft.getHeight(), null);
 
@@ -120,7 +115,7 @@ public class Hud implements LifeListener {
 		//Draw the score
 		drawScore(graphics);
 
-		
+
 
 	}
 
