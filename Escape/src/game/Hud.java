@@ -48,11 +48,17 @@ public class Hud implements LifeListener {
 
 		weapons = new ArrayList<>();
 		//Factory???
+		/*
+		 * LF: C'est pas une bonne idée la liste de weapons
+		 * sa rend l'HUD trop dépendant...
+		 * le truc sa serai d'avoir une liste de binome <image, nom> ou un truc dans le genre...
+		 * 
 		weapons.add(new Fireball());
 		weapons.add(new Fireball());
 		//weapons.add(new Fireball());
 		weapons.add(new Fireball());
-
+		*/
+		
 	}
 
 
@@ -84,7 +90,7 @@ public class Hud implements LifeListener {
 	public void drawWeapons(Graphics2D graphics){
 		/*int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
 		int yDeb = Variables.SCREEN_WIDTH/30;
-		int echelle = (xEnd-xDeb) / (5*nbWeapon), i=1;*/
+		int echelle = (xEnd-xDeb) / (5*nbWeapon+1), i=1;*/
 
 		int debHudX = Variables.SCREEN_WIDTH-hudRight.getWidth();
 		int debWeaponX = debHudX + 1*hudRight.getWidth()/4;
@@ -113,6 +119,12 @@ public class Hud implements LifeListener {
 		
 		
 
+		/*Iterator<Weapon> it = weapons.iterator();
+
+		while(it.hasNext()){
+			graphics.drawImage(it.next().getImage(), xDeb+i*echelle, yDeb, 3*echelle, 3*hudLeft.getHeight()/8, null);
+			i+=3;
+		}*/
 	}
 
 

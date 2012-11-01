@@ -22,19 +22,19 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 public abstract class Entity {
 
+	protected Body body;
+	
 	/*
 	 * Sauvegarde une association entre body et entity
 	 * Un seul World et une seule liste d'entity
 	 */
-	protected static Hashtable<Body, Entity> entities;
+	protected static Hashtable<Body, Entity> entities = new Hashtable<>();
 	protected static World world;
-	
-	
-	protected Body body;
-	
-	
-	public Entity() {
-		entities = new Hashtable<>();
+	public static void setWorld(World newWorld) {
+		world = newWorld;	
+	}
+	public static void step() {
+		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);			
 	}
 	
 	
@@ -44,7 +44,7 @@ public abstract class Entity {
 	 * @param x position x on the screen
 	 * @param y position y on the screen
 	 */
-	public void init(World world, float x, float y){
+	public void init(float x, float y){
 		Entity.world = world;
 		
 		PolygonShape polygonShape = new PolygonShape();
@@ -96,6 +96,14 @@ public abstract class Entity {
 						toScreenSize(body.getPosition().y) + image.getHeight()/2);
 	}
 
+	public boolean isOnSprite(Vec2 point){
+		Vec2 position = getScreenPostion();
+		BufferedImage image = getImage();
+		
+		return point.x>position.x && point.x<position.x+image.getWidth() &&
+				point.y>position.y && point.y<position.y+image.getHeight();
+	}
+	
 	public void setVelocity(float speedX, float speedY){
 		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(speedY)));
 	}	
@@ -120,6 +128,9 @@ public abstract class Entity {
 		world.destroyBody(entity.getBody());
 		entities.remove(entity.getBody());		
 	}
+	
+	
+	
 	
 	/*
 	 * Methodes protected

@@ -2,6 +2,7 @@ package entities.weapons;
 
 import game.Ressources;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,7 +10,29 @@ import javax.imageio.ImageIO;
 
 public class Fireball extends Weapon {
 
-	public Fireball(){
-		currentImage = Ressources.getImage("images/weapons/fire.png");		
+	protected BufferedImage image;
+	
+	public Fireball(int x, int y){
+		super(x,y);
+		image = Ressources.getImage("images/weapons/fire.png");
 	}
+
+	@Override
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	@Override
+	public BufferedImage getIcon() {
+		return image;
+	}
+	
+	@Override
+	public void compute() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 }

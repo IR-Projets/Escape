@@ -11,9 +11,6 @@ import game.Variables;
 
 public abstract class Ship extends Entity{
 	private List<LifeListener> lifeListener = new ArrayList<LifeListener>();
-
-	private int posX;
-	private int posY;
 	private int life;
 	
 	public Ship(){
