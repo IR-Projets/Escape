@@ -24,9 +24,10 @@ public class Game {
 	private Graphics2D bufferGraphics; 
 	
 	
-	int fps;
+	private final int fps_refreshRate = 10;
+	private double fps;
 	private double time = 0;
-	
+	private int ite = 0;
 	
 	
 	
@@ -52,12 +53,11 @@ public class Game {
 		
 		env.step();
 		env.compute();		
+		env.render(bufferGraphics);		
 		
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);
 		}
-		
-		env.render(bufferGraphics);		
 		
 		graphics.drawImage(offscreen, 0, 0, null);
 	}
@@ -65,13 +65,21 @@ public class Game {
 	
 	
 	public void drawFPS(Graphics2D graphics){
-		double now = System.nanoTime();
-		double fps = 1000000000 / (now-time);
-		time = now;
+		ite++;
+		if(ite>fps_refreshRate){	//1er image: On récupère le temps
+			ite=0;
+			time = System.nanoTime();
+		}
+		else if(ite==1){			//2e image: On calcul le temps écoulé depuis la 1er image
+			double now = System.nanoTime();
+			fps = 1000000000 / (now-time);
+			time = now;
+		}	
+		
 		graphics.setColor(Variables.RED);
 		graphics.scale(2, 2);
 		graphics.drawString("fps: " + (int)fps, 10, 10);
-		graphics.scale(0.5, 0.5);		
+		graphics.scale(0.5, 0.5);	
 	}
 
 	public void event(MotionEvent event) {

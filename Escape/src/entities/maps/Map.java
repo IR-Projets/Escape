@@ -28,7 +28,7 @@ import javax.imageio.ImageIO;
 		
 
 		public Map(){			                               
-			image = Ressources.getImage(font);
+			image = Ressources.getImage(font, true);
 			
 			width = image.getWidth();
 			height = image.getHeight();
