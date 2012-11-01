@@ -73,8 +73,8 @@ public class Player extends Ship {
 	
 	
 	@Override
-	public void init(World world, float x, float y){
-		super.init(world, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
+	public void init(float x, float y){
+		super.init(Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
 		body.setFixedRotation(true);		
 	}
 	

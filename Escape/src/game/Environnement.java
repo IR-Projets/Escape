@@ -33,7 +33,7 @@ public class Environnement {
 	
 
 	
-	private World world;			//The Jbox2D world
+	//private World world;			//The Jbox2D world
 	private Map map;				//The background map
 	private List<Entity> entities;	//All entities
 	private List<Entity> entitiesToDelete;	//All entities
@@ -47,7 +47,7 @@ public class Environnement {
 	 * @param world Jbox2d world
 	 */
 	public Environnement(World world){
-		this.world = world;
+		Entity.setWorld(world);
 		
 		world.setContactListener(new ContactListener() {
 			@Override
@@ -87,7 +87,7 @@ public class Environnement {
 	}
 	
 	/* Bien init le hud avant le player!!!*/
-	public void setPlayer(Player player) throws IOException{
+	public void setPlayer(Player player){
 		this.player = player;
 		player.addListener(Hud.get());
 		addEntity(player, 0, 0);
@@ -114,7 +114,7 @@ public class Environnement {
 	 * @param y start position y
 	 */
 	public void addEntity(Entity entity, int x, int y){
-		entity.init(world, x, y);
+		entity.init(x, y);
 		entities.add(entity);
 	}
 	
@@ -142,7 +142,7 @@ public class Environnement {
 	
 	public void step(){	
 		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
-		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);	
+		Entity.step();
 	}
 	
 	/**

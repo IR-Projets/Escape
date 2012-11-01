@@ -33,20 +33,14 @@ public class EnvironnementFactory {
 		Environnement env = new Environnement(world);
 		Map map;
 		Player playerShip;
-		Hud hud;
 		List<Entity> entityList = new LinkedList<>();
-		try {
-			map = new Map();
-			playerShip = new Player();
-			env.setPlayer(playerShip);
-			
-			for(int i=0;i<10; i++){
-				entityList.add(new Enemy());
-			}	
-			
-		} catch (IOException e) {
-			throw new IllegalStateException("Impossible de créer le monde 1", e);
-		}
+		map = new Map();
+		playerShip = new Player();
+		env.setPlayer(playerShip);
+
+		for(int i=0;i<10; i++){
+			entityList.add(new Enemy());
+		}	
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(playerShip));
