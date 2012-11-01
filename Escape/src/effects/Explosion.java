@@ -1,5 +1,6 @@
 package effects;
 
+import game.Ressources;
 import game.Variables;
 
 import java.awt.Graphics2D;
@@ -20,18 +21,14 @@ public class Explosion extends Effects {
 	private int x;
 	private int y;
 	
-	public Explosion(int x, int y) throws IOException{
+	public Explosion(int x, int y){
 		this.x=x;
 		this.y=y;
 		
 		images = new BufferedImage[4];
 		
-		for(int i=0; i<images.length; i++){
-			try {  
-				images[i] = ImageIO.read(new File("images/Effects/fire"+i+".png"));				
-			} catch (IOException ex) {
-				throw new IOException("Ship initialisation fail: can't open images/Effects/fire"+i+".png");
-			}
+		for(int i=0; i<images.length; i++){  
+			images[i] = Ressources.getImage("images/Effects/fire"+i+".png");				
 		}
 	}
 	

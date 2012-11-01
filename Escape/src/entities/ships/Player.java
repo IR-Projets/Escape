@@ -1,5 +1,6 @@
 package entities.ships;
 
+import game.Ressources;
 import game.Variables;
 
 import java.awt.image.BufferedImage;
@@ -47,27 +48,16 @@ public class Player extends Ship {
 	
 	
 	
-	public Player() throws IOException {
+	public Player(){
 		looping = Looping.NONE;
 		
-		String imageURL = "images/Ships/Player/Joueur.png";
-		
-		try {                
-			image = ImageIO.read(new File(imageURL));
-		} catch (IOException ex) {
-			throw new IOException("Ship initialisation fail: can't open " + imageURL);
-		}
+		image = Ressources.getImage("images/ships/player/Joueur.png");
 				
 		loopingImage = new BufferedImage[12];
 		String image = "";
 		
 		for(int i=0; i<loopingImage.length; i++){
-			try {  
-				image = "images/Ships/Player/Joueur"+(i+1)+".png";
-				loopingImage[i] = ImageIO.read(new File(image));				
-			} catch (IOException ex) {
-				throw new IOException("Ship initialisation fail: can't open :" + image);
-			}
+			loopingImage[i] = Ressources.getImage("images/Ships/Player/Joueur"+(i+1)+".png");	
 		}
 	}
 

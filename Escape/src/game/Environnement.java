@@ -100,11 +100,7 @@ public class Environnement {
 		if(entity!=null){
 			Vec2 pos = entity.getScreenPostion();
 			
-			try {
-				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 			//Test
 			player.setLife(player.getLife()-20);
 			entitiesToDelete.add(entity);

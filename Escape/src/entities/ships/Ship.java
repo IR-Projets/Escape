@@ -16,11 +16,11 @@ public abstract class Ship extends Entity{
 	private int posY;
 	private int life;
 	
-	public Ship() throws IOException{
+	public Ship(){
 		this(Variables.MAX_LIFE);
 	}
 	
-	public Ship(int life) throws IOException{
+	public Ship(int life){
 		this.life=life;
 	}
 	
