@@ -27,7 +27,7 @@ public class Hud implements LifeListener {
 	}
 	
 	
-	private BufferedImage hudLeft=null, hudRight=null;
+	private BufferedImage hudLeft=null, hudRight=null, cadreSup, cadreInf, cadreBor;
 	private final List<Weapon> weapons;
 	private int score;//Position of the life, because it's not a rectangle regular, so we have to update the points when losing life
 
@@ -36,8 +36,13 @@ public class Hud implements LifeListener {
 	
 	private Hud(){
 		try {
-			hudLeft = ImageIO.read(new File("images/hud3.png"));
-			hudRight = ImageIO.read(new File("images/hud4.png"));
+			hudLeft = ImageIO.read(new File("images/hud/hudLeft.png"));
+			hudRight = ImageIO.read(new File("images/hud/hudRight.png"));
+			cadreSup = ImageIO.read(new File("images/hud/fontWeapon.png"));
+			cadreInf = ImageIO.read(new File("images/hud/fontWeapon.png"));
+			cadreBor = ImageIO.read(new File("images/hud/fontWeapon.png"));
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();//("HUD initialisation fail: can't open images hud.png");
 			System.exit(0);
@@ -74,25 +79,31 @@ public class Hud implements LifeListener {
 
 	public void drawScore(Graphics2D graphics){
 		graphics.setColor(Variables.WHITE);
-		graphics.drawString("SCORE", Variables.SCREEN_WIDTH/16, Variables.SCREEN_HEIGHT/26);
-		graphics.drawString(Integer.toString(score), Variables.SCREEN_WIDTH/5, Variables.SCREEN_HEIGHT/26);
+		graphics.drawString("SCORE", hudLeft.getWidth()/6,2*hudLeft.getHeight()/5);
+		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2, 2*hudLeft.getHeight()/5);
 	}
 
 
 	//TODO
 	
 	public void drawWeapons(Graphics2D graphics){
-		int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
+		/*int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
 		int yDeb = Variables.SCREEN_WIDTH/30;
-		int echelle = (xEnd-xDeb) / (5*nbWeapon), i=1;
+		int echelle = (xEnd-xDeb) / (5*nbWeapon), i=1;*/
 		
-		graphics.drawImage(hudRight, xDeb, 0, hudRight.getWidth(), hudRight.getHeight(), null);
-		Iterator<Weapon> it = weapons.iterator();
+		int bordX = Variables.SCREEN_WIDTH-hudRight.getWidth();
+		int echelleY = hudRight.getHeight()/4;
+		graphics.drawImage(hudRight, bordX, 0, hudRight.getWidth(), hudRight.getHeight(), null);
+		graphics.drawImage(cadreSup, Variables.SCREEN_WIDTH-4*hudRight.getWidth()/5, hudRight.getHeight()/2, cadreSup.getWidth(), cadreSup.getHeight(), null);
+		//graphics.drawImage(cadreBor, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5, cadreBor.getWidth(), cadreBor.getHeight(), null);
+		//graphics.drawImage(cadreInf, bordX+hudRight.getWidth()/5, 4*hudRight.getHeight()/5+echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+		
+		/*Iterator<Weapon> it = weapons.iterator();
 
 		while(it.hasNext()){
 			graphics.drawImage(it.next().getIcon(), xDeb+i*echelle, yDeb, 3*echelle, 3*hudLeft.getHeight()/8, null);
 			i+=3;
-		}
+		}*/
 	}
 
 

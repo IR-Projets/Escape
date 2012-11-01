@@ -10,14 +10,14 @@ public class Variables {
 	
 	public final static String APPLICATION_NAME = "Escape IR";
 	public final static int SCREEN_WIDTH = 500;
-	public final static int SCREEN_HEIGHT = 500;
+	public final static int SCREEN_HEIGHT = 800;
 	
 	public final static Color GREEN = new Color(0,125,0);
 	public final static Color RED = new Color(255,0,0);
 	public final static Color BLUE = new Color(0,0,255);
 	public final static Color WHITE = new Color(255,255,255);
 	
-	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
+	public final static int SPEED_MAIN_SHIP = 50;/* Speed of the main ship */
 	
 	public final static int TRACE_DELETE_RATE = 5;/*If we increase the value, the delete time of Trace become lower*/
 	public final static double TRACE_VARIATION_MAX = 30;/* The limit intervalle to accept movement -> Angle Bornes */
