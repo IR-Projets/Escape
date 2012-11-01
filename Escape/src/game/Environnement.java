@@ -27,6 +27,7 @@ import entities.ships.Player;
 import entities.ships.Ship;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
+import hud.Hud;
 
 
 public class Environnement {

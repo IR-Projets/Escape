@@ -1,4 +1,4 @@
-package game;
+package hud;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -10,11 +10,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import entities.ships.LifeListener;
 import entities.weapons.Fireball;
 import entities.weapons.Weapon;
+import game.Ressources;
+import game.Variables;
 
-public class Hud implements LifeListener {
+public class Hud implements LifeListener, ItemListener {
 
 	/*
 	 * Singleton
@@ -28,8 +29,9 @@ public class Hud implements LifeListener {
 
 
 	private BufferedImage hudLeft=null, hudRight=null, cadreSup, cadreInf, cadreBor;
-	private final List<Weapon> weapons;
-	private int score;//Position of the life, because it's not a rectangle regular, so we have to update the points when losing life
+	
+	private final List<Item> items;
+	private int score;
 
 	private int sizeLife;// The total size for display the life
 	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
@@ -40,27 +42,29 @@ public class Hud implements LifeListener {
 		cadreSup = Ressources.getImage("images/hud/fontWeaponTop.png");
 		cadreInf = Ressources.getImage("images/hud/fontWeaponBot.png");
 		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
-
-
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 
-		weapons = new ArrayList<>();
-		//Factory???
-		/*
-		 * LF: C'est pas une bonne idée la liste de weapons
-		 * sa rend l'HUD trop dépendant...
-		 * le truc sa serai d'avoir une liste de binome <image, nom> ou un truc dans le genre...
-		 * 
-		weapons.add(new Fireball());
-		weapons.add(new Fireball());
-		//weapons.add(new Fireball());
-		weapons.add(new Fireball());
-		*/
+		items = new ArrayList<>();
+
+		items.add(new Item("Fireball", Ressources.getImage("images/weapons/fire.png")));
+		items.add(new Item("Missile", Ressources.getImage("images/weapons/missile.png")));
+	}
+	
+	
+	@Override
+	public void itemAdd(Item item) {
+		// TODO Auto-generated method stub
 		
 	}
 
+
+	@Override
+	public void itemRemove(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void lifeChanged(int oldLife, int newLife) {
@@ -71,6 +75,7 @@ public class Hud implements LifeListener {
 		System.out.println("Sizelife"+sizeLife);
 	}
 
+	
 	public void drawLife(Graphics2D graphics){
 		graphics.setColor(Variables.GREEN);
 		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, sizeLife, hudLeft.getHeight()/4);
@@ -85,46 +90,47 @@ public class Hud implements LifeListener {
 	}
 
 
-	//TODO
+	
+	public void drawItem(Graphics2D graphics, int x, int y, Item item){
+		int widthItem = item.getImage().getWidth(), heighItem = item.getImage().getHeight();
+		
+		graphics.drawImage(cadreBor, x, y, cadreBor.getWidth(), cadreBor.getHeight(), null);//the font
+		graphics.drawImage(item.getImage(), x+5, y+1, widthItem, heighItem, null);//image
+		
+		graphics.setColor(Variables.RED);
+		graphics.drawRect(x+7, y+1, widthItem-4, heighItem-1);//border of the item image
+		graphics.drawString(item.getName(), x+35, y+15);//Name of the item
+		
+	}
+
 
 	public void drawWeapons(Graphics2D graphics){
-		/*int xDeb =5*Variables.SCREEN_WIDTH/9, xEnd = Variables.SCREEN_WIDTH, nbWeapon = weapons.size();
-		int yDeb = Variables.SCREEN_WIDTH/30;
-		int echelle = (xEnd-xDeb) / (5*nbWeapon+1), i=1;*/
 
 		int debHudX = Variables.SCREEN_WIDTH-hudRight.getWidth();
-		int debWeaponX = debHudX + 1*hudRight.getWidth()/4;
+		int debWeaponX = debHudX + hudRight.getWidth()/7;
 		int debWeaponY = 6*hudRight.getHeight()/11;
-		
 		int echelleY = cadreBor.getHeight();
-		graphics.drawImage(hudRight, debHudX, 0, hudRight.getWidth(), hudRight.getHeight(), null);
 		
+		graphics.drawImage(hudRight, debHudX, 0, hudRight.getWidth(), hudRight.getHeight(), null);//Right hud
 		
-		/* 1er cadre */
-		graphics.drawImage(cadreSup, debWeaponX, debWeaponY, cadreSup.getWidth(), cadreSup.getHeight(), null);
-		graphics.drawImage(cadreBor, debWeaponX, debWeaponY+echelleY, cadreBor.getWidth(), cadreBor.getHeight(), null);
-		//graphics.drawImage(cadreBor, debWeaponX, debWeaponY+2*echelleY, cadreBor.getWidth(), cadreBor.getHeight(), null);
-		graphics.drawImage(cadreInf, debWeaponX, debWeaponY+3*echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
-			
+		Iterator<Item> it = items.iterator();
+		int i=0;
 		
-		/* rectangle test pour encadrer les differentes images*/
-		graphics.setColor(Variables.WHITE);
-		graphics.drawRect(debWeaponX, debWeaponY, cadreSup.getWidth(), cadreSup.getHeight());
-		graphics.drawRect(debWeaponX, debWeaponY+echelleY, cadreBor.getWidth(), cadreBor.getHeight());
-		graphics.drawRect(debWeaponX, debWeaponY+3*echelleY, cadreInf.getWidth(), cadreInf.getHeight());
+		/* Drawing all items */
+		if(it.hasNext()){
+			drawItem(graphics,debWeaponX, debWeaponY+cadreSup.getHeight(), it.next());
+			i++;
+		}
 		
-		
-		
-		
-		
-		
-
-		/*Iterator<Weapon> it = weapons.iterator();
-
 		while(it.hasNext()){
-			graphics.drawImage(it.next().getImage(), xDeb+i*echelle, yDeb, 3*echelle, 3*hudLeft.getHeight()/8, null);
-			i+=3;
-		}*/
+			drawItem(graphics,debWeaponX, debWeaponY+cadreSup.getHeight()+(i++)*echelleY, it.next());
+		}
+		
+		/* Drawing the border for items*/
+		graphics.drawImage(cadreSup, debWeaponX, debWeaponY, cadreSup.getWidth(), cadreSup.getHeight(), null);
+		graphics.drawImage(cadreInf, debWeaponX, debWeaponY+cadreSup.getHeight()+i*echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+		graphics.setColor(Variables.WHITE);
+		graphics.drawString("Weapon", debWeaponX+22, debWeaponY+20);
 	}
 
 
@@ -153,5 +159,8 @@ public class Hud implements LifeListener {
 	public void render(Graphics2D graphics){
 		drawHud(graphics);
 	}
+
+
+
 
 }
