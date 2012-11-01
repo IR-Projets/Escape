@@ -151,7 +151,8 @@ public class Environnement {
 	 * @param event the event to be handled
 	 */
 	public void event(MotionEvent event) {
-		gesture.event(event);		
+		gesture.event(event);
+		Hud.get().event(event);
 	}
 
 	public void compute() {		

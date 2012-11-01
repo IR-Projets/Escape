@@ -16,6 +16,7 @@ public class Variables {
 	public final static Color RED = new Color(255,0,0);
 	public final static Color BLUE = new Color(0,0,255);
 	public final static Color WHITE = new Color(255,255,255);
+	public final static Color BLACK = new Color(0,0,0);
 	
 	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
 	
