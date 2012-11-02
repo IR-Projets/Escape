@@ -1,21 +1,15 @@
 package hud;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-
-import entities.weapons.Fireball;
-import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
 import game.Variables;
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Hud implements LifeListener, ItemListener {
 
@@ -29,8 +23,15 @@ public class Hud implements LifeListener, ItemListener {
 		return instance;
 	}
 
+	
+	/*TODO :
+	*Refactoring -> drawItem dans Item avec le nom render()
+	*Faire la detection des armes dans le menu
+	*
+	*/
+	
 
-	private BufferedImage hudLeft, hudRight, cadreSup, cadreInf, cadreBor, error;
+	private BufferedImage hudLeft, hudRight, cadreSup, cadreInf, cadreBor, noWeapon, flecheDown;
 	private final List<Item> items;
 	private int score;
 	private boolean displayItemList;
@@ -44,7 +45,8 @@ public class Hud implements LifeListener, ItemListener {
 		cadreSup = Ressources.getImage("images/hud/fontWeaponTop.png");
 		cadreInf = Ressources.getImage("images/hud/fontWeaponBot.png");
 		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
-		error = Ressources.getImage("images/hud/error.png");
+		noWeapon = Ressources.getImage("images/hud/error.png");
+		flecheDown = Ressources.getImage("images/hud/flechedown.png");
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
@@ -100,6 +102,9 @@ public class Hud implements LifeListener, ItemListener {
 		
 		if(printFont == true)
 			graphics.drawImage(cadreBor, x, y, cadreBor.getWidth(), cadreBor.getHeight(), null);//the font
+		if(printFont == false)
+			graphics.drawImage(flecheDown, x+95, y, flecheDown.getWidth(), flecheDown.getHeight(), null);//the bottom fleche
+		
 		graphics.drawImage(item.getImage(), x+5, y+1, widthItem, heighItem, null);//image of the item
 		
 		graphics.setColor(Variables.WHITE);
@@ -113,7 +118,7 @@ public class Hud implements LifeListener, ItemListener {
 	
 	
 	public void drawItemList(Graphics2D graphics){
-		int debWeaponX = Variables.SCREEN_WIDTH-hudRight.getWidth() + hudRight.getWidth()/7;
+		int debWeaponX = Variables.SCREEN_WIDTH-hudRight.getWidth() + 4*hudRight.getWidth()/18;
 		int debWeaponY = 6*hudRight.getHeight()/11;
 		int echelleY = cadreBor.getHeight();
 		int i=0;
@@ -144,7 +149,7 @@ public class Hud implements LifeListener, ItemListener {
 		
 		/*Drawing actual item in the Right Hud */
 		if(items.isEmpty())
-			drawItem(graphics, beginLeftHud+30, hudRight.getHeight()/5, new Item("No Weapon", error, 0), false);
+			drawItem(graphics, beginLeftHud+30, hudRight.getHeight()/5, new Item("No Weapon", noWeapon, 0), false);
 		else
 			drawItem(graphics, beginLeftHud+30, hudRight.getHeight()/5, items.get(0), false);
 		
@@ -158,10 +163,29 @@ public class Hud implements LifeListener, ItemListener {
 		int beginLeftHud = Variables.SCREEN_WIDTH-hudRight.getWidth();
 		int mouseX = event.getX(), mouseY = event.getY();
 		
+		/*Displaying the menu*/
 		if(mouseX >= beginLeftHud && mouseX <= (beginLeftHud+hudRight.getWidth()-20))
 			if(mouseY >= 10 && mouseY <= hudRight.getHeight()-10)
 				if(event.getKind() == Kind.ACTION_DOWN)
 					displayItemList=(displayItemList==true)?false:true;
+		
+		
+		/* Choising the arm --- in case*/
+		int debItemX = Variables.SCREEN_WIDTH-hudRight.getWidth() + hudRight.getWidth()/7;
+		int finItemX = debItemX + cadreBor.getWidth();
+		if(displayItemList == false)
+			return;
+		
+		//Iterator<> it = items.iterator();
+		/*for(int i=0;i<items.size();i++)
+				if(mouseX >= debItemX && mouseX <= finItemX)
+					items.add(e);
+		}*/
+		
+		
+		
+		
+		
 		//System.out.println(event.getX()+" et "+event.getY());
 	}
 
@@ -178,11 +202,7 @@ public class Hud implements LifeListener, ItemListener {
 		//Draw the score
 		drawScore(graphics);
 
-
-
 	}
-
-
 
 
 
