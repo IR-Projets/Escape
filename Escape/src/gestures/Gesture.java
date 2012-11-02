@@ -3,6 +3,7 @@ package gestures;
 import entities.ships.Player;
 import entities.ships.Ship;
 import entities.weapons.Fireball;
+import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import gestures.filters.Backoff;
@@ -93,7 +94,7 @@ public class Gesture {
 		case ACTION_DOWN :
 			if(controlledShip.isOnSprite(new Vec2(event.getX(), event.getY()))){
 				Vec2 pos = controlledShip.getScreenPostion();
-				new Fireball((int)pos.x, (int)pos.y);
+				Weapon weapon = new Fireball((int)pos.x+50, (int)pos.y+50);
 			}
 			break;
 

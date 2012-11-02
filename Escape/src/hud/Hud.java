@@ -54,9 +54,11 @@ public class Hud implements LifeListener, ItemListener {
 		
 		items = new ArrayList<>();
 
+		
 		items.add(new Item("Fireball", Ressources.getImage("images/weapons/fire.png"),1));
 		items.add(new Item("Missile", Ressources.getImage("images/weapons/missile.png"),1));
 		items.add(new Item("Shiboleet", Ressources.getImage("images/weapons/shiboleet.png"),2));
+		
 	}
 	
 	

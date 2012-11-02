@@ -12,6 +12,14 @@ public class Fireball extends Weapon {
 
 	protected BufferedImage image;
 	
+	
+	
+	//TODO: Entity doit afficher lui même ses entitées !!!!!!!!!!!!!!!!!!!!!!!
+	//Renomer Entity en Entities !!!!!!!!!!!!!!!!!!
+	
+	
+	
+	
 	public Fireball(int x, int y){
 		image = Ressources.getImage("images/weapons/fire.png");
 		init(x,y);
