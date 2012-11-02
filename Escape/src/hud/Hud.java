@@ -64,6 +64,7 @@ public class Hud implements LifeListener, ItemListener {
 		
 		itemEmpty = new Item("No Weapon", noWeapon, 0);
 		itemList = new ItemList();
+		
 	}
 
 	@Override
