@@ -1,6 +1,7 @@
 package hud;
 
 import fr.umlv.zen2.MotionEvent;
+import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
 import game.Variables;
 
@@ -123,6 +124,9 @@ public class ItemList {
 		int debItemY = 6*hudRightHeight/11+cadreSup.getHeight();
 		int echelleY = cadreBor.getHeight();
 
+		if(event.getKind() != Kind.ACTION_DOWN)//Only accept on the down click of the mouse
+			return false;
+		
 		for(int i=1;i<itemList.size();i++)
 			if(mouseX >= debItemX && mouseX <= finItemX)
 				if(mouseY >= debItemY+echelleY*(i-1) && mouseY <= debItemY+echelleY*i){

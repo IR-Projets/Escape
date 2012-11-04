@@ -104,13 +104,13 @@ public class Hud implements LifeListener, ItemListener {
 		graphics.drawImage(hudRight, beginLeftHud, 0, hudRight.getWidth(), hudRight.getHeight(), null);//Right hud
 
 		if(displayItemList == true)//Display menu on click, which is represents by this boolean
-			itemList.drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 4*hudRight.getWidth()/18, 6*hudRight.getHeight()/11);
+			itemList.drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
 
 		/*Drawing actual item in the Right Hud */
 		if(itemList.getItems().isEmpty())
-			itemEmpty.drawItem(graphics, beginLeftHud+30, hudRight.getHeight()/5);
+			itemEmpty.drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		else
-			itemList.getItems().get(0).drawItem(graphics, beginLeftHud+30, hudRight.getHeight()/5);
+			itemList.getItems().get(0).drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		//ONLY FOR TEST -> DRAW THE SIZE OF THE EVENT
 		//graphics.drawRect(beginLeftHud, 10, hudRight.getWidth()-20, hudRight.getHeight()-10);
 	}
