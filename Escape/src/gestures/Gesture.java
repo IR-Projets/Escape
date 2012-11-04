@@ -1,7 +1,6 @@
 package gestures;
 
 import entities.ships.Player;
-import entities.ships.Ship;
 import entities.weapons.Fireball;
 import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
@@ -16,23 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
-
-
-/*
- * LF:
- * TODO: JAVADOC
- * TODO: Am�liorer lisibilit� !!
- * 
- * QB:
- * DO : Lisibilite & debut javadoc
- * TODO : Probleme de gravite quand on trace une nouvelle courbe apre une reussie -> le vaisseau tombe, et ne continu pas l'ancienne trajectoire
- *
- *	
- * TODO : Faire un setDebug pour afficher les courbes approximer ou non :) -> pour demain
- * //QB: Pa mal , mai fo voir pour deplacer limage mnt selon un angle en fonction(pour le loop surtout)
- * Gerer l'acceleration
- */
-
 
 public class Gesture {
 

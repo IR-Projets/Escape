@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  */
 
 
-/* <one line to give the program's name and a brief idea of what it does.>
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
  *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
 
  *  This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ public class Hud implements LifeListener, ItemListener {
 	private int score;
 	private boolean displayItemList;//Boolean for know if we have to display the ItemList
 	private final Item itemEmpty;//Only for show an empty item if we ItemList is empty.
-	
+
 	private int sizeLife;// The total size for display the life
 	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
 
@@ -56,15 +56,15 @@ public class Hud implements LifeListener, ItemListener {
 		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
 		hudRight = Ressources.getImage("images/hud/hudRight.png");
 		noWeapon = Ressources.getImage("images/hud/error.png");
-		
+
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		displayItemList = false;
-		
+
 		itemEmpty = new Item("No Weapon", noWeapon, 0);
 		itemList = new ItemList();
-		
+
 	}
 
 	@Override
@@ -85,29 +85,39 @@ public class Hud implements LifeListener, ItemListener {
 		sizeLife -= diffLife*echelle;
 		System.out.println("Sizelife"+sizeLife);
 	}
-
+	
+	/**
+	 * Draw the life of the player
+	 * @param graphics the graphics2D to print on
+	 */
 	public void drawLife(Graphics2D graphics){
 		graphics.setColor(Variables.GREEN);
 		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, sizeLife, hudLeft.getHeight()/4);
 		score++;
 	}
 
+	/**
+	 * Draw the score of the player
+	 * @param graphics the graphics2D to print on
+	 */
 	public void drawScore(Graphics2D graphics){
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString("SCORE", hudLeft.getWidth()/6,2*hudLeft.getHeight()/5);
 		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2, 2*hudLeft.getHeight()/5);
 	}
 
+	/**
+	 * Draw the right hud, with the weapon associated. When click on the hud, display the weapon list
+	 * @param graphics the graphics2D to print on
+	 */
 	public void drawWeapons(Graphics2D graphics){
-
 		int beginLeftHud = Variables.SCREEN_WIDTH-hudRight.getWidth();
 		graphics.drawImage(hudRight, beginLeftHud, 0, hudRight.getWidth(), hudRight.getHeight(), null);//Right hud
 
 		if(displayItemList == true)//Display menu on click, which is represents by this boolean
 			itemList.drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
 
-		/*Drawing actual item in the Right Hud */
-		if(itemList.getItems().isEmpty())
+		if(itemList.getItems().isEmpty())/*Drawing actual item in the Right Hud */
 			itemEmpty.drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		else
 			itemList.getItems().get(0).drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
@@ -116,6 +126,10 @@ public class Hud implements LifeListener, ItemListener {
 	}
 
 	
+	/**
+	 * Display the menu of weapon when click on the right hud, and launch the eventItemList for manage the selection of weapon
+	 * @param event the MotionEvent which reprensents the event of the mouse
+	 */
 	public void event(MotionEvent event) {
 		int beginLeftHud = Variables.SCREEN_WIDTH-hudRight.getWidth();
 		int mouseX = event.getX(), mouseY = event.getY();
@@ -130,29 +144,16 @@ public class Hud implements LifeListener, ItemListener {
 				if(event.getKind() == Kind.ACTION_DOWN)
 					displayItemList=(displayItemList==true)?false:true;
 	}
-
-
-	public void drawHud(Graphics2D graphics){
-		//Draw the life
-		drawLife(graphics);
-
-		//Draw the HUD
-		graphics.drawImage(hudLeft, 0, 0, hudLeft.getWidth(), hudLeft.getHeight(), null);
-
-		//Draw Weapons
-		drawWeapons(graphics);
-
-		//Draw the score
-		drawScore(graphics);
-
-	}
-
+	
+	
 	/**
-	 * Display the HUD, which is compone of several elements : 
-	 * @param Graphics2D graphics, which represents the world to draw on
+	 * Display the HUD, which is compone of several elements : the left hud with the life and score, the right hud with the weapon.
+	 * @param graphics the graphics2D to print on
 	 */
 	public void render(Graphics2D graphics){
-		drawHud(graphics);
+		drawLife(graphics);
+		graphics.drawImage(hudLeft, 0, 0, hudLeft.getWidth(), hudLeft.getHeight(), null);//Draw the right HUD
+		drawWeapons(graphics);
+		drawScore(graphics);
 	}
-
 }

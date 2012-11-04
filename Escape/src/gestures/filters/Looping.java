@@ -1,13 +1,13 @@
 package gestures.filters;
 
 
+import entities.ships.Player;
+import game.Variables;
+
 import java.util.Iterator;
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
-
-import entities.ships.Player;
-import game.Variables;
 
 
 public class Looping implements Filter {
@@ -17,7 +17,7 @@ public class Looping implements Filter {
 	public static final int TRACE_CIRCLE_BORNES_MAX = 125;/* bornes of the diameter Max */
 	public static final int TRACE_CIRCLE_BORNES_MIN = 30;/* bornes of the diameter Min */
 	
-	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
+	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.1;/* rate of error -> accept approximely of circle */
 	public static final double TRACE_CIRCLE_RATE_CLOSED = 40;/* number of coordate of difference we accept between the begin and end of the circle */
 	private enum Direction {LEFT, RIGHT};
 	private Direction direction;
@@ -60,7 +60,7 @@ public class Looping implements Filter {
 		Vec2 pDeb = trace.get(0), pDistMax = vecDistMax(trace);
 		
 		Vec2 pCenterOrigin = new Vec2((pDistMax.x+pDeb.x)/2, (pDistMax.y+pDeb.y)/2);//pDistMax.sub(pDeb);
-		double rayon = Filters.LengthNormalize(pCenterOrigin, pDeb);
+		//double rayon = Filters.LengthNormalize(pCenterOrigin, pDeb);
 		int nbErreur=0;
 
 		Iterator<Vec2> it = trace.iterator();

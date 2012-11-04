@@ -1,13 +1,35 @@
 package gestures.filters;
 
-import entities.ships.Player;
-import entities.ships.Ship;
-import game.Variables;
-
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
 
+import entities.ships.Player;
+import game.Variables;
+/**
+ * The drift is a movement vertical which goes to the top of the screen, to the right or the left.
+ * we refuse the horizontal and verticals movements
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class Drift implements Filter{
 	/**

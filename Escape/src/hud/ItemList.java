@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 
-/* <one line to give the program's name and a brief idea of what it does.>
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
  *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
 
  *  This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,6 @@ import java.util.List;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 public class ItemList {
 
 	private final List<Item> itemList;
@@ -78,12 +77,11 @@ public class ItemList {
 	 * display the item list of this object on the graphics
 	 * The first element displayed is the second, because the first element is already displays on the hud
 	 * Drawing a wallpaper behind item, for have a best render
-	 * 
 	 * @param graphics the graphics2D to print on
-	 * @param debX the begin of the drawing of the listItem, at position X
-	 * @param debY the begin of the drawing of the listItem, at position Y
+	 * @param x the begin of the drawing of the listItem, at position x
+	 * @param y the begin of the drawing of the listItem, at position y
 	 */
-	public void drawItemList(Graphics2D graphics, int debX, int debY){
+	public void drawItemList(Graphics2D graphics, int x, int y){
 		int echelleY = cadreBor.getHeight();
 		int i=0;
 
@@ -92,25 +90,24 @@ public class ItemList {
 			it.next();
 
 		if(it.hasNext()){/*Drawing the second item, with the position in Y after the cadreSup*/
-			drawItemwithFont(graphics,debX, debY+cadreSup.getHeight(), it.next());
+			drawItemwithFont(graphics,x, y+cadreSup.getHeight(), it.next());
 			i++;
 		}
 
 		while(it.hasNext())
-			drawItemwithFont(graphics,debX, debY+cadreSup.getHeight()+(i++)*echelleY, it.next());
+			drawItemwithFont(graphics,x, y+cadreSup.getHeight()+(i++)*echelleY, it.next());
 
 		/* Drawing the border for items*/
-		graphics.drawImage(cadreSup, debX, debY, cadreSup.getWidth(), cadreSup.getHeight(), null);
-		graphics.drawImage(cadreInf, debX, debY+cadreSup.getHeight()+i*echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+		graphics.drawImage(cadreSup, x, y, cadreSup.getWidth(), cadreSup.getHeight(), null);
+		graphics.drawImage(cadreInf, x, y+cadreSup.getHeight()+i*echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
 		graphics.setColor(Variables.WHITE);
-		graphics.drawString("Weapon", debX+22, debY+20);
+		graphics.drawString("Weapon", x+22, y+20);
 	}
 
 
 
 	/**
-	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud do this work
-	 * 
+	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
 	 * @see Hud 
 	 * @param event The even to check
 	 * @param hudRightWidth the Width of the Right Hud

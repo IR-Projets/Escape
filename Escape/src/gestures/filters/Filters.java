@@ -8,6 +8,25 @@ import java.util.Objects;
 
 import org.jbox2d.common.Vec2;
 
+/** This class is composed by several methods uses for the implementation of the interface Filter.
+ */
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 public class Filters{
 
 	/** 
@@ -64,7 +83,7 @@ public class Filters{
 		Vec2 pActual = null, pLast = it.next();
 		while(it.hasNext()){
 			int i;
-			for(i=0; i<3 && it.hasNext(); i++){
+			for(i=0; i<3 && it.hasNext(); i++){// calcul by interval of 4 points
 				pActual = it.next();
 			}
 			double angleActual = getAngle(pLast, pActual);
@@ -73,10 +92,8 @@ public class Filters{
 				firstLoop = false;
 			}
 			
-			if(angleActual > angleMax)
-				angleMax = angleActual;
-			if(angleActual < angleMin)
-				angleMin = angleActual;
+			angleMin = Math.min(angleActual, angleMin);
+			angleMax = Math.max(angleActual, angleMax);
 			//System.out.println("Variation" + (angleMax-angleMin ));
 			if(angleMax - angleMin>Variables.TRACE_VARIATION_MAX)
 				return false;
