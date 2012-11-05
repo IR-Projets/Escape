@@ -89,11 +89,6 @@ public class ItemList {
 		if(it.hasNext())//Don't care about the first element, because he is print on the hud
 			it.next();
 
-		if(it.hasNext()){/*Drawing the second item, with the position in Y after the cadreSup*/
-			drawItemwithFont(graphics,x, y+cadreSup.getHeight(), it.next());
-			i++;
-		}
-
 		while(it.hasNext())
 			drawItemwithFont(graphics,x, y+cadreSup.getHeight()+(i++)*echelleY, it.next());
 
