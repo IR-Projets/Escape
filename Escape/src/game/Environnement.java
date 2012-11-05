@@ -155,7 +155,6 @@ public class Environnement {
 	 * @param event the event to be handled
 	 */
 	public void event(MotionEvent event) {
-		System.out.println("wolrd"+world);
 		if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN)
 			entities.addEntitie(new Fireball(world, "images/weapons/fire.png", event.getX(), event.getY()));
 		else{
