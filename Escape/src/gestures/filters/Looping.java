@@ -32,7 +32,6 @@ public class Looping implements Filter {
 			return Direction.LEFT;
 	}
 	
-	
 	public Vec2 vecDistMax(List<Vec2> trace){
 		Iterator<Vec2> it = trace.iterator();
 		Vec2 vecBegin = null, vecMax = null;
@@ -104,6 +103,7 @@ public class Looping implements Filter {
 			break;
 			
 		}
+		System.out.println("loop"+direction);
 	}
 
 }

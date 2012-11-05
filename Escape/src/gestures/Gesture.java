@@ -1,8 +1,6 @@
 package gestures;
 
 import entities.ships.Player;
-import entities.weapons.Fireball;
-import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import gestures.filters.Backoff;
@@ -21,7 +19,7 @@ public class Gesture {
 	private TraceStack traceStack;
 	private List<Filter> filters;
 	private final Player controlledShip;
-	
+
 
 	public Gesture(Player controlledShip){
 		this.controlledShip = controlledShip;
@@ -40,7 +38,7 @@ public class Gesture {
 		filtersList.add(new Looping());
 		return filtersList;
 	}
-	
+
 
 	/**
 	 * Display the Gesture, which is a trace of the movement printing by the mouse
@@ -48,10 +46,9 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){
-			controlledShip.setVelocity(0, 0);
+			controlledShip.stop();
 			return;
 		}
-		
 		traceStack.render(graphics);
 	}
 
@@ -74,10 +71,6 @@ public class Gesture {
 			break;
 
 		case ACTION_DOWN :
-			if(controlledShip.isOnSprite(new Vec2(event.getX(), event.getY()))){
-				Vec2 pos = controlledShip.getScreenPostion();
-				Weapon weapon = new Fireball((int)pos.x+50, (int)pos.y+50);
-			}
 			break;
 
 		case ACTION_MOVE :
@@ -88,7 +81,7 @@ public class Gesture {
 			break;
 		}
 	}
-	
+
 
 	public void compute() {
 		/*

@@ -5,13 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-
-
-import entities.maps.Map;
-import entities.ships.Ship;
-import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
-import gestures.Gesture;
 
 public class Game {
 

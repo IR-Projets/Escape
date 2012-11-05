@@ -2,16 +2,21 @@ package entities.weapons;
 
 import java.awt.image.BufferedImage;
 
-import entities.Entity;
+import org.jbox2d.dynamics.World;
 
-public abstract class Weapon extends Entity{
+import entities.Entitie;
 
+public abstract class Weapon extends Entitie{
 
-	public void init(int x, int y){
-		super.init(x,y);
-		body.setBullet(true);
+	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
+	public Weapon(World world, String nameImage, float x, float y) {
+		super(world, nameImage, x, y);
+		getBody().setActive(true);
 	}
-	
-	public abstract BufferedImage getIcon();
+
+	@Override
+	public BufferedImage getImageRender() {
+		return getImage();
+	}
 	
 }

@@ -1,24 +1,17 @@
 package game;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
-
-import entities.Entity;
-import entities.maps.Map;
-import entities.ships.Player;
-import entities.ships.Ship;
-import entities.ships.enemies.Enemy;
-import gestures.Gesture;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.testbed.tests.EdgeShapes;
+
+import entities.maps.Map;
+import entities.ships.Player;
+import entities.ships.enemies.Enemy;
+import gestures.Gesture;
 
 
 public class EnvironnementFactory {
@@ -33,13 +26,15 @@ public class EnvironnementFactory {
 		Environnement env = new Environnement(world);
 		Map map;
 		Player playerShip;
-		List<Entity> entityList = new LinkedList<>();
+		//List<Entitie> entityList = new LinkedList<>();
 		map = new Map();
-		playerShip = new Player();
+		playerShip = new Player(world, "images/ships/player/Joueur.png", Variables.MAX_LIFE);
 		env.setPlayer(playerShip);
 
+		Random rand = new Random();
 		for(int i=0;i<10; i++){
-			entityList.add(new Enemy());
+			env.addEntitie(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
+			//entityList.add(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
 		}	
 		
 		env.setMap(map);
@@ -47,10 +42,10 @@ public class EnvironnementFactory {
 
 		
 		
-		Random rand = new Random();
+		/*Random rand = new Random();
 		for(Entity entity : entityList){
 			env.addEntity(entity, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3);
-		}
+		}*/
 		
 		return env;
 	}

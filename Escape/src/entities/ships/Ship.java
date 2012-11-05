@@ -1,24 +1,24 @@
 package entities.ships;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import entities.Entity;
-import game.Variables;
 import hud.LifeListener;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.jbox2d.dynamics.World;
+import entities.Entitie;
 
 
-public abstract class Ship extends Entity{
+
+public abstract class Ship extends Entitie{
 	private List<LifeListener> lifeListener = new ArrayList<LifeListener>();
 	private int life;
 	
-	public Ship(){
+	/*public Ship(){
 		this(Variables.MAX_LIFE);
-	}
+	}*/
 	
-	public Ship(int life){
+	public Ship(World world, String nameImage, float x, float y, int life){
+		super(world,nameImage,x,y);
 		this.life=life;
 	}
 	

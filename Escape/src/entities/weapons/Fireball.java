@@ -1,12 +1,8 @@
 package entities.weapons;
 
-import game.Ressources;
-
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import org.jbox2d.dynamics.World;
 
 public class Fireball extends Weapon {
 
@@ -18,9 +14,11 @@ public class Fireball extends Weapon {
 	//Renomer Entity en Entities !!!!!!!!!!!!!!!!!!
 	
 	
+	public Fireball(World world, String nameImage, float x, float y) {
+		super(world,nameImage,x,y);
+	}
 	
-	
-	public Fireball(int x, int y){
+	/*public Fireball(int x, int y){
 		image = Ressources.getImage("images/weapons/fire.png");
 		init(x,y);
 	}
@@ -33,13 +31,21 @@ public class Fireball extends Weapon {
 	@Override
 	public BufferedImage getIcon() {
 		return image;
-	}
+	}*/
 	
 	@Override
 	public void compute() {
 		// TODO Auto-generated method stub
 		
 	}
+
+	//la il faudra ajouter l'effet d'augmentation de la boule
+	/*
+	@Override
+	public BufferedImage getImageRender() {
+		
+		return null;
+	}*/
 	
 	
 	

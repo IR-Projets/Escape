@@ -4,14 +4,6 @@ import game.Ressources;
 import game.Variables;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.LookupOp;
-import java.awt.image.LookupTable;
-import java.awt.image.ShortLookupTable;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -21,41 +13,43 @@ import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
-		
-	BufferedImage image;
-	
+
+	//BufferedImage image;
+
 	private final static int SLOW = 45;
-	
+
 	private BufferedImage[] loopingImage;
-	
+
 	//Utilise sa pour charger les images !!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//Class loader
 	//getRessourceAsStream(String name)
 	//FAIRE NOTRE CLASS LOADER
-	
-	
+
+
 	public enum Looping{
 		NONE,
 		LEFT,
 		RIGHT;
-		
-		BufferedImage currentImage;
+
+		//BufferedImage currentImage;
 		int frame = 0;
 		int count = 0;
 	}
 	private Looping looping;
-	
-	
-	
-	public Player(){
+
+
+
+	public Player(World world, String nameImage, int life){
+		super(world, nameImage, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, life);
+		getBody().setFixedRotation(true);
 		looping = Looping.NONE;
-		
-		image = Ressources.getImage("images/ships/player/Joueur.png");
-				
+
+		//image = Ressources.getImage("images/ships/player/Joueur.png");
+
 		loopingImage = new BufferedImage[12];
-		String image = "";
-		
+		//String image = "";
+
 		for(int i=0; i<loopingImage.length; i++){
 			loopingImage[i] = Ressources.getImage("images/Ships/Player/Joueur"+(i+1)+".png");	
 		}
@@ -65,101 +59,93 @@ public class Player extends Ship {
 	public void compute() {
 		Vec2 position = getPositionNormalized();
 		Vec2 velocity = getVelocity();
-		
-		if(position.y > image.getHeight() + Variables.SCREEN_HEIGHT/3 ){
+
+		if(position.y > getImage().getHeight() + Variables.SCREEN_HEIGHT/3 ){
 			setVelocity(velocity.x*20, -10);
 		}		
 	}
-	
-	
+
 	@Override
-	public void init(float x, float y){
-		super.init(Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5);
-		body.setFixedRotation(true);		
-	}
-	
-	
-	@Override
-	public BufferedImage getImage(){
+	public BufferedImage getImageRender() {
 		switch(looping){
-			case NONE:		
-				return image;
-				
-			case LEFT:
-				looping.count = ++looping.count % SLOW;
-				if(looping.count==0)
-					looping.frame--;
-				return loopRender();
-				
-			case RIGHT:
-				looping.count = ++looping.count % SLOW;
-				if(looping.count==0)
-					looping.frame++;
-				return loopRender();
+		case NONE:		
+			return getImage();
+
+		case LEFT:
+			looping.count = ++looping.count % SLOW;
+			if(looping.count==0)
+				looping.frame--;
+			System.out.println("looping frame"+looping.frame);
+			return loopRender();
+
+		case RIGHT:
+			looping.count = ++looping.count % SLOW;
+			if(looping.count==0)
+				looping.frame++;
+			return loopRender();
 		}
 		return null;
 	}
-	
+
 	
 	private BufferedImage loopRender(){				
 		if(looping.frame<0 || looping.frame>=loopingImage.length){
 			looping.frame = 0;
 			looping = Looping.NONE;
-			return image;
+			return getImage();
 		}
-		
+
 		switch(looping){
-			case LEFT:
-				return loopingImage[looping.frame];
-			case RIGHT:
-				return loopingImage[looping.frame];
+		case LEFT:
+			return loopingImage[looping.frame];
+		case RIGHT:
+			return loopingImage[looping.frame];
+		case NONE:
+		default:
+			break;
 		}
-		return image;
-		
+		return getImage();
 	}
-	
-	
-	
-	
+
 	/*
 	 * Actions
 	 */
 	public void looping(Looping loop){
 		looping = loop;
 		switch(looping){
-			case NONE:
-				looping.frame=0;
-				break;
-			case LEFT:
-				looping.frame= loopingImage.length-1;
-				break;
-			case RIGHT:
-				looping.frame = 0;
-				break;
+		case NONE:
+			looping.frame=0;
+			break;
+		case LEFT:
+			looping.frame= loopingImage.length-1;
+			break;
+		case RIGHT:
+			looping.frame = 0;
+			break;
 		} 
 	}
-		
 
-	
-	
+
+
 	/**
 	 * Used to join the Ship to the origin point
 	 * Non used
 	 */
-	private void initJoin(){
+	@SuppressWarnings("unused")
+	private void initJoin(World world){
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
-		
+
 		DistanceJointDef jd = new DistanceJointDef();
 		Vec2 p1 = new Vec2();
 		Vec2 p2 = new Vec2();
 		Vec2 d = new Vec2();
-		
+
 		jd.frequencyHz = Variables.LINK_FREQUENCY;
 		jd.dampingRatio = Variables.LINK_DAMPING;
-		
+
 		jd.bodyA = ground;
-		jd.bodyB = body;
+		jd.bodyB = getBody();
 		jd.localAnchorA.set(toWorldSize(Variables.SCREEN_WIDTH/2), toWorldSize(Variables.SCREEN_HEIGHT/5));
 		jd.localAnchorB.set(0,0);
 		p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
@@ -168,4 +154,6 @@ public class Player extends Ship {
 		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
 	}
+
+
 }
