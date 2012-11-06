@@ -130,8 +130,7 @@ public class Player extends Ship {
 	/**
 	 * Used to join the Ship to the origin point
 	 * Non used
-	 */
-	@SuppressWarnings("unused")
+	 *
 	private void initJoin(World world){
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
@@ -154,6 +153,6 @@ public class Player extends Ship {
 		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
 	}
-
+	*/
 
 }
