@@ -28,24 +28,7 @@ public class Test extends TestbedTest {
 		setTitle("#### TEST #####");
 
 		env = EnvironnementFactory.factory(getWorld());
-		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);
-		
-		Runnable run = new Runnable(){
-			@Override
-			public void run() {
-				for(;;){
-					
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						Thread.currentThread().interrupt();
-					}
-				}
-			}
-		};
-		Thread thread = new Thread(run);
-		thread.start();
-		
+		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);	
 		
 	}
 	
