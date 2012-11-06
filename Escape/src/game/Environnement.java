@@ -136,18 +136,10 @@ public class Environnement {
 		//render all: map, entities and the gesture
 		map.render(graphics);
 		player.render(graphics);
-		for(Entitie entitie : entities.getEntities().values())
-			entitie.render(graphics);
+		entities.render(graphics);
 		gesture.render(graphics);
 		Effects.render(graphics);
 		Hud.get().render(graphics);
-	}
-
-
-	public void step(){	
-		//First we compute the movement with JBox2d (only for Main lanch, testbed do it alone)
-		//Entity.step();
-		entities.step();
 	}
 
 	/**
@@ -173,8 +165,7 @@ public class Environnement {
 		entitiesToDelete.clear();
 
 		map.compute();
-		for(Entitie entitie : entities.getEntities().values())
-			entitie.compute();
+		entities.compute();
 		gesture.compute();
 	}	
 }

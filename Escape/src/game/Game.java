@@ -43,9 +43,7 @@ public class Game {
 	public void run(Graphics2D graphics) {		
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
-		
-		
-		env.step();
+	
 		env.compute();		
 		env.render(bufferGraphics);		
 		

@@ -21,19 +21,20 @@ public class Test extends TestbedTest {
 	private static final String TIME_STEP = "Time step";
 	private static final String VELOCITY_OP = "Velocity operation";
 	private static final String POSITION_IT = "Position Iteration";
+	private Environnement env = null;
 	
 	@Override
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
 
-		final Environnement env = EnvironnementFactory.factory(getWorld());
+		env = EnvironnementFactory.factory(getWorld());
 		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);
 		
 		Runnable run = new Runnable(){
 			@Override
 			public void run() {
 				for(;;){
-					env.compute();
+					
 					try {
 						Thread.sleep(10);
 					} catch (InterruptedException e) {
@@ -51,12 +52,15 @@ public class Test extends TestbedTest {
 	  @Override
 	  public void step(TestbedSettings settings) {
 	    super.step(settings); // make sure we update the engine!
-	    TestbedSetting timeStep = settings.getSetting(TIME_STEP); // grab our setting
+	    env.compute();
+	    
+	   /* TestbedSetting timeStep = settings.getSetting(TIME_STEP); // grab our setting
 	    TestbedSetting velocityIterations = settings.getSetting(VELOCITY_OP); // grab our setting
 	    TestbedSetting positionIterations = settings.getSetting(POSITION_IT); // grab our setting
 	    
 	    
 	    getWorld().step(timeStep.value/60.f, velocityIterations.value, positionIterations.value);
+	    */
 	  }
 
 	@Override

@@ -3,6 +3,7 @@ package entities;
 //import Entity;
 import game.Variables;
 
+import java.awt.Graphics2D;
 import java.util.Hashtable;
 
 import org.jbox2d.dynamics.Body;
@@ -22,9 +23,6 @@ public class Entities {
 		entities = new Hashtable<>();
 	}
 	
-	public Hashtable<Body, Entitie> getEntities() {
-		return entities;
-	}
 	
 	public Entitie getEntitie(Body body){
 		return entities.get(body);
@@ -38,9 +36,19 @@ public class Entities {
 		world.destroyBody(entity.getBody());
 		entities.remove(entity.getBody());
 	}
-	
-	public void step() {
+
+	public void render(Graphics2D graphics) {
+		for(Entitie entitie : entities.values())
+			entitie.render(graphics);		
+	}
+
+
+	public void compute() {
+		for(Entitie entitie : entities.values())
+			entitie.compute();
 		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);			
 	}
+	
+	
 	
 }
