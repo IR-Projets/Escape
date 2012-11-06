@@ -1,5 +1,9 @@
 package hud;
 
+import entities.Entities;
+import entities.weapons.Weapon;
+import entities.weapons.WeaponFactory;
+import entities.weapons.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
@@ -31,20 +35,12 @@ import java.awt.image.BufferedImage;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-public class Hud implements LifeListener, ItemListener {
+public class Hud implements LifeListener{
 
-	/*
-	 * Singleton
-	 */
-	private static Hud instance = null;
-	public static Hud get(){
-		if(instance==null)
-			instance = new Hud();
-		return instance;
-	}
 
-	private final BufferedImage hudLeft, hudRight, noWeapon;
+	private final BufferedImage hudLeft, hudRight;
 	private final ItemList itemList;
+
 	private int score;
 	private boolean displayItemList;//Boolean for know if we have to display the ItemList
 	private final Item itemEmpty;//Only for show an empty item if we ItemList is empty.
@@ -52,31 +48,28 @@ public class Hud implements LifeListener, ItemListener {
 	private int sizeLife;// The total size for display the life
 	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
 
-	private Hud(){
+	public Hud(){
 		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
 		hudRight = Ressources.getImage("images/hud/hudRight.png");
-		noWeapon = Ressources.getImage("images/hud/error.png");
 
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		displayItemList = false;
 
-		itemEmpty = new Item("No Weapon", noWeapon, 0);
+		itemEmpty = new Item(WeaponType.Null, "No Weapon", "images/hud/error.png", 0);
 		itemList = new ItemList();
-
 	}
 
-	@Override
-	public void itemAdd(Item item) {
-		itemList.getItems().add(item);
+	
+	public ItemList getItemList() {
+		return itemList;
 	}
 
-	@Override
-	public void itemRemove(Item item) {
-		itemList.getItems().remove(item);
+	public Weapon createSelectedWeapon(Entities entities, int x, int y){
+		return WeaponFactory.createWeapon(entities, itemList.removeCurrentItem().getWeaponType(), x, y);
 	}
-
+	
 	@Override
 	public void lifeChanged(int oldLife, int newLife) {
 		if(oldLife == newLife)
@@ -117,7 +110,7 @@ public class Hud implements LifeListener, ItemListener {
 		if(displayItemList == true)//Display menu on click, which is represents by this boolean
 			itemList.drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
 
-		if(itemList.getItems().isEmpty())/*Drawing actual item in the Right Hud */
+		if(itemList.isEmpty())//Drawing actual item in the Right Hud 
 			itemEmpty.drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		else
 			itemList.getItems().get(0).drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
@@ -156,4 +149,5 @@ public class Hud implements LifeListener, ItemListener {
 		drawWeapons(graphics);
 		drawScore(graphics);
 	}
+
 }

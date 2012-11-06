@@ -23,10 +23,16 @@ public abstract class Entity {
 	public Entity(Entities entities, int posX, int posY, int width, int height) {
 		this.entities = entities;
 		body = entities.createBody(posX, posY, width, height);
+		entities.addEntity(this);
 	}
 
 	public abstract BufferedImage getImage();// The Image use for render -> for action like loop, ...
 	public abstract void compute();
+	
+	
+	public Entities getEntities(){
+		return entities;
+	}
 	
 	
 	public void render(Graphics2D graphics){

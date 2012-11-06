@@ -1,14 +1,10 @@
 package entities;
 
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
-import entities.ships.Player;
 import entities.ships.enemies.Enemy;
-import game.Ressources;
 import game.Variables;
 
 public class EnnemyFactory extends Entities {

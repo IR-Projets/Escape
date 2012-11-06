@@ -1,5 +1,8 @@
 package hud;
 
+import entities.weapons.Weapon;
+import entities.weapons.WeaponFactory.WeaponType;
+import game.Ressources;
 import game.Variables;
 
 import java.awt.Graphics2D;
@@ -33,13 +36,19 @@ public class Item {
 	private final String name;
 	private final BufferedImage image;
 	private int nbItem;
+	WeaponType type;
 	
-	public Item(String name, BufferedImage image, int nbItem) {
+	public Item(WeaponType type, String name, String nameImage, int nbItem) {
+		this.type = type;
 		this.name = name;
-		this.image=image;
+		this.image=Ressources.getImage(nameImage);
 		this.nbItem=nbItem;
 	}
 
+	public WeaponType getWeaponType(){
+		return type;
+	}
+	
 	/**
 	 * Return the name of the Item
 	 * @return
@@ -64,6 +73,14 @@ public class Item {
 		return nbItem;
 	}
 	
+	public void addItem(int quantity){
+		nbItem+=quantity;
+	}
+	
+	public Item removeItem(){
+		nbItem--;
+		return this;
+	}
 	/**
 	 * Draw the item, at the position x and y. The drawing show : The image of item, with a frame,
 	 * the quantity at the bottom right of the frame, and the name of the item, at right of the image.
@@ -83,5 +100,7 @@ public class Item {
 		graphics.drawString(String.valueOf(getNbItem()), x+20, y+23);//display the amount of the item
 		
 	}
+
+
 
 }

@@ -44,7 +44,7 @@ public class EnvironnementFactory {
 		*/
 		
 		env.setMap(map);
-		env.setGesture(new Gesture(playerShip));
+		env.setGesture(new Gesture(env));
 
 		
 		

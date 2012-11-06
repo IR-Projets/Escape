@@ -34,6 +34,7 @@ public class Environnement {
 	private List<Entity> entitiesToDelete;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
+	private Hud hud;
 
 
 
@@ -66,8 +67,10 @@ public class Environnement {
 		});
 		//entities = new LinkedList<>();
 		entitiesToDelete = new LinkedList<>();
+		hud = new Hud();
 	}
 
+	
 	/**
 	 * Set the background (the map)
 	 * @param map the map to be rendered
@@ -83,11 +86,18 @@ public class Environnement {
 	/* Bien init le hud avant le player!!!*/
 	public void setPlayer(Player player){
 		this.player = player;
-		player.addListener(Hud.get());
+		player.addListener(hud);
 		//entities.addEntity(player);
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 
+	public Hud getHud() {
+		return hud;
+	}
 
 
 	protected void playerCollision(Entity entitie) {
@@ -115,11 +125,11 @@ public class Environnement {
 	public void addEntitie(Entity entitie){
 		entities.addEntity(entitie);
 	}
-	*/
+	 */
 	public void removeEntitie(Entity entitie){
 		entities.removeEntitie(entitie);
 	}
-	
+
 
 
 	/*public void removeEntity(Entity entity){
@@ -139,7 +149,7 @@ public class Environnement {
 		entities.render(graphics);
 		gesture.render(graphics);
 		Effects.render(graphics);
-		Hud.get().render(graphics);
+		hud.render(graphics);
 	}
 
 	/**
@@ -147,22 +157,14 @@ public class Environnement {
 	 * @param event the event to be handled
 	 */
 	public void event(MotionEvent event) {
-		if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN){
-			Vec2 pos = player.getPositionNormalized();
-			int width = player.getImage().getWidth();
-			int height = player.getImage().getHeight();
-			entities.addEntity(new Fireball(entities, (int)pos.x+width/2, (int)pos.y+height/2));
-		}
-		else{
-			gesture.event(event);
-			Hud.get().event(event);
-		}
+		gesture.event(event);
+		hud.event(event);
 	}
 
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
-		
+
 		entities.step(timeStep, velocityIteration, positionIteration);
-		
+
 		/*
 		 * Delete entities that were collided
 		 */
@@ -174,8 +176,8 @@ public class Environnement {
 		entities.compute();
 		gesture.compute();
 	}
-	
-	
+
+
 	public void compute() {		
 		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}

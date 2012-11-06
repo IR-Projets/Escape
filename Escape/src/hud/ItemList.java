@@ -1,5 +1,10 @@
 package hud;
 
+import entities.Entities;
+import entities.weapons.Ball;
+import entities.weapons.Weapon;
+import entities.weapons.WeaponFactory;
+import entities.weapons.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
@@ -38,20 +43,23 @@ public class ItemList {
 
 	private final List<Item> itemList;
 	private final BufferedImage cadreSup, cadreInf, cadreBor;
-
+	
+	
 	public ItemList() {
 		cadreSup = Ressources.getImage("images/hud/fontWeaponTop.png");
 		cadreInf = Ressources.getImage("images/hud/fontWeaponBot.png");
 		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
 		itemList = new LinkedList<>();
 
+		
+
 		//Only for test
-		itemList.add(new Item("Fireball", Ressources.getImage("images/weapons/fire.png"),1));
-		itemList.add(new Item("Missile", Ressources.getImage("images/weapons/missile.png"),1));
-		itemList.add(new Item("Shiboleet", Ressources.getImage("images/weapons/shiboleet.png"),2));
+		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",1));
+		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",1));
+		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",2));
 	}
-
-
+	
+	
 	/**
 	 * @return the list of item
 	 */
@@ -60,6 +68,18 @@ public class ItemList {
 	}
 
 
+	public void addItem(Item item, int quantity){
+		if(itemList.contains(item)){
+			int index = itemList.indexOf(item);
+			itemList.get(index).addItem(quantity);
+		}
+		else{
+			itemList.add(item);
+		}
+	}
+
+	
+	
 	/**
 	 * Draw an item, which is compose of a list of item, with a wallpaper specific to the ItemList. 
 	 * @param graphics
@@ -127,6 +147,24 @@ public class ItemList {
 					return true;
 				}
 		return false;
+	}
+
+
+	public Item removeCurrentItem() {
+		Item item;
+		if(itemList.get(0).getNbItem()>1){
+			item = itemList.get(0).removeItem();
+		}
+		else{
+			item = itemList.get(0);
+			itemList.remove(0);
+		}
+		return item;
+	}
+
+
+	public boolean isEmpty() {
+		return itemList.isEmpty();
 	}
 
 

@@ -2,6 +2,7 @@ package entities;
 
 //import Entity;
 import entities.ships.Player;
+import entities.weapons.WeaponFactory;
 import game.Ressources;
 import game.Variables;
 
@@ -48,7 +49,6 @@ public class Entities {
 				entity = EnnemyFactory.createEntity(this);
 				break;
 		}
-		addEntity(entity);
 		return entity;
 	}
 	

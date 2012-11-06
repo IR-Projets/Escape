@@ -1,8 +1,12 @@
 package gestures;
 
 import entities.ships.Player;
+import entities.weapons.Ball;
+import entities.weapons.Fireball;
+import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
+import game.Environnement;
 import gestures.filters.Backoff;
 import gestures.filters.Drift;
 import gestures.filters.Filter;
@@ -16,13 +20,14 @@ import org.jbox2d.common.Vec2;
 
 public class Gesture {
 
-	private TraceStack traceStack;
-	private List<Filter> filters;
-	private final Player controlledShip;
+	private final TraceStack traceStack;
+	private final List<Filter> filters;
+	private final Environnement env;
+	
+	
 
-
-	public Gesture(Player controlledShip){
-		this.controlledShip = controlledShip;
+	public Gesture(Environnement env){
+		this.env=env;
 		traceStack = new TraceStack();
 		filters = initFilters();
 	}
@@ -46,7 +51,7 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){
-			controlledShip.stop();
+			env.getPlayer().stop();
 			return;
 		}
 		traceStack.render(graphics);
@@ -64,13 +69,24 @@ public class Gesture {
 		case ACTION_UP : 			
 			for(Filter filter : filters){
 				if(traceStack.check(filter)){
-					filter.apply(controlledShip);
+					filter.apply(env.getPlayer());
 				}
 			}
 			traceStack.finishCurrentTrace();
 			break;
 
 		case ACTION_DOWN :
+			Player player = env.getPlayer();
+			if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN && !env.getHud().getItemList().isEmpty()){
+				Vec2 pos = player.getPositionNormalized();
+				int width = player.getImage().getWidth();
+				int height = player.getImage().getHeight();
+				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
+				env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2);
+				
+				
+			}
+			
 			break;
 
 		case ACTION_MOVE :
