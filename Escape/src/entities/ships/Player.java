@@ -1,5 +1,6 @@
 package entities.ships;
 
+import entities.Entities;
 import game.Ressources;
 import game.Variables;
 
@@ -13,8 +14,6 @@ import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
-
-	//BufferedImage image;
 
 	private final static int SLOW = 45;
 
@@ -40,16 +39,14 @@ public class Player extends Ship {
 
 
 
-	public Player(World world, String nameImage, int life){
-		super(world, nameImage, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, life);
+	public Player(Entities entities, int posX, int posY){
+		super(entities, Ressources.getImage("images/Ships/Player/Joueur.png"), posX, posY, Variables.MAX_LIFE);
+		
 		getBody().setFixedRotation(true);
 		looping = Looping.NONE;
 
-		//image = Ressources.getImage("images/ships/player/Joueur.png");
 
 		loopingImage = new BufferedImage[12];
-		//String image = "";
-
 		for(int i=0; i<loopingImage.length; i++){
 			loopingImage[i] = Ressources.getImage("images/Ships/Player/Joueur"+(i+1)+".png");	
 		}
@@ -66,7 +63,7 @@ public class Player extends Ship {
 	}
 
 	@Override
-	public BufferedImage getImageRender() {
+	public BufferedImage getImage() {
 		switch(looping){
 		case NONE:		
 			return getImage();

@@ -13,7 +13,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 
 import effects.Effects;
 import effects.Explosion;
-import entities.Entitie;
+import entities.Entity;
 import entities.Entities;
 import entities.maps.Map;
 import entities.ships.Player;
@@ -32,7 +32,7 @@ public class Environnement {
 	private Map map;				//The background map
 	//private List<Entitie> entities;	//All entities
 	private final Entities entities;
-	private List<Entitie> entitiesToDelete;	//All entities
+	private List<Entity> entitiesToDelete;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 
@@ -87,13 +87,13 @@ public class Environnement {
 	public void setPlayer(Player player){
 		this.player = player;
 		player.addListener(Hud.get());
-		entities.addEntitie(player);
+		entities.addEntity(player);
 	}
 
 
 
 
-	protected void playerCollision(Entitie entitie) {
+	protected void playerCollision(Entity entitie) {
 		if(entitie!=null){
 			Vec2 pos = entitie.getScreenPostion();
 
@@ -114,10 +114,10 @@ public class Environnement {
 		entity.init(x, y);
 		entities.add(entity);
 	}*/
-	public void addEntitie(Entitie entitie){
-		entities.addEntitie(entitie);
+	public void addEntitie(Entity entitie){
+		entities.addEntity(entitie);
 	}
-	public void removeEntitie(Entitie entitie){
+	public void removeEntitie(Entity entitie){
 		entities.removeEntitie(entitie);
 	}
 
@@ -151,7 +151,7 @@ public class Environnement {
 			Vec2 pos = player.getPositionNormalized();
 			int width = player.getImage().getWidth();
 			int height = player.getImage().getHeight();
-			entities.addEntitie(new Fireball(world, "images/weapons/fire.png", pos.x+width/2, pos.y+height/2));
+			entities.addEntity(new Fireball(entities, (int)pos.x+width/2, (int)pos.y+height/2));
 		}
 		else{
 			gesture.event(event);
@@ -166,7 +166,7 @@ public class Environnement {
 		/*
 		 * Delete entities that were collided
 		 */
-		for(Entitie entitie : entitiesToDelete)
+		for(Entity entitie : entitiesToDelete)
 			entities.removeEntitie(entitie);
 		entitiesToDelete.clear();
 
@@ -178,6 +178,10 @@ public class Environnement {
 	
 	public void compute() {		
 		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
+	}
+
+	public Entities getEntities() {
+		return entities;
 	}	
 }
 

@@ -5,7 +5,9 @@ import java.util.Random;
 
 import org.jbox2d.dynamics.World;
 
+import entities.Entities;
 import entities.ships.Ship;
+import game.Ressources;
 
 
 public class Enemy extends Ship{
@@ -13,18 +15,16 @@ public class Enemy extends Ship{
 	double lastExecution=0;
 	Random rand = new Random();
 
-	public Enemy(World world, float x, float y, int life){	
-		super(world, getRandomNameImage(), x, y, life);
+	public Enemy(Entities entities, int x, int y, int life){	
+		super(entities, getRandomNameImage(), x, y, life);
 	}
 
-	private static String getRandomNameImage(){
+	private static BufferedImage getRandomNameImage(){
 		Random rand = new Random();
-		String imageURL;
 		if(rand.nextInt()%2==0)
-			imageURL = "images/Ships/ship.png";
+			return Ressources.getImage("images/Ships/ship.png");
 		else
-			imageURL = "images/Ships/dirtyDick.png";
-		return imageURL;
+			return Ressources.getImage("images/Ships/dirtyDick.png");
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class Enemy extends Ship{
 	}
 
 	@Override
-	public BufferedImage getImageRender() {
+	public BufferedImage getImage() {
 		return getImage();
 	}
 

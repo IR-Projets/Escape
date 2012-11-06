@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 
 import org.jbox2d.dynamics.World;
 
+import entities.Entities;
+import game.Ressources;
+
 public class Fireball extends Weapon {
 
 	protected BufferedImage image;
@@ -14,8 +17,8 @@ public class Fireball extends Weapon {
 	//Renomer Entity en Entities !!!!!!!!!!!!!!!!!!
 	
 	
-	public Fireball(World world, String nameImage, float x, float y) {
-		super(world,nameImage,x,y);
+	public Fireball(Entities entities, int x, int y) {
+		super(entities, Ressources.getImage("images/weapons/fire.png"),x,y);
 	}
 	
 	/*public Fireball(int x, int y){

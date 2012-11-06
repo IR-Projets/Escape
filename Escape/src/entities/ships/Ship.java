@@ -2,25 +2,31 @@ package entities.ships;
 
 import hud.LifeListener;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import org.jbox2d.dynamics.World;
-import entities.Entitie;
+
+import entities.Entities;
+import entities.Entity;
 
 
 
-public abstract class Ship extends Entitie{
-	private List<LifeListener> lifeListener = new ArrayList<LifeListener>();
+public abstract class Ship extends Entity{
+	
 	private int life;
+	private final BufferedImage image;
+	private List<LifeListener> lifeListener = new ArrayList<LifeListener>();
 	
-	/*public Ship(){
-		this(Variables.MAX_LIFE);
-	}*/
 	
-	public Ship(World world, String nameImage, float x, float y, int life){
-		super(world,nameImage,x,y);
+	
+	public Ship(Entities entities, BufferedImage image, int posX, int posY, int life){
+		super(entities, posX, posY, image.getWidth(), image.getHeight());
+		this.image= image;
 		this.life=life;
 	}
+	
+	
 	
 	public void addListener(LifeListener listen){
 		lifeListener.add(listen);

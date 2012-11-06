@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="entities/ships/boss/Boss1.java|entities/ships/boss/Boss2.java|entities/ships/boss/Boss3.java|entities/ships/enemies/Enemy1.java|entities/ships/enemies/Enemy2.java|entities/ships/enemies/Enemy3.java|gestures/filters/OurGesture1.java|gestures/filters/OurGesture2.java|gestures/filters/OurGesture3.java|entities/maps/Earth.java|entities/maps/Jupiter.java|entities/maps/MapFactory.java|entities/maps/Moon.java|entities/weapons/Missile.java|entities/weapons/OurWeapon.java|entities/weapons/Shiboleet.java|entities/Entity.java" kind="src" path="Escape/src"/>
+	<classpathentry excluding="entities/ships/boss/Boss1.java|entities/ships/boss/Boss2.java|entities/ships/boss/Boss3.java|entities/ships/enemies/Enemy1.java|entities/ships/enemies/Enemy2.java|entities/ships/enemies/Enemy3.java|gestures/filters/OurGesture1.java|gestures/filters/OurGesture2.java|gestures/filters/OurGesture3.java|entities/maps/Earth.java|entities/maps/Jupiter.java|entities/maps/MapFactory.java|entities/maps/Moon.java|entities/weapons/Missile.java|entities/weapons/OurWeapon.java|entities/weapons/Shiboleet.java" kind="src" path="Escape/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/jbox2d-library-2.1.2.2-sources.jar"/>

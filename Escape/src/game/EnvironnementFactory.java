@@ -28,12 +28,12 @@ public class EnvironnementFactory {
 		Player playerShip;
 		//List<Entitie> entityList = new LinkedList<>();
 		map = new Map();
-		playerShip = new Player(world, "images/ships/player/Joueur.png", Variables.MAX_LIFE);
+		playerShip = new Player(env.getEntities(), 0, 0);
 		env.setPlayer(playerShip);
 
 		Random rand = new Random();
 		for(int i=0;i<10; i++){
-			env.addEntitie(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
+			env.addEntitie(new Enemy(env.getEntities(), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
 			//entityList.add(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
 		}	
 		
