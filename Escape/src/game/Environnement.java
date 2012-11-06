@@ -155,8 +155,10 @@ public class Environnement {
 		}
 	}
 
-	public void compute() {		
-
+	public void compute(float timeStep, int velocityIteration, int positionIteration) {
+		
+		world.step(timeStep, velocityIteration, positionIteration);
+		
 		/*
 		 * Delete entities that were collided
 		 */
@@ -167,6 +169,11 @@ public class Environnement {
 		map.compute();
 		entities.compute();
 		gesture.compute();
+	}
+	
+	
+	public void compute() {		
+		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}	
 }
 

@@ -45,10 +45,7 @@ public class Entities {
 
 	public void compute() {
 		for(Entitie entitie : entities.values())
-			entitie.compute();
-		world.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);			
-	}
-	
-	
+			entitie.compute();		
+	}	
 	
 }
