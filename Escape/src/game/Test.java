@@ -18,7 +18,7 @@ import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
 public class Test extends TestbedTest {
 
-	private static final String TIME_STEP = "Time step";
+	private static final String TIME_STEP = "Slow";
 	private static final String VELOCITY_OP = "Velocity operation";
 	private static final String POSITION_IT = "Position Iteration";
 	private Environnement env = null;
@@ -32,12 +32,21 @@ public class Test extends TestbedTest {
 		
 	}
 	
+	int count=0;
 	  @Override
 	  public void step(TestbedSettings settings) {
 	    super.step(settings); // make sure we update the engine!
-	    env.compute();
 	    
-	   /* TestbedSetting timeStep = settings.getSetting(TIME_STEP); // grab our setting
+	    TestbedSetting timeStep = settings.getSetting(TIME_STEP); // grab our setting
+	    
+	    count++;
+	    if(count>timeStep.value){
+	    	count=0;
+	    	env.compute();
+	    }
+	    
+	    
+	   /* 
 	    TestbedSetting velocityIterations = settings.getSetting(VELOCITY_OP); // grab our setting
 	    TestbedSetting positionIterations = settings.getSetting(POSITION_IT); // grab our setting
 	    
@@ -63,9 +72,9 @@ public class Test extends TestbedTest {
 		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 		
 		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
-		model.getSettings().addSetting(new TestbedSetting("Time step", SettingType.ENGINE, 0, 0, 100));
-		model.getSettings().addSetting(new TestbedSetting("Velocity operation", SettingType.ENGINE, 0, 0, 100));
-		model.getSettings().addSetting(new TestbedSetting("Position Iteration", SettingType.ENGINE, 0, 0, 100));
+		model.getSettings().addSetting(new TestbedSetting(TIME_STEP, SettingType.ENGINE, 1, 1, 100));
+		//model.getSettings().addSetting(new TestbedSetting("Velocity operation", SettingType.ENGINE, 0, 0, 100));
+		//model.getSettings().addSetting(new TestbedSetting("Position Iteration", SettingType.ENGINE, 0, 0, 100));
 
 		
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
