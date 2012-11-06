@@ -17,11 +17,12 @@ import org.jbox2d.dynamics.World;
 
 public abstract class Entity {
 
-	private final Body body;
+	private Body body;
+	private Entities entities;
 
 	public Entity(Entities entities, int posX, int posY, int width, int height) {
-		body = createBody(entities.getWorld(), posX, posY, width, height);
-		entities.addEntity(this);
+		this.entities = entities;
+		body = entities.createBody(posX, posY, width, height);
 	}
 
 	public abstract BufferedImage getImage();// The Image use for render -> for action like loop, ...
@@ -93,17 +94,6 @@ public abstract class Entity {
 		return val / Variables.WORLD_SCALE;
 	}
 	
-	protected static Body createBody(World world, int posX, int posY, int width, int height){
-		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(Entity.toWorldSize(width), Entity.toWorldSize(height));
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
-		bodyDef.allowSleep = false;
-		Body body = world.createBody(bodyDef);
-		body.createFixture(polygonShape, 1.0f);
-		return body;
-	}
-	
+
 
 }

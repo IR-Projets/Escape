@@ -6,10 +6,18 @@ import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.jbox2d.dynamics.Body;
+
+import entities.Entity;
+
 public class Ressources {
+	
+	private static final Map<String, BufferedImage> images = new Hashtable<>();
 	
 	/**
 	 * Load a BufferedImage
@@ -19,6 +27,11 @@ public class Ressources {
 	 */
 	public static BufferedImage getImage(String url, boolean optimized){
 		BufferedImage image = null;
+		
+		if(images.containsKey(url)){
+			return images.get(url);
+		}
+		
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream input = classLoader.getResourceAsStream(url);
 		try {
@@ -30,9 +43,10 @@ public class Ressources {
 		}
 		
 		if(optimized)
-			return optimise(image);
-		else
-			return image;			
+			image = optimise(image);
+		
+		images.put(url, image);
+		return image;		
 	}
 	
 	/**

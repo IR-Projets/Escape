@@ -36,9 +36,4 @@ public class Enemy extends Ship{
 		}
 	}
 
-	@Override
-	public BufferedImage getImage() {
-		return getImage();
-	}
-
 }

@@ -5,6 +5,8 @@ import hud.LifeListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
@@ -27,6 +29,9 @@ public abstract class Ship extends Entity{
 	}
 	
 	
+	public BufferedImage getImage(){
+		return image;
+	}
 	
 	public void addListener(LifeListener listen){
 		lifeListener.add(listen);

@@ -28,7 +28,6 @@ public class Environnement {
 
 
 
-	private World world;			//The Jbox2D world
 	private Map map;				//The background map
 	//private List<Entitie> entities;	//All entities
 	private final Entities entities;
@@ -42,10 +41,10 @@ public class Environnement {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(World world){
-		entities = new Entities(world);
+	public Environnement(final Entities entities){
 
-		world.setContactListener(new ContactListener() {
+		this.entities=entities;
+		entities.getWorld().setContactListener(new ContactListener() {
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
 			}			
@@ -65,8 +64,6 @@ public class Environnement {
 				}
 			}
 		});
-
-		this.world=world;
 		//entities = new LinkedList<>();
 		entitiesToDelete = new LinkedList<>();
 	}
@@ -87,7 +84,7 @@ public class Environnement {
 	public void setPlayer(Player player){
 		this.player = player;
 		player.addListener(Hud.get());
-		entities.addEntity(player);
+		//entities.addEntity(player);
 	}
 
 
@@ -114,12 +111,15 @@ public class Environnement {
 		entity.init(x, y);
 		entities.add(entity);
 	}*/
+	/*
 	public void addEntitie(Entity entitie){
 		entities.addEntity(entitie);
 	}
+	*/
 	public void removeEntitie(Entity entitie){
 		entities.removeEntitie(entitie);
 	}
+	
 
 
 	/*public void removeEntity(Entity entity){
@@ -161,7 +161,7 @@ public class Environnement {
 
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
 		
-		world.step(timeStep, velocityIteration, positionIteration);
+		entities.step(timeStep, velocityIteration, positionIteration);
 		
 		/*
 		 * Delete entities that were collided

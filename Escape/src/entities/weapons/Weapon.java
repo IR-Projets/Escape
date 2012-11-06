@@ -6,6 +6,7 @@ import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.Entity;
+import game.Ressources;
 
 public abstract class Weapon extends Entity{
 
@@ -18,7 +19,7 @@ public abstract class Weapon extends Entity{
 
 	@Override
 	public BufferedImage getImage() {
-		return getImage();
+		return Ressources.getImage("images/weapons/fire.png");
 	}
 	
 }

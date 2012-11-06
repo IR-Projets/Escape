@@ -8,6 +8,8 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import entities.Entities;
+import entities.Entities.EntityType;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
@@ -23,19 +25,23 @@ public class EnvironnementFactory {
 	private static final boolean DO_SLEEP = false;
 	
 	public static Environnement WORLD1(World world){
-		Environnement env = new Environnement(world);
-		Map map;
-		Player playerShip;
-		//List<Entitie> entityList = new LinkedList<>();
-		map = new Map();
-		playerShip = new Player(env.getEntities(), 0, 0);
+		Entities entities = new Entities(world);
+		Environnement env = new Environnement(entities);
+		
+		Map map = new Map();
+		Player playerShip = new Player(entities);		
 		env.setPlayer(playerShip);
 
+		for(int i=0;i<10; i++)
+			entities.createEntity(EntityType.Ennemy);
+		
+		/*
 		Random rand = new Random();
 		for(int i=0;i<10; i++){
 			env.addEntitie(new Enemy(env.getEntities(), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
 			//entityList.add(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
 		}	
+		*/
 		
 		env.setMap(map);
 		env.setGesture(new Gesture(playerShip));
