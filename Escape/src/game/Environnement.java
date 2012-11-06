@@ -147,8 +147,12 @@ public class Environnement {
 	 * @param event the event to be handled
 	 */
 	public void event(MotionEvent event) {
-		if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN)
-			entities.addEntitie(new Fireball(world, "images/weapons/fire.png", event.getX(), event.getY()));
+		if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN){
+			Vec2 pos = player.getPositionNormalized();
+			int width = player.getImage().getWidth();
+			int height = player.getImage().getHeight();
+			entities.addEntitie(new Fireball(world, "images/weapons/fire.png", pos.x+width/2, pos.y+height/2));
+		}
 		else{
 			gesture.event(event);
 			Hud.get().event(event);

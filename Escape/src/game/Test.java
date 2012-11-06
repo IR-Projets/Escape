@@ -68,10 +68,10 @@ public class Test extends TestbedTest {
 		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
 		
 		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
-		model.getSettings().addSetting(new TestbedSetting(COMPUTE_RATE, SettingType.ENGINE, 1, 1, 100));
-		model.getSettings().addSetting(new TestbedSetting(TIME_STEP, SettingType.ENGINE, 1, 1, 100));
-		model.getSettings().addSetting(new TestbedSetting(VELOCITY_OP, SettingType.ENGINE, 0, 0, 100));
-		model.getSettings().addSetting(new TestbedSetting(POSITION_IT, SettingType.ENGINE, 0, 0, 100));
+		model.getSettings().addSetting(new TestbedSetting(COMPUTE_RATE, SettingType.ENGINE, 1, 1, 50));
+		model.getSettings().addSetting(new TestbedSetting(TIME_STEP, SettingType.ENGINE, 1, 1, 60));
+		model.getSettings().addSetting(new TestbedSetting(VELOCITY_OP, SettingType.ENGINE, 0, 0, 10));
+		model.getSettings().addSetting(new TestbedSetting(POSITION_IT, SettingType.ENGINE, 0, 0, 10));
 
 		
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
