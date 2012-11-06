@@ -44,8 +44,9 @@ public class Game {
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 	
-		env.compute();		
+				
 		env.render(bufferGraphics);		
+		env.compute();
 		
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);

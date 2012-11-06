@@ -19,11 +19,9 @@ public abstract class Entitie {
 
 	private final Body body;
 	private final BufferedImage image;
-	private final World world;
 
 	public Entitie(World world, String nameImage, float x, float y) {
 		this.image = Ressources.getImage(nameImage);
-		this.world=world;
 		
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(toWorldSize(image.getWidth()/2), toWorldSize(image.getHeight()/2));
@@ -103,11 +101,4 @@ public abstract class Entitie {
 	public float toWorldSize(float speedX){
 		return speedX / Variables.WORLD_SCALE;
 	}
-
-	
-	public World getWorld() {
-		return world;
-	}
-
-
 }
