@@ -3,9 +3,14 @@ package game;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.awt.image.WritableRaster;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -73,7 +78,7 @@ public class Ressources {
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice device = env.getDefaultScreenDevice();
 		GraphicsConfiguration config = device.getDefaultConfiguration();
-		imageTmp = config.createCompatibleImage(image.getWidth(), image.getHeight());	
+		imageTmp = config.createCompatibleImage(image.getWidth(), image.getHeight(), Transparency.OPAQUE);	
 		imageTmp.createGraphics().drawImage(image, 0, 0, null);
 		
 		return imageTmp;
