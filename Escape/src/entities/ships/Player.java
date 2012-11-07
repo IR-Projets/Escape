@@ -1,6 +1,7 @@
 package entities.ships;
 
 import entities.Entities;
+import entities.Entity;
 import game.Ressources;
 import game.Variables;
 
@@ -122,6 +123,25 @@ public class Player extends Ship {
 		} 
 	}
 
+	@Override
+	public EntityType getType() {
+		return EntityType.Joueur;
+	}
+
+	@Override
+	public void collision(Entity entity, EntityType type) {
+		switch(type){
+		case Boss:
+		case Enemy:
+		case Weapon:
+			if(getLife()>10)
+				setLife(getLife()-10);
+			else
+				getEntities().removeEntitie(this);
+			break;
+		}
+		
+	}
 
 
 	/**

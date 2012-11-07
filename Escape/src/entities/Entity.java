@@ -15,7 +15,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
-public abstract class Entity {
+public abstract class Entity implements CollisionListener{
 
 	private Body body;
 	private Entities entities;
@@ -99,7 +99,5 @@ public abstract class Entity {
 	public static float toWorldSize(float val){
 		return val / Variables.WORLD_SCALE;
 	}
-	
-
 
 }

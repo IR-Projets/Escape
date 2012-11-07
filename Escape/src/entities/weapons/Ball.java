@@ -3,6 +3,7 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 
 import entities.Entities;
+import entities.Entity;
 import game.Ressources;
 
 public class Ball extends Weapon{
@@ -17,7 +18,5 @@ public class Ball extends Weapon{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 	
 }

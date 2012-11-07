@@ -1,6 +1,15 @@
 package entities;
 
+
 public interface CollisionListener {
-	//public void collide(Entity entity);
-	public void collide(Entity entity);
+	public enum EntityType{
+		Enemy,
+		Boss,
+		Joueur,
+		Item,
+		Weapon
+	}
+	
+	public EntityType getType();
+	public void collision(Entity entity, EntityType type);
 }

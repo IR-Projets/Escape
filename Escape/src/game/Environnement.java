@@ -31,7 +31,6 @@ public class Environnement {
 	private Map map;				//The background map
 	//private List<Entitie> entities;	//All entities
 	private final Entities entities;
-	private List<Entity> entitiesToDelete;	//All entities
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
@@ -43,30 +42,7 @@ public class Environnement {
 	 * @param world Jbox2d world
 	 */
 	public Environnement(final Entities entities){
-
 		this.entities=entities;
-		entities.getWorld().setContactListener(new ContactListener() {
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}			
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}			
-			@Override
-			public void endContact(Contact contact) {
-			}			
-			@Override
-			public void beginContact(Contact contact) {
-				if(contact.getFixtureA().getBody() == player.getBody()){
-					playerCollision(entities.getEntitie(contact.getFixtureB().getBody()));
-				}
-				else if(contact.getFixtureB().getBody() == player.getBody()){
-					playerCollision(entities.getEntitie(contact.getFixtureA().getBody()));
-				}
-			}
-		});
-		//entities = new LinkedList<>();
-		entitiesToDelete = new LinkedList<>();
 		hud = new Hud();
 	}
 
@@ -99,7 +75,7 @@ public class Environnement {
 		return hud;
 	}
 
-
+/*
 	protected void playerCollision(Entity entitie) {
 		if(entitie!=null){
 			Vec2 pos = entitie.getScreenPostion();
@@ -110,6 +86,8 @@ public class Environnement {
 			entitiesToDelete.add(entitie);
 		}
 	}
+*/
+
 
 	/**
 	 * Add an entity to the Environnement at the specified position
@@ -145,7 +123,6 @@ public class Environnement {
 	public void render(Graphics2D graphics){			
 		//render all: map, entities and the gesture
 		map.render(graphics);
-		player.render(graphics);
 		entities.render(graphics);
 		gesture.render(graphics);
 		Effects.render(graphics);
@@ -162,18 +139,9 @@ public class Environnement {
 	}
 
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
-
 		entities.step(timeStep, velocityIteration, positionIteration);
-
-		/*
-		 * Delete entities that were collided
-		 */
-		for(Entity entitie : entitiesToDelete)
-			entities.removeEntitie(entitie);
-		entitiesToDelete.clear();
-
-		map.compute();
 		entities.compute();
+		map.compute();
 		gesture.compute();
 	}
 

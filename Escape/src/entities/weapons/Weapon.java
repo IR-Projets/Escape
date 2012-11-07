@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import entities.Entities;
 import entities.Entity;
+import entities.CollisionListener.EntityType;
 
 public abstract class Weapon extends Entity{
 
@@ -20,6 +21,17 @@ public abstract class Weapon extends Entity{
 	@Override
 	public BufferedImage getImage(){
 		return image;
+	}
+	
+	
+	@Override
+	public EntityType getType() {
+		return EntityType.Weapon;
+	}
+
+	@Override
+	public void collision(Entity entity, EntityType type) {
+		getEntities().removeEntitie(this);	
 	}
 	
 }

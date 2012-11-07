@@ -9,13 +9,19 @@ import game.Variables;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 
 public class Entities {
 	/*
@@ -23,10 +29,30 @@ public class Entities {
 	 * Un seul World et une seule liste d'entity
 	 */	
 	private final Map<Body, Entity> entities = new Hashtable<>();
+	private final List<Entity> entitiesToDelete;	//All entities
 	private final World world;
 	
 	public Entities(World world){
+		entitiesToDelete = new LinkedList<>();
 		this.world = world;
+		world.setContactListener(new ContactListener() {
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+			}			
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+			}			
+			@Override
+			public void endContact(Contact contact) {
+			}			
+			@Override
+			public void beginContact(Contact contact) {
+				Entity entityA = getEntitie(contact.getFixtureA().getBody());
+				Entity entityB = getEntitie(contact.getFixtureB().getBody());
+				if(entityA!=null && entityB!=null)
+					entityA.collision(entityB, entityB.getType());
+			}
+		});
 	}
 	
 	public World getWorld(){
@@ -34,12 +60,12 @@ public class Entities {
 	}
 	
 	
-	public enum EntityType{
+	public enum EntityFactoryType{
 		Player,
 		Ennemy
 	}
 	
-	public Entity createEntity(EntityType entityType){
+	public Entity createEntity(EntityFactoryType entityType){
 		Entity entity = null;
 		switch(entityType){
 			case Player:
@@ -66,8 +92,7 @@ public class Entities {
 	}
 	
 	public void removeEntitie(Entity entity){
-		world.destroyBody(entity.getBody());
-		entities.remove(entity.getBody());
+		entitiesToDelete.add(entity);
 	}
 
 	
@@ -86,6 +111,15 @@ public class Entities {
 	}	
 	
 	public void step(float timeStep, int velocityIteration, int positionIteration){
+		/*
+		 * Delete entities that were collided
+		 */
+		for(Entity entity : entitiesToDelete){
+			world.destroyBody(entity.getBody());
+			entities.remove(entity.getBody());
+		}
+		entitiesToDelete.clear();
+		
 		world.step(timeStep, velocityIteration, positionIteration);
 	}
 	

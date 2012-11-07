@@ -6,6 +6,7 @@ import java.util.Random;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
+import entities.Entity;
 import entities.ships.Ship;
 import game.Ressources;
 
@@ -34,6 +35,25 @@ public class Enemy extends Ship{
 			lastExecution=now;
 			setVelocity(rand.nextInt(100)-50, rand.nextInt(100)-50);
 		}
+	}
+
+	@Override
+	public EntityType getType() {
+		return EntityType.Enemy;
+	}
+
+	@Override
+	public void collision(Entity entity, EntityType type) {
+		switch (type) {
+		case Weapon:			
+		case Joueur:
+			getEntities().removeEntitie(this);
+			break;			
+
+		default:
+			break;
+		}
+		
 	}
 
 }
