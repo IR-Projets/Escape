@@ -34,7 +34,7 @@ public class Game {
 	private double time = 0;
 	private int ite = 0;
 
-	private long next_game_tick = System.currentTimeMillis();
+	private long next_game_tick;
 	
 	
 	
@@ -50,6 +50,7 @@ public class Game {
 	}
 	
 	public void init(Graphics2D graphics) {
+		next_game_tick = System.currentTimeMillis();
 	}
 	
 
@@ -62,18 +63,12 @@ public class Game {
 
 		while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
 			env.compute();
-
 			next_game_tick += Variables.SKIP_TICKS;
 			loops++;
 		}
 
 		float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
-
-		//long now = System.currentTimeMillis();
 		env.render(bufferGraphics, interpolation);
-		//long time = System.currentTimeMillis() - now;
-		//System.out.println(time);
-		
 				
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);
@@ -106,4 +101,13 @@ public class Game {
 		env.event(event);
 	}
 	
+	
+	
+	long now;
+	public void beginTime(){
+		 now = System.currentTimeMillis();
+	}
+	public void endTime(String description){
+		System.out.println(description + ": " + (System.currentTimeMillis() - now + "ms"));
+	}
 }
