@@ -18,8 +18,6 @@ public abstract class Weapon extends Entity{
 	public Weapon(Entities entities, BufferedImage image, int x, int y) {
 		super(entities, x, y, image.getWidth(), image.getHeight());
 		this.image = image;
-		
-		//getBody().setActive(true); ???????
 	}
 
 	@Override

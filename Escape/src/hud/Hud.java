@@ -76,7 +76,6 @@ public class Hud implements LifeListener{
 			return;
 		int diffLife = oldLife-newLife;
 		sizeLife -= diffLife*echelle;
-		System.out.println("Sizelife"+sizeLife);
 	}
 	
 	/**

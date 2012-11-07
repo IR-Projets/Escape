@@ -103,7 +103,6 @@ public class Looping implements Filter {
 			break;
 			
 		}
-		System.out.println("loop"+direction);
 	}
 
 }

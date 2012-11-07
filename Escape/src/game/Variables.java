@@ -13,11 +13,16 @@ public class Variables {
 	 */
 	public static final String APPLICATION_NAME = "Escape IR";
 	public static final int SCREEN_WIDTH = 500;
-	public static final int SCREEN_HEIGHT = 500;
+	public static final int SCREEN_HEIGHT = 700;
 	
+	
+	/*
+	 * Render variables
+	 */
 	public static final int TICKS_PER_SECOND = 25;
-	public static final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+	public static final int SKIP_TICKS = 300 / TICKS_PER_SECOND;
 	public static final int MAX_FRAMESKIP = 5;
+	
 	
 	/*
 	 * Some static colors

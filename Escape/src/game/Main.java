@@ -16,8 +16,6 @@ public class Main {
 	public static void main(String[] args) {
 		final Game game;
 
-/* NON ON TEST PAS !!! */
-
 		try {
 			game = new Game();
 		} catch (IOException e1) {
