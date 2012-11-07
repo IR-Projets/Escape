@@ -1,5 +1,7 @@
 package entities.ships;
 
+import effects.Effects;
+import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import game.Ressources;
@@ -136,8 +138,11 @@ public class Player extends Ship {
 		case Weapon:
 			if(getLife()>10)
 				setLife(getLife()-10);
-			else
+			else{
+				Vec2 pos = getScreenPostion();
+				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 				getEntities().removeEntitie(this);
+			}
 			break;
 		}
 		

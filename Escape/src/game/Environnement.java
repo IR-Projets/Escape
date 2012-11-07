@@ -75,19 +75,6 @@ public class Environnement {
 		return hud;
 	}
 
-/*
-	protected void playerCollision(Entity entitie) {
-		if(entitie!=null){
-			Vec2 pos = entitie.getScreenPostion();
-
-			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-			//Test
-			player.setLife(player.getLife()-20);
-			entitiesToDelete.add(entitie);
-		}
-	}
-*/
-
 
 	/**
 	 * Add an entity to the Environnement at the specified position

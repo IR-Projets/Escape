@@ -3,8 +3,11 @@ package entities.ships.enemies;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import effects.Effects;
+import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import entities.ships.Ship;
@@ -47,6 +50,8 @@ public class Enemy extends Ship{
 		switch (type) {
 		case Weapon:			
 		case Joueur:
+			Vec2 pos = getScreenPostion();
+			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 			getEntities().removeEntitie(this);
 			break;			
 
