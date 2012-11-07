@@ -38,6 +38,12 @@ public class Entities {
 		world.setContactListener(new ContactListener() {
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
+				Entity entityA = getEntitie(contact.getFixtureA().getBody());
+				Entity entityB = getEntitie(contact.getFixtureB().getBody());
+				if(entityA!=null && entityB!=null){
+					entityA.collision(entityB, entityB.getType());
+					entityB.collision(entityA, entityA.getType());
+				}
 			}			
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
@@ -47,10 +53,6 @@ public class Entities {
 			}			
 			@Override
 			public void beginContact(Contact contact) {
-				Entity entityA = getEntitie(contact.getFixtureA().getBody());
-				Entity entityB = getEntitie(contact.getFixtureB().getBody());
-				if(entityA!=null && entityB!=null)
-					entityA.collision(entityB, entityB.getType());
 			}
 		});
 	}
