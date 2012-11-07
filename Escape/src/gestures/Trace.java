@@ -64,6 +64,10 @@ public class Trace {
 		}
 	}
 
+	public void setValid(boolean valid) {//Only uses by the validation of weapon
+		this.valid = valid;
+	}
+	
 	/**
 	 * Check if a Trace is correctly recognized by our movement, defined by the interface Filter
 	 * All trace are managed By Gesture.

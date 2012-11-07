@@ -1,15 +1,15 @@
 package gestures;
 
 import entities.ships.Player;
-import entities.weapons.Ball;
-import entities.weapons.Fireball;
 import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Environnement;
+import game.Variables;
 import gestures.filters.Backoff;
 import gestures.filters.Drift;
 import gestures.filters.Filter;
+import gestures.filters.Filters;
 import gestures.filters.Looping;
 
 import java.awt.Graphics2D;
@@ -23,13 +23,17 @@ public class Gesture {
 	private final TraceStack traceStack;
 	private final List<Filter> filters;
 	private final Environnement env;
+	private Weapon weaponToMove;
 	
-	
+	private enum Action{ MOVE, SHOOT };
+	private Action action;
+
 
 	public Gesture(Environnement env){
 		this.env=env;
 		traceStack = new TraceStack();
 		filters = initFilters();
+		weaponToMove=null;
 	}
 
 	/*
@@ -66,13 +70,30 @@ public class Gesture {
 	 */
 	public void event(MotionEvent event){
 		switch(event.getKind()){	
-		case ACTION_UP : 			
-			for(Filter filter : filters){
-				if(traceStack.check(filter)){
-					filter.apply(env.getPlayer());
+		case ACTION_UP :
+			if(action == Action.MOVE){
+				for(Filter filter : filters){
+					if(traceStack.check(filter)){
+						filter.apply(env.getPlayer());
+					}
 				}
 			}
-			traceStack.finishCurrentTrace();
+			else{
+				if(weaponToMove != null){
+					List<Vec2> traceWeapon = traceStack.getCurrentTrace().getTrace();
+					double angle;
+					if(traceWeapon.size() <=1)
+						angle = 90;
+					else
+						angle = Filters.getAngle(traceWeapon);
+					float vitX = (float) (Math.cos(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
+					float vitY = (float) (Math.sin(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
+					weaponToMove.setVelocity(vitX, vitY);
+					traceStack.getCurrentTrace().setValid(true);
+				}
+			}
+				traceStack.finishCurrentTrace();
+			
 			break;
 
 		case ACTION_DOWN :
@@ -82,11 +103,11 @@ public class Gesture {
 				int width = player.getImage().getWidth();
 				int height = player.getImage().getHeight();
 				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
-				env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2);
-				
-				
+				weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2);
+				action = Action.SHOOT;
 			}
-			
+			else
+				action = Action.MOVE;
 			break;
 
 		case ACTION_MOVE :
