@@ -22,7 +22,10 @@ public class Game {
 	private double fps;
 	private double time = 0;
 	private int ite = 0;
-	
+
+	private long next_game_tick = System.currentTimeMillis();
+    int loops;
+    float interpolation;
 	
 	
 	
@@ -44,13 +47,30 @@ public class Game {
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 	
-				
-		env.render(bufferGraphics);		
-		env.compute();
+		if(true){ //Optimisation
+			loops = 0;
+			System.out.println("out");
+			while( System.currentTimeMillis() > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
+				env.compute();
+
+				next_game_tick += Variables.SKIP_TICKS;
+				loops++;
+			}
+
+			interpolation = (float) (System.currentTimeMillis() + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
+			env.render(bufferGraphics, interpolation); //interpolation????		
+		}
+		else{
+			env.render(bufferGraphics, 0);
+			env.compute();
+		}
 		
+				
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);
 		}
+		
+	
 		
 		graphics.drawImage(offscreen, 0, 0, null);
 	}

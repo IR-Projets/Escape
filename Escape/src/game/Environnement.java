@@ -107,9 +107,9 @@ public class Environnement {
 	 * Render all entities associated
 	 * @param graphics draw area
 	 */
-	public void render(Graphics2D graphics){			
+	public void render(Graphics2D graphics, float interpolation){			
 		//render all: map, entities and the gesture
-		map.render(graphics);
+		map.render(graphics, interpolation);
 		entities.render(graphics);
 		gesture.render(graphics);
 		Effects.render(graphics);

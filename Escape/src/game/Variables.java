@@ -8,24 +8,46 @@ public class Variables {
 
 	public final static boolean DEBUG = true;
 	
-	public final static String APPLICATION_NAME = "Escape IR";
-	public final static int SCREEN_WIDTH = 500;
-	public final static int SCREEN_HEIGHT = 800;
+	/*
+	 * Application variables
+	 */
+	public static final String APPLICATION_NAME = "Escape IR";
+	public static final int SCREEN_WIDTH = 500;
+	public static final int SCREEN_HEIGHT = 500;
 	
+	public static final int TICKS_PER_SECOND = 25;
+	public static final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+	public static final int MAX_FRAMESKIP = 5;
+	
+	/*
+	 * Some static colors
+	 */
 	public final static Color GREEN = new Color(0,125,0);
 	public final static Color RED = new Color(255,0,0);
 	public final static Color BLUE = new Color(0,0,255);
 	public final static Color WHITE = new Color(255,255,255);
 	public final static Color BLACK = new Color(0,0,0);
 	
+	
+	/*
+	 * Main ship
+	 */
 	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
 	public final static int SPEED_WEAPON = 80;/* Speed of the main ship */
+	public final static int MAX_LIFE = 100;
 	
+	
+	/*
+	 * Gesture variables
+	 */
 	public final static int TRACE_DELETE_RATE = 3;/*If we increase the value, the delete time of Trace become lower*/
 	public final static double TRACE_VARIATION_MAX = 30;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_LENGTH_MIN = 4;
 	
 	
+	/*
+	 * World variables
+	 */
 	public final static float WORLD_SCALE = 20;
 	public static final float WORLD_GRAVITY_X = 0;
 	public static final float WORLD_GRAVITY_Y = 0;
@@ -35,10 +57,7 @@ public class Variables {
 	public static final int WORLD_POSITION_ITERATION = 8;
 	
 	
-	public static float LINK_FREQUENCY = .005f;	//Duret?e plus c'est petit, plus c'est dur
-	public static float LINK_DAMPING = 0.001f;	//Ressort plus c'est petit, moins ia de ressort
 	
-	public final static int MAX_LIFE = 100;
 	/*
 	 * 
 	 */
