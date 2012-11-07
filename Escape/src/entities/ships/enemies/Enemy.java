@@ -53,7 +53,7 @@ public class Enemy extends Ship{
 			Vec2 pos = getScreenPostion();
 			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 			getEntities().removeEntitie(this);
-			break;			
+			break;	
 
 		default:
 			break;
