@@ -66,6 +66,10 @@ public class Hud implements LifeListener{
 		return itemList;
 	}
 
+	public Item getItemActual() {
+		return itemList.getItems().get(0);
+	}
+	
 	public Weapon createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
 		WeaponFactory factory = new WeaponFactory(entities);
 		return factory.createWeapon(itemList.removeCurrentItem().getWeaponType(), x, y, damagedPlayer);

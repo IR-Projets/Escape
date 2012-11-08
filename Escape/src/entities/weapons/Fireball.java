@@ -1,42 +1,33 @@
 package entities.weapons;
 
-import java.awt.image.BufferedImage;
-
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.World;
-
 import entities.Entities;
+import entities.weapons.WeaponFactory.WeaponType;
 import game.Ressources;
 
 public class Fireball extends Weapon {
 
-	protected BufferedImage image;
-	
-	
-	
-	//TODO: Entity doit afficher lui même ses entitées !!!!!!!!!!!!!!!!!!!!!!!
-	//Renomer Entity en Entities !!!!!!!!!!!!!!!!!!
-	
+	private final long time;
+	private int increase;
 	
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, Ressources.getImage("images/weapons/fire.png"),x,y, firedByPlayer);
+		super(entities, EntityShape.Circle, Ressources.getImage("images/weapons/fire.png"),x,y, firedByPlayer,3, WeaponType.Fireball);
+		time = System.nanoTime()/1000000;
+		increase=0;
 	}
 
 	
 	@Override
 	public void compute() {
-		// TODO Auto-generated method stub
-		
+		long diffTime = (System.nanoTime()/1000000 - time)/10;
+		//System.out.println(diffTime);
+		if(isLaunch())
+			return;
+		if(diffTime % 32 > 29  && increase <3){
+			setImage(Weapon.resize(getImage(), 1.5f));
+			increase++;
+			setDamage(getDamage()*2);
+		}
 	}
-
-	//la il faudra ajouter l'effet d'augmentation de la boule
-	/*
-	@Override
-	public BufferedImage getImageRender() {
-		
-		return null;
-	}*/
-	
 	
 	
 }

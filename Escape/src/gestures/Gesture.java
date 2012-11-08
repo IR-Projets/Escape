@@ -2,6 +2,7 @@ package gestures;
 
 import entities.ships.Player;
 import entities.weapons.Weapon;
+import entities.weapons.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Environnement;
@@ -24,6 +25,7 @@ public class Gesture {
 	private final List<Filter> filters;
 	private final Environnement env;
 	private Weapon weaponToMove;
+	private final Weapon shibMissible[];
 	
 	private enum Action{ MOVE, SHOOT };
 	private Action action;
@@ -34,6 +36,7 @@ public class Gesture {
 		traceStack = new TraceStack();
 		filters = initFilters();
 		weaponToMove=null;
+		shibMissible = new Weapon[2];
 	}
 
 	/*
@@ -89,7 +92,16 @@ public class Gesture {
 					float vitX = (float) (Math.cos(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
 					float vitY = (float) (Math.sin(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
 					weaponToMove.setVelocity(vitX, vitY);
+					weaponToMove.setLaunch(true);
 					traceStack.getCurrentTrace().setValid(true);
+					if(weaponToMove.getWeaponType() == WeaponType.Shiboleet){
+						shibMissible[0].setVelocity(-vitX, vitY);
+						shibMissible[0].setLaunch(true);
+						shibMissible[1].setVelocity(0, vitY);
+						shibMissible[1].setLaunch(true);
+					}
+						
+					
 				}
 			}
 				traceStack.finishCurrentTrace();
@@ -103,7 +115,15 @@ public class Gesture {
 				int width = player.getImage().getWidth();
 				int height = player.getImage().getHeight();
 				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
-				weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);
+				if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet){
+					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
+					shibMissible[0] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
+					shibMissible[1] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
+					env.getHud().getItemActual().addItem(2);
+				}
+				else
+					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);
+				
 				action = Action.SHOOT;
 			}
 			else

@@ -1,11 +1,6 @@
 package entities.weapons;
 
-import hud.Item;
-
-import java.util.Random;
-
 import entities.Entities;
-import entities.Entity;
 import entities.EntityFactory;
 
 
@@ -45,7 +40,7 @@ public class WeaponFactory extends EntityFactory{
 			weapon =  new Ball(getEntities(), x, y, damagedPlayer);
 			break;
 		case Shiboleet:
-			weapon =  new Ball(getEntities(), x, y, damagedPlayer);
+			weapon =  new Shiboleet(getEntities(), x, y, damagedPlayer);
 			break;
 		}
 		if(weapon!=null)
