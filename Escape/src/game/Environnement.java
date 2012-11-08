@@ -103,6 +103,7 @@ public class Environnement {
 	 * @param event the event to be handled
 	 */
 	public void event(MotionEvent event) {
+		System.out.println(event.getX() + " " + event.getY());
 		gesture.event(event);
 		hud.event(event);
 	}

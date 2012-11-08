@@ -36,9 +36,13 @@ public abstract class Weapon extends Entity{
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
-		Vec2 pos = getScreenPostion();
-		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-		getEntities().removeEntitie(this);	
+		if(damagedPlayer==false && type==EntityType.Joueur)
+			setSensor(false);
+		else{
+			Vec2 pos = getScreenPostion();
+			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
+			getEntities().removeEntitie(this);
+		}
 
 	}
 

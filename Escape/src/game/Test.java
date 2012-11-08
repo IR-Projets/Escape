@@ -1,6 +1,9 @@
 package game;
 
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import javax.swing.JFrame;
 
 import org.jbox2d.common.Vec2;
@@ -14,6 +17,9 @@ import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
+import fr.umlv.zen2.MotionEvent;
+import fr.umlv.zen2.MotionEvent.Kind;
+
 
 
 public class Test extends TestbedTest {
@@ -23,6 +29,8 @@ public class Test extends TestbedTest {
 	private static final String VELOCITY_OP = "Velocity operation";
 	private static final String POSITION_IT = "Position Iteration";
 	private Environnement env = null;
+	Constructor eventConstructor;
+	
 	
 	@Override
 	public void initTest(boolean argDeserialized) {
@@ -31,6 +39,15 @@ public class Test extends TestbedTest {
 		env = EnvironnementFactory.factory(getWorld());
 		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);	
 		
+		
+		try {
+			eventConstructor = MotionEvent.class.getDeclaredConstructor(int.class, int.class, Kind.class);
+			eventConstructor.setAccessible(true);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}		
 	}
 	
 	int count=0;
@@ -43,14 +60,52 @@ public class Test extends TestbedTest {
 	    TestbedSetting velocityIterations = settings.getSetting(VELOCITY_OP); // grab our setting
 	    TestbedSetting positionIterations = settings.getSetting(POSITION_IT); // grab our setting
 	    
-
 	    count++;
 	    if(count>computeRate.value){
 	    	count=0;
 		    env.compute(timeStep.value/60.f, velocityIterations.value, positionIterations.value);
-	    }	   
+	    }	  
+	    
 	  }
+	 
+	public void event(int x, int y, Kind kind){
+		
+		if(x<0 || y<0)
+			return;
+		x = (int) (x * Variables.WORLD_SCALE);
+		y = Variables.SCREEN_HEIGHT - (int)(y * Variables.WORLD_SCALE);
 
+		MotionEvent event = null;
+		try {
+			event = (MotionEvent) eventConstructor.newInstance(x, y, kind);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		env.event(event);
+	}
+	  
+	boolean clicked = false;
+	@Override
+	public void mouseUp(Vec2 p){	
+		clicked=false;
+		event((int)p.x, (int)p.y, Kind.ACTION_UP);
+	}
+	@Override
+	public void mouseDown(Vec2 p){
+		clicked=true;
+		event((int)p.x, (int)p.y, Kind.ACTION_DOWN);
+	}
+	@Override
+	public void mouseMove(Vec2 p){
+		if(clicked)
+			event((int)p.x, (int)p.y, Kind.ACTION_MOVE);
+	}
+	  
+	
+	
+	
+	
+	
 	@Override
 	public String getTestName() {
 		return "#### TEST #####";

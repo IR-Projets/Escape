@@ -132,7 +132,6 @@ public class Player extends Ship {
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
-		System.out.println(type);
 		switch(type){
 		case Boss:
 		case Enemy:

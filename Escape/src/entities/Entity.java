@@ -89,7 +89,9 @@ public abstract class Entity implements CollisionListener{
 		setVelocity(0,0);
 	}
 	
-	
+	public void setSensor(boolean isSensor){
+		body.getFixtureList().setSensor(isSensor);
+	}
 	
 	
 	/*
