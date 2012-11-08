@@ -22,6 +22,7 @@ import entities.Entities;
 import entities.maps.Clouds;
 import entities.maps.Map;
 import entities.ships.Player;
+import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Fireball;
 import fr.umlv.zen2.MotionEvent;
@@ -47,15 +48,15 @@ public class Environnement {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Map map, Player player, Entities entities, EnnemyBehavior enemyBehavior, Hud hud){
+	public Environnement(Map map, Player player, EnnemyBehavior ennemyBehavior, Entities entities, Hud hud){
 		this.map = map;
 		this.player = player;
 		player.addListener(hud);
+		this.ennemyBehavior = ennemyBehavior;
 		this.entities=entities;
 		this.gesture = new Gesture(this);
 		this.hud = hud;
 		hud = new Hud();
-		this.ennemyBehavior = new EnnemyBehavior(entities, "./Escape/src/script.txt");
 	}
 
 	
@@ -87,13 +88,13 @@ public class Environnement {
 	 * @param graphics draw area
 	 */
 	public void render(Graphics2D graphics, float interpolation){			
-		map.render_groundLayer(graphics);	//The ground (the planet)
+		map.render(graphics);	//The ground (the planet)
 		
 		entities.render(graphics);			//All the entities (player too)
 		gesture.render(graphics);			//Gesture movements (circle)
 		Effects.render(graphics);			//Effect (explosion)
 		
-		map.render_earthLayer(graphics);	//the earth (cloud)
+		//map.render_earthLayer(graphics);	//the earth (cloud)
 		hud.render(graphics);				//Health, score, amo
 	}
 
@@ -111,6 +112,7 @@ public class Environnement {
 		entities.compute();
 		map.compute();
 		gesture.compute();
+		Effects.compute();
 		ennemyBehavior.compute();
 	}
 

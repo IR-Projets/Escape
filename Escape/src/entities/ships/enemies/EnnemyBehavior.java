@@ -13,6 +13,7 @@ import entities.Entity;
 import entities.ships.enemies.LoaderBehavior.Behavior;
 import entities.ships.enemies.LoaderBehavior.HeadScript;
 import entities.ships.enemies.LoaderBehavior.HeadScript.Couple;
+import game.Ressources;
 import game.Variables;
 
 
@@ -31,11 +32,7 @@ public class EnnemyBehavior {
 		enemys = new LinkedList<>();
 
 		BufferedReader bufIn = null;
-		try {
-			bufIn = new BufferedReader(new FileReader(filename));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		bufIn = new BufferedReader (Ressources.getFile(filename));
 		try {
 			head = LoaderBehavior.initHead(bufIn);
 			listBehavior = LoaderBehavior.initBody(bufIn);

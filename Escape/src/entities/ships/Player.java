@@ -43,7 +43,7 @@ public class Player extends Ship {
 
 
 	public Player(Entities entities){
-		super(entities, Ressources.getImage("images/Ships/Player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
+		super(entities, Ressources.getImage("images/ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 		
 		getBody().setFixedRotation(true);
 		looping = Looping.NONE;
@@ -51,7 +51,7 @@ public class Player extends Ship {
 
 		loopingImage = new BufferedImage[12];
 		for(int i=0; i<loopingImage.length; i++){
-			loopingImage[i] = Ressources.getImage("images/Ships/Player/Joueur"+(i+1)+".png");	
+			loopingImage[i] = Ressources.getImage("images/ships/player/Joueur"+(i+1)+".png");	
 		}
 	}
 

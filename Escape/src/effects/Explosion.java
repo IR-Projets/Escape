@@ -28,21 +28,24 @@ public class Explosion extends Effects {
 		images = new BufferedImage[4];
 		
 		for(int i=0; i<images.length; i++){  
-			images[i] = Ressources.getImage("images/Effects/fire"+i+".png");				
+			images[i] = Ressources.getImage("images/effects/fire"+i+".png");				
 		}
 	}
 	
 	
 	@Override
-	public void renderEffect(Graphics2D graphics) {
+	public void renderEffect(Graphics2D graphics) {		
+		graphics.drawImage(images[currentImage], x, y, null);
+	}
+
+	@Override
+	public void computeEffect() {
 		currentIte = ++currentIte % SLOW;
 		if(currentIte==0){
 			currentImage++;
 		}
-		
-		graphics.drawImage(images[currentImage], x, y, null);
 	}
-
+	
 	@Override
 	public boolean terminated() {
 		return currentImage==images.length-1 && currentIte==SLOW-1;

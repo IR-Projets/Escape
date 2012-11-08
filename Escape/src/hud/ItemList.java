@@ -54,9 +54,9 @@ public class ItemList {
 		
 
 		//Only for test
-		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",1));
-		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",1));
-		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",2));
+		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",10));
+		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",10));
+		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",20));
 	}
 	
 	
