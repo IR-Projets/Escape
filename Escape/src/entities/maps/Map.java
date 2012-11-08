@@ -27,7 +27,6 @@ public abstract class Map{
 	private int subImgW;
 	private int subImgH;
 	private BufferedImage imageTmp;
-	private List <Layer> layers;
 	private float velocity;
 
 
@@ -36,7 +35,6 @@ public abstract class Map{
 		this.ground = ground;
 		this.velocity=velocity;
 		float ratio = 1f; //Doit etre inferieur a 1
-		layers= new LinkedList<>();
 		
 		subImgW=(int)(Variables.SCREEN_WIDTH * ratio);
 		if(subImgW>ground.getWidth())
@@ -51,12 +49,8 @@ public abstract class Map{
 			posY=0;
 	}
 
-
-	public void addLayer(Layer layer){
-		this.layers.add(layer);
-	}
 	
-	public void render_groundLayer(Graphics2D graphics){	
+	public void render(Graphics2D graphics){	
 		int screenW = Variables.SCREEN_WIDTH;
 		int screenH = Variables.SCREEN_HEIGHT;
 
@@ -66,25 +60,11 @@ public abstract class Map{
 		graphics.drawImage(ground.getSubimage(0, (int)posY, subImgW, subImgH), 0, 0, Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, null );
 	}
 	
-	public void render_earthLayer(Graphics2D graphics){	
-		Iterator<Layer> ite = layers.iterator();
-		while(ite.hasNext()){
-			Layer current = ite.next();
-			current.render(graphics);
-			if(current.finished()){
-				ite.remove();
-			}
-		}
-	}
-
 
 	public void compute() {
 		posY-=velocity;
-		for(Layer layer : layers)
-			layer.compute();
 		computeMap();
 	}
 	
 	public abstract void computeMap();
-
 }

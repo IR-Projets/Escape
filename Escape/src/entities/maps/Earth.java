@@ -3,6 +3,10 @@ package entities.maps;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import effects.Cloud;
+import effects.Cloud.CloudType;
+import effects.Effects;
+
 import game.Ressources;
 import game.Variables;
 
@@ -33,21 +37,17 @@ public class Earth extends Map {
 		if(loop>LOOP_SKIP){
 			loop=0;
 			
-			int posY = rand.nextInt(Variables.SCREEN_WIDTH); 
-			
 			switch(rand.nextInt(3)){
 				case 0:
-					addLayer(new Layer(imageBigCloud, posY - imageBigCloud.getWidth()/2, 2f));
+					Effects.addEffect(new Cloud(CloudType.Big, 2));//addLayer(new Layer(imageBigCloud, posY - imageBigCloud.getWidth()/2, 2f));
 					break;
 				case 1:
-					addLayer(new Layer(imageMidCloud, posY - imageMidCloud.getWidth()/2, 0.5f));
+					Effects.addEffect(new Cloud(CloudType.Midlle, 0.5f));//addLayer(new Layer(imageMidCloud, posY - imageMidCloud.getWidth()/2, 0.5f));
 					break;
 				case 2:
-					addLayer(new Layer(imageSmallCloud, posY - imageSmallCloud.getWidth()/2, 0.1f));
+					Effects.addEffect(new Cloud(CloudType.Small, 0.1f));//addLayer(new Layer(imageSmallCloud, posY - imageSmallCloud.getWidth()/2, 0.1f));
 					break;
-			}
-			
-			
+			}			
 		}	
 	}
 	

@@ -34,15 +34,18 @@ public class Explosion extends Effects {
 	
 	
 	@Override
-	public void renderEffect(Graphics2D graphics) {
+	public void renderEffect(Graphics2D graphics) {		
+		graphics.drawImage(images[currentImage], x, y, null);
+	}
+
+	@Override
+	public void computeEffect() {
 		currentIte = ++currentIte % SLOW;
 		if(currentIte==0){
 			currentImage++;
 		}
-		
-		graphics.drawImage(images[currentImage], x, y, null);
 	}
-
+	
 	@Override
 	public boolean terminated() {
 		return currentImage==images.length-1 && currentIte==SLOW-1;

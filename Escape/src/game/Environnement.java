@@ -84,13 +84,13 @@ public class Environnement {
 	 * @param graphics draw area
 	 */
 	public void render(Graphics2D graphics, float interpolation){			
-		map.render_groundLayer(graphics);	//The ground (the planet)
+		map.render(graphics);	//The ground (the planet)
 		
 		entities.render(graphics);			//All the entities (player too)
 		gesture.render(graphics);			//Gesture movements (circle)
 		Effects.render(graphics);			//Effect (explosion)
 		
-		map.render_earthLayer(graphics);	//the earth (cloud)
+		//map.render_earthLayer(graphics);	//the earth (cloud)
 		hud.render(graphics);				//Health, score, amo
 	}
 
@@ -108,6 +108,7 @@ public class Environnement {
 		entities.compute();
 		map.compute();
 		gesture.compute();
+		Effects.compute();
 		//ennemyBehavior.compute();
 	}
 

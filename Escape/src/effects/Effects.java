@@ -12,21 +12,32 @@ public abstract class Effects {
 	public static void render(Graphics2D graphics){
 
 		Iterator<Effects> ite = effects.iterator();
-		
 		while(ite.hasNext()){
 			Effects effect = ite.next();
 			effect.renderEffect(graphics);
+		}
+	}
+	
+	public static void compute(){
+		Iterator<Effects> ite = effects.iterator();		
+		while(ite.hasNext()){
+			Effects effect = ite.next();
+			effect.computeEffect();
 			if(effect.terminated()){
 				ite.remove();
 			}
 		}
 	}
 	
+	/*
+	 * TODO: systeme de couches !!
+	 */
 	public static void addEffect(Effects effect){
 		effects.add(effect);		
 	}
 	
 	
 	public abstract void renderEffect(Graphics2D graphics);
+	public abstract void computeEffect();
 	public abstract boolean terminated();
 }
