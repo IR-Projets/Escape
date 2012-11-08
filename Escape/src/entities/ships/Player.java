@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
@@ -46,6 +47,8 @@ public class Player extends Ship {
 		super(entities, EntityShape.Polygon, Ressources.getImage("images/ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 		
 		getBody().setFixedRotation(true);
+		getBody().getFixtureList().getFilterData().groupIndex = -1;
+		
 		looping = Looping.NONE;
 
 

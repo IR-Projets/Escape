@@ -21,7 +21,10 @@ public abstract class Weapon extends Entity{
 		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.damagedPlayer=damagedPlayer;
-		setSensor(false);
+		if(damagedPlayer)
+			getBody().getFixtureList().getFilterData().groupIndex = 1;
+		else
+			getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
 	@Override
