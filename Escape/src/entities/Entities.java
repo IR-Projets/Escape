@@ -65,28 +65,6 @@ public class Entities {
 	}
 	
 	
-	public enum EntityFactoryType{
-		Player,
-		Ennemy
-	}
-	
-	public Entity createEntity(EntityFactoryType entityType){
-		Entity entity = null;
-		switch(entityType){
-			case Player:
-				entity = new Player(this);
-				break;
-			case Ennemy:
-				Random rand = new Random();
-				if(rand.nextInt(2)==0)
-					return new Enemy(this, Ressources.getImage("images/ships/dirtyDick.png"), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, 10);
-				else
-					return new Enemy(this, Ressources.getImage("images/ships/ship.png"), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, 10);
-		}
-		return entity;
-	}
-	
-	
 	/*
 	 * Methodes sur les collection d'entities 
 	 */
@@ -131,18 +109,7 @@ public class Entities {
 	}
 	
 	
-	
-	protected Body createBody(int posX, int posY, int width, int height){
-		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(Entity.toWorldSize(width/2), Entity.toWorldSize(height/2));
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
-		bodyDef.allowSleep = false;
-		Body body = world.createBody(bodyDef);
-		body.createFixture(polygonShape, 1.0f);
-		return body;
-	}
+
 	
 	
 }

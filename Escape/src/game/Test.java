@@ -68,10 +68,10 @@ public class Test extends TestbedTest {
 	    
 	  }
 	 
-	public void event(int x, int y, Kind kind){
-		
+	public void event(int x, int y, Kind kind){		
 		if(x<0 || y<0)
 			return;
+		
 		x = (int) (x * Variables.WORLD_SCALE);
 		y = Variables.SCREEN_HEIGHT - (int)(y * Variables.WORLD_SCALE);
 
@@ -83,6 +83,7 @@ public class Test extends TestbedTest {
 		}
 		env.event(event);
 	}
+	
 	  
 	boolean clicked = false;
 	@Override

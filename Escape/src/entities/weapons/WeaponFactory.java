@@ -6,9 +6,14 @@ import java.util.Random;
 
 import entities.Entities;
 import entities.Entity;
+import entities.EntityFactory;
 
 
-public class WeaponFactory {
+public class WeaponFactory extends EntityFactory{
+
+	public WeaponFactory(Entities entities) {
+		super(entities);
+	}
 
 	public enum WeaponType{
 		Ball,
@@ -27,23 +32,24 @@ public class WeaponFactory {
 	}
 	};
 	
-	public static Weapon createWeapon(Entities entities, WeaponType type, int x, int y, boolean damagedPlayer) {
+	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
+		Weapon weapon=null;
 		switch(type){
 		case Ball:
-			return new Ball(entities, x, y, damagedPlayer);
-		case Fireball:
-			return new Fireball(entities, x, y, damagedPlayer);
-		case Missile:
-			return new Ball(entities, x, y, damagedPlayer);
-		case Shiboleet:
-			return new Ball(entities, x, y, damagedPlayer);
-		case Null:
-			return null;
-		default:
+			weapon = new Ball(getEntities(), x, y, damagedPlayer);
 			break;
-			
-			
+		case Fireball:
+			weapon = new Fireball(getEntities(), x, y, damagedPlayer);
+			break;
+		case Missile:
+			weapon =  new Ball(getEntities(), x, y, damagedPlayer);
+			break;
+		case Shiboleet:
+			weapon =  new Ball(getEntities(), x, y, damagedPlayer);
+			break;
 		}
-		return null;		
+		if(weapon!=null)
+			getEntities().addEntity(weapon);
+		return weapon;		
 	}	
 }

@@ -20,7 +20,7 @@ public class Enemy extends Ship{
 	Random rand = new Random();
 
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life){	
-		super(entities, image, x, y, life);
+		super(entities, EntityShape.Square, image, x, y, life);
 	}
 
 	/*private static BufferedImage getRandomNameImage(){

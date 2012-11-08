@@ -21,17 +21,14 @@ public abstract class Ship extends Entity{
 	private int life;
 	private final BufferedImage image;
 	private final List<LifeListener> lifeListener = new ArrayList<LifeListener>();
-	//private final List<Weapon> weapons ;
 	
 	
-	public Ship(Entities entities, BufferedImage image, int posX, int posY, int life){
-		super(entities, posX, posY, image.getWidth(), image.getHeight());
+	public Ship(Entities entities, EntityShape bodyForm, BufferedImage image, int posX, int posY, int life){
+		super(entities, bodyForm.get(entities.getWorld(), posX, posY, image.getWidth(), image.getHeight()));
 		this.image= image;
 		this.life=life;
-		//WeaponFactory.createEntity(entities);
 	}
-	
-	
+
 	public BufferedImage getImage(){
 		return image;
 	}

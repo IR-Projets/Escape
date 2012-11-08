@@ -3,6 +3,7 @@ package entities.weapons;
 import java.awt.image.BufferedImage;
 
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 
 import effects.Effects;
 import effects.Explosion;
@@ -16,10 +17,11 @@ public abstract class Weapon extends Entity{
 	private final boolean damagedPlayer;
 
 	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
-	public Weapon(Entities entities, BufferedImage image, int x, int y, boolean damagedPlayer) {
-		super(entities, x, y, image.getWidth(), image.getHeight());
+	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, boolean damagedPlayer) {
+		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.damagedPlayer=damagedPlayer;
+		setSensor(false);
 	}
 
 	@Override

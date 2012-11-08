@@ -2,6 +2,7 @@ package entities.weapons;
 
 import java.awt.image.BufferedImage;
 
+import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
@@ -18,23 +19,9 @@ public class Fireball extends Weapon {
 	
 	
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, Ressources.getImage("images/weapons/fire.png"),x,y, firedByPlayer);
-	}
-	
-	/*public Fireball(int x, int y){
-		image = Ressources.getImage("images/weapons/fire.png");
-		init(x,y);
+		super(entities, EntityShape.Circle, Ressources.getImage("images/weapons/fire.png"),x,y, firedByPlayer);
 	}
 
-	@Override
-	public BufferedImage getImage() {
-		return image;
-	}
-
-	@Override
-	public BufferedImage getIcon() {
-		return image;
-	}*/
 	
 	@Override
 	public void compute() {

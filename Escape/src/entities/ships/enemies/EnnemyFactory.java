@@ -17,7 +17,9 @@ public class EnnemyFactory extends Entities {
 	
 	public static Entity createEntity(Entities entities, String nameImage, int x, int y, int life) {
 		//Random rand = new Random();
-		return new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
+		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
+		entities.addEntity(enemy);
+		return enemy;
 	}
 	/*rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3*/
 	
