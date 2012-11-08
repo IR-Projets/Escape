@@ -7,6 +7,8 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -65,19 +67,11 @@ public class Ressources {
 		return getImage(url, false);
 	}
 	
-	public static FileReader getFile(String url){
+	public static InputStream getFile(String url){
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		try {
-			return new FileReader(classLoader.getResource(url).getFile());
-		} catch (FileNotFoundException e) {
-			System.out.println("Can't read file: " + url + System.getProperty("line.separator"));
-			e.printStackTrace();
-			System.exit(0);
-		}
-		return null;
+
+		return classLoader.getResourceAsStream(url);
 	}
-	
-	
 	
 	/**
 	 * Optimise the Image with device param

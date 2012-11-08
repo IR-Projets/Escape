@@ -1,6 +1,10 @@
 package game;
 
 import java.awt.Graphics2D;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +40,7 @@ public class Environnement {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
-	EnnemyBehavior ennemyBehavior;
+	private EnnemyBehavior ennemyBehavior;
 
 
 

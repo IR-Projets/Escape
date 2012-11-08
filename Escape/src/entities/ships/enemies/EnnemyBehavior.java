@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class EnnemyBehavior {
 		enemys = new LinkedList<>();
 
 		BufferedReader bufIn = null;
-		bufIn = new BufferedReader (Ressources.getFile(filename));
+		bufIn = new BufferedReader (new InputStreamReader(Ressources.getFile(filename)));
 		try {
 			head = LoaderBehavior.initHead(bufIn);
 			listBehavior = LoaderBehavior.initBody(bufIn);
