@@ -22,9 +22,9 @@ public abstract class Weapon extends Entity{
 		this.image = image;
 		this.damagedPlayer=damagedPlayer;
 		if(damagedPlayer)
-			getBody().getFixtureList().getFilterData().groupIndex = 1;
-		else
 			getBody().getFixtureList().getFilterData().groupIndex = -1;
+		else
+			getBody().getFixtureList().getFilterData().groupIndex = -2;
 	}
 
 	@Override

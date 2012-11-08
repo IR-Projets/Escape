@@ -47,7 +47,7 @@ public class Player extends Ship {
 		super(entities, EntityShape.Polygon, Ressources.getImage("images/ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 		
 		getBody().setFixedRotation(true);
-		getBody().getFixtureList().getFilterData().groupIndex = -1;
+		getBody().getFixtureList().getFilterData().groupIndex = -2;
 		
 		looping = Looping.NONE;
 

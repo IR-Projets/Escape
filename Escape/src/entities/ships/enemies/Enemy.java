@@ -22,7 +22,7 @@ public class Enemy extends Ship{
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life){	
 		super(entities, EntityShape.Square, image, x, y, life);
 		
-		getBody().getFixtureList().getFilterData().groupIndex = 1;
+		getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
 	/*private static BufferedImage getRandomNameImage(){
