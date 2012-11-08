@@ -30,7 +30,7 @@ public class Environnement {
 
 
 	private Map map;				//The background map
-	private final Entities entities;
+	private Entities entities;
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
@@ -42,7 +42,12 @@ public class Environnement {
 	 * @param world Jbox2d world
 	 */
 	public Environnement(Map map, Player player, Entities entities, Hud hud){
+		this.map = map;
+		this.player = player;
+		player.addListener(hud);
 		this.entities=entities;
+		this.gesture = new Gesture(this);
+		this.hud = hud;
 		hud = new Hud();
 		ennemyBehavior = new EnnemyBehavior(entities, "../script.sir.txt");
 	}
@@ -53,12 +58,7 @@ public class Environnement {
 	 * @param map the map to be rendered
 	 */
 	public void setMap(Map map){
-		this.map = map;
-		this.player = player;
-		player.addListener(hud);
-		this.entities=entities;
-		this.gesture = new Gesture(this);
-		this.hud = hud;
+
 	}
 	
 	
