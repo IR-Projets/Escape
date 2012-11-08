@@ -37,8 +37,8 @@ public class Variables {
 	/*
 	 * Main ship
 	 */
-	public final static int SPEED_MAIN_SHIP = 100;/* Speed of the main ship */
-	public final static int SPEED_WEAPON = 80;/* Speed of the main ship */
+	public final static int SPEED_MAIN_SHIP = 150;/* Speed of the main ship */
+	public final static int SPEED_WEAPON = 200;/* Speed of the main ship */
 	public final static int MAX_LIFE = 100;
 	
 	
@@ -61,11 +61,6 @@ public class Variables {
 	public static final int WORLD_VELOCITY_ITERATION = 10;
 	public static final int WORLD_POSITION_ITERATION = 8;
 	
-	
-	
-	/*
-	 * 
-	 */
 	
 	
 }

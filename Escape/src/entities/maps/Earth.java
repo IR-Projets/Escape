@@ -39,13 +39,13 @@ public class Earth extends Map {
 			
 			switch(rand.nextInt(3)){
 				case 0:
-					Effects.addEffect(new Cloud(CloudType.Big, 2));//addLayer(new Layer(imageBigCloud, posY - imageBigCloud.getWidth()/2, 2f));
+					Effects.addEffect(3, new Cloud(CloudType.Big, 2));//addLayer(new Layer(imageBigCloud, posY - imageBigCloud.getWidth()/2, 2f));
 					break;
 				case 1:
-					Effects.addEffect(new Cloud(CloudType.Midlle, 0.5f));//addLayer(new Layer(imageMidCloud, posY - imageMidCloud.getWidth()/2, 0.5f));
+					Effects.addEffect(2, new Cloud(CloudType.Midlle, 0.5f));//addLayer(new Layer(imageMidCloud, posY - imageMidCloud.getWidth()/2, 0.5f));
 					break;
 				case 2:
-					Effects.addEffect(new Cloud(CloudType.Small, 0.1f));//addLayer(new Layer(imageSmallCloud, posY - imageSmallCloud.getWidth()/2, 0.1f));
+					Effects.addEffect(1, new Cloud(CloudType.Small, 0.1f));//addLayer(new Layer(imageSmallCloud, posY - imageSmallCloud.getWidth()/2, 0.1f));
 					break;
 			}			
 		}	
