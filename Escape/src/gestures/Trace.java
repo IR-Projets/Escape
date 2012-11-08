@@ -3,7 +3,11 @@ package gestures;
 import game.Variables;
 import gestures.filters.Filter;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,11 +61,22 @@ public class Trace {
 		Vec2 currentPoint = traceIte.next();
 		Vec2 lastPoint = null;
 		
+		graphics.setStroke(new BasicStroke(5));
 		while(traceIte.hasNext()){
 			lastPoint = currentPoint;
 			currentPoint = traceIte.next();
+			
+			graphics.setStroke(new BasicStroke(4));//The line to trace
 			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);
+			
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.1f));//Draw a transparence line for effect
+			graphics.setStroke(new BasicStroke(12));
+			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);
+		
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		}
+		
+		graphics.setStroke(new BasicStroke(1));
 	}
 
 	public void setValid(boolean valid) {//Only uses by the validation of weapon

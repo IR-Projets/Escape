@@ -28,7 +28,7 @@ public abstract class Entity implements CollisionListener{
 
 	public abstract BufferedImage getImage();// The Image use for render -> for action like loop, ...
 	public abstract void compute();
-	
+	public abstract EntityType getType();
 	
 	public Entities getEntities(){
 		return entities;

@@ -15,9 +15,11 @@ public class Looping implements Filter {
 	//public static final int TRACE_CIRCLE_BORNES = 35;/* bornes of the diameter that we accept */
 	
 	public static final int TRACE_CIRCLE_BORNES_MAX = 250;/* bornes of the diameter Max */
-	public static final int TRACE_CIRCLE_BORNES_MIN = 30;/* bornes of the diameter Min */
+	public static final int TRACE_CIRCLE_BORNES_MIN = 20;/* bornes of the diameter Min */
 	
-	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.1;/* rate of error -> accept approximely of circle */
+	public static final double TRACE_CIRCLE_RATE_PERCENTAGE = 0.25;/* rate of error -> accept approximely of circle */
+	public static final double TRACE_CIRCLE_BORNES = 25;/* bornes of the diameter we accept for variation of point */
+	
 	public static final double TRACE_CIRCLE_RATE_CLOSED = 40;/* number of coordate of difference we accept between the begin and end of the circle */
 	private enum Direction {LEFT, RIGHT};
 	private Direction direction;
@@ -59,7 +61,7 @@ public class Looping implements Filter {
 		Vec2 pDeb = trace.get(0), pDistMax = vecDistMax(trace);
 		
 		Vec2 pCenterOrigin = new Vec2((pDistMax.x+pDeb.x)/2, (pDistMax.y+pDeb.y)/2);//pDistMax.sub(pDeb);
-		//double rayon = Filters.LengthNormalize(pCenterOrigin, pDeb);
+		double rayonNormal = Filters.LengthNormalize(pCenterOrigin, pDeb);
 		int nbErreur=0;
 
 		Iterator<Vec2> it = trace.iterator();
@@ -70,7 +72,7 @@ public class Looping implements Filter {
 			double rayonActual = Filters.LengthNormalize(pCenterOrigin, vecActual);
 			//System.out.println("Rayon actual"+rayonActual+" et rayon"+rayon);
 
-			if(rayonActual > TRACE_CIRCLE_BORNES_MAX || rayonActual < TRACE_CIRCLE_BORNES_MIN )
+			if(rayonActual > TRACE_CIRCLE_BORNES_MAX || rayonActual < TRACE_CIRCLE_BORNES_MIN || rayonActual > rayonNormal+TRACE_CIRCLE_BORNES || rayonActual < rayonNormal-TRACE_CIRCLE_BORNES)
 				nbErreur++;
 			
 			if(nbErreur>trace.size()*TRACE_CIRCLE_RATE_PERCENTAGE){

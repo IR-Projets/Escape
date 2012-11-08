@@ -17,8 +17,8 @@ public class Fireball extends Weapon {
 	//Renomer Entity en Entities !!!!!!!!!!!!!!!!!!
 	
 	
-	public Fireball(Entities entities, int x, int y) {
-		super(entities, Ressources.getImage("images/weapons/fire.png"),x,y);
+	public Fireball(Entities entities, int x, int y, SourceWeapon sourceWeapon) {
+		super(entities, Ressources.getImage("images/weapons/fire.png"),x,y, sourceWeapon);
 	}
 	
 	/*public Fireball(int x, int y){
