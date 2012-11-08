@@ -42,6 +42,17 @@ public class Environnement {
 	 * @param world Jbox2d world
 	 */
 	public Environnement(Map map, Player player, Entities entities, Hud hud){
+		this.entities=entities;
+		hud = new Hud();
+		ennemyBehavior = new EnnemyBehavior(entities, "../script.sir.txt");
+	}
+
+	
+	/**
+	 * Set the background (the map)
+	 * @param map the map to be rendered
+	 */
+	public void setMap(Map map){
 		this.map = map;
 		this.player = player;
 		player.addListener(hud);
@@ -94,6 +105,7 @@ public class Environnement {
 		entities.compute();
 		map.compute();
 		gesture.compute();
+		ennemyBehavior.compute();
 	}
 
 

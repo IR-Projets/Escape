@@ -9,7 +9,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
-import entities.Entities.EntityFactoryType;
 import entities.maps.Earth;
 import entities.maps.Map;
 import entities.ships.Player;
@@ -32,9 +31,8 @@ public class EnvironnementFactory {
 		Map map = new Earth();		
 		Hud hud = new Hud();
 
-		
-		for(int i=0;i<10; i++)
-			entities.createEntity(EntityFactoryType.Ennemy);
+		/*for(int i=0;i<10; i++)
+			entities.createEntity(EntityFactoryType.Ennemy);*/
 		
 		
 		Environnement env = new Environnement(map, playerShip, entities, hud);		

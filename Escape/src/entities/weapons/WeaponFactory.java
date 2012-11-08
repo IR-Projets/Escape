@@ -7,6 +7,7 @@ import java.util.Random;
 import entities.Entities;
 import entities.Entity;
 
+
 public class WeaponFactory {
 
 	public enum WeaponType{
@@ -14,8 +15,17 @@ public class WeaponFactory {
 		Fireball, 
 		Shiboleet, 
 		Missile,
-		Null
+		Null;
+		public static WeaponType convert(String weaponName){
+			switch(weaponName){
+			case "Ball": return Ball;
+			case "Fireball": return Fireball;
+			case "Shiboleet": return Shiboleet;
+			case "Missile": return Missile;
+			default: return null;
+			}
 	}
+	};
 	
 	public static Weapon createWeapon(Entities entities, WeaponType type, int x, int y) {
 		switch(type){

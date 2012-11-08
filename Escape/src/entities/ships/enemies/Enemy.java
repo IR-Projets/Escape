@@ -19,17 +19,17 @@ public class Enemy extends Ship{
 	double lastExecution=0;
 	Random rand = new Random();
 
-	public Enemy(Entities entities, int x, int y, int life){	
-		super(entities, getRandomNameImage(), x, y, life);
+	public Enemy(Entities entities, BufferedImage image, int x, int y, int life){	
+		super(entities, image, x, y, life);
 	}
 
-	private static BufferedImage getRandomNameImage(){
+	/*private static BufferedImage getRandomNameImage(){
 		Random rand = new Random();
 		if(rand.nextInt()%2==0)
 			return Ressources.getImage("images/Ships/ship.png");
 		else
 			return Ressources.getImage("images/Ships/dirtyDick.png");
-	}
+	}*/
 
 	@Override
 	public void compute() {
@@ -53,7 +53,7 @@ public class Enemy extends Ship{
 			Vec2 pos = getScreenPostion();
 			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 			getEntities().removeEntitie(this);
-			break;			
+			break;	
 
 		default:
 			break;

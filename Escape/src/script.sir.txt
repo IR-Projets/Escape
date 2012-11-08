@@ -1,0 +1,8 @@
+#/script/sir
+#Movement for Enemmies : IA 1
+
+step 3
+move(left, bottom);
+
+step 6
+move(right, bottom);
