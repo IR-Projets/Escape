@@ -2,7 +2,6 @@ package gestures;
 
 import entities.ships.Player;
 import entities.weapons.Weapon;
-import entities.weapons.Weapon.SourceWeapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Environnement;
@@ -104,7 +103,7 @@ public class Gesture {
 				int width = player.getImage().getWidth();
 				int height = player.getImage().getHeight();
 				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
-				weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, SourceWeapon.Player);
+				weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);
 				action = Action.SHOOT;
 			}
 			else

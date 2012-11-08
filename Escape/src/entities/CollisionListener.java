@@ -7,7 +7,8 @@ public interface CollisionListener {
 		Boss,
 		Joueur,
 		Item,
-		Weapon
+		WeaponAllied,
+		WeaponEnnemy
 	}
 	
 	public EntityType getType();

@@ -132,10 +132,11 @@ public class Player extends Ship {
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
+		System.out.println(type);
 		switch(type){
 		case Boss:
 		case Enemy:
-		case Weapon:
+		case WeaponEnnemy:
 			if(getLife()>10)
 				setLife(getLife()-10);
 			else{
@@ -143,6 +144,8 @@ public class Player extends Ship {
 				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 				getEntities().removeEntitie(this);
 			}
+			break;
+		case WeaponAllied :
 			break;
 		}
 		

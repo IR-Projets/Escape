@@ -2,7 +2,6 @@ package hud;
 
 import entities.Entities;
 import entities.weapons.Weapon;
-import entities.weapons.Weapon.SourceWeapon;
 import entities.weapons.WeaponFactory;
 import entities.weapons.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
@@ -67,8 +66,8 @@ public class Hud implements LifeListener{
 		return itemList;
 	}
 
-	public Weapon createSelectedWeapon(Entities entities, int x, int y, SourceWeapon sourceWeapon){
-		return WeaponFactory.createWeapon(entities, itemList.removeCurrentItem().getWeaponType(), x, y, sourceWeapon);
+	public Weapon createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
+		return WeaponFactory.createWeapon(entities, itemList.removeCurrentItem().getWeaponType(), x, y, damagedPlayer);
 	}
 	
 	@Override

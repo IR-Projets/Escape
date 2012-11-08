@@ -6,7 +6,6 @@ import java.util.Random;
 
 import entities.Entities;
 import entities.Entity;
-import entities.weapons.Weapon.SourceWeapon;
 
 
 public class WeaponFactory {
@@ -28,16 +27,16 @@ public class WeaponFactory {
 	}
 	};
 	
-	public static Weapon createWeapon(Entities entities, WeaponType type, int x, int y, SourceWeapon sourceWeapon) {
+	public static Weapon createWeapon(Entities entities, WeaponType type, int x, int y, boolean damagedPlayer) {
 		switch(type){
 		case Ball:
-			return new Ball(entities, x, y, sourceWeapon);
+			return new Ball(entities, x, y, damagedPlayer);
 		case Fireball:
-			return new Fireball(entities, x, y, sourceWeapon);
+			return new Fireball(entities, x, y, damagedPlayer);
 		case Missile:
-			return new Ball(entities, x, y, sourceWeapon);
+			return new Ball(entities, x, y, damagedPlayer);
 		case Shiboleet:
-			return new Ball(entities, x, y, sourceWeapon);
+			return new Ball(entities, x, y, damagedPlayer);
 		case Null:
 			return null;
 		default:

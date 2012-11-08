@@ -9,8 +9,8 @@ import game.Ressources;
 public class Ball extends Weapon{
 
 	
-	public Ball(Entities entities, int x, int y, SourceWeapon sourceWeapon) {
-		super(entities, Ressources.getImage("images/weapons/shiboleet.png"), x, y, sourceWeapon);
+	public Ball(Entities entities, int x, int y, boolean firedByPlayer) {
+		super(entities, Ressources.getImage("images/weapons/shiboleet.png"), x, y, firedByPlayer);
 	}
 
 	@Override

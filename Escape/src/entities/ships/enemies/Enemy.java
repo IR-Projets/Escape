@@ -48,7 +48,8 @@ public class Enemy extends Ship{
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		switch (type) {
-		case Weapon:			
+		case WeaponEnnemy:
+		case WeaponAllied:
 		case Joueur:
 			Vec2 pos = getScreenPostion();
 			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));

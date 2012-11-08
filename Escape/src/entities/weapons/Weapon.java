@@ -13,14 +13,13 @@ import entities.CollisionListener.EntityType;
 public abstract class Weapon extends Entity{
 
 	private final BufferedImage image;
-	public enum SourceWeapon { Player, Ennemy };
-	private final SourceWeapon sourceWeapon;
+	private final boolean damagedPlayer;
 
 	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
-	public Weapon(Entities entities, BufferedImage image, int x, int y, SourceWeapon sourceWeapon) {
+	public Weapon(Entities entities, BufferedImage image, int x, int y, boolean damagedPlayer) {
 		super(entities, x, y, image.getWidth(), image.getHeight());
 		this.image = image;
-		this.sourceWeapon=sourceWeapon;
+		this.damagedPlayer=damagedPlayer;
 	}
 
 	@Override
@@ -28,23 +27,18 @@ public abstract class Weapon extends Entity{
 		return image;
 	}
 
-
 	@Override
 	public EntityType getType() {
-		return EntityType.Weapon;
+		if(damagedPlayer)
+			return EntityType.WeaponEnnemy;
+		return EntityType.WeaponAllied;
 	}
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		Vec2 pos = getScreenPostion();
-		switch (sourceWeapon){
-		case Player: 
-				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-				getEntities().removeEntitie(this);	
-			break;
-		default :
-			break;
-		}
+		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
+		getEntities().removeEntitie(this);	
 
 	}
 
