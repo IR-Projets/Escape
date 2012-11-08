@@ -1,6 +1,10 @@
 package game;
 
 import java.awt.Graphics2D;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +22,7 @@ import entities.Entities;
 import entities.maps.Clouds;
 import entities.maps.Map;
 import entities.ships.Player;
+import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Fireball;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
@@ -34,6 +39,7 @@ public class Environnement {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
+	private EnnemyBehavior ennemyBehavior;
 
 
 
@@ -41,7 +47,7 @@ public class Environnement {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Map map, Player player, Entities entities, Hud hud){
+	public Environnement(Map map, Player player, Entities entities, EnnemyBehavior enemyBehavior, Hud hud){
 		this.map = map;
 		this.player = player;
 		player.addListener(hud);
@@ -49,7 +55,7 @@ public class Environnement {
 		this.gesture = new Gesture(this);
 		this.hud = hud;
 		hud = new Hud();
-		ennemyBehavior = new EnnemyBehavior(entities, "../script.sir.txt");
+		this.ennemyBehavior = new EnnemyBehavior(entities, "./Escape/src/script.txt");
 	}
 
 	

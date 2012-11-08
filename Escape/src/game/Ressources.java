@@ -65,8 +65,6 @@ public class Ressources {
 	
 	
 	
-	
-	
 	/**
 	 * Optimise the Image with device param
 	 * @param image to be optimized

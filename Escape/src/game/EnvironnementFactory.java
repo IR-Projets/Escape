@@ -13,6 +13,7 @@ import entities.maps.Earth;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
+import entities.ships.enemies.EnnemyBehavior;
 import gestures.Gesture;
 import hud.Hud;
 
@@ -28,6 +29,7 @@ public class EnvironnementFactory {
 	public static Environnement WORLD1(World world){
 		Entities entities = new Entities(world);		
 		Player playerShip = new Player(entities);
+		EnnemyBehavior enemyBehavior;
 		Map map = new Earth();		
 		Hud hud = new Hud();
 
@@ -35,7 +37,7 @@ public class EnvironnementFactory {
 			entities.createEntity(EntityFactoryType.Ennemy);*/
 		
 		
-		Environnement env = new Environnement(map, playerShip, entities, hud);		
+		Environnement env = new Environnement(map, playerShip, entities, null, hud);		
 		return env;
 	}
 	
