@@ -30,12 +30,13 @@ public class EnvironnementFactory {
 	public static Environnement WORLD1(World world){
 		Entities entities = new Entities(world);		
 		Player playerShip = new Player(entities);
-		EnnemyBehavior ennemyBehavior = null;//= new EnnemyBehavior(entities, "");
+		EnnemyBehavior ennemyBehavior = new EnnemyBehavior(entities, "script.sir.txt");//= new EnnemyBehavior(entities, "");
 		Map map = new Earth();		
 		Hud hud = new Hud();
+		
 
-		for(int i=0;i<10; i++)
-			entities.createEntity(EntityFactoryType.Ennemy);
+		/*for(int i=0;i<10; i++)
+			entities.createEntity(EntityFactoryType.Ennemy);*/
 		
 		
 		Environnement env = new Environnement(map, playerShip, ennemyBehavior, entities, hud);		

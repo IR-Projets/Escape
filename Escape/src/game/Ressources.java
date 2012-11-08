@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -63,7 +65,17 @@ public class Ressources {
 		return getImage(url, false);
 	}
 	
-	
+	public static FileReader getFile(String url){
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		try {
+			return new FileReader(classLoader.getResource(url).getFile());
+		} catch (FileNotFoundException e) {
+			System.out.println("Can't read file: " + url + System.getProperty("line.separator"));
+			e.printStackTrace();
+			System.exit(0);
+		}
+		return null;
+	}
 	
 	
 	

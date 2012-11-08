@@ -109,7 +109,7 @@ public class Environnement {
 		map.compute();
 		gesture.compute();
 		Effects.compute();
-		//ennemyBehavior.compute();
+		ennemyBehavior.compute();
 	}
 
 
