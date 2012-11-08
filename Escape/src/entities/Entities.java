@@ -2,6 +2,7 @@ package entities;
 
 //import Entity;
 import entities.ships.Player;
+import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyFactory;
 import entities.weapons.WeaponFactory;
 import game.Ressources;
@@ -13,6 +14,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -63,23 +65,26 @@ public class Entities {
 	}
 	
 	
-	/*public enum EntityFactoryType{
+	public enum EntityFactoryType{
 		Player,
 		Ennemy
-	}*/
+	}
 	
-	/*public Entity createEntity(EntityFactoryType entityType){
+	public Entity createEntity(EntityFactoryType entityType){
 		Entity entity = null;
 		switch(entityType){
 			case Player:
 				entity = new Player(this);
 				break;
 			case Ennemy:
-				entity = EnnemyFactory.createEntity(this);
-				break;
+				Random rand = new Random();
+				if(rand.nextInt(2)==0)
+					return new Enemy(this, Ressources.getImage("images/ships/dirtyDick.png"), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, 10);
+				else
+					return new Enemy(this, Ressources.getImage("images/ships/ship.png"), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, 10);
 		}
 		return entity;
-	}*/
+	}
 	
 	
 	/*

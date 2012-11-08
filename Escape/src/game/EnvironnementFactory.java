@@ -9,10 +9,12 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
+import entities.Entities.EntityFactoryType;
 import entities.maps.Earth;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
+import entities.ships.enemies.EnnemyBehavior;
 import gestures.Gesture;
 import hud.Hud;
 
@@ -28,14 +30,15 @@ public class EnvironnementFactory {
 	public static Environnement WORLD1(World world){
 		Entities entities = new Entities(world);		
 		Player playerShip = new Player(entities);
+		EnnemyBehavior ennemyBehavior = null;//= new EnnemyBehavior(entities, "");
 		Map map = new Earth();		
 		Hud hud = new Hud();
 
-		/*for(int i=0;i<10; i++)
-			entities.createEntity(EntityFactoryType.Ennemy);*/
+		for(int i=0;i<10; i++)
+			entities.createEntity(EntityFactoryType.Ennemy);
 		
 		
-		Environnement env = new Environnement(map, playerShip, entities, hud);		
+		Environnement env = new Environnement(map, playerShip, ennemyBehavior, entities, hud);		
 		return env;
 	}
 	
