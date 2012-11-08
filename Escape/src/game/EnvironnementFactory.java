@@ -10,10 +10,12 @@ import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.Entities.EntityFactoryType;
+import entities.maps.Earth;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
 import gestures.Gesture;
+import hud.Hud;
 
 
 public class EnvironnementFactory {
@@ -25,34 +27,17 @@ public class EnvironnementFactory {
 	private static final boolean DO_SLEEP = false;
 	
 	public static Environnement WORLD1(World world){
-		Entities entities = new Entities(world);
-		Environnement env = new Environnement(entities);
-		
-		Map map = new Map();
-		Player playerShip = new Player(entities);		
-		env.setPlayer(playerShip);
+		Entities entities = new Entities(world);		
+		Player playerShip = new Player(entities);
+		Map map = new Earth();		
+		Hud hud = new Hud();
 
+		
 		for(int i=0;i<10; i++)
 			entities.createEntity(EntityFactoryType.Ennemy);
 		
-		/*
-		Random rand = new Random();
-		for(int i=0;i<10; i++){
-			env.addEntitie(new Enemy(env.getEntities(), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
-			//entityList.add(new Enemy(world, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, Variables.MAX_LIFE));
-		}	
-		*/
 		
-		env.setMap(map);
-		env.setGesture(new Gesture(env));
-
-		
-		
-		/*Random rand = new Random();
-		for(Entity entity : entityList){
-			env.addEntity(entity, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3);
-		}*/
-		
+		Environnement env = new Environnement(map, playerShip, entities, hud);		
 		return env;
 	}
 	

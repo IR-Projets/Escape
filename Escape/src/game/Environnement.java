@@ -15,6 +15,7 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entity;
 import entities.Entities;
+import entities.maps.Clouds;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.weapons.Fireball;
@@ -29,7 +30,6 @@ public class Environnement {
 
 
 	private Map map;				//The background map
-	//private List<Entitie> entities;	//All entities
 	private final Entities entities;
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
@@ -41,30 +41,15 @@ public class Environnement {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(final Entities entities){
-		this.entities=entities;
-		hud = new Hud();
-	}
-
-	
-	/**
-	 * Set the background (the map)
-	 * @param map the map to be rendered
-	 */
-	public void setMap(Map map){
+	public Environnement(Map map, Player player, Entities entities, Hud hud){
 		this.map = map;
-	}
-
-	public void setGesture(Gesture gesture) {
-		this.gesture = gesture;		
-	}
-
-	/* Bien init le hud avant le player!!!*/
-	public void setPlayer(Player player){
 		this.player = player;
 		player.addListener(hud);
-		//entities.addEntity(player);
+		this.entities=entities;
+		this.gesture = new Gesture(this);
+		this.hud = hud;
 	}
+	
 	
 	public Player getPlayer() {
 		return player;
@@ -75,45 +60,24 @@ public class Environnement {
 		return hud;
 	}
 
-
-	/**
-	 * Add an entity to the Environnement at the specified position
-	 * @param entity the entity to add
-	 * @param x start position x
-	 * @param y start position y
-	 */
-	/*public void addEntity(Entitie entitie, int x, int y){
-		entity.init(x, y);
-		entities.add(entity);
-	}*/
-	/*
-	public void addEntitie(Entity entitie){
-		entities.addEntity(entitie);
+	public Entities getEntities() {
+		return entities;
 	}
-	 */
-	public void removeEntitie(Entity entitie){
-		entities.removeEntitie(entitie);
-	}
-
-
-
-	/*public void removeEntity(Entity entity){
-		entities.remove(entity);
-		Entity.removeEntity(entity);
-
-	}*/
-
+	
+	
 	/**
 	 * Render all entities associated
 	 * @param graphics draw area
 	 */
 	public void render(Graphics2D graphics, float interpolation){			
-		//render all: map, entities and the gesture
-		map.render(graphics, interpolation);
-		entities.render(graphics);
-		gesture.render(graphics);
-		Effects.render(graphics);
-		hud.render(graphics);
+		map.render_groundLayer(graphics);	//The ground (the planet)
+		
+		entities.render(graphics);			//All the entities (player too)
+		gesture.render(graphics);			//Gesture movements (circle)
+		Effects.render(graphics);			//Effect (explosion)
+		
+		map.render_earthLayer(graphics);	//the earth (cloud)
+		hud.render(graphics);				//Health, score, amo
 	}
 
 	/**
@@ -136,10 +100,6 @@ public class Environnement {
 	public void compute() {		
 		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}
-
-	public Entities getEntities() {
-		return entities;
-	}	
 }
 
 

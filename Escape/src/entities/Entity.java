@@ -39,14 +39,17 @@ public abstract class Entity implements CollisionListener{
 		AffineTransform tx = new AffineTransform();
 		tx.rotate(getRotate(), getImage().getWidth()/2, getImage().getHeight()/2);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BICUBIC);
+		BufferedImage imageRotated = op.filter(getImage(), null);
 		
 		Vec2 pos = getScreenPostion();
-
-		graphics.drawImage(op.filter(getImage(), null),
+		
+		
+		
+		graphics.drawImage(imageRotated,
 				(int)pos.x,
 				(int)pos.y,
-				getImage().getWidth(), 
-				getImage().getHeight(),
+				imageRotated.getWidth(), 
+				imageRotated.getHeight(),
 				null );
 	}
 	
