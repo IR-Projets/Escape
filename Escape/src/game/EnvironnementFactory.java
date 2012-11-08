@@ -9,7 +9,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
-import entities.Entities.EntityFactoryType;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
@@ -32,8 +31,8 @@ public class EnvironnementFactory {
 		Player playerShip = new Player(entities);		
 		env.setPlayer(playerShip);
 
-		for(int i=0;i<10; i++)
-			entities.createEntity(EntityFactoryType.Ennemy);
+		/*for(int i=0;i<10; i++)
+			entities.createEntity(EntityFactoryType.Ennemy);*/
 		
 		/*
 		Random rand = new Random();

@@ -1,11 +1,10 @@
-package entities;
-
-import java.util.Random;
+package entities.ships.enemies;
 
 import org.jbox2d.dynamics.World;
 
-import entities.ships.enemies.Enemy;
-import game.Variables;
+import entities.Entities;
+import entities.Entity;
+import game.Ressources;
 
 public class EnnemyFactory extends Entities {
 
@@ -16,11 +15,11 @@ public class EnnemyFactory extends Entities {
 
 	
 	
-	public static Entity createEntity(Entities entities) {
-		Random rand = new Random();
-		return new Enemy(entities, rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3,  Variables.MAX_LIFE);
+	public static Entity createEntity(Entities entities, String nameImage, int x, int y, int life) {
+		//Random rand = new Random();
+		return new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
 	}
-	
+	/*rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3*/
 	
 	/*
 	

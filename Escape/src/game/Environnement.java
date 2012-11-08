@@ -17,6 +17,7 @@ import entities.Entity;
 import entities.Entities;
 import entities.maps.Map;
 import entities.ships.Player;
+import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Fireball;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
@@ -34,6 +35,7 @@ public class Environnement {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
+	private EnnemyBehavior ennemyBehavior;
 
 
 
@@ -41,9 +43,10 @@ public class Environnement {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(final Entities entities){
+	public Environnement(Entities entities){
 		this.entities=entities;
 		hud = new Hud();
+		ennemyBehavior = new EnnemyBehavior(entities, "../script.sir.txt");
 	}
 
 	
@@ -130,6 +133,7 @@ public class Environnement {
 		entities.compute();
 		map.compute();
 		gesture.compute();
+		ennemyBehavior.compute();
 	}
 
 

@@ -2,6 +2,7 @@ package entities;
 
 //import Entity;
 import entities.ships.Player;
+import entities.ships.enemies.EnnemyFactory;
 import entities.weapons.WeaponFactory;
 import game.Ressources;
 import game.Variables;
@@ -62,12 +63,12 @@ public class Entities {
 	}
 	
 	
-	public enum EntityFactoryType{
+	/*public enum EntityFactoryType{
 		Player,
 		Ennemy
-	}
+	}*/
 	
-	public Entity createEntity(EntityFactoryType entityType){
+	/*public Entity createEntity(EntityFactoryType entityType){
 		Entity entity = null;
 		switch(entityType){
 			case Player:
@@ -78,8 +79,7 @@ public class Entities {
 				break;
 		}
 		return entity;
-	}
-	
+	}*/
 	
 	
 	/*
