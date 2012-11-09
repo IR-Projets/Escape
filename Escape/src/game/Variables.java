@@ -61,7 +61,7 @@ public class Variables {
 	public static final int WORLD_VELOCITY_ITERATION = 10;
 	public static final int WORLD_POSITION_ITERATION = 8;
 
-	public static final float WORLD_BORDER = 10;
+	public static final float WORLD_BORDER = 50;
 	
 	
 	
