@@ -22,7 +22,7 @@ public class Shiboleet extends Weapon {
 		long diffTime = (System.nanoTime()/1000000 - time);
 		if(isLaunch())
 			return;
-		if(diffTime > 300 && increase <3){
+		if(diffTime > 300 && increase <2){
 			setImage(Weapon.resize(getImage(), 1.5f));
 			increase++;
 			setDamage(getDamage()*2);
