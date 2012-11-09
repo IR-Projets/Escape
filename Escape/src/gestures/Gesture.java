@@ -116,10 +116,10 @@ public class Gesture {
 				int height = player.getImage().getHeight();
 				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
 				if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet){
+					env.getHud().getItemActual().addItem(2);
 					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
 					shibMissible[0] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
 					shibMissible[1] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
-					env.getHud().getItemActual().addItem(2);
 				}
 				else
 					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);

@@ -11,14 +11,14 @@ public class WeaponFactory extends EntityFactory{
 	}
 
 	public enum WeaponType{
-		Ball,
+		Shuriken,
 		Fireball, 
 		Shiboleet, 
 		Missile,
 		Null;
 		public static WeaponType convert(String weaponName){
 			switch(weaponName){
-			case "Ball": return Ball;
+			case "Shuriken": return Shuriken;
 			case "Fireball": return Fireball;
 			case "Shiboleet": return Shiboleet;
 			case "Missile": return Missile;
@@ -30,14 +30,14 @@ public class WeaponFactory extends EntityFactory{
 	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
 		Weapon weapon=null;
 		switch(type){
-		case Ball:
-			weapon = new Ball(getEntities(), x, y, damagedPlayer);
+		case Shuriken:
+			weapon = new Shuriken(getEntities(), x, y, damagedPlayer);
 			break;
 		case Fireball:
 			weapon = new Fireball(getEntities(), x, y, damagedPlayer);
 			break;
 		case Missile:
-			weapon =  new Ball(getEntities(), x, y, damagedPlayer);
+			weapon =  new Missile(getEntities(), x, y, damagedPlayer);
 			break;
 		case Shiboleet:
 			weapon =  new Shiboleet(getEntities(), x, y, damagedPlayer);

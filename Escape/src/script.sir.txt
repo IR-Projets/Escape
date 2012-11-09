@@ -9,6 +9,17 @@ begin = 2t,50p
 begin =5t,250p
 begin=5t, 50p
 begin = 8t, 250p
+
+begin = 13t, 50p
+begin = 13t, 250p
+begin = 13t, 450p
+
+
+begin = 18t, 50p
+begin = 18t, 250p
+begin = 18t, 450p
+
+
 </head>
 
 <body>

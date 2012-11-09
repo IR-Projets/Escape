@@ -6,7 +6,7 @@ import game.Ressources;
 
 public class Fireball extends Weapon {
 
-	private final long time;
+	private long time;
 	private int increase;
 	
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
@@ -18,14 +18,14 @@ public class Fireball extends Weapon {
 	
 	@Override
 	public void compute() {
-		long diffTime = (System.nanoTime()/1000000 - time)/10;
-		//System.out.println(diffTime);
+		long diffTime = (System.nanoTime()/1000000 - time);
 		if(isLaunch())
 			return;
-		if(diffTime % 32 > 29  && increase <3){
+		if(diffTime > 300 && increase <3){
 			setImage(Weapon.resize(getImage(), 1.5f));
 			increase++;
 			setDamage(getDamage()*2);
+			time=System.nanoTime()/1000000;
 		}
 	}
 	

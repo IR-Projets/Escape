@@ -1,7 +1,7 @@
 package hud;
 
 import entities.Entities;
-import entities.weapons.Ball;
+import entities.weapons.Shuriken;
 import entities.weapons.Weapon;
 import entities.weapons.WeaponFactory;
 import entities.weapons.WeaponFactory.WeaponType;
@@ -52,11 +52,10 @@ public class ItemList {
 		itemList = new LinkedList<>();
 
 		
-
-		//Only for test
+		itemList.add(new Item(WeaponType.Shuriken, "Shuriken", "images/weapons/shuriken.png",20));
 		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",10));
 		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",10));
-		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",20));
+		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",5));
 	}
 	
 	
