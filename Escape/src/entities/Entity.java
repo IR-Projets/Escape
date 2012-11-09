@@ -38,7 +38,7 @@ public abstract class Entity implements CollisionListener{
 	public Entities getEntities(){
 		return entities;
 	}
-	
+	  
 	
 	public void render(Graphics2D graphics){
 		AffineTransform tx = new AffineTransform();

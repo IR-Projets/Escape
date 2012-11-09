@@ -48,10 +48,7 @@ public class EnvironnementFactory {
 		else{
 			world.setGravity(new Vec2(Variables.WORLD_GRAVITY_X, Variables.WORLD_GRAVITY_Y));
 			world.setAllowSleep(DO_SLEEP);
-		}
-
-		setWorldLimit(world);
-		
+		}		
 		
 		/*
 		 * TODO: Mettre ICI tout les niveaux du jeu!
@@ -68,33 +65,6 @@ public class EnvironnementFactory {
 		return factory(null);
 	}
 	
-	
-	
-	
-	/*
-	 * Set the limit of our world
-	 */
-	private static void setWorldLimit(World world){
-		BodyDef bd = new BodyDef();
-		Body ground = world.createBody(bd);
 
-		float worldWidth = Variables.SCREEN_WIDTH/Variables.WORLD_SCALE;
-		float worldHeight = Variables.SCREEN_HEIGHT/Variables.WORLD_SCALE;
-		float bordure = Variables.WORLD_BORDER;
-		
-		PolygonShape shape = new PolygonShape();
-		//0,0->width,0
-		shape.setAsEdge(new Vec2(0f, 0f), new Vec2(worldWidth, 0.0f));
-		ground.createFixture(shape, 0.0f);
-		//Width,0->width,height
-		shape.setAsEdge(new Vec2(worldWidth, 0f), new Vec2(worldWidth, worldHeight));
-		ground.createFixture(shape, 0.0f);
-		//width,height->0,height
-		shape.setAsEdge(new Vec2(worldWidth, worldHeight), new Vec2(0, worldHeight));
-		ground.createFixture(shape, 0.0f);
-		//0,height->0,0
-		shape.setAsEdge(new Vec2(0, worldHeight), new Vec2(0, 0));
-		ground.createFixture(shape, 0.0f);
-	}
 	
 }

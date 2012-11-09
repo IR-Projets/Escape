@@ -1,6 +1,7 @@
 package entities;
 
 //import Entity;
+import entities.CollisionListener.EntityType;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyFactory;
@@ -20,6 +21,7 @@ import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
@@ -38,11 +40,21 @@ public class Entities {
 	public Entities(World world){
 		entitiesToDelete = new LinkedList<>();
 		this.world = world;
+		final Body worldLimit = setWorldLimit(world);
 		world.setContactListener(new ContactListener() {
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
-				Entity entityA = getEntitie(contact.getFixtureA().getBody());
-				Entity entityB = getEntitie(contact.getFixtureB().getBody());
+				Body bodyA = contact.getFixtureA().getBody();
+				Body bodyB = contact.getFixtureB().getBody();
+							
+				Entity entityA = getEntitie(bodyA);
+				Entity entityB = getEntitie(bodyB);
+				
+				if(bodyA==worldLimit)
+					entityB.collision(null, EntityType.WorldLimit);
+				if(bodyB==worldLimit)
+					entityA.collision(null, EntityType.WorldLimit);
+					
 				if(entityA!=null && entityB!=null){
 					entityA.collision(entityB, entityB.getType());
 					entityB.collision(entityA, entityA.getType());
@@ -108,6 +120,39 @@ public class Entities {
 		world.step(timeStep, velocityIteration, positionIteration);
 	}
 	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Set the limit of our world
+	 */
+	private static Body setWorldLimit(World world){
+		BodyDef bd = new BodyDef();
+		Body ground = world.createBody(bd);
+
+		float worldWidth = Variables.SCREEN_WIDTH/Variables.WORLD_SCALE;
+		float worldHeight = Variables.SCREEN_HEIGHT/Variables.WORLD_SCALE;
+		float bordure = Variables.WORLD_BORDER;
+		
+		PolygonShape shape = new PolygonShape();
+		//0,0->width,0
+		shape.setAsEdge(new Vec2(-bordure, -bordure), new Vec2(worldWidth+bordure, -bordure));
+		ground.createFixture(shape, 0.0f);
+		//Width,0->width,height
+		shape.setAsEdge(new Vec2(worldWidth+bordure, -bordure), new Vec2(worldWidth+bordure, worldHeight+bordure));
+		ground.createFixture(shape, 0.0f);
+		//width,height->0,height
+		shape.setAsEdge(new Vec2(worldWidth+bordure, worldHeight+bordure), new Vec2(-bordure, worldHeight+bordure));
+		ground.createFixture(shape, 0.0f);
+		//0,height->0,0
+		shape.setAsEdge(new Vec2(-bordure, worldHeight+bordure), new Vec2(-bordure, -bordure));
+		ground.createFixture(shape, 0.0f);
+		
+		return ground;
+	}
 	
 
 	

@@ -8,7 +8,8 @@ public interface CollisionListener {
 		Joueur,
 		Item,
 		WeaponAllied,
-		WeaponEnnemy
+		WeaponEnnemy, 
+		WorldLimit
 	}
 	
 	public EntityType getType();
