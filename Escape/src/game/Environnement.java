@@ -105,12 +105,12 @@ public class Environnement {
 	}
 
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
-		entities.step(timeStep, velocityIteration, positionIteration);
-		entities.compute();
-		map.compute();
-		gesture.compute();
-		Effects.compute();
 		ennemyBehavior.compute();
+		gesture.compute();
+		entities.compute();
+		entities.step(timeStep, velocityIteration, positionIteration);
+		map.compute();
+		Effects.compute();
 	}
 
 

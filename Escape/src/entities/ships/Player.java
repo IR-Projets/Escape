@@ -60,12 +60,18 @@ public class Player extends Ship {
 
 	@Override
 	public void compute() {
-		Vec2 position = getPositionNormalized();
-		Vec2 velocity = getVelocity();
+		Vec2 pos = getPositionNormalized();
+		Vec2 vel = getVelocity();
 
-		if(position.y > getImage().getHeight() + Variables.SCREEN_HEIGHT/3 ){
-			setVelocity(velocity.x*20, -10);
-		}		
+		if( (vel.x<0 && pos.x<0) ||
+			(vel.x>0 && pos.x>Variables.SCREEN_WIDTH - getImage().getWidth()))
+			vel.x=0;
+		
+		if( (vel.y<0 && pos.y<getImage().getHeight()) || 
+			(vel.y>0 && pos.y>Variables.SCREEN_HEIGHT/3 + getImage().getHeight()))
+			vel.y=0;
+		
+		setVelocity(vel.x, vel.y);
 	}
 
 	@Override
