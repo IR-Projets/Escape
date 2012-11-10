@@ -68,6 +68,24 @@ public class Filters{
 	}
 
 	/**
+	 * Check if the angle is in between angleLimit +- bornes
+	 * @param angleLimit
+	 * @return true if is in the invervalle, else false
+	 */
+	/**
+	 * Check if the angle is in between angleLimit +- bornes
+	 * @param angle actual angle to check
+	 * @param angleLimit
+	 * @param bornes
+	 * @return true if is in the invervalle, else false
+	 */
+	public static boolean checkAngleBornes(double angle, double angleLimit, int bornes){
+		if(angle >= angleLimit-bornes && angle <= angleLimit+bornes )
+			return true;
+		return false;
+	}
+	
+	/**
 	 * Check if a right is affine, with a calcul between the difference angle does by the trace
 	 * @param trace
 	 * @return boolean 

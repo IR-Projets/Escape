@@ -10,11 +10,14 @@ public class Shiboleet extends Weapon {
 
 	private long time;
 	private int increase;
+	private final int id;
+	private static int nbShib = 0;
 	
 	public Shiboleet(Entities entities, int x, int y, boolean firedByPlayer) {
 		super(entities, EntityShape.Circle, Ressources.getImage("images/weapons/shiboleet.png"), x, y, firedByPlayer, 4, WeaponType.Shiboleet);
 		time = System.nanoTime()/1000000;
 		increase=0;
+		id=nbShib++;
 	}
 
 	@Override
@@ -37,6 +40,16 @@ public class Shiboleet extends Weapon {
 			getBody().setAngularVelocity( 3f);
 	}
 	
+	@Override
+	public void launch(float vitX, float vitY) {
+		if(id%3 == 0)
+			setVelocity(vitX, vitY);
+		if(id%3 == 1)
+			setVelocity(-vitX, vitY);
+		if(id%3 == 2)
+			setVelocity(0, vitY);
+		setLaunch(true);
+	}
 
 
 }

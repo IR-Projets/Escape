@@ -58,7 +58,7 @@ public class EnnemyBehavior {
 		while(it.hasNext()){
 			Couple couple = it.next();
 			if(couple.getTime()*1000 < difTime){
-				enemys.add(EnnemyFactory.createEntity(entities, head.getFilename(), couple.getPos(), 9*Variables.SCREEN_HEIGHT/10, head.getLife()));
+				enemys.add(EnnemyFactory.createEntity(entities, head.getFilename(), couple.getPos(), Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, head.getLife()));
 				it.remove();
 			}
 

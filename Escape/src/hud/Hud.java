@@ -11,6 +11,7 @@ import game.Variables;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 /**
  * This class represents our Head Up Display, which manage the elements associated with the game (life, weapon).
  * 
@@ -70,7 +71,7 @@ public class Hud implements LifeListener{
 		return itemList.getItems().get(0);
 	}
 	
-	public Weapon createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
+	public List<Weapon> createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
 		WeaponFactory factory = new WeaponFactory(entities);
 		return factory.createWeapon(itemList.removeCurrentItem().getWeaponType(), x, y, damagedPlayer);
 	}

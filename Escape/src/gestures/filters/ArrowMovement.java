@@ -6,8 +6,9 @@ import org.jbox2d.common.Vec2;
 
 import entities.ships.Player;
 import game.Variables;
+import static gestures.filters.Filters.checkAngleBornes;
 /**
- * The Backoff is a back movement, which accept a trace with gradient between 260 and 280 degrees
+ * The ArrowMovement is a movement vertical (from left to right or right to left), or a movement which goes to the top of the screen.
  * 
  * @author Quentin Bernard et Ludovic Feltz
  */
@@ -29,35 +30,39 @@ import game.Variables;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+public class ArrowMovement implements Filter{
 
+	private double angle;
 
-public class Backoff implements Filter {
-	
 	/**
-	 * Check if the angle of the Right is correct for backoff
+	 * Check if the angle of the Right is correctly for an Arrow Movement : (0,90,180) degree +- FILTER_BORNES
 	 * @param angle
 	 * @return true if the angle is correct
 	 */
-	private boolean checkAngle(double angle){
-		if((angle >= 270-FILTER_BORNES && angle <= 270+FILTER_BORNES ))
-			return true;
-		return false;
+	private boolean checkAngle() {
+		int bornes = FILTER_BORNES;
+		return checkAngleBornes(angle, 0d, bornes) || checkAngleBornes(angle, 90d, bornes) || checkAngleBornes(angle, 180d, bornes);
 	}
-	
+
 	@Override
-	public boolean check(List<Vec2> trace){
+	public boolean check(List<Vec2> trace) {
 		if(!trace.isEmpty()){
-			double angle = Filters.getAngle(trace);
-			if(Filters.isAffine(trace) && checkAngle(angle))
+			angle = Filters.getAngle(trace);
+			if(Filters.isAffine(trace) && checkAngle())
 				return true;
-			return false;
 		}
 		return false;
 	}
 
 	@Override
 	public void apply(Player ship) {
-		ship.setVelocity(0, -Variables.SPEED_MAIN_SHIP);
+		int vitesse=Variables.SPEED_MAIN_SHIP;
+		if(angle < 45)
+			ship.setVelocity(vitesse, 0);
+		else if (angle > 45 && angle < 135)
+			ship.setVelocity(0, vitesse);
+		else
+			ship.setVelocity(-vitesse, 0);
 	}
-	
+
 }

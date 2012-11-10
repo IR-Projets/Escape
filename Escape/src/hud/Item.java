@@ -1,12 +1,11 @@
 package hud;
 
-import entities.weapons.Weapon;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import entities.weapons.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 /**
  * This class represents an item, which contains the main function for initialize it and show it on a Graphics.
  * An item is represents by a name, an image and a number, which represents the number on the inventory.

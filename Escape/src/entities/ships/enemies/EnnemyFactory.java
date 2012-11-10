@@ -4,7 +4,11 @@ import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.Entity;
+import entities.weapons.Weapon;
+import entities.weapons.WeaponFactory;
+import entities.weapons.WeaponFactory.WeaponType;
 import game.Ressources;
+import hud.Item;
 
 public class EnnemyFactory extends Entities {
 
@@ -19,6 +23,12 @@ public class EnnemyFactory extends Entities {
 		//Random rand = new Random();
 		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
 		entities.addEntity(enemy);
+		/*WeaponFactory factory = new WeaponFactory(entities);
+		Weapon tmp = factory.createWeapon(WeaponType.Fireball,  x, y, true);
+		tmp.setVelocity(0, -100);
+		tmp.setLaunch(true);*/
+		
+		
 		return enemy;
 	}
 	/*rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3*/

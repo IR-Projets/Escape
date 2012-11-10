@@ -46,7 +46,7 @@ public class Variables {
 	 * Gesture variables
 	 */
 	public final static int TRACE_DELETE_RATE = 5;/*If we increase the value, the delete time of Trace become lower*/
-	public final static double TRACE_VARIATION_MAX = 30;/* The limit intervalle to accept movement -> Angle Bornes */
+	public final static double TRACE_VARIATION_MAX = 40;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_LENGTH_MIN = 4;
 	
 	

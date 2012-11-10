@@ -7,6 +7,7 @@ import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Environnement;
 import game.Variables;
+import gestures.filters.ArrowMovement;
 import gestures.filters.Backoff;
 import gestures.filters.Drift;
 import gestures.filters.Filter;
@@ -15,6 +16,7 @@ import gestures.filters.Looping;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
@@ -24,8 +26,8 @@ public class Gesture {
 	private final TraceStack traceStack;
 	private final List<Filter> filters;
 	private final Environnement env;
-	private Weapon weaponToMove;
-	private final Weapon shibMissible[];
+	private List<Weapon> weaponsToMove;
+	
 	
 	private enum Action{ MOVE, SHOOT };
 	private Action action;
@@ -35,8 +37,7 @@ public class Gesture {
 		this.env=env;
 		traceStack = new TraceStack();
 		filters = initFilters();
-		weaponToMove=null;
-		shibMissible = new Weapon[2];
+		weaponsToMove = null;
 	}
 
 	/*
@@ -48,6 +49,7 @@ public class Gesture {
 		filtersList.add(new Backoff());
 		filtersList.add(new Drift());
 		filtersList.add(new Looping());
+		filtersList.add(new ArrowMovement());
 		return filtersList;
 	}
 
@@ -82,7 +84,7 @@ public class Gesture {
 				}
 			}
 			else{
-				if(weaponToMove != null){
+				if(weaponsToMove != null && !weaponsToMove.isEmpty()){
 					List<Vec2> traceWeapon = traceStack.getCurrentTrace().getTrace();
 					double angle;
 					if(traceWeapon.size() <=1)
@@ -91,17 +93,10 @@ public class Gesture {
 						angle = Filters.getAngle(traceWeapon);
 					float vitX = (float) (Math.cos(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
 					float vitY = (float) (Math.sin(Math.toRadians(angle)))*Variables.SPEED_WEAPON;
-					weaponToMove.setVelocity(vitX, vitY);
-					weaponToMove.setLaunch(true);
+					for(Weapon weapon : weaponsToMove)
+						weapon.launch(vitX, vitY);
 					traceStack.getCurrentTrace().setValid(true);
-					if(weaponToMove.getWeaponType() == WeaponType.Shiboleet){
-						shibMissible[0].setVelocity(-vitX, vitY);
-						shibMissible[0].setLaunch(true);
-						shibMissible[1].setVelocity(0, vitY);
-						shibMissible[1].setLaunch(true);
-					}
-						
-					
+					weaponsToMove = null;
 				}
 			}
 				traceStack.finishCurrentTrace();
@@ -114,16 +109,10 @@ public class Gesture {
 				Vec2 pos = player.getPositionNormalized();
 				int width = player.getImage().getWidth();
 				int height = player.getImage().getHeight();
-				//env.getEntities().addEntity(new Fireball(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2));
-				if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet){
-					env.getHud().getItemActual().addItem(2);
-					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
-					shibMissible[0] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
-					shibMissible[1] = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
-				}
+				if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet)
+					weaponsToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false);
 				else
-					weaponToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);
-				
+					weaponsToMove = env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false);
 				action = Action.SHOOT;
 			}
 			else

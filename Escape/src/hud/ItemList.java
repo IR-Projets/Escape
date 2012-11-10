@@ -1,9 +1,5 @@
 package hud;
 
-import entities.Entities;
-import entities.weapons.Shuriken;
-import entities.weapons.Weapon;
-import entities.weapons.WeaponFactory;
 import entities.weapons.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;

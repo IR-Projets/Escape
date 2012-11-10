@@ -28,6 +28,11 @@ import entities.ships.Ship;
  *
  */
 public interface Filter {
+	
+	/**
+	 * The bornes uses for backoff, drift and arrowmovement. 
+	 */
+	public static final int FILTER_BORNES = 10;/* We refuse affine courbe which increase perpendiculary, with this bornes*/
 	/**
 	 * Check if a list of Vec2 is correctly positioned, depends on what kind on filter we want to apply
 	 * @param trace

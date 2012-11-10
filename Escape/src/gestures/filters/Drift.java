@@ -6,9 +6,11 @@ import org.jbox2d.common.Vec2;
 
 import entities.ships.Player;
 import game.Variables;
+import static gestures.filters.Filters.checkAngleBornes;;
 /**
  * The drift is a movement vertical which goes to the top of the screen, to the right or the left.
- * we refuse the horizontal and verticals movements
+ * We add the same movement, but goes to the bot of the screen, to the right and to the left.
+ * Refuse the horizontal and verticals movements
  * 
  * @author Quentin Bernard et Ludovic Feltz
  */
@@ -32,54 +34,47 @@ import game.Variables;
  */
 
 public class Drift implements Filter{
-	/**
-	 * The vertical bound tilt angle that the drift refuse (90 +- this variable)
-	 */
-	public static final int TRACE_DRIFT_BORNES_TOP = 10;
-	/**
-	 * The horizontal bound tilt angle that the drift refuse(0 + this variable and 180 - this variable)
-	 */
-	public static final int TRACE_DRIFT_BORNES_BOT = 10;
 	
 	private double angle=0;
 	
 	/**
-	 * Check if the angle of the Right is correctly for a left or right drift, but no vertical or horizontal courbe
+	 * Check if the angle of the Right is correctly for :
+	 * a left drift : drift from left to right and from bottom to top
+	 * a right drift : drift from right to left and from bottom to top
+	 * a low left drift : drift from left to right and from top to bottom ( New movement!)
+	 * a low right drift : drift from right to left and from top to bottom ( New movement!)
+	 * 
+	 * Refuse the horizontal and vertical angles, with the bornes TRACE_DRIFT_BORNES.
 	 * @param angle
 	 * @return true if the angle is correct
 	 */
-	public boolean checkAngle(double angle){
-		if((angle >= 90-TRACE_DRIFT_BORNES_TOP && angle <= 90+TRACE_DRIFT_BORNES_TOP )||
-				angle -TRACE_DRIFT_BORNES_BOT <= 0 || angle + TRACE_DRIFT_BORNES_BOT >= 180 )
-			return false;
-		return true;
+	public boolean checkAngle(){
+		int bornes = FILTER_BORNES;
+		return !checkAngleBornes(angle, 0d, bornes) && !checkAngleBornes(angle, 90d, bornes) && !checkAngleBornes(angle,180d, bornes) && !checkAngleBornes(angle, 270d, bornes);
 	}
 
-	/**
-	 * Check if a list of Vec2 is correctly set, with the angle calcul (Point by point)
-	 */
 	@Override
 	public boolean check(List<Vec2> trace){
 		if(!trace.isEmpty()){
 			angle = Filters.getAngle(trace);
-			if(Filters.isAffine(trace) && checkAngle(angle))
+			if(Filters.isAffine(trace) && checkAngle())
 				return true;
-			return false;
 		}
 		return false;
 	}
 	
-	
-	/**
-	 * Move the ship in the good direction, depending on the angle of drift
-	 */
 	@Override
 	public void apply(Player ship) {
-		int vitX;
-		if(angle < 90)
+		int vitX, vitY;
+		if(angle < 90 || angle > 270)
 			vitX = Variables.SPEED_MAIN_SHIP;
 		else
 			vitX = -Variables.SPEED_MAIN_SHIP;
-		ship.setVelocity(vitX, Variables.SPEED_MAIN_SHIP);		
+		if(angle <180)
+			vitY = Variables.SPEED_MAIN_SHIP;
+		else
+			vitY = -Variables.SPEED_MAIN_SHIP;
+		
+		ship.setVelocity(vitX, vitY);		
 	}
 }
