@@ -49,9 +49,9 @@ public class ItemList {
 
 		
 		itemList.add(new Item(WeaponType.Shuriken, "Shuriken", "images/weapons/shuriken.png",20));
-		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",10));
-		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",10));
-		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",5));
+		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",20));
+		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",20));
+		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",20));
 	}
 	
 	
