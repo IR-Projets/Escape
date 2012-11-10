@@ -41,7 +41,7 @@ public class Shiboleet extends Weapon {
 	}
 	
 	@Override
-	public void launch(float vitX, float vitY) {
+	public void shoot(int vitX, int vitY) {
 		if(id%3 == 0)
 			setVelocity(vitX, vitY);
 		if(id%3 == 1)

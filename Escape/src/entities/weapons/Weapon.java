@@ -88,7 +88,7 @@ public abstract class Weapon extends Entity{
 		return (scaleOp.filter(image, imageRezise));
 	}
 
-	public void launch(float vitX, float vitY) {
+	public void shoot(int vitX, int vitY) {
 		setVelocity(vitX, vitY);
 		setLaunch(true);
 	}

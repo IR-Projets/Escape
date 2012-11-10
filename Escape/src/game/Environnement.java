@@ -25,6 +25,7 @@ import entities.ships.Player;
 import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Fireball;
+import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import gestures.Gesture;
@@ -73,6 +74,9 @@ public class Environnement {
 		return player;
 	}
 
+	public List<Weapon> getWeapons(){
+		return player.getWeapons();
+	}
 
 	public Hud getHud() {
 		return hud;

@@ -4,15 +4,13 @@ import hud.LifeListener;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.Entity;
 import entities.weapons.Weapon;
-import entities.weapons.WeaponFactory;
 
 
 
@@ -21,12 +19,13 @@ public abstract class Ship extends Entity{
 	private int life;
 	private final BufferedImage image;
 	private final List<LifeListener> lifeListener = new ArrayList<LifeListener>();
-	
+	private final List<Weapon> weapons;
 	
 	public Ship(Entities entities, EntityShape bodyForm, BufferedImage image, int posX, int posY, int life){
 		super(entities, bodyForm.get(entities.getWorld(), posX, posY, image.getWidth(), image.getHeight()));
 		this.image= image;
 		this.life=life;
+		weapons = new LinkedList<>();
 	}
 
 	public BufferedImage getImage(){
@@ -45,5 +44,18 @@ public abstract class Ship extends Entity{
 	
 	public int getLife(){
 		return life;
+	}
+
+	public List<Weapon> getWeapons() {
+		return weapons;
+	}
+	
+	public void shoot(int vitX, int vitY){
+		Iterator<Weapon> it = weapons.iterator();
+		while(it.hasNext()){
+			Weapon weapon = it.next();
+			weapon.shoot(vitX, vitY);
+			it.remove();
+		}
 	}
 }
