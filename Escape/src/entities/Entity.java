@@ -87,7 +87,7 @@ public abstract class Entity implements CollisionListener{
 	}
 
 	public void setVelocity(float speedX, float speedY){
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX), toWorldSize(speedY)));
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
 	}	
 
 	public void stop(){

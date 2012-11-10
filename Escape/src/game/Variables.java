@@ -53,7 +53,7 @@ public class Variables {
 	/*
 	 * World variables
 	 */
-	public final static float WORLD_SCALE = 5;
+	public final static float WORLD_SCALE = 1;
 	public static final float WORLD_GRAVITY_X = 0;
 	public static final float WORLD_GRAVITY_Y = 0;
 
