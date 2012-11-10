@@ -8,6 +8,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jbox2d.common.Vec2;
+
+import effects.Effects;
+import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import entities.weapons.Weapon;
@@ -57,5 +61,11 @@ public abstract class Ship extends Entity{
 			weapon.shoot(vitX, vitY);
 			it.remove();
 		}
+	}
+	
+	public void explode(){
+		Vec2 pos = getScreenPostion();
+		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
+		getEntities().removeEntitie(this);
 	}
 }

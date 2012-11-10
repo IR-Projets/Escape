@@ -12,6 +12,7 @@ import entities.Entities;
 import entities.Entity;
 import entities.ships.Ship;
 import game.Ressources;
+import game.Variables;
 
 
 public class Enemy extends Ship{
@@ -46,18 +47,20 @@ public class Enemy extends Ship{
 	public EntityType getType() {
 		return EntityType.Enemy;
 	}
-
+	
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		switch (type) {
 		case WeaponEnnemy:
 		case WeaponAllied:
 		case Joueur:
-			Vec2 pos = getScreenPostion();
-			Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-			getEntities().removeEntitie(this);
+			explode();
 			break;	
-
+		case WorldLimit:
+			Vec2 pos = getScreenPostion();
+			if(pos.y+getImage().getHeight()>=Variables.SCREEN_HEIGHT)
+				explode();
+			break;
 		default:
 			break;
 		}

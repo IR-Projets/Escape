@@ -19,7 +19,6 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entity;
 import entities.Entities;
-import entities.maps.Clouds;
 import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
