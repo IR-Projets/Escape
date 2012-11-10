@@ -45,10 +45,10 @@ public class Player extends Ship {
 
 	public Player(Entities entities){
 		super(entities, EntityShape.Polygon, Ressources.getImage("images/ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
-		
+
 		getBody().setFixedRotation(true);
 		getBody().getFixtureList().getFilterData().groupIndex = -2;
-		
+
 		looping = Looping.NONE;
 
 
@@ -64,13 +64,13 @@ public class Player extends Ship {
 		Vec2 vel = getVelocity();
 
 		if( (vel.x<0 && pos.x<0) ||
-			(vel.x>0 && pos.x>Variables.SCREEN_WIDTH - getImage().getWidth()))
+				(vel.x>0 && pos.x>Variables.SCREEN_WIDTH - getImage().getWidth()))
 			vel.x=0;
-		
+
 		if( (vel.y<0 && pos.y<getImage().getHeight()) || 
-			(vel.y>0 && pos.y>Variables.SCREEN_HEIGHT/3 + getImage().getHeight()))
+				(vel.y>0 && pos.y>Variables.SCREEN_HEIGHT/3 + getImage().getHeight()))
 			vel.y=0;
-		
+
 		setVelocity(vel.x, vel.y);
 	}
 
@@ -96,7 +96,7 @@ public class Player extends Ship {
 		return null;
 	}
 
-	
+
 	private BufferedImage loopRender(){				
 		if(looping.frame<0 || looping.frame>=loopingImage.length){
 			looping.frame = 0;
@@ -145,25 +145,24 @@ public class Player extends Ship {
 		case Boss:
 		case Enemy:
 		case WeaponEnnemy:
-			if(getLife()>10)
-				setLife(getLife()-10);
-			else{
+			setLife(getLife()-10);
+			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
 				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 				getEntities().removeEntitie(this);
 			}
-			break;
-		case WeaponAllied :
-			break;
-		}
-		
+		break;
+	case WeaponAllied :
+		break;
 	}
 
+}
 
-	/**
-	 * Used to join the Ship to the origin point
-	 * Non used
-	 *
+
+/**
+ * Used to join the Ship to the origin point
+ * Non used
+ *
 	private void initJoin(World world){
 		Joint joint;
 		Body ground = world.createBody(new BodyDef());
@@ -186,6 +185,6 @@ public class Player extends Ship {
 		jd.length = 0;//d.length();
 		joint = world.createJoint(jd);
 	}
-	*/
+ */
 
 }
