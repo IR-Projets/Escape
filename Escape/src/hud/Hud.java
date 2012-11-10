@@ -39,15 +39,40 @@ import java.util.List;
 public class Hud implements LifeListener{
 
 
+	/**
+	 * BufferedImage for the left and right hud
+	 */
 	private final BufferedImage hudLeft, hudRight;
+	
+	/**
+	 * Represents the itemList of the player
+	 */
 	private final ItemList itemList;
 
+	/**
+	 * Score of the player
+	 */
 	private int score;
-	private boolean displayItemList;//Boolean for know if we have to display the ItemList
-	private final Item itemEmpty;//Only for show an empty item if we ItemList is empty.
+	
+	/**
+	 * Boolean for know if we have to display the ItemList
+	 */
+	private boolean displayItemList;
+	
+	/**
+	 * Only for show an empty item if we ItemList is empty
+	 */
+	private final Item itemEmpty;
 
-	private int sizeLife;// The total size for display the life
-	private final int echelle;// The scale to compare one Point of life into a Percent of the Health Menu
+	/**
+	 * The total size for display the life
+	 */
+	private int sizeLife;
+	
+	/**
+	 * The scale to compare one Point of life into a Percent of the Health Menu
+	 */
+	private final int echelle;
 
 	public Hud(){
 		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
@@ -57,20 +82,34 @@ public class Hud implements LifeListener{
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		displayItemList = false;
-
 		itemEmpty = new Item(WeaponType.Null, "No Weapon", "images/hud/error.png", 0);
 		itemList = new ItemList();
 	}
 
-	
+	/**
+	 * Getter of the itemList
+	 * @return ItemList
+	 */
 	public ItemList getItemList() {
 		return itemList;
 	}
 
+	/**
+	 * Return the current item, which is the first element of our itemList
+	 * @return ItemList
+	 */
 	public Item getItemActual() {
 		return itemList.getItems().get(0);
 	}
 	
+	/**
+	 * Create a list of Weapon, associated with the current Item in our list. (list because a weapon can be represents by multiple weapon, like shiboleet
+	 * @param entities the current list of our entities (use for the factory)
+	 * @param x the position in x to create it
+	 * @param y the position in y to create it
+	 * @param damagedPlayer if the weapon can damaged the player
+	 * @return the list of weapon.
+	 */
 	public List<Weapon> createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
 		WeaponFactory factory = new WeaponFactory(entities);
 		return factory.createWeapon(itemList.removeCurrentItem().getWeaponType(), x, y, damagedPlayer);

@@ -32,11 +32,34 @@ import game.Variables;
  *
  */
 public class Item {
+	
+	/**
+	 * The name of the item
+	 */
 	private final String name;
+	
+	/**
+	 * The image associated with the item
+	 */
 	private final BufferedImage image;
+	
+	/**
+	 * the number of item
+	 */
 	private int nbItem;
+	
+	/**
+	 * The type of Weapon the item is : for associated a weapon to an item
+	 */
 	WeaponType type;
 	
+	/**
+	 * The default constructor
+	 * @param type type of the weapon associated with the item
+	 * @param name name of the item
+	 * @param nameImage name of the image of the item
+	 * @param nbItem number of item
+	 */
 	public Item(WeaponType type, String name, String nameImage, int nbItem) {
 		this.type = type;
 		this.name = name;
@@ -44,13 +67,17 @@ public class Item {
 		this.nbItem=nbItem;
 	}
 
+	/**
+	 * Return the type of weapon of the item
+	 * @return the type of weapon of the item
+	 */
 	public WeaponType getWeaponType(){
 		return type;
 	}
 	
 	/**
 	 * Return the name of the Item
-	 * @return
+	 * @return the name of the Item
 	 */
 	public String getName() {
 		return name;
@@ -58,7 +85,7 @@ public class Item {
 	
 	/**
 	 * Return the Image of the Item
-	 * @return
+	 * @return the Image of the Item
 	 */
 	public BufferedImage getImage() {
 		return image;
@@ -66,19 +93,26 @@ public class Item {
 
 	/**
 	 * Return the number of item
-	 * @return
+	 * @return the number of item
 	 */
 	public int getNbItem() {
 		return nbItem;
 	}
 	
-	public void addItem(int quantity){
+	/**
+	 * Add a quantity to this item
+	 * @param quantity for know how many we increase it
+	 */
+	public void addQuantity(int quantity){
 		nbItem+=quantity;
 	}
 	
-	public Item removeItem(){
+	/**
+	 * Decrease the quantity of the item
+	 * @return the item
+	 */
+	public void removeQuantity(){
 		nbItem--;
-		return this;
 	}
 	/**
 	 * Draw the item, at the position x and y. The drawing show : The image of item, with a frame,
@@ -99,7 +133,4 @@ public class Item {
 		graphics.drawString(String.valueOf(getNbItem()), x+20, y+23);//display the amount of the item
 		
 	}
-
-
-
 }

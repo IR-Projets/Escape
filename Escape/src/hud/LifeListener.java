@@ -1,5 +1,9 @@
 package hud;
 
+/**
+ * This interface is a Listener, for impact the changment of the life from the player to the HUD, and display it
+ *
+ */
 /* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
  *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
 
@@ -19,5 +23,10 @@ package hud;
  */
 
 public interface LifeListener {
+	/**
+	 * The main methode of the listener : send the difference between the old life and the new life, for does some action
+	 * @param oldLife
+	 * @param newLife
+	 */
 	void lifeChanged(int oldLife, int newLife);
 }

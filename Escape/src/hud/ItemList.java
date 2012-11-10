@@ -37,7 +37,14 @@ import java.util.List;
  */
 public class ItemList {
 
+	/**
+	 * the List of item
+	 */
 	private final List<Item> itemList;
+	
+	/**
+	 * the three image uses for displays the menu
+	 */
 	private final BufferedImage cadreSup, cadreInf, cadreBor;
 	
 	
@@ -47,33 +54,56 @@ public class ItemList {
 		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
 		itemList = new LinkedList<>();
 
-		
+		//TODO
 		itemList.add(new Item(WeaponType.Shuriken, "Shuriken", "images/weapons/shuriken.png",20));
 		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",20));
 		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",20));
 		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",20));
 	}
 	
+	/**
+	 * Returns true if this list contains no elements
+	 * @return true if this list contains no elements
+	 */
+	public boolean isEmpty() {
+		return itemList.isEmpty();
+	}
 	
 	/**
-	 * @return the list of item
+	 * Return the list of items
+	 * @return the list of items
 	 */
 	public List<Item> getItems() {
 		return itemList;
 	}
-
-
+	
+	/**
+	 * Add an item, with a quantity, to the list
+	 * @param item the item to add
+	 * @param quantity the quantity to add
+	 */
 	public void addItem(Item item, int quantity){
 		if(itemList.contains(item)){
 			int index = itemList.indexOf(item);
-			itemList.get(index).addItem(quantity);
+			itemList.get(index).addQuantity(quantity);
 		}
 		else{
 			itemList.add(item);
 		}
 	}
 
-	
+	/**
+	 * Remove the CurrentItem, by removing the quantity by One, or removing totally the item, depending on his quantity
+	 * @return the Item remove
+	 */
+	public Item removeCurrentItem() {
+		Item item = itemList.get(0);
+		if(item.getNbItem()>1)
+			item.removeQuantity();
+		else
+			itemList.remove(0);
+		return item;
+	}
 	
 	/**
 	 * Draw an item, which is compose of a list of item, with a wallpaper specific to the ItemList. 
@@ -86,7 +116,6 @@ public class ItemList {
 		graphics.drawImage(cadreBor, x, y, cadreBor.getWidth(), cadreBor.getHeight(), null);//the font of the item
 		item.drawItem(graphics, x+5, y+1);// the draw of the item
 	}
-
 
 	/**
 	 * display the item list of this object on the graphics
@@ -113,8 +142,6 @@ public class ItemList {
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString("Weapon", x+22, y+20);
 	}
-
-
 
 	/**
 	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
@@ -143,24 +170,4 @@ public class ItemList {
 				}
 		return false;
 	}
-
-
-	public Item removeCurrentItem() {
-		Item item;
-		if(itemList.get(0).getNbItem()>1){
-			item = itemList.get(0).removeItem();
-		}
-		else{
-			item = itemList.get(0);
-			itemList.remove(0);
-		}
-		return item;
-	}
-
-
-	public boolean isEmpty() {
-		return itemList.isEmpty();
-	}
-
-
 }
