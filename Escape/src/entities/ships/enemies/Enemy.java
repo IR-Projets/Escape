@@ -26,14 +26,6 @@ public class Enemy extends Ship{
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
-	/*private static BufferedImage getRandomNameImage(){
-		Random rand = new Random();
-		if(rand.nextInt()%2==0)
-			return Ressources.getImage("images/Ships/ship.png");
-		else
-			return Ressources.getImage("images/Ships/dirtyDick.png");
-	}*/
-
 	@Override
 	public void compute() {
 		double now = System.currentTimeMillis();

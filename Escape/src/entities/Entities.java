@@ -135,7 +135,7 @@ public class Entities {
 
 		float worldWidth = Variables.SCREEN_WIDTH/Variables.WORLD_SCALE;
 		float worldHeight = Variables.SCREEN_HEIGHT/Variables.WORLD_SCALE;
-		float bordure = Variables.WORLD_BORDER;
+		float bordure = Variables.WORLD_BORDER/Variables.WORLD_SCALE;
 		
 		PolygonShape shape = new PolygonShape();
 		//0,0->width,0
