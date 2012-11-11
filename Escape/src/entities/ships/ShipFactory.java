@@ -18,12 +18,14 @@ public class ShipFactory extends EntityFactory {
 	}
 
 
+	//A deplacer et supprimer la classe??  (on a deja un Enemi Factory)
 	public Player createPlayer(){
 		Player player = new Player(getEntities());
 		getEntities().addEntity(player);
 		return player;
 	}
 	
+	/*
 	public Ship createEntity(int posX, int posY, int width, int height){
 		Ship ship;
 		Random rand = new Random();
@@ -33,6 +35,6 @@ public class ShipFactory extends EntityFactory {
 			ship = new Enemy(getEntities(), Ressources.getImage("images/ships/ship.png"), rand.nextInt(Variables.SCREEN_WIDTH), rand.nextInt(Variables.SCREEN_HEIGHT*2/3)+Variables.SCREEN_HEIGHT/3, 10);
 		getEntities().addEntity(ship);
 		return ship;
-	}
+	}*/
 
 }

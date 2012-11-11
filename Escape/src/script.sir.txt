@@ -33,15 +33,15 @@ begin = 26t, 450p
 
 <body>
 
-step:1
+step:4
 speed: 80
-move :l
-shoot :Fireball,b
+move :b
+shoot :Fireball,lb
 
 step : 1
 speed :60
 move :rb
-shoot:Fireball, lb
+shoot:Shiboleet, lb
 
 step : 1
 speed :60

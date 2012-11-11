@@ -1,11 +1,14 @@
 package entities.ships.enemies;
 
+import java.util.List;
+
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.Entity;
 import entities.ships.Ship;
 import entities.ships.boss.Boss;
+import entities.ships.enemies.LoaderBehavior.Behavior;
 import entities.weapons.Weapon;
 import entities.weapons.WeaponFactory;
 import entities.weapons.WeaponFactory.WeaponType;
@@ -21,9 +24,9 @@ public class EnnemyFactory extends Entities {
 
 	
 	
-	public static Enemy createEnnemy(Entities entities, String nameImage, int x, int y, int life) {
+	public static Enemy createEnnemy(Entities entities, String nameImage, int x, int y, int life, List<Behavior> listBehavior) {
 		//Random rand = new Random();
-		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
+		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life, listBehavior);
 		entities.addEntity(enemy);
 		/*WeaponFactory factory = new WeaponFactory(entities);
 		Weapon tmp = factory.createWeapon(WeaponType.Fireball,  x, y, true);

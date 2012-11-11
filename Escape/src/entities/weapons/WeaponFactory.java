@@ -32,28 +32,28 @@ public class WeaponFactory extends EntityFactory{
 	};
 	
 	public List<Weapon> createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
-		List<Weapon> listWeapon = new LinkedList<>();
+		List<Weapon> listWeapons = new LinkedList<>();
 		
 		switch(type){
 		case Shuriken:
-			listWeapon.add(new Shuriken(getEntities(), x, y, damagedPlayer));
+			listWeapons.add(new Shuriken(getEntities(), x, y, damagedPlayer));
 			break;
 		case Fireball:
-			listWeapon.add(new Fireball(getEntities(), x, y, damagedPlayer));
+			listWeapons.add(new Fireball(getEntities(), x, y, damagedPlayer));
 			break;
 		case Missile:
-			listWeapon.add(new Missile(getEntities(), x, y, damagedPlayer));
+			listWeapons.add(new Missile(getEntities(), x, y, damagedPlayer));
 			break;
 		case Shiboleet:
 			for(int i=0;i<3;i++)
-			listWeapon.add(new Shiboleet(getEntities(), x, y, damagedPlayer));
+			listWeapons.add(new Shiboleet(getEntities(), x, y, damagedPlayer));
 			break;
 		default:
 			break;
 		}
 		
-		for(Weapon weapon : listWeapon)
+		for(Weapon weapon : listWeapons)
 			getEntities().addEntity(weapon);
-		return listWeapon;		
+		return listWeapons;		
 	}	
 }
