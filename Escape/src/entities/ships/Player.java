@@ -19,9 +19,11 @@ import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
 
-	private final static int SLOW = 45;
+	private final static int TICK_SKIP = 60;
 
-	private BufferedImage[] loopingImage;
+	private BufferedImage[] loopingImages;
+	private BufferedImage[] touchedImages;
+	private boolean touched;
 
 	//Utilise sa pour charger les images !!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -52,9 +54,15 @@ public class Player extends Ship {
 		looping = Looping.NONE;
 
 
-		loopingImage = new BufferedImage[12];
-		for(int i=0; i<loopingImage.length; i++){
-			loopingImage[i] = Ressources.getImage("images/ships/player/Joueur"+(i+1)+".png");	
+		loopingImages = new BufferedImage[12];
+		touchedImages = new BufferedImage[2];
+		touched=false;
+		
+		for(int i=0; i<loopingImages.length; i++){
+			loopingImages[i] = Ressources.getImage("images/ships/player/Joueur"+(i+1)+".png");	
+		}
+		for(int i=0; i<touchedImages.length; i++){
+			touchedImages[i] = Ressources.getImage("images/ships/player/Joueur_red"+(i+1)+".png");
 		}
 	}
 
@@ -74,21 +82,38 @@ public class Player extends Ship {
 		setVelocity(vel.x, vel.y);
 	}
 
+	private int touchedImage=0;
+	private int count=0;
 	@Override
 	public BufferedImage getImage() {
+		
 		switch(looping){
 		case NONE:		
-			return super.getImage();
+			if(touched){
+				count++;
+				BufferedImage image = touchedImages[touchedImage];
+				if(count>TICK_SKIP){
+					count=0;
+					touchedImage++;
+					if(touchedImage>=2){
+						touchedImage=0;
+						touched=false;
+					}
+				}
+				return image;
+			}
+			else
+				return super.getImage();
 
 		case LEFT:
-			looping.count = ++looping.count % SLOW;
+			looping.count = ++looping.count % TICK_SKIP;
 			if(looping.count==0)
 				looping.frame--;
 			System.out.println("looping frame"+looping.frame);
 			return loopRender();
 
 		case RIGHT:
-			looping.count = ++looping.count % SLOW;
+			looping.count = ++looping.count % TICK_SKIP;
 			if(looping.count==0)
 				looping.frame++;
 			return loopRender();
@@ -98,7 +123,7 @@ public class Player extends Ship {
 
 
 	private BufferedImage loopRender(){				
-		if(looping.frame<0 || looping.frame>=loopingImage.length){
+		if(looping.frame<0 || looping.frame>=loopingImages.length){
 			looping.frame = 0;
 			looping = Looping.NONE;
 			return getImage();
@@ -106,9 +131,9 @@ public class Player extends Ship {
 
 		switch(looping){
 		case LEFT:
-			return loopingImage[looping.frame];
+			return loopingImages[looping.frame];
 		case RIGHT:
-			return loopingImage[looping.frame];
+			return loopingImages[looping.frame];
 		case NONE:
 		default:
 			break;
@@ -126,7 +151,7 @@ public class Player extends Ship {
 			looping.frame=0;
 			break;
 		case LEFT:
-			looping.frame= loopingImage.length-1;
+			looping.frame= loopingImages.length-1;
 			break;
 		case RIGHT:
 			looping.frame = 0;
@@ -145,6 +170,7 @@ public class Player extends Ship {
 		case Boss:
 		case Enemy:
 		case WeaponEnnemy:
+			touched=true;
 			setLife(getLife()-10);
 			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
