@@ -1,4 +1,4 @@
-package hud;
+package entities.ships;
 
 /**
  * This interface is a Listener, for impact the changment of the life from the player to the HUD, and display it
@@ -22,11 +22,13 @@ package hud;
  *
  */
 
-public interface LifeListener {
+public interface ShipListener {
 	/**
 	 * The main methode of the listener : send the difference between the old life and the new life, for does some action
 	 * @param oldLife
 	 * @param newLife
 	 */
 	void lifeChanged(int oldLife, int newLife);
+	
+	void destroyed();
 }

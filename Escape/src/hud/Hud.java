@@ -1,6 +1,7 @@
 package hud;
 
 import entities.Entities;
+import entities.ships.ShipListener;
 import entities.weapons.Weapon;
 import entities.weapons.WeaponFactory;
 import entities.weapons.WeaponFactory.WeaponType;
@@ -36,7 +37,7 @@ import java.util.List;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-public class Hud implements LifeListener{
+public class Hud implements ShipListener{
 
 
 	/**
@@ -192,6 +193,11 @@ public class Hud implements LifeListener{
 		graphics.drawImage(hudLeft, 0, 0, hudLeft.getWidth(), hudLeft.getHeight(), null);//Draw the right HUD
 		drawWeapons(graphics);
 		drawScore(graphics);
+	}
+
+	@Override
+	public void destroyed() {
+
 	}
 
 }

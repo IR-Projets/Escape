@@ -1,6 +1,5 @@
 package entities.ships;
 
-import hud.LifeListener;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public abstract class Ship extends Entity{
 	
 	private int life;
 	private final BufferedImage image;
-	private final List<LifeListener> lifeListener = new ArrayList<LifeListener>();
+	private final List<ShipListener> lifeListener = new ArrayList<ShipListener>();
 	private final List<Weapon> weapons;
 	
 	public Ship(Entities entities, EntityShape bodyForm, BufferedImage image, int posX, int posY, int life){
@@ -36,12 +35,12 @@ public abstract class Ship extends Entity{
 		return image;
 	}
 	
-	public void addListener(LifeListener listen){
+	public void addListener(ShipListener listen){
 		lifeListener.add(listen);
 	}
 	
 	public void setLife(int life){
-		for(LifeListener listen : lifeListener)
+		for(ShipListener listen : lifeListener)
 			listen.lifeChanged(this.life, life);
 		this.life = life;
 	}
@@ -71,5 +70,7 @@ public abstract class Ship extends Entity{
 		Vec2 pos = getScreenPostion();
 		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
 		getEntities().removeEntitie(this, getType());
+		for(ShipListener shipDestruct : lifeListener)
+			shipDestruct.destroyed();
 	}
 }
