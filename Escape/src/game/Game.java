@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
+import game.EnvironnementFactory.Level;
 
 public class Game implements GameStateListener{
 
@@ -37,13 +38,14 @@ public class Game implements GameStateListener{
 	private long next_game_tick;
 	private boolean paused;
 
-
+	private Level level;
 	/*
 	 * TODO: C'est ici que va ï¿½tre gï¿½rer tout les evenements du jeux (mort, gagnï¿½, ...)
 	 */
 
 	public Game() throws IOException{		
-		environnement = EnvironnementFactory.factory();
+		this.level = Level.Jupiter;
+		environnement = EnvironnementFactory.factory(level);
 		environnement.addListener(this);
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
@@ -62,8 +64,19 @@ public class Game implements GameStateListener{
 			System.exit(0);
 			break;
 		case Win:
-			System.out.println("Gagné !!");
-			environnement = EnvironnementFactory.factory();
+			//On lance le niveau suivant
+			switch(level){
+			case Jupiter:
+				level = Level.Moon;
+				break;
+			case Moon:
+				level = Level.Earth;
+				break;
+			case Earth:
+				System.out.println("Jeu fini!! pas encore implémenté");
+				break;
+			}			
+			environnement = EnvironnementFactory.factory(level);
 			environnement.addListener(this);
 			break;
 		}

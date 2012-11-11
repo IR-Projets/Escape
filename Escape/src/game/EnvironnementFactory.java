@@ -3,6 +3,8 @@ package game;
 import java.util.Random;
 
 import maps.Earth;
+import maps.Moon;
+import maps.Jupiter;
 import maps.Map;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -21,16 +23,18 @@ import hud.Hud;
 
 
 public class EnvironnementFactory {
+	public enum Level{
+		Earth,
+		Moon,
+		Jupiter
+	}
 	
-	/*
-	 * TODO: set the gravity to 0 (set to 10 for test only)
-	 */
-
+	
 	private static final boolean DO_SLEEP = false;
 	
-	public static Environnement WORLD1(World world){
+	private static Environnement Earth(World world){
 		Entities entities = new Entities(world);		
-		EnnemyBehavior ennemyBehavior = new EnnemyBehavior(entities, "script.sir.txt");//= new EnnemyBehavior(entities, "");
+		EnnemyBehavior ennemyBehavior = new EnnemyBehavior(entities, "script.sir.txt");//script de la terre
 		Map map = new Earth();		
 		Hud hud = new Hud();
 		
@@ -41,8 +45,36 @@ public class EnvironnementFactory {
 		return env;
 	}
 	
+	private static Environnement Moon(World world){
+		Entities entities = new Entities(world);		
+		EnnemyBehavior ennemyBehavior = new EnnemyBehavior(entities, "script.sir.txt");//Script de la lune
+		Map map = new Moon();		
+		Hud hud = new Hud();
+		
+		ShipFactory factory = new ShipFactory(entities);
+		Player playerShip = factory.createPlayer();
+		
+		Environnement env = new Environnement(map, playerShip, ennemyBehavior, entities, hud);		
+		return env;
+	}
 	
-	public static Environnement factory(World world){
+	private static Environnement Jupiter(World world){
+		Entities entities = new Entities(world);		
+		EnnemyBehavior ennemyBehavior = new EnnemyBehavior(entities, "script.sir.txt");//Script de la lune
+		Map map = new Jupiter();		
+		Hud hud = new Hud();
+		
+		ShipFactory factory = new ShipFactory(entities);
+		Player playerShip = factory.createPlayer();
+		
+		Environnement env = new Environnement(map, playerShip, ennemyBehavior, entities, hud);		
+		return env;
+	}
+	
+	/*
+	 * Environnement factory principal (celui du main)
+	 */
+	public static Environnement factory(World world, Level level){
 		if(world==null){
 			world = new World(new Vec2(Variables.WORLD_GRAVITY_X, Variables.WORLD_GRAVITY_Y), DO_SLEEP);
 		}
@@ -51,19 +83,22 @@ public class EnvironnementFactory {
 			world.setAllowSleep(DO_SLEEP);
 		}		
 		
-		/*
-		 * TODO: Mettre ICI tout les niveaux du jeu!
-		 * 
-		 * if(lvl1)
-		 * 		return world1()
-		 * ...
-		 *  
-		 */		
-		return WORLD1(world);
+		switch(level){
+		case Earth:
+			return Earth(world);
+		case Moon:
+			return Moon(world);
+		case Jupiter: 
+			return Jupiter(world);
+		}
+		return null;		
 	}
 	
-	public static Environnement factory(){
-		return factory(null);
+	/*
+	 * Environnement factory du test JBox2d
+	 */
+	public static Environnement factory(Level level){
+		return factory(null, level);
 	}
 	
 

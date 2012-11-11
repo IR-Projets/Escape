@@ -19,10 +19,11 @@ import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
+import game.EnvironnementFactory.Level;
 
 
 
-public class Test extends TestbedTest {
+public class Test extends TestbedTest implements GameStateListener{
 
 	private static final String COMPUTE_RATE = "Compute rate";
 	private static final String TIME_STEP = "Time step";
@@ -31,13 +32,15 @@ public class Test extends TestbedTest {
 	private Environnement env = null;
 	//reflexion pour avoir accès au constructeur protected de MotionEvent
 	Constructor eventConstructor;
-	
+	Level level;
 	
 	@Override
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
 
-		env = EnvironnementFactory.factory(getWorld());
+		level = Level.Moon;
+		env = EnvironnementFactory.factory(getWorld(), level);
+		env.addListener(this);
 		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);	
 		
 		
@@ -48,6 +51,33 @@ public class Test extends TestbedTest {
 			e.printStackTrace();
 		} catch (SecurityException e) {
 			e.printStackTrace();
+		}		
+	}
+	
+
+	@Override
+	public void stateChanged(GameState state) {
+		switch(state){
+		case Loose:
+			System.out.println("Perdu !!");
+			System.exit(0);
+			break;
+		case Win:
+			System.out.println("Gagné !!");
+			//le niveau que l'on vient de gagner
+			switch(level){
+			case Jupiter:
+				env = EnvironnementFactory.factory(Level.Moon);
+				break;
+			case Moon:
+				env = EnvironnementFactory.factory(Level.Earth);
+				break;
+			case Earth:
+				System.out.println("Jeu fini!! pas encore implémenté");
+				break;
+			}			
+			env.addListener(this);
+			break;
 		}		
 	}
 	
