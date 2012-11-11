@@ -4,7 +4,7 @@
 <head>
 
 life = 150
-sprite = images/Ships/ship.png
+sprite = images/ships/ship.png
 
 begin = 2t,100p
 

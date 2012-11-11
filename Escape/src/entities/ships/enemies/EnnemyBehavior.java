@@ -66,7 +66,7 @@ public class EnnemyBehavior {
 				it.remove();
 			}
 			//TODO: Ajouter un boss!!!
-			else if(10000<difTime && !bossDejaAffiche){
+			else if(100000<difTime && !bossDejaAffiche){
 				bossDejaAffiche = true;
 				enemys.add(EnnemyFactory.createBoss(entities, "images/ships/boss.png", Variables.SCREEN_HEIGHT/2, Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, 10));
 			}
