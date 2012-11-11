@@ -29,6 +29,7 @@ public class Test extends TestbedTest {
 	private static final String VELOCITY_OP = "Velocity operation";
 	private static final String POSITION_IT = "Position Iteration";
 	private Environnement env = null;
+	//reflexion pour avoir accès au constructeur protected de MotionEvent
 	Constructor eventConstructor;
 	
 	

@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 import java.util.List;
 
 import maps.Map;
@@ -13,6 +14,7 @@ import entities.ships.Player;
 import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
+import game.GameStateListener.GameState;
 import gestures.Gesture;
 import hud.Hud;
 
@@ -27,7 +29,7 @@ public class Environnement implements EntitiesListener {
 	private Player player;
 	private Hud hud;
 	private EnnemyBehavior ennemyBehavior;
-
+	private List<GameStateListener> gameListener;
 
 
 	/**
@@ -35,6 +37,7 @@ public class Environnement implements EntitiesListener {
 	 * @param world Jbox2d world
 	 */
 	public Environnement(Map map, Player player, EnnemyBehavior ennemyBehavior, Entities entities, Hud hud){
+		gameListener = new LinkedList<>();
 		this.map = map;
 		this.player = player;
 		player.addListener(hud);		
@@ -46,6 +49,10 @@ public class Environnement implements EntitiesListener {
 		hud = new Hud();
 	}
 
+
+	public void addListener(GameStateListener listener) {
+		this.gameListener.add(listener);		
+	}
 	
 	/**
 	 * Set the background (the map)
@@ -78,16 +85,21 @@ public class Environnement implements EntitiesListener {
 	 */
 	@Override
 	public void entityRemoved(EntityType entity) {
+		GameState newState = null;
 		switch (entity){
 		case Boss:
-			System.out.println("GAME OVER: WIN !");
+			newState = GameState.Win;
 			break;
 		case Joueur:
-			System.out.println("GAME OVER: LOSE !");
+			newState = GameState.Loose;
 			break;
 		default:
-			System.out.println("Entity Destroyed");
 			break;
+		}
+		if(newState!=null){
+			for(GameStateListener listener : gameListener){
+				listener.stateChanged(newState);
+			}
 		}
 	}
 	
@@ -95,7 +107,7 @@ public class Environnement implements EntitiesListener {
 	 * Render all entities associated
 	 * @param graphics draw area
 	 */
-	public void render(Graphics2D graphics, float interpolation){			
+	public void render(Graphics2D graphics){			
 		map.render(graphics);				//The ground (the planet)
 		entities.render(graphics);			//All the entities (player too)
 		gesture.render(graphics);			//Gesture movements (circle)

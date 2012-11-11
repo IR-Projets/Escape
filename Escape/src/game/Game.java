@@ -16,69 +16,92 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
 
-public class Game {
+public class Game implements GameStateListener{
 
-	Environnement env;
+	Environnement environnement;
 
 	/*
 	 * For the double buffered method
 	 */
 	private BufferedImage offscreen;
 	private Graphics2D bufferGraphics; 
-	
-	
+
+
 	private final int fps_refreshRate = 20;
 	private double fps;
 	private double time = 0;
 	private int ite = 0;
-
 	private long next_game_tick;
-	
-	
-	
+	private boolean paused;
+
+
 	/*
 	 * TODO: C'est ici que va ï¿½tre gï¿½rer tout les evenements du jeux (mort, gagnï¿½, ...)
 	 */
-	
+
 	public Game() throws IOException{		
-		env = EnvironnementFactory.factory();
+		environnement = EnvironnementFactory.factory();
+		environnement.addListener(this);
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
 		bufferGraphics = offscreen.createGraphics();
+		paused=false;
 	}
-	
+
+	@Override
+	public void stateChanged(GameState state) {
+		switch(state){
+		case Paused:
+			paused = paused ? false : true;
+			break;
+		case Loose:
+			System.out.println("Perdu !!");
+			System.exit(0);
+			break;
+		case Win:
+			System.out.println("Gagné !!");
+			environnement = EnvironnementFactory.factory();
+			environnement.addListener(this);
+			break;
+		}
+
+	}
+
+
 	public void init(Graphics2D graphics) {
 		next_game_tick = System.currentTimeMillis();
 	}
-	
+
 
 	public void run(Graphics2D graphics) {				
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 
-		int loops = 0;
-		long currentTime = System.currentTimeMillis();
-
-		while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
-			env.compute();
-			next_game_tick += Variables.SKIP_TICKS;
-			loops++;
+		if(!paused){
+			int loops = 0;
+			long currentTime = System.currentTimeMillis();
+			while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
+				environnement.compute();
+				next_game_tick += Variables.SKIP_TICKS;
+				loops++;
+			}
 		}
 
-		float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
-		env.render(bufferGraphics, interpolation);
-				
+		//float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
+		environnement.render(bufferGraphics);
+
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);
 		}
-		
+
 		graphics.drawImage(offscreen, 0, 0, null);
 	}
 
-	
-	
+
+
 	public void drawFPS(Graphics2D graphics){
 		ite++;
 		if(ite>fps_refreshRate){	//1er image: On récupère le temps
@@ -90,7 +113,7 @@ public class Game {
 			fps = 1000000000 / (now-time);
 			time = now;
 		}	
-		
+
 		graphics.setColor(Variables.RED);
 		graphics.scale(2, 2);
 		graphics.drawString("fps: " + (int)fps, 10, 10);
@@ -98,14 +121,14 @@ public class Game {
 	}
 
 	public void event(MotionEvent event) {
-		env.event(event);
+		environnement.event(event);
 	}
-	
-	
-	
+
+
+
 	long now;
 	public void beginTime(){
-		 now = System.currentTimeMillis();
+		now = System.currentTimeMillis();
 	}
 	public void endTime(String description){
 		System.out.println(description + ": " + (System.currentTimeMillis() - now + "ms"));
