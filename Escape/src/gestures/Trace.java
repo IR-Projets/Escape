@@ -35,6 +35,8 @@ import org.jbox2d.common.Vec2;
  *
  */
 public class Trace {
+	private static final int MAX_SIZE_LIST = 200;
+
 	/**
 	 * Our current trace, which are represents by a List of Vec2
 	 */
@@ -99,6 +101,7 @@ public class Trace {
 	 * @param vec
 	 */
 	public void addPoint(Vec2 vec){
+		if(trace.size()<= MAX_SIZE_LIST)
 		trace.add(vec);
 	}
 	

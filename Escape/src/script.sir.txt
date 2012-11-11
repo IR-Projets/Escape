@@ -38,12 +38,12 @@ speed: 80
 move :b
 shoot :Fireball,lb
 
-step : 1
+step : 2
 speed :60
 move :rb
 shoot:Shiboleet, lb
 
-step : 1
+step : 3
 speed :60
 move :lb
 shoot:Shuriken, rb

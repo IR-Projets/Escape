@@ -106,7 +106,6 @@ public class Enemy extends Ship{
 			loop=0;
 			Behavior behavActual = listBehavior.get(indexBehavior);
 
-			System.out.println("Setp"+step+" et "+behavActual.getStep());
 			if(step > behavActual.getStep()+sumStep){
 				sumStep+=behavActual.getStep();
 				indexBehavior = (indexBehavior+1)%listBehavior.size();
