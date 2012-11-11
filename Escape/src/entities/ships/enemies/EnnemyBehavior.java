@@ -21,22 +21,22 @@ import game.Variables;
 
 public class EnnemyBehavior {
 
+	private final static int LOOP_SKIP = 64;
+	
 	private final Entities entities;
 	
 	
 	private HeadScript head;
 	private List<Behavior> listBehavior;
 	
-	private final List<Ship> enemys;//For move the entity and launch the missile
+	private final List<Enemy> enemys;//For move the entity and launch the missile
 	
-	private int stepMax, stepActual, indexBehavior;
-	private long timeBegin;
+	private int indexBehavior, loop, step;
 	
 	//private Boss boss;
 
 	public EnnemyBehavior(Entities entities, String filename){
 		this.entities=entities;
-		timeBegin = System.nanoTime()/1000000;
 		enemys = new LinkedList<>();
 
 		BufferedReader bufIn = null;
@@ -48,11 +48,7 @@ public class EnnemyBehavior {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		stepActual = stepMax=0;
-		for(Behavior behav : listBehavior)
-			stepMax+=behav.getStep();
-		indexBehavior=0;
+		indexBehavior=loop=step=0;
 	}
 
 	//TODO: A virer
@@ -119,39 +115,32 @@ public class EnnemyBehavior {
 	}
 	
 	
-	
-	
-	
 	public void compute(){
-		long timeActual = System.nanoTime()/1000000;
-		long difTime = timeActual-timeBegin;
-
-		Iterator <Couple> it = head.getListAppear().iterator();
-		while(it.hasNext()){
-			Couple couple = it.next();
-			if(couple.getTime()*1000 < difTime){
-				enemys.add(EnnemyFactory.createEnnemy(entities, head.getFilename(), couple.getPos(), Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, head.getLife()));
-				it.remove();
-			}
-			//TODO: Ajouter un boss!!!
-			/*else if(10000<difTime && !bossDejaAffiche){
-				bossDejaAffiche = true;
-				enemys.add(EnnemyFactory.createBoss(entities, "images/ships/boss.png", Variables.SCREEN_HEIGHT/2, Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, 10));
-			}*/
-
-		}
-
 		Behavior behavActual = listBehavior.get(indexBehavior);
-		if( (difTime / 1000) < (behavActual.getStep() + stepActual)){
+		loop++;
+		if(loop>LOOP_SKIP){
+			step++;
+			loop=0;
+			
+			Iterator <Couple> it = head.getListAppear().iterator();
+			while(it.hasNext()){
+				Couple couple = it.next();
+				if(step > couple.getTime()){
+					enemys.add(EnnemyFactory.createEnnemy(entities, head.getFilename(), couple.getPos(), Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, head.getLife()));
+					it.remove();
+				}
+				//TODO: Ajouter un boss!!!
+				/*else if(10000<difTime && !bossDejaAffiche){
+					bossDejaAffiche = true;
+					enemys.add(EnnemyFactory.createBoss(entities, "images/ships/boss.png", Variables.SCREEN_HEIGHT/2, Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, 10));
+				}*/
+			}
 			launchMove(behavActual);
-			//
-		}
-		else {
 			launchWeapon(behavActual);
-			stepActual += behavActual.getStep() % stepMax;
-			indexBehavior = (indexBehavior+1)%listBehavior.size();
+			if(step > behavActual.getStep())
+				indexBehavior = (indexBehavior+1)%listBehavior.size();
+			return;
 		}
-
 	}
 
 

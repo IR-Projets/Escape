@@ -21,7 +21,7 @@ public class EnnemyFactory extends Entities {
 
 	
 	
-	public static Ship createEnnemy(Entities entities, String nameImage, int x, int y, int life) {
+	public static Enemy createEnnemy(Entities entities, String nameImage, int x, int y, int life) {
 		//Random rand = new Random();
 		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
 		entities.addEntity(enemy);
