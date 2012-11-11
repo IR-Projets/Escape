@@ -77,7 +77,7 @@ public abstract class Weapon extends Entity{
 	public void collision(Entity entity, EntityType type) {
 		Vec2 pos = getScreenPostion();
 		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-		getEntities().removeEntitie(this);
+		getEntities().removeEntitie(this, getType());
 	}
 	
 	public static BufferedImage resize(BufferedImage image, float coefSize){

@@ -2,6 +2,9 @@ package game;
 
 import java.util.Random;
 
+import maps.Earth;
+import maps.Map;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -9,8 +12,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
-import entities.maps.Earth;
-import entities.maps.Map;
 import entities.ships.Player;
 import entities.ships.ShipFactory;
 import entities.ships.enemies.Enemy;

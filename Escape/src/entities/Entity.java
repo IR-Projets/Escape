@@ -22,6 +22,16 @@ public abstract class Entity implements CollisionListener{
 	private Body body;
 	private Entities entities;
 
+	public enum EntityType{
+		Enemy,
+		Boss,
+		Joueur,
+		Item,
+		WeaponAllied,
+		WeaponEnnemy, 
+		WorldLimit
+	}
+	
 	public Entity(Entities entities, Body body) {
 		this.entities = entities;
 		this.body = body;//entities.createBody(posX, posY, width, height);

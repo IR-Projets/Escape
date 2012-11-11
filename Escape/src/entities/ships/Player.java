@@ -149,7 +149,7 @@ public class Player extends Ship {
 			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
 				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-				getEntities().removeEntitie(this);
+				getEntities().removeEntitie(this, getType());
 			}
 		break;
 	case WeaponAllied :

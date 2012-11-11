@@ -1,21 +1,14 @@
 package entities;
 
 //import Entity;
-import entities.CollisionListener.EntityType;
-import entities.ships.Player;
-import entities.ships.enemies.Enemy;
-import entities.ships.enemies.EnnemyFactory;
-import entities.weapons.WeaponFactory;
-import game.Ressources;
+import entities.Entity.EntityType;
 import game.Variables;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -24,7 +17,6 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
@@ -36,6 +28,7 @@ public class Entities {
 	private final Map<Body, Entity> entities = new Hashtable<>();
 	private final List<Entity> entitiesToDelete;	//All entities
 	private final World world;
+	private EntitiesListener entityListener;
 	
 	public Entities(World world){
 		entitiesToDelete = new LinkedList<>();
@@ -50,11 +43,13 @@ public class Entities {
 				Entity entityA = getEntitie(bodyA);
 				Entity entityB = getEntitie(bodyB);
 				
+				//Collision avec les bordures
 				if(bodyA==worldLimit)
 					entityB.collision(null, EntityType.WorldLimit);
 				if(bodyB==worldLimit)
 					entityA.collision(null, EntityType.WorldLimit);
 					
+				//Collision de deux entity
 				if(entityA!=null && entityB!=null){
 					entityA.collision(entityB, entityB.getType());
 					entityB.collision(entityA, entityA.getType());
@@ -88,10 +83,14 @@ public class Entities {
 		entities.put(entity.getBody(), entity);				
 	}
 	
-	public void removeEntitie(Entity entity){
+	public void removeEntitie(Entity entity, EntityType type){
 		entitiesToDelete.add(entity);
+		entityListener.entityRemoved(type);
 	}
 
+	public void addEntitiesListener(EntitiesListener listener) {
+		this.entityListener = listener;
+	}
 	
 	
 	/*
@@ -152,9 +151,5 @@ public class Entities {
 		ground.createFixture(shape, 0.0f);
 		
 		return ground;
-	}
-	
-
-	
-	
+	}	
 }

@@ -1,37 +1,23 @@
 package game;
 
 import java.awt.Graphics2D;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.jbox2d.callbacks.ContactImpulse;
-import org.jbox2d.callbacks.ContactListener;
-import org.jbox2d.collision.Manifold;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.Contact;
+import maps.Map;
 
 import effects.Effects;
-import effects.Explosion;
-import entities.Entity;
 import entities.Entities;
-import entities.maps.Map;
+import entities.EntitiesListener;
+import entities.Entity.EntityType;
 import entities.ships.Player;
-import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyBehavior;
-import entities.weapons.Fireball;
 import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
-import fr.umlv.zen2.MotionEvent.Kind;
 import gestures.Gesture;
 import hud.Hud;
 
 
-public class Environnement {
+public class Environnement implements EntitiesListener {
 
 
 
@@ -51,9 +37,10 @@ public class Environnement {
 	public Environnement(Map map, Player player, EnnemyBehavior ennemyBehavior, Entities entities, Hud hud){
 		this.map = map;
 		this.player = player;
-		player.addListener(hud);
-		this.ennemyBehavior = ennemyBehavior;
+		player.addListener(hud);		
+		this.ennemyBehavior = ennemyBehavior;		
 		this.entities=entities;
+		entities.addEntitiesListener(this);
 		this.gesture = new Gesture(this);
 		this.hud = hud;
 		hud = new Hud();
@@ -85,6 +72,24 @@ public class Environnement {
 		return entities;
 	}
 	
+	/*
+	 * Entities Listener: detect the death of each Entity
+	 * @see entities.EntitiesListener#entityRemoved(entities.Entity.EntityType)
+	 */
+	@Override
+	public void entityRemoved(EntityType entity) {
+		switch (entity){
+		case Boss:
+			System.out.println("GAME OVER: WIN !");
+			break;
+		case Joueur:
+			System.out.println("GAME OVER: LOSE !");
+			break;
+		default:
+			System.out.println("Entity Destroyed");
+			break;
+		}
+	}
 	
 	/**
 	 * Render all entities associated
@@ -107,6 +112,10 @@ public class Environnement {
 		hud.event(event);
 	}
 
+	
+	/**
+	 * Methode compute appellée par TestBed: step()
+	 */
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
 		ennemyBehavior.compute();
 		gesture.compute();
@@ -115,8 +124,9 @@ public class Environnement {
 		map.compute();
 		Effects.compute();
 	}
-
-
+	/**
+	 * Methode compute appellée par Game: run()
+	 */
 	public void compute() {		
 		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}

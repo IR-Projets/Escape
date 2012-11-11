@@ -66,6 +66,6 @@ public abstract class Ship extends Entity{
 	public void explode(){
 		Vec2 pos = getScreenPostion();
 		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-		getEntities().removeEntitie(this);
+		getEntities().removeEntitie(this, getType());
 	}
 }
