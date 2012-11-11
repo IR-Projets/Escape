@@ -54,6 +54,10 @@ public abstract class Ship extends Entity{
 		return weapons;
 	}
 	
+	public void addWeapons(List<Weapon> weapons){
+		this.weapons.addAll(weapons);
+	}
+	
 	public void shoot(int vitX, int vitY){
 		Iterator<Weapon> it = weapons.iterator();
 		while(it.hasNext()){

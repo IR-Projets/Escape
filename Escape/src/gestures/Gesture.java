@@ -133,9 +133,9 @@ public class Gesture {
 		int width = player.getImage().getWidth();
 		int height = player.getImage().getHeight();
 		if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet)
-			env.getWeapons().addAll(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false));
+			env.getPlayer().addWeapons(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false));
 		else
-			env.getWeapons().addAll(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false));
+			env.getPlayer().addWeapons(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false));
 		action = Action.SHOOT;
 	}
 
@@ -153,7 +153,7 @@ public class Gesture {
 						filter.apply(env.getPlayer());
 			}
 			else
-				if(!env.getWeapons().isEmpty())
+				if(!env.getPlayer().getWeapons().isEmpty())
 					shootWeapon();
 			traceStack.finishCurrentTrace();
 			break;

@@ -67,10 +67,6 @@ public class Environnement implements EntitiesListener {
 		return player;
 	}
 
-	public List<Weapon> getWeapons(){
-		return player.getWeapons();
-	}
-
 	public Hud getHud() {
 		return hud;
 	}

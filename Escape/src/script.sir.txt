@@ -6,28 +6,26 @@
 life = 150
 sprite = images/ships/ship.png
 
-begin = 2t,100p
+begin = 2t,400p
 
-begin =5t,250p
-begin=5t, 100p
-begin = 8t, 250p
+begin = 8t, 200p
 
-begin = 13t, 100p
+begin = 13t, 150p
 begin = 13t, 250p
-begin = 13t, 450p
+begin = 13t, 400p
 
 
-begin = 18t, 100p
+begin = 18t, 150p
 begin = 18t, 250p
 begin = 18t, 450p
 
 
-begin = 22t, 100p
+begin = 22t, 150p
 begin = 22t, 250p
 begin = 22t, 450p
 
 
-begin = 24t, 50p
+begin = 24t, 150p
 begin = 26t, 250p
 begin = 26t, 450p
 
@@ -38,7 +36,7 @@ begin = 26t, 450p
 step:1
 speed: 80
 move :l
-shoot :Fireball,rb
+shoot :Fireball,b
 
 step : 1
 speed :60
@@ -48,6 +46,6 @@ shoot:Fireball, lb
 step : 1
 speed :60
 move :lb
-shoot:Fireball, rb
+shoot:Shuriken, rb
 </body>
 
