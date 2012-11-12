@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import effects.Story;
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
 import game.EnvironnementFactory.Level;
@@ -38,6 +39,7 @@ public class Game implements GameStateListener{
 	private long next_game_tick;
 	private boolean paused;
 
+	private Story story;
 	private Level level;
 	/*
 	 * TODO: C'est ici que va �tre g�rer tout les evenements du jeux (mort, gagn�, ...)
@@ -50,7 +52,9 @@ public class Game implements GameStateListener{
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
 		bufferGraphics = offscreen.createGraphics();
+		story = new Story();
 		paused=false;
+		next_game_tick = -1;
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class Game implements GameStateListener{
 
 
 	public void init(Graphics2D graphics) {
-		next_game_tick = System.currentTimeMillis();
+		
 	}
 
 
@@ -93,18 +97,26 @@ public class Game implements GameStateListener{
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 
-		if(!paused){
-			int loops = 0;
-			long currentTime = System.currentTimeMillis();
-			while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
-				environnement.compute();
-				next_game_tick += Variables.SKIP_TICKS;
-				loops++;
-			}
+		if(!story.isFinished()){
+			story.render(bufferGraphics);
 		}
-
-		//float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
-		environnement.render(bufferGraphics);
+		else{
+			if(!paused){
+				if(next_game_tick==-1)
+					next_game_tick = System.currentTimeMillis();
+				
+				int loops = 0;
+				long currentTime = System.currentTimeMillis();
+				while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
+					environnement.compute();
+					next_game_tick += Variables.SKIP_TICKS;
+					loops++;
+				}
+			}
+			//float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
+			environnement.render(bufferGraphics);
+		}
+		
 
 		if(Variables.DEBUG){
 			drawFPS(bufferGraphics);
