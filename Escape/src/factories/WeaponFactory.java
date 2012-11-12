@@ -1,10 +1,14 @@
-package entities.weapons;
+package factories;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import entities.Entities;
-import entities.EntityFactory;
+import entities.weapons.Fireball;
+import entities.weapons.Missile;
+import entities.weapons.Shiboleet;
+import entities.weapons.Shuriken;
+import entities.weapons.Weapon;
 
 
 public class WeaponFactory extends EntityFactory{

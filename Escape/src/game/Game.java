@@ -16,10 +16,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import listeners.GameStateListener;
+
 import effects.Story;
+import factories.EnvironnementFactory;
+import factories.EnvironnementFactory.Level;
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
-import game.EnvironnementFactory.Level;
 
 public class Game implements GameStateListener{
 

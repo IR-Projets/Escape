@@ -14,6 +14,7 @@ public class Variables {
 	public static final String APPLICATION_NAME = "Escape IR";
 	public static final int SCREEN_WIDTH = 500;
 	public static final int SCREEN_HEIGHT = 700;
+	public static final String IMAGES_URL = "images/";
 	
 	
 	/*

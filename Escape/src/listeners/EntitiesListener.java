@@ -1,5 +1,6 @@
-package entities;
+package listeners;
 
+import entities.Entity;
 import entities.Entity.EntityType;
 
 

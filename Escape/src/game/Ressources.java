@@ -30,23 +30,24 @@ public class Ressources {
 	
 	/**
 	 * Load a BufferedImage
-	 * @param url Image to be loaded (must be in a package)
+	 * @param fileName Image to be loaded (must be in a package)
 	 * @param optimized Set the optimisation, usefull for big image without transparency (default false)
 	 * @return BufferedImage
 	 */
-	public static BufferedImage getImage(String url, boolean optimized){
+	public static BufferedImage getImage(String fileName, boolean optimized){
 		BufferedImage image = null;
+		String filePath = Variables.IMAGES_URL + fileName;
 		
-		if(images.containsKey(url)){
-			return images.get(url);
+		if(images.containsKey(filePath)){
+			return images.get(filePath);
 		}
 		
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream input = classLoader.getResourceAsStream(url);
+		InputStream input = classLoader.getResourceAsStream(filePath);
 		try {
 			image = ImageIO.read(input);
 		} catch (IllegalArgumentException | IOException e) {
-			System.out.println("Can't read file: " + url + System.getProperty("line.separator"));
+			System.out.println("Can't read file: " + filePath + System.getProperty("line.separator"));
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -54,7 +55,7 @@ public class Ressources {
 		if(optimized)
 			image = optimise(image);
 		
-		images.put(url, image);
+		images.put(filePath, image);
 		return image;		
 	}
 	

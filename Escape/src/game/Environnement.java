@@ -4,17 +4,18 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
 
+import listeners.EntitiesListener;
+import listeners.GameStateListener;
+import listeners.GameStateListener.GameState;
 import maps.Map;
 
 import effects.Effects;
 import entities.Entities;
-import entities.EntitiesListener;
 import entities.Entity.EntityType;
 import entities.ships.Player;
 import entities.ships.enemies.EnnemyBehavior;
 import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
-import game.GameStateListener.GameState;
 import gestures.Gesture;
 import hud.Hud;
 

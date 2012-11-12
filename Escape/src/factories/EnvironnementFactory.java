@@ -1,4 +1,4 @@
-package game;
+package factories;
 
 import java.util.Random;
 
@@ -15,9 +15,10 @@ import org.jbox2d.dynamics.World;
 
 import entities.Entities;
 import entities.ships.Player;
-import entities.ships.ShipFactory;
 import entities.ships.enemies.Enemy;
 import entities.ships.enemies.EnnemyBehavior;
+import game.Environnement;
+import game.Variables;
 import gestures.Gesture;
 import hud.Hud;
 

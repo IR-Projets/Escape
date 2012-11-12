@@ -28,7 +28,7 @@ public class Explosion extends Effects {
 		images = new BufferedImage[4];
 		
 		for(int i=0; i<images.length; i++){  
-			images[i] = Ressources.getImage("images/effects/fire"+i+".png");				
+			images[i] = Ressources.getImage("effects/fire"+i+".png");				
 		}
 	}
 	

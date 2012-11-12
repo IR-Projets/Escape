@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import listeners.ShipListener;
+
 import org.jbox2d.common.Vec2;
 
 import effects.Effects;

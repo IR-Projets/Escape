@@ -25,13 +25,13 @@ public class Cloud extends Effects {
 		
 		switch(type){
 		case Big:
-			image = Ressources.getImage("images/maps/bigCloud.png");
+			image = Ressources.getImage("maps/bigCloud.png");
 			break;			
 		case Midlle:
-			image = Ressources.getImage("images/maps/midCloud.png");
+			image = Ressources.getImage("maps/midCloud.png");
 			break;
 		case Small:
-			image = Ressources.getImage("images/maps/smallCloud.png");
+			image = Ressources.getImage("maps/smallCloud.png");
 			break;
 		}
 		posY = - image.getHeight();

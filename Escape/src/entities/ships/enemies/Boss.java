@@ -1,4 +1,4 @@
-package entities.ships.boss;
+package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
 
@@ -17,7 +17,7 @@ public class Boss extends Ship{
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
-		if(type==EntityType.WeaponAllied)
+		if(type==EntityType.WeaponPlayer)
 			explode();		
 	}
 

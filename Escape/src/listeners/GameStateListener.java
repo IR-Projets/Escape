@@ -1,4 +1,4 @@
-package game;
+package listeners;
 
 public interface GameStateListener {
 	public enum GameState{

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 
 public class LoaderBehavior {
 

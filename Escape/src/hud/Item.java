@@ -3,7 +3,7 @@ package hud;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
 /**

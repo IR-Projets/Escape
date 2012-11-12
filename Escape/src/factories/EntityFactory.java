@@ -1,7 +1,9 @@
-package entities;
+package factories;
 
 
 import org.jbox2d.dynamics.World;
+
+import entities.Entities;
 
 
 

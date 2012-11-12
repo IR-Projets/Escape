@@ -10,7 +10,7 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 
 public abstract class Weapon extends Entity{
 
@@ -70,7 +70,7 @@ public abstract class Weapon extends Entity{
 	public EntityType getType() {
 		if(damagedPlayer)
 			return EntityType.WeaponEnnemy;
-		return EntityType.WeaponAllied;
+		return EntityType.WeaponPlayer;
 	}
 
 	@Override

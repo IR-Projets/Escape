@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import listeners.ShipListener;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -14,11 +16,10 @@ import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import entities.ships.Ship;
-import entities.ships.ShipListener;
 import entities.ships.enemies.LoaderBehavior.Behavior;
 import entities.ships.enemies.LoaderBehavior.HeadScript.Couple;
-import entities.weapons.WeaponFactory;
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
 
@@ -126,7 +127,7 @@ public class Enemy extends Ship{
 	public void collision(Entity entity, EntityType type) {
 		switch (type) {
 		case WeaponEnnemy:
-		case WeaponAllied:
+		case WeaponPlayer:
 		case Joueur:
 			explode();
 			break;	

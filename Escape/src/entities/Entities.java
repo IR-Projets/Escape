@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import listeners.EntitiesListener;
+
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -28,7 +30,7 @@ public class Entities {
 	private final Map<Body, Entity> entities = new Hashtable<>();
 	private final List<Entity> entitiesToDelete;	//All entities
 	private final World world;
-	private EntitiesListener entityListener;
+	private EntitiesListener entitiesListener;
 	
 	public Entities(World world){
 		entitiesToDelete = new LinkedList<>();
@@ -85,11 +87,11 @@ public class Entities {
 	
 	public void removeEntitie(Entity entity, EntityType type){
 		entitiesToDelete.add(entity);
-		entityListener.entityRemoved(type);
+		entitiesListener.entityRemoved(type);
 	}
 
 	public void addEntitiesListener(EntitiesListener listener) {
-		this.entityListener = listener;
+		this.entitiesListener = listener;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package entities.ships;
+package listeners;
 
 /**
  * This interface is a Listener, for impact the changment of the life from the player to the HUD, and display it

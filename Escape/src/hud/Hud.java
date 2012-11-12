@@ -1,10 +1,9 @@
 package hud;
 
 import entities.Entities;
-import entities.ships.ShipListener;
 import entities.weapons.Weapon;
-import entities.weapons.WeaponFactory;
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory;
+import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
@@ -13,6 +12,8 @@ import game.Variables;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+
+import listeners.ShipListener;
 /**
  * This class represents our Head Up Display, which manage the elements associated with the game (life, weapon).
  * 
@@ -76,14 +77,14 @@ public class Hud implements ShipListener{
 	private final int echelle;
 
 	public Hud(){
-		hudLeft = Ressources.getImage("images/hud/hudLeft.png");
-		hudRight = Ressources.getImage("images/hud/hudRight.png");
+		hudLeft = Ressources.getImage("hud/hudLeft.png");
+		hudRight = Ressources.getImage("hud/hudRight.png");
 
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		displayItemList = false;
-		itemEmpty = new Item(WeaponType.Null, "No Weapon", "images/hud/error.png", 0);
+		itemEmpty = new Item(WeaponType.Null, "No Weapon", "hud/error.png", 0);
 		itemList = new ItemList();
 	}
 

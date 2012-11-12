@@ -1,6 +1,6 @@
 package entities;
 
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
 
@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+
+import listeners.EntityListener;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -18,7 +20,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
-public abstract class Entity implements CollisionListener{	
+public abstract class Entity implements EntityListener{	
 	private Body body;
 	private Entities entities;
 
@@ -27,7 +29,7 @@ public abstract class Entity implements CollisionListener{
 		Boss,
 		Joueur,
 		Item,
-		WeaponAllied,
+		WeaponPlayer,
 		WeaponEnnemy, 
 		WorldLimit
 	}

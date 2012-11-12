@@ -1,4 +1,4 @@
-package maps;
+package factories;
 
 public class MapFactory {
 

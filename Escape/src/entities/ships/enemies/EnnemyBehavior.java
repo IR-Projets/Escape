@@ -7,11 +7,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import listeners.ShipListener;
 import entities.Entities;
-import entities.ships.ShipListener;
 import entities.ships.enemies.LoaderBehavior.Behavior;
 import entities.ships.enemies.LoaderBehavior.HeadScript;
 import entities.ships.enemies.LoaderBehavior.HeadScript.Couple;
+import factories.ShipFactory;
 import game.Ressources;
 import game.Variables;
 
@@ -61,7 +62,7 @@ public class EnnemyBehavior {
 			while(it.hasNext()){
 				Couple couple = it.next();
 				if(step > couple.getTime()){
-					final Enemy enemy = EnnemyFactory.createEnnemy(entities, head.getFilename(), couple.getPos(), Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, head.getLife(), listBehavior);
+					final Enemy enemy = ShipFactory.createEnnemy(entities, head.getFilename(), couple.getPos(), Variables.SCREEN_HEIGHT+Variables.SCREEN_HEIGHT/20, head.getLife(), listBehavior);
 					enemys.add(enemy);
 					enemy.addListener(new ShipListener(){
 

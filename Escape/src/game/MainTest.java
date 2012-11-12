@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 
+import listeners.GameStateListener;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.testbed.framework.TestList;
 import org.jbox2d.testbed.framework.TestbedFrame;
@@ -17,13 +19,14 @@ import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
+import factories.EnvironnementFactory;
+import factories.EnvironnementFactory.Level;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
-import game.EnvironnementFactory.Level;
 
 
 
-public class Test extends TestbedTest implements GameStateListener{
+public class MainTest extends TestbedTest implements GameStateListener{
 
 	private static final String COMPUTE_RATE = "Compute rate";
 	private static final String TIME_STEP = "Time step";
@@ -147,7 +150,7 @@ public class Test extends TestbedTest implements GameStateListener{
 	public static void main(String args[]){
 		final TestbedModel model = new TestbedModel();         	// create our model
 
-		Test test = new Test();
+		MainTest test = new MainTest();
 		
 		// add tests
 		model.addCategory("Tests personnels");             // add a category

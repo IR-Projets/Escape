@@ -1,7 +1,7 @@
 package gestures;
 
 import entities.ships.Player;
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Environnement;

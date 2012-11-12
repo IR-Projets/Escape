@@ -46,7 +46,7 @@ public class Player extends Ship {
 
 
 	public Player(Entities entities){
-		super(entities, EntityShape.Polygon, Ressources.getImage("images/ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
+		super(entities, EntityShape.Polygon, Ressources.getImage("ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 
 		getBody().setFixedRotation(true);
 		getBody().getFixtureList().getFilterData().groupIndex = -2;
@@ -59,10 +59,10 @@ public class Player extends Ship {
 		touched=false;
 		
 		for(int i=0; i<loopingImages.length; i++){
-			loopingImages[i] = Ressources.getImage("images/ships/player/Joueur"+(i+1)+".png");	
+			loopingImages[i] = Ressources.getImage("ships/player/Joueur"+(i+1)+".png");	
 		}
 		for(int i=0; i<touchedImages.length; i++){
-			touchedImages[i] = Ressources.getImage("images/ships/player/Joueur_red"+(i+1)+".png");
+			touchedImages[i] = Ressources.getImage("ships/player/Joueur_red"+(i+1)+".png");
 		}
 	}
 
@@ -178,7 +178,7 @@ public class Player extends Ship {
 				getEntities().removeEntitie(this, getType());
 			}
 		break;
-	case WeaponAllied :
+	case WeaponPlayer :
 		break;
 	}
 

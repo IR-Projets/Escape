@@ -1,6 +1,6 @@
 package hud;
 
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
@@ -49,16 +49,16 @@ public class ItemList {
 	
 	
 	public ItemList() {
-		cadreSup = Ressources.getImage("images/hud/fontWeaponTop.png");
-		cadreInf = Ressources.getImage("images/hud/fontWeaponBot.png");
-		cadreBor = Ressources.getImage("images/hud/fontWeapon.png");
+		cadreSup = Ressources.getImage("hud/fontWeaponTop.png");
+		cadreInf = Ressources.getImage("hud/fontWeaponBot.png");
+		cadreBor = Ressources.getImage("hud/fontWeapon.png");
 		itemList = new LinkedList<>();
 
 		//TODO
-		itemList.add(new Item(WeaponType.Shuriken, "Shuriken", "images/weapons/shuriken.png",20));
-		itemList.add(new Item(WeaponType.Fireball, "Fireball", "images/weapons/fire.png",20));
-		itemList.add(new Item(WeaponType.Missile, "Missile", "images/weapons/missile.png",20));
-		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "images/weapons/shiboleet.png",20));
+		itemList.add(new Item(WeaponType.Shuriken, "Shuriken", "weapons/shuriken.png",20));
+		itemList.add(new Item(WeaponType.Fireball, "Fireball", "weapons/fire.png",20));
+		itemList.add(new Item(WeaponType.Missile, "Missile", "weapons/missile.png",20));
+		itemList.add(new Item(WeaponType.Shiboleet, "Shiboleet", "weapons/shiboleet.png",20));
 	}
 	
 	/**

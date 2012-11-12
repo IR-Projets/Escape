@@ -1,7 +1,7 @@
 package entities.weapons;
 
 import entities.Entities;
-import entities.weapons.WeaponFactory.WeaponType;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 
 public class Fireball extends Weapon {
@@ -10,7 +10,7 @@ public class Fireball extends Weapon {
 	private int increase;
 	
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, Ressources.getImage("images/weapons/fire.png"),x,y, firedByPlayer,3, WeaponType.Fireball);
+		super(entities, EntityShape.Circle, Ressources.getImage("weapons/fire.png"),x,y, firedByPlayer,3, WeaponType.Fireball);
 		time = System.nanoTime()/1000000;
 		increase=0;
 	}
