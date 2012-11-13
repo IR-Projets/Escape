@@ -36,7 +36,7 @@ import game.Variables;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-public class Hud implements ShipListener{
+public class Hud {
 
 
 	/**
@@ -64,14 +64,8 @@ public class Hud implements ShipListener{
 	private final Player player;
 
 	/**
-	 * The total size for display the life
-	 */
-	private int sizeLife;
-
-	/**
 	 * The scale to compare one Point of life into a Percent of the Health Menu
 	 */
-	private final int echelle;
 
 	public Hud(Player player){
 		cadreSup = Ressources.getImage("hud/fontWeaponTop.png");
@@ -83,21 +77,12 @@ public class Hud implements ShipListener{
 
 		this.player = player;
 		score = 0;
-		sizeLife = 4*hudLeft.getWidth()/7;
-		echelle = sizeLife/Variables.MAX_LIFE;
+		
 		displayItemList = false;
 		itemEmpty = new WeaponItem(WeaponType.Null, 0);
-		player.addListener(this);
 	}
 
 
-	@Override
-	public void lifeChanged(int oldLife, int newLife) {
-		if(oldLife == newLife)
-			return;
-		int diffLife = oldLife-newLife;
-		sizeLife -= diffLife*echelle;
-	}
 
 	/**
 	 * Draw the life of the player
@@ -105,7 +90,7 @@ public class Hud implements ShipListener{
 	 */
 	public void drawLife(Graphics2D graphics){
 		graphics.setColor(Variables.GREEN);
-		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, sizeLife, hudLeft.getHeight()/4);
+		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, player.getLife(), hudLeft.getHeight()/4);
 		score++;
 	}
 
@@ -229,9 +214,5 @@ public class Hud implements ShipListener{
 		drawScore(graphics);
 	}
 
-	@Override
-	public void destroyed() {
-
-	}
 
 }

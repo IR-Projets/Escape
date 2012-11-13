@@ -148,7 +148,7 @@ public class Gesture {
 
 		case ACTION_DOWN :
 			if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && !player.getWeapons().isEmpty()){
-				
+				player.getWeapons().removeCurrentItem();
 				player.loadWeapon();
 				action = Action.SHOOT;
 			}
