@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-import listeners.ShipListener;
 import entities.ships.Player;
 import entities.ships.WeaponItem;
 import factories.WeaponFactory.WeaponType;

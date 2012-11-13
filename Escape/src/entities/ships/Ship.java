@@ -44,8 +44,6 @@ public abstract class Ship extends Entity{
 	}
 	
 	public void setLife(int life){
-		for(ShipListener listen : lifeListener)
-			listen.lifeChanged(this.life, life);
 		this.life = life;
 	}
 	

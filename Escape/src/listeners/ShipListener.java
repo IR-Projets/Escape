@@ -23,12 +23,6 @@ package listeners;
  */
 
 public interface ShipListener {
-	/**
-	 * The main methode of the listener : send the difference between the old life and the new life, for does some action
-	 * @param oldLife
-	 * @param newLife
-	 */
-	void lifeChanged(int oldLife, int newLife);
 	
 	void destroyed();
 }
