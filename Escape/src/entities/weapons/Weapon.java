@@ -10,31 +10,31 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
-import factories.WeaponFactory.WeaponType;
+import game.Ressources;
 
 public abstract class Weapon extends Entity{
+	
 
-	private WeaponType weaponType;
+
 	private BufferedImage image;
 
 	private int damage;
 
 	private boolean isLaunch;
-	private final boolean damagedPlayer;
+	private final boolean firedByPlayer;
 
 	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
-	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, boolean damagedPlayer, int damage, WeaponType weaponType) {
+	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, boolean firedByPlayer, int damage) {
 		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
-		this.damagedPlayer=damagedPlayer;
-		if(damagedPlayer)
-			getBody().getFixtureList().getFilterData().groupIndex = -1;
-		else
+		this.firedByPlayer=firedByPlayer;
+		if(firedByPlayer)
 			getBody().getFixtureList().getFilterData().groupIndex = -2;
+		else
+			getBody().getFixtureList().getFilterData().groupIndex = -1;
 		this.damage=0;
 		isLaunch=false;
 		this.damage=damage;
-		this.weaponType=weaponType;
 	}
 
 	@Override
@@ -62,13 +62,9 @@ public abstract class Weapon extends Entity{
 		this.damage = damage;
 	}
 	
-	public WeaponType getWeaponType() {
-		return weaponType;
-	}
-	
 	@Override
 	public EntityType getType() {
-		if(damagedPlayer)
+		if(firedByPlayer)
 			return EntityType.WeaponEnnemy;
 		return EntityType.WeaponPlayer;
 	}
@@ -88,7 +84,10 @@ public abstract class Weapon extends Entity{
 		return (scaleOp.filter(image, imageRezise));
 	}
 
-	public void shoot(int vitX, int vitY) {
+	public void shoot(double angle, int velocity) {
+		int vitX = (int) (Math.cos(Math.toRadians(angle))*velocity);
+		int vitY = (int) (Math.sin(Math.toRadians(angle))*velocity);
+		System.out.println("Vitx"+vitX+" et "+vitY+" et angle"+angle);
 		setVelocity(vitX, vitY);
 		setLaunch(true);
 	}

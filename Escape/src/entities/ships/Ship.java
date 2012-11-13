@@ -3,8 +3,6 @@ package entities.ships;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import listeners.ShipListener;
@@ -16,6 +14,8 @@ import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import entities.weapons.Weapon;
+import factories.WeaponFactory;
+import factories.WeaponFactory.WeaponType;
 
 
 
@@ -24,13 +24,15 @@ public abstract class Ship extends Entity{
 	private int life;
 	private final BufferedImage image;
 	private final List<ShipListener> lifeListener = new ArrayList<ShipListener>();
-	private final List<Weapon> weapons;
+	private Weapon weapon;
+	private final WeaponFactory weaponFactory;
 	
 	public Ship(Entities entities, EntityShape bodyForm, BufferedImage image, int posX, int posY, int life){
 		super(entities, bodyForm.get(entities.getWorld(), posX, posY, image.getWidth(), image.getHeight()));
 		this.image= image;
 		this.life=life;
-		weapons = new LinkedList<>();
+		weapon = null;
+		weaponFactory = new WeaponFactory(entities);
 	}
 
 	public BufferedImage getImage(){
@@ -50,21 +52,20 @@ public abstract class Ship extends Entity{
 	public int getLife(){
 		return life;
 	}
-
-	public List<Weapon> getWeapons() {
-		return weapons;
-	}
 	
-	public void addWeapons(List<Weapon> weapons){
-		this.weapons.addAll(weapons);
-	}
+	public void loadWeapon(WeaponType weaponType){
+		int posY;
+		if(weaponType == WeaponType.Shiboleet || weaponType == WeaponType.ShiboleetExtended)
+			posY = (int)(getPositionNormalized().y-getImage().getHeight()/2);
+		else
+			posY = (int)(getPositionNormalized().y+getImage().getHeight()/2);
+		weapon = weaponFactory.createWeapon(weaponType, (int)getPositionNormalized().x+getImage().getWidth()/2, posY, true);
+		}
 	
-	public void shoot(int vitX, int vitY){
-		Iterator<Weapon> it = weapons.iterator();
-		while(it.hasNext()){
-			Weapon weapon = it.next();
-			weapon.shoot(vitX, vitY);
-			it.remove();
+	public void shootWeapon(double angle, int velocity){
+		if(weapon != null){
+			weapon.shoot(angle, velocity);
+			weapon = null;
 		}
 	}
 	
@@ -75,4 +76,12 @@ public abstract class Ship extends Entity{
 		for(ShipListener shipDestruct : lifeListener)
 			shipDestruct.destroyed();
 	}
+	
+	public void move(double angle, int velocity){
+		int vitX = (int) (Math.cos(Math.toRadians(angle))*velocity);
+		int vitY = (int) (Math.sin(Math.toRadians(angle))*velocity);
+		setVelocity(vitX, vitY);
+	}
+
+	
 }

@@ -1,23 +1,21 @@
 package entities.weapons;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import entities.Entities;
+import factories.WeaponFactory;
 import factories.WeaponFactory.WeaponType;
-import game.Ressources;
 
 public class Shiboleet extends Weapon {
 
 	private long time;
 	private int increase;
-	private final int id;
-	private static int nbShib = 0;
 	
 	public Shiboleet(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, Ressources.getImage("weapons/shiboleet.png"), x, y, firedByPlayer, 4, WeaponType.Shiboleet);
+		super(entities, EntityShape.Circle, WeaponType.Shiboleet.getImage(), x, y, firedByPlayer, 4);
 		time = System.nanoTime()/1000000;
 		increase=0;
-		id=nbShib++;
 	}
 
 	@Override
@@ -26,9 +24,11 @@ public class Shiboleet extends Weapon {
 		if(isLaunch())
 			return;
 		if(diffTime > 300 && increase <2){
-			setImage(Weapon.resize(getImage(), 1.5f));
+			BufferedImage image = Weapon.resize(getImage(), 1.5f);
+			setImage(image);	
 			increase++;
-			setDamage(getDamage()*2);
+			int damage = getDamage()*2;
+			setDamage(damage);			
 			time=System.nanoTime()/1000000;
 		}
 	}
@@ -39,17 +39,5 @@ public class Shiboleet extends Weapon {
 		if(isLaunch())
 			getBody().setAngularVelocity( 3f);
 	}
-	
-	@Override
-	public void shoot(int vitX, int vitY) {
-		if(id%3 == 0)
-			setVelocity(vitX, vitY);
-		if(id%3 == 1)
-			setVelocity(-vitX, vitY);
-		if(id%3 == 2)
-			setVelocity(0, vitY);
-		setLaunch(true);
-	}
-
 
 }

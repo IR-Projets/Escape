@@ -1,4 +1,4 @@
-package hud;
+package entities.ships;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -31,13 +31,9 @@ import game.Variables;
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-public class Item {
+public class WeaponItem {
 	
-	/**
-	 * The name of the item
-	 */
-	private final String name;
-	
+
 	/**
 	 * The image associated with the item
 	 */
@@ -46,12 +42,12 @@ public class Item {
 	/**
 	 * the number of item
 	 */
-	private int nbItem;
+	private int quantity;
 	
 	/**
 	 * The type of Weapon the item is : for associated a weapon to an item
 	 */
-	WeaponType type;
+	WeaponType weaponType;
 	
 	/**
 	 * The default constructor
@@ -60,11 +56,10 @@ public class Item {
 	 * @param nameImage name of the image of the item
 	 * @param nbItem number of item
 	 */
-	public Item(WeaponType type, String name, String nameImage, int nbItem) {
-		this.type = type;
-		this.name = name;
-		this.image=Ressources.getImage(nameImage);
-		this.nbItem=nbItem;
+	public WeaponItem(WeaponType weaponType, int quantity) {
+		this.weaponType = weaponType;
+		this.image=weaponType.getImage();
+		this.quantity=quantity;
 	}
 
 	/**
@@ -72,16 +67,9 @@ public class Item {
 	 * @return the type of weapon of the item
 	 */
 	public WeaponType getWeaponType(){
-		return type;
+		return weaponType;
 	}
 	
-	/**
-	 * Return the name of the Item
-	 * @return the name of the Item
-	 */
-	public String getName() {
-		return name;
-	}
 	
 	/**
 	 * Return the Image of the Item
@@ -95,8 +83,8 @@ public class Item {
 	 * Return the number of item
 	 * @return the number of item
 	 */
-	public int getNbItem() {
-		return nbItem;
+	public int getQuantity() {
+		return quantity;
 	}
 	
 	/**
@@ -104,7 +92,7 @@ public class Item {
 	 * @param quantity for know how many we increase it
 	 */
 	public void addQuantity(int quantity){
-		nbItem+=quantity;
+		quantity+=quantity;
 	}
 	
 	/**
@@ -112,7 +100,7 @@ public class Item {
 	 * @return the item
 	 */
 	public void removeQuantity(){
-		nbItem--;
+		quantity --;
 	}
 	/**
 	 * Draw the item, at the position x and y. The drawing show : The image of item, with a frame,
@@ -124,13 +112,13 @@ public class Item {
 	public void drawItem(Graphics2D graphics, int x, int y){
 		int widthItem = getImage().getWidth(), heighItem = getImage().getHeight();
 		
-		graphics.drawImage(getImage(), x, y, widthItem, heighItem, null);//display image of the item
+		graphics.drawImage(getImage(), x, y, null);//display image of the item
 		graphics.setColor(Variables.BLACK);
 		graphics.drawRect(x+2, y, widthItem-4, heighItem-1);//border of the item image
-		graphics.drawString(getName(), x+26, y+15);//Name of the item
+		graphics.drawString(weaponType.toString(), x+26, y+15);//Name of the item
 		
 		graphics.setColor(Variables.WHITE);
-		graphics.drawString(String.valueOf(getNbItem()), x+20, y+23);//display the amount of the item
+		graphics.drawString(String.valueOf(getQuantity()), x+20, y+23);//display the amount of the item
 		
 	}
 }

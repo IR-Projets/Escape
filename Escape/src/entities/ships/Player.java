@@ -4,8 +4,10 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
+import gestures.TraceStack;
 
 import java.awt.image.BufferedImage;
 
@@ -24,13 +26,8 @@ public class Player extends Ship {
 	private BufferedImage[] loopingImages;
 	private BufferedImage[] touchedImages;
 	private boolean touched;
-
-	//Utilise sa pour charger les images !!!!!!!!!!!!!!!!!!!!!!!!!
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	//Class loader
-	//getRessourceAsStream(String name)
-	//FAIRE NOTRE CLASS LOADER
-
+	
+	private final WeaponItems weaponItems;
 
 	public enum Looping{
 		NONE,
@@ -51,8 +48,10 @@ public class Player extends Ship {
 		getBody().setFixedRotation(true);
 		getBody().getFixtureList().getFilterData().groupIndex = -2;
 
+		weaponItems = new WeaponItems();
+		
 		looping = Looping.NONE;
-
+		
 
 		loopingImages = new BufferedImage[12];
 		touchedImages = new BufferedImage[2];
@@ -70,6 +69,8 @@ public class Player extends Ship {
 	public void compute() {
 		Vec2 pos = getPositionNormalized();
 		Vec2 vel = getVelocity();
+		
+		//limites du monde pour empecher le joueur de sortir
 
 		if( (vel.x<0 && pos.x<0) ||
 				(vel.x>0 && pos.x>Variables.SCREEN_WIDTH - getImage().getWidth()))
@@ -183,7 +184,14 @@ public class Player extends Ship {
 	}
 
 }
+	
+	public WeaponItems getWeapons(){
+		return weaponItems;
+	}
 
+	public void loadWeapon() {
+		loadWeapon(weaponItems.getCurrentWeaponItem().getWeaponType());
+	}
 
 /**
  * Used to join the Ship to the origin point

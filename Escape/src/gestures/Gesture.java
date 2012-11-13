@@ -1,10 +1,8 @@
 package gestures;
 
 import entities.ships.Player;
-import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
-import game.Environnement;
 import game.Variables;
 import gestures.filters.ArrowMovement;
 import gestures.filters.Backoff;
@@ -51,10 +49,7 @@ public class Gesture {
 	 */
 	private final List<Filter> filters;
 	
-	/**
-	 * Our environnement, for knows the current player, the HUD for create and launch weapon
-	 */
-	private final Environnement env;
+	private final Player player;
 
 	/**
 	 * An enum for represents the kind of gesture the player wants : He wants to move, or to shoot
@@ -67,8 +62,8 @@ public class Gesture {
 	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...)
 	 * @param env
 	 */
-	public Gesture(Environnement env){
-		this.env=env;
+	public Gesture(Player player){
+		this.player=player;
 		traceStack = new TraceStack();
 		filters = initFilters();
 	}
@@ -101,7 +96,7 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){
-			env.getPlayer().stop();
+			player.stop();
 			return;
 		}
 		traceStack.render(graphics);
@@ -111,33 +106,27 @@ public class Gesture {
 	/**
 	 * Shoot the weapon created by the player, which are in his lists of weapons.
 	 */
-	public void shootWeapon(){
+	private void shootWeapon(){
 		List<Vec2> traceWeapon = traceStack.getCurrentTrace().getTrace();
 		double angle;
 		if(traceWeapon.size() <=1)//we shoot in top by default
 			angle = 90;
 		else
 			angle = Filters.getAngle(traceWeapon);
-		int vitX = (int) (Math.cos(Math.toRadians(angle))*Variables.SPEED_WEAPON);
-		int vitY = (int) (Math.sin(Math.toRadians(angle))*Variables.SPEED_WEAPON);
-		env.getPlayer().shoot(vitX, vitY);
+		player.shootWeapon(angle, Variables.SPEED_WEAPON);
+		
+		/*int vitX = (int) (Math.cos(Math.toRadians(angle))*Variables.SPEED_WEAPON);
+		int vitY = (int) (Math.sin(Math.toRadians(angle))*Variables.SPEED_WEAPON);*/
 		traceStack.getCurrentTrace().setValid(true);
 	}
 
-	/**
-	 * Create the Weapon associated with the current Item
-	 */
-	private void createWeapon() {
-		Player player = env.getPlayer();
-		Vec2 pos = player.getPositionNormalized();
-		int width = player.getImage().getWidth();
-		int height = player.getImage().getHeight();
-		if(env.getHud().getItemActual().getWeaponType() == WeaponType.Shiboleet)
-			env.getPlayer().addWeapons(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y-height/2, false));
-		else
-			env.getPlayer().addWeapons(env.getHud().createSelectedWeapon(env.getEntities(), (int)pos.x+width/2, (int)pos.y+height/2, false));
-		action = Action.SHOOT;
-	}
+
+	
+	/*public Weapon createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
+		WeaponFactory factory = new WeaponFactory(entities);
+		return factory.createWeapon(env.getHud().getItemList().removeCurrentItem().getWeaponType(), x, y, damagedPlayer);
+	}*/
+	
 
 	/**
 	 * The event launched by the mouse, which is described by zen2 Libraries
@@ -150,17 +139,19 @@ public class Gesture {
 			if(action == Action.MOVE){
 				for(Filter filter : filters)
 					if(traceStack.check(filter))
-						filter.apply(env.getPlayer());
+						filter.apply(player);
 			}
-			else
-				if(!env.getPlayer().getWeapons().isEmpty())
+			else if (action == Action.SHOOT)
 					shootWeapon();
 			traceStack.finishCurrentTrace();
 			break;
 
 		case ACTION_DOWN :
-			if(env.getPlayer().isOnSprite(new Vec2(event.getX(), event.getY())) && event.getKind()==Kind.ACTION_DOWN && !env.getHud().getItemList().isEmpty())
-				createWeapon();
+			if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && !player.getWeapons().isEmpty()){
+				
+				player.loadWeapon();
+				action = Action.SHOOT;
+			}
 			else
 				action = Action.MOVE;
 			break;

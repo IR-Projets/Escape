@@ -8,13 +8,10 @@ import listeners.EntitiesListener;
 import listeners.GameStateListener;
 import listeners.GameStateListener.GameState;
 import maps.Map;
-
 import effects.Effects;
 import entities.Entities;
 import entities.Entity.EntityType;
 import entities.ships.Player;
-import entities.ships.enemies.EnnemyBehavior;
-import entities.weapons.Weapon;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
 import hud.Hud;
@@ -29,7 +26,6 @@ public class Environnement implements EntitiesListener {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
-	private EnnemyBehavior ennemyBehavior;
 	private List<GameStateListener> gameListener;
 
 
@@ -37,17 +33,14 @@ public class Environnement implements EntitiesListener {
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Map map, Player player, EnnemyBehavior ennemyBehavior, Entities entities, Hud hud){
+	public Environnement(Map map, Player player, Entities entities){
 		gameListener = new LinkedList<>();
 		this.map = map;
 		this.player = player;
-		player.addListener(hud);		
-		this.ennemyBehavior = ennemyBehavior;		
 		this.entities=entities;
 		entities.addEntitiesListener(this);
-		this.gesture = new Gesture(this);
-		this.hud = hud;
-		hud = new Hud();
+		this.gesture = new Gesture(player);
+		hud = new Hud(player);;
 	}
 
 
@@ -126,7 +119,6 @@ public class Environnement implements EntitiesListener {
 	 * Methode compute appellée par TestBed: step()
 	 */
 	public void compute(float timeStep, int velocityIteration, int positionIteration) {
-		ennemyBehavior.compute();
 		gesture.compute();
 		entities.compute();
 		entities.step(timeStep, velocityIteration, positionIteration);

@@ -56,6 +56,8 @@ public class ArrowMovement implements Filter{
 
 	@Override
 	public void apply(Player ship) {
+		
+		
 		int vitesse=Variables.SPEED_MAIN_SHIP;
 		if(angle < 45)
 			ship.setVelocity(vitesse, 0);

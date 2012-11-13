@@ -1,14 +1,15 @@
 package factories;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.image.BufferedImage;
 
 import entities.Entities;
 import entities.weapons.Fireball;
 import entities.weapons.Missile;
 import entities.weapons.Shiboleet;
+import entities.weapons.ShiboleetExtension;
 import entities.weapons.Shuriken;
 import entities.weapons.Weapon;
+import game.Ressources;
 
 
 public class WeaponFactory extends EntityFactory{
@@ -22,6 +23,7 @@ public class WeaponFactory extends EntityFactory{
 		Shuriken,
 		Fireball, 
 		Shiboleet, 
+		ShiboleetExtended, 
 		Missile,
 		Null;
 		public static WeaponType convert(String weaponName){
@@ -32,32 +34,44 @@ public class WeaponFactory extends EntityFactory{
 			case "Missile": return Missile;
 			default: return null;
 			}
-	}
+		}
+			
+		public BufferedImage getImage(){
+			switch(this){
+			case Shuriken: return Ressources.getImage("weapons/shuriken.png");
+			case Fireball: return Ressources.getImage("weapons/fire.png");
+			case Shiboleet: 
+			case ShiboleetExtended: return Ressources.getImage("weapons/shiboleet.png");
+			case Missile: return Ressources.getImage("weapons/missile.png");
+			case Null : return Ressources.getImage("hud/error.png");
+			default: return null;
+			}
+		}
 	};
 	
-	public List<Weapon> createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
-		List<Weapon> listWeapons = new LinkedList<>();
+	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
+		Weapon weapon = null;
 		
 		switch(type){
 		case Shuriken:
-			listWeapons.add(new Shuriken(getEntities(), x, y, damagedPlayer));
+			weapon =new Shuriken(getEntities(), x, y, damagedPlayer);
 			break;
 		case Fireball:
-			listWeapons.add(new Fireball(getEntities(), x, y, damagedPlayer));
+			weapon = new Fireball(getEntities(), x, y, damagedPlayer);
 			break;
 		case Missile:
-			listWeapons.add(new Missile(getEntities(), x, y, damagedPlayer));
+			weapon = new Missile(getEntities(), x, y, damagedPlayer);
 			break;
 		case Shiboleet:
-			for(int i=0;i<3;i++)
-			listWeapons.add(new Shiboleet(getEntities(), x, y, damagedPlayer));
+			weapon = new Shiboleet(getEntities(), x, y, damagedPlayer);
+			break;
+		case ShiboleetExtended:
+			weapon = new ShiboleetExtension(getEntities(), x, y, damagedPlayer,3);
 			break;
 		default:
 			break;
 		}
-		
-		for(Weapon weapon : listWeapons)
-			getEntities().addEntity(weapon);
-		return listWeapons;		
+		getEntities().addEntity(weapon);
+		return weapon;		
 	}	
 }

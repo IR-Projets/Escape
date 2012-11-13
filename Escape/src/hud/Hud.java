@@ -1,19 +1,17 @@
 package hud;
 
-import entities.Entities;
-import entities.weapons.Weapon;
-import factories.WeaponFactory;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.Iterator;
+
+import listeners.ShipListener;
+import entities.ships.Player;
+import entities.ships.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 import game.Ressources;
 import game.Variables;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.List;
-
-import listeners.ShipListener;
 /**
  * This class represents our Head Up Display, which manage the elements associated with the game (life, weapon).
  * 
@@ -45,78 +43,54 @@ public class Hud implements ShipListener{
 	 * BufferedImage for the left and right hud
 	 */
 	private final BufferedImage hudLeft, hudRight;
-	
-	/**
-	 * Represents the itemList of the player
-	 */
-	private final ItemList itemList;
 
 	/**
 	 * Score of the player
 	 */
 	private int score;
-	
+
 	/**
 	 * Boolean for know if we have to display the ItemList
 	 */
 	private boolean displayItemList;
-	
+
+	private final BufferedImage cadreSup, cadreInf, cadreBor;
 	/**
 	 * Only for show an empty item if we ItemList is empty
 	 */
-	private final Item itemEmpty;
+	private final WeaponItem itemEmpty;
+
+
+	private final Player player;
 
 	/**
 	 * The total size for display the life
 	 */
 	private int sizeLife;
-	
+
 	/**
 	 * The scale to compare one Point of life into a Percent of the Health Menu
 	 */
 	private final int echelle;
 
-	public Hud(){
+	public Hud(Player player){
+		cadreSup = Ressources.getImage("hud/fontWeaponTop.png");
+		cadreInf = Ressources.getImage("hud/fontWeaponBot.png");
+		cadreBor = Ressources.getImage("hud/fontWeapon.png");
+
 		hudLeft = Ressources.getImage("hud/hudLeft.png");
 		hudRight = Ressources.getImage("hud/hudRight.png");
 
+		this.player = player;
 		score = 0;
 		sizeLife = 4*hudLeft.getWidth()/7;
 		echelle = sizeLife/Variables.MAX_LIFE;
 		displayItemList = false;
-		itemEmpty = new Item(WeaponType.Null, "No Weapon", "hud/error.png", 0);
-		itemList = new ItemList();
+		itemEmpty = new WeaponItem(WeaponType.Null, 0);
+		player.addListener(this);
 	}
 
-	/**
-	 * Getter of the itemList
-	 * @return ItemList
-	 */
-	public ItemList getItemList() {
-		return itemList;
-	}
 
-	/**
-	 * Return the current item, which is the first element of our itemList
-	 * @return ItemList
-	 */
-	public Item getItemActual() {
-		return itemList.getItems().get(0);
-	}
-	
-	/**
-	 * Create a list of Weapon, associated with the current Item in our list. (list because a weapon can be represents by multiple weapon, like shiboleet
-	 * @param entities the current list of our entities (use for the factory)
-	 * @param x the position in x to create it
-	 * @param y the position in y to create it
-	 * @param damagedPlayer if the weapon can damaged the player
-	 * @return the list of weapon.
-	 */
-	public List<Weapon> createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
-		WeaponFactory factory = new WeaponFactory(entities);
-		return factory.createWeapon(itemList.removeCurrentItem().getWeaponType(), x, y, damagedPlayer);
-	}
-	
 	@Override
 	public void lifeChanged(int oldLife, int newLife) {
 		if(oldLife == newLife)
@@ -124,7 +98,7 @@ public class Hud implements ShipListener{
 		int diffLife = oldLife-newLife;
 		sizeLife -= diffLife*echelle;
 	}
-	
+
 	/**
 	 * Draw the life of the player
 	 * @param graphics the graphics2D to print on
@@ -146,6 +120,65 @@ public class Hud implements ShipListener{
 	}
 
 	/**
+	 * display the item list of this object on the graphics
+	 * The first element displayed is the second, because the first element is already displays on the hud
+	 * Drawing a wallpaper behind item, for have a best render
+	 * @param graphics the graphics2D to print on
+	 * @param x the begin of the drawing of the listItem, at position x
+	 * @param y the begin of the drawing of the listItem, at position y
+	 */
+	public void drawItemList(Graphics2D graphics, int x, int y){
+		int echelleY = cadreSup.getHeight();
+		graphics.drawImage(cadreSup, x, y, cadreSup.getWidth(), cadreSup.getHeight(), null);
+		
+		graphics.setColor(Variables.WHITE);
+		graphics.drawString("Weapon", x+22, y+20);
+
+		Iterator<WeaponItem> it = player.getWeapons().iterator();
+		if(it.hasNext())//Don't care about the first element, because he is print on the hud
+			it.next();
+
+		while(it.hasNext()){
+			graphics.drawImage(cadreBor, x, y+echelleY, cadreBor.getWidth(), cadreBor.getHeight(), null);//the font of the item
+			it.next().drawItem(graphics, x+5, y+echelleY);// the draw of the item
+			echelleY+=cadreBor.getHeight();
+		}
+
+		/* Drawing the bo;rder for items*/
+		graphics.drawImage(cadreInf, x, y+echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
+		
+	}
+
+	/**
+	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
+	 * @see Hud 
+	 * @param event The even to check
+	 * @param hudRightWidth the Width of the Right Hud
+	 * @param hudRightHeight the Height of the Right Hud
+	 * @return true if the event is associated with a selection of a weapon, else false.
+	 */
+	public boolean eventItemList(MotionEvent event, int hudRightWidth, int hudRightHeight){
+		int mouseX = event.getX(), mouseY = event.getY();
+		int debItemX = Variables.SCREEN_WIDTH-hudRightWidth + hudRightWidth/7;
+		int finItemX = debItemX + cadreBor.getWidth();
+		int debItemY = 6*hudRightHeight/11+cadreSup.getHeight();
+		int echelleY = cadreBor.getHeight();
+
+		if(event.getKind() != Kind.ACTION_DOWN)//Only accept on the down click of the mouse
+			return false;
+
+		for(int i=1;i<player.getWeapons().size();i++)
+			if(mouseX >= debItemX && mouseX <= finItemX)
+				if(mouseY >= debItemY+echelleY*(i-1) && mouseY <= debItemY+echelleY*i){
+					//System.out.println("mise en tete de "+itemList.get(i).getName());
+					player.getWeapons().setIndexInList(i, 0);
+					return true;
+				}
+		return false;
+	}
+
+
+	/**
 	 * Draw the right hud, with the weapon associated. When click on the hud, display the weapon list
 	 * @param graphics the graphics2D to print on
 	 */
@@ -154,17 +187,17 @@ public class Hud implements ShipListener{
 		graphics.drawImage(hudRight, beginLeftHud, 0, hudRight.getWidth(), hudRight.getHeight(), null);//Right hud
 
 		if(displayItemList == true)//Display menu on click, which is represents by this boolean
-			itemList.drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
+			drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
 
-		if(itemList.isEmpty())//Drawing actual item in the Right Hud 
+		if(player.getWeapons().isEmpty())//Drawing actual item in the Right Hud 
 			itemEmpty.drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		else
-			itemList.getItems().get(0).drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
+			player.getWeapons().getCurrentWeaponItem().drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		//ONLY FOR TEST -> DRAW THE SIZE OF THE EVENT
 		//graphics.drawRect(beginLeftHud, 10, hudRight.getWidth()-20, hudRight.getHeight()-10);
 	}
 
-	
+
 	/**
 	 * Display the menu of weapon when click on the right hud, and launch the eventItemList for manage the selection of weapon
 	 * @param event the MotionEvent which reprensents the event of the mouse
@@ -174,7 +207,7 @@ public class Hud implements ShipListener{
 		int mouseX = event.getX(), mouseY = event.getY();
 
 		/* Check the event of the list of weapon*/
-		if(displayItemList == true && itemList.eventItemList(event, hudRight.getWidth(), hudRight.getHeight()) == true)
+		if(displayItemList == true && eventItemList(event, hudRight.getWidth(), hudRight.getHeight()) == true)
 			displayItemList=false;
 
 		/*Displaying the menu*/
@@ -183,8 +216,8 @@ public class Hud implements ShipListener{
 				if(event.getKind() == Kind.ACTION_DOWN)
 					displayItemList=(displayItemList==true)?false:true;
 	}
-	
-	
+
+
 	/**
 	 * Display the HUD, which is compone of several elements : the left hud with the life and score, the right hud with the weapon.
 	 * @param graphics the graphics2D to print on
