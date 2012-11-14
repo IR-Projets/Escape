@@ -12,6 +12,7 @@ import maps.Map;
 import effects.Effects;
 import entities.Entities;
 import entities.ships.Player;
+import entities.ships.enemies.EnemiesLoader;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
 
@@ -20,26 +21,27 @@ public class Environnement implements EntitiesListener {
 
 
 
-	private Map map;				//The background map
-	private Entities entities;
-	private Gesture gesture;		//Gesture/Event manager
-	private Player player;
-	private Hud hud;
-	private List<EnvironnementListener> gameListener;
+	private final Map map;				//The background map
+	private final Entities entities;
+	private final Gesture gesture;		//Gesture/Event manager
+	private final Player player;
+	private final Hud hud;
+	private final List<EnvironnementListener> gameListener;
+	private final EnemiesLoader enemiesLoader;
 
 
 	/**
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Entities entities, Map map, Player player){
+	public Environnement(Entities entities, Map map, Player player, EnemiesLoader enemiesLoader){
 		this.gameListener = new LinkedList<>();
 		this.map = map;
 		this.player = player;
 		this.entities=entities;
+		this.enemiesLoader=enemiesLoader;
 		this.gesture = new Gesture(this);
 		this.hud = new Hud(player);
-		
 		entities.addEntitiesListener(this);
 	}
 
@@ -114,6 +116,7 @@ public class Environnement implements EntitiesListener {
 		gesture.compute();
 		entities.compute();
 		entities.step(timeStep, velocityIteration, positionIteration);
+		enemiesLoader.compute();
 		map.compute();
 		Effects.compute();
 	}

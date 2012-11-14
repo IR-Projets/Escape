@@ -85,9 +85,10 @@ public abstract class Weapon extends Entity{
 	}
 
 	public void shoot(double angle, int velocity) {
-		int vitX = (int) (Math.cos(Math.toRadians(angle))*velocity);
-		int vitY = (int) (Math.sin(Math.toRadians(angle))*velocity);
+		float vitX = (float) (Math.cos(Math.toRadians(angle))*velocity);
+		float vitY = (float) (Math.sin(Math.toRadians(angle))*velocity);
 		setVelocity(vitX, vitY);
+		System.out.println("vitX"+vitX+" et vitY" + vitY);
 		setLaunch(true);
 	}
 

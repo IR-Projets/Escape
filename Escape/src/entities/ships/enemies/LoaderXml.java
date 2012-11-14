@@ -1,43 +1,53 @@
 package entities.ships.enemies;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.jbox2d.common.Vec2;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import entities.ships.enemies.EnemyBehavior.Action;
-import entities.ships.enemies.EnemyBehavior.Types;
-import factories.WeaponFactory.WeaponType;
+import entities.Entities;
+import entities.ships.enemies.Action.ActionType;
+import entities.ships.enemies.EnemiesLoader.EnemyApparitionTime;
 import game.Ressources;
 
 
 public class LoaderXml{
-
-
+	public enum EnemyType{Enemy, Boss};
+	
 	private class EnemyProperties{
-		public String name=null;
+		public BufferedImage image=null;
 		public int life=-1;
-		public String nameImage = null;
-		public int repeatTime=-1; 
+		public int repeatTime=-1;
 		public List<Action> actions=null;
+		List<AppearTime> appearListTmp = null;
+		EnemyType enemyType;
+	}
+	
+	private class AppearTime{
+		int time=-1;
+		Vec2 position=new Vec2(-1,-1);
+		
 	}
 	/*
 	 * Le handler XML
 	 */
-	private static class EnemyHandler extends DefaultHandler {
+	public class EnemyHandler extends DefaultHandler {
 		private StringBuilder sb;
-		private Action actionTmp;
-		private EnemyProperties enemyProperties;
+		List<EnemyProperties> listEnemyProperties=null;
+		EnemyProperties enemyPropertiesTmp=null;
+		Action actionTmp=null;
+		AppearTime appearTmp = null;
+		
 
 		@Override
 		public void characters(char[] argv,int start, int length) throws SAXException{
@@ -47,161 +57,281 @@ public class LoaderXml{
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
-			if (qName.equals("enemy")){
-				if (enemyProperties.name!=null){
-					throw new SAXException("Enemy already init, you can only load one enemy by file");
+			if (qName.equals("enemy") || qName.equals("boss")){
+				if (enemyPropertiesTmp!=null){
+					throw new SAXException("Enemy or Boss missformated, you can only init enemy one by one");
+				}
+				else{
+					enemyPropertiesTmp = new EnemyProperties();
+					if(qName.equals("enemy"))
+						enemyPropertiesTmp.enemyType=EnemyType.Enemy;
+					else
+						enemyPropertiesTmp.enemyType=EnemyType.Boss;
 				}
 				return;
 			}
 			if (qName.equals("life")){
-				if (enemyProperties.life!=-1){
-					throw new SAXException("life already init, you can only load one life by file");
+				if (enemyPropertiesTmp == null || enemyPropertiesTmp.life !=-1){
+					throw new SAXException("Enemy tag not specified or life field already init");
 				}
+				sb = new StringBuilder();
 				return;
 			}
 			if (qName.equals("image")){
-				if (enemyProperties.nameImage!=null){
-					throw new SAXException("image already init, you can only load one image by file");
+				if (enemyPropertiesTmp == null || enemyPropertiesTmp.image !=null){
+					throw new SAXException("Enemy tag not specified or image field already init");
 				}
+				sb = new StringBuilder();
 				return;
 			}
 
 			if (qName.equals("actions")){
-				if (enemyProperties.actions==null) throw new SAXException("Image undefined: define the image first");
+				if (enemyPropertiesTmp==null  || enemyPropertiesTmp.repeatTime !=-1)
+					throw new SAXException("Enemy tag not specified or repeatTime attribute already init");
 				try {
-					enemyProperties.repeatTime=Integer.parseInt(attributes.getValue("repeattime"));
+					enemyPropertiesTmp.repeatTime=Integer.parseInt(attributes.getValue("repeattime"));
+					enemyPropertiesTmp.actions = new LinkedList<>();
 				} catch (Exception e){
 					throw new SAXException("Error while parsing actions: repeattime");
 				}
 				return;
 			}
 
-
 			if (qName.equals("move")){
-				if (enemyProperties.repeatTime==-1) throw new SAXException("Actions undefined: define the actions first");
+				if (enemyPropertiesTmp.repeatTime==-1 || enemyPropertiesTmp.actions == null) 
+					throw new SAXException("Actions undefined: define the actions first or specifty the attribute repeatTime");
 				try {
-					actionTmp.type=Types.Move;
+					actionTmp = new Action();
 					actionTmp.beg=Integer.parseInt(attributes.getValue("beg"));
 					actionTmp.end=Integer.parseInt(attributes.getValue("end"));
+					actionTmp.type=ActionType.Move;
 				} catch (Exception e){
-					throw new SAXException("Error while parsing actions: repeattime");
+					throw new SAXException("Error while parsing actions move: beg or end attributes");
 				}
 				return;
 			}
 
 			if (qName.equals("fire")){
-				if (enemyProperties.repeatTime==-1) throw new SAXException("Actions undefined: define the actions first");
-				if (actionTmp.beg==-1) throw new SAXException("Beg undefined : define the beg first");
-				if (actionTmp.end==-1) throw new SAXException("End undefined : define the end first");
+				if (enemyPropertiesTmp.repeatTime==-1 || enemyPropertiesTmp.actions == null) 
+					throw new SAXException("Actions undefined: define the actions first or specifty the attribute repeatTime");
 				try {
-					actionTmp.type=Types.Fire;
+					actionTmp = new Action();
 					actionTmp.beg=Integer.parseInt(attributes.getValue("beg"));
 					actionTmp.end=Integer.parseInt(attributes.getValue("end"));
+					actionTmp.type=ActionType.Fire;
 				} catch (Exception e){
-					throw new SAXException("Error while parsing actions: beg and end");
+					throw new SAXException("Error while parsing actions move: beg or end attributes");
 				}
 				return;
 			}
 
 			if (qName.equals("angle")){
-				if (actionTmp.angle !=-1){
-					throw new SAXException("angle already init, you can only load one angle by actions");
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.angle !=Integer.MAX_VALUE){
+					throw new SAXException("Enemy tag undefined, actions tag undefined, or angle already defined");
 				}
+				sb = new StringBuilder();
 				return;
 			}
 
 			if (qName.equals("velocity")){
-				if (actionTmp.velocity !=-1){
-					throw new SAXException("velocity already init, you can only load one velocity by actions");
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.velocity !=Integer.MAX_VALUE){
+					throw new SAXException("Enemy tag undefined, actions tag undefined, or velocity already defined");
+				}
+				sb = new StringBuilder();
+				return;
+			}
+
+			if (qName.equals("name")){
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.name !=null){
+					throw new SAXException("Enemy tag undefined, actions tag undefined, or name already defined");
+				}
+				sb = new StringBuilder();
+				return;
+			}
+			
+			if (qName.equals("appear")){
+				if (enemyPropertiesTmp == null ){
+					throw new SAXException("Enemy tag undefined");
+				}
+				try {
+					if(enemyPropertiesTmp.appearListTmp == null)
+						enemyPropertiesTmp.appearListTmp = new LinkedList<>();
+					appearTmp = new AppearTime();
+					appearTmp.time = Integer.parseInt(attributes.getValue("time"));
+					
+					//appearTmp.position=new Vec2(Integer.parseInt(attributes.getValue("posX")), Integer.parseInt(attributes.getValue("posY")));
+					//enemyPropertiesTmp.appearListTmp.add(appearTmp);
+				}catch (Exception e){
+					throw new SAXException("Error while parsing appear : time, posX or posY attributes");
+				}
+				
+				return;
+			}
+			
+			if (qName.equals("posX")){
+				if (enemyPropertiesTmp == null || appearTmp == null || appearTmp.position.x != -1){
+					throw new SAXException("Enemy tag, appear time or posX already defined");
+				}
+				sb = new StringBuilder();
+				return;
+			}	
+			
+			if (qName.equals("posY")){
+				if (enemyPropertiesTmp == null || appearTmp == null || appearTmp.position.y != -1){
+					throw new SAXException("Enemy tag, appear time or posY already defined");
+				}
+				sb = new StringBuilder();
+				return;
+			}	
+			
+			if (qName.equals("enemies"))
+				return;
+			
+			throw new SAXException("Unknown XML attribute: " + qName);
+		}
+		
+		
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException{
+			
+			if (qName.equals("enemy") || qName.equals("boss")){
+				if (enemyPropertiesTmp == null || enemyPropertiesTmp.life==-1 || enemyPropertiesTmp.image==null || enemyPropertiesTmp.actions==null || enemyPropertiesTmp.appearListTmp == null ){
+					throw new SAXException("Enemy, life, image, actions or appear fields are not correctly set ");
+				}
+				else{
+					if((qName.equals("enemy") && enemyPropertiesTmp.enemyType!= EnemyType.Enemy)  || (qName.equals("boss") && enemyPropertiesTmp.enemyType!= EnemyType.Boss))
+						throw new SAXException("Boss or Enemy tag missformated");
+					if(listEnemyProperties == null)
+						listEnemyProperties = new LinkedList<>();
+					listEnemyProperties.add(enemyPropertiesTmp);
+					enemyPropertiesTmp=null;
+				}
+				return;
+			}
+			
+			if (qName.equals("life")){
+				if (enemyPropertiesTmp == null || enemyPropertiesTmp.life !=-1)
+					throw new SAXException("Enemy tag not specified or life field already init");
+				try{
+					enemyPropertiesTmp.life = Integer.parseInt(sb.toString());
+				} catch (Exception e){
+					throw new SAXException(qName+" tag should contain an integer value");
+				}
+				return;
+			}
+			
+			if (qName.equals("image")){
+				if (enemyPropertiesTmp == null || enemyPropertiesTmp.image !=null)
+					throw new SAXException("Enemy tag not specified or image field already init");
+				try{
+					enemyPropertiesTmp.image = Ressources.getImage(sb.toString());
+				} catch (Exception e){
+					throw new SAXException(qName+" tag should contain an image url");
+				}
+				return;
+			}
+
+			if (qName.equals("actions")){
+				if (enemyPropertiesTmp==null  || enemyPropertiesTmp.actions == null || enemyPropertiesTmp.actions.isEmpty())
+					throw new SAXException("No action specified for this enemy");
+				return;
+			}
+
+			if (qName.equals("move")){
+				if (enemyPropertiesTmp == null || actionTmp.angle == Integer.MAX_VALUE || actionTmp.velocity==Integer.MAX_VALUE|| actionTmp.beg == -1 || actionTmp.end == -1 || actionTmp.type != ActionType.Move) 
+					throw new SAXException("Move tag missformated : angle, velocity, beg or end not renseigned");
+				enemyPropertiesTmp.actions.add(actionTmp);
+				actionTmp=null;
+				return;
+			}
+			
+			if (qName.equals("fire")){
+				if (enemyPropertiesTmp == null || actionTmp.angle == Integer.MAX_VALUE || actionTmp.velocity==Integer.MAX_VALUE|| actionTmp.name == null || actionTmp.beg == -1 || actionTmp.end == -1 || actionTmp.type != ActionType.Fire) 
+					throw new SAXException("Move tag missformated : angle, velocity, beg or end not renseigned");
+				enemyPropertiesTmp.actions.add(actionTmp);
+				actionTmp=null;
+				return;
+			}
+
+			if (qName.equals("angle")){
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.angle !=Integer.MAX_VALUE)
+					throw new SAXException("Enemy tag not specified or actions tag not specified or angle field already init");
+				try{
+					actionTmp.angle = Double.parseDouble(sb.toString());
+				} catch (Exception e){
+					throw new SAXException(qName+" angle should contain a double value");
+				}
+				return;
+			}
+			
+			if (qName.equals("velocity")){
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.velocity !=Integer.MAX_VALUE)
+					throw new SAXException("Enemy tag not specified or actions tag not specified or velocity field already init");
+				try{
+					actionTmp.velocity = Integer.parseInt(sb.toString());
+				} catch (Exception e){
+					throw new SAXException(qName+" velocity should contain an Integer value");
 				}
 				return;
 			}
 
 			if (qName.equals("name")){
-				if (actionTmp.name !=null){
-					throw new SAXException("name already init, you can only load one name by actions");
-				}
+				if (enemyPropertiesTmp == null || actionTmp == null || actionTmp.name !=null)
+					throw new SAXException("Enemy tag not specified or actions tag not specified or name field already init");
+				actionTmp.name = sb.toString();
 				return;
 			}
+			
+			if (qName.equals("appear")){
+				if (enemyPropertiesTmp == null || appearTmp == null || appearTmp.position == null || appearTmp.position.x ==-1 || appearTmp.position.y ==-1 || appearTmp.time ==-1){
+					throw new SAXException("Enemy, appear tag or time, posX and posY are not correctly set");
+				}
+				enemyPropertiesTmp.appearListTmp.add(appearTmp);
+				appearTmp=null;
+				return;
+			}	
+			
+			if (qName.equals("posX")){
+				if (enemyPropertiesTmp == null || appearTmp == null || appearTmp.position.x != -1){
+					throw new SAXException("Enemy tag undefined, or appear time undefined");
+				}
+				appearTmp.position.x = Integer.parseInt(sb.toString());
+				return;
+			}	
+		
+			if (qName.equals("posY")){
+				if (enemyPropertiesTmp == null || appearTmp == null || appearTmp.position.y != -1){
+					throw new SAXException("Enemy tag undefined, or appear time undefined");
+				}
+				appearTmp.position.y = Integer.parseInt(sb.toString());
+				return;
+			}	
+			
+			if (qName.equals("enemies"))
+				return;
+			
 			throw new SAXException("Unknown XML attribute: " + qName);
 		}
-
-
-
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException{
-			if (qName.equals("enemy")){
-				try{
-					enemyProperties.life=Integer.parseInt(sb.toString());
-				} catch (Exception e){
-					throw new SAXException(qName+" tag should contain an integer value");
-				}
-
-				if (qName.equals("image")){
-					try{
-						enemyProperties.nameImage=sb.toString();
-					} catch (Exception e){
-						throw new SAXException(qName+" tag should contain a String");
-					}
-				}
-
-				else if (qName.equals("move")){
-					if (actionTmp.angle != -1 && actionTmp.beg != -1 && actionTmp.end != -1 && actionTmp.type != null && actionTmp.velocity != -1)
-						throw new SAXException("Move miss constructed : check if the angle, beg, end and velocity are correctly set");
-					enemyProperties.actions.add(actionTmp);
-					actionTmp = new EnemyBehavior.Action();
-					return;
-				}
-
-				if (qName.equals("fire")){
-					if (actionTmp.angle != -1 && actionTmp.beg != -1 && actionTmp.end != -1 && actionTmp.type != null && actionTmp.velocity != -1 && actionTmp.name != null)
-						throw new SAXException("Fire miss constructed : check if the angle, beg, end and velocity are correctly set");
-					enemyProperties.actions.add(actionTmp);
-					actionTmp = new Action();
-					return;
-				}
-
-				if (qName.equals("angle")){
-					try{
-						actionTmp.angle=Double.parseDouble(sb.toString());
-					} catch (Exception e){
-						throw new SAXException(qName+" tag should contain a double value");
-					}
-				}
-
-				if (qName.equals("velocity")){
-					try{
-						actionTmp.velocity=Integer.parseInt(sb.toString());
-					} catch (Exception e){
-						throw new SAXException(qName+" tag should contain an integer value");
-					}
-				}
-
-				if (qName.equals("name")){
-					try{
-						enemyProperties.name=sb.toString();
-					} catch (Exception e){
-						throw new SAXException(qName+" tag should contain a string value");
-					}
-				}
-
-			}
-		}
-
+		
 		@Override
 		public void endDocument() throws SAXException {
 			sb = null;
 		}
 
 	}
+
 	
-	public static EnemyProperties getEnemiesFromXml(InputStream input){
+	public List<EnemyApparitionTime> getEnemysFromXml(Entities entities, String filename) {
+		
 		EnemyHandler eh = new EnemyHandler();
+		List<EnemyApparitionTime> listEnemies = new LinkedList<>();
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setValidating(true);
 			SAXParser parser = factory.newSAXParser();
-			parser.parse(input, eh);
+			
+			parser.parse(Ressources.getFile(filename), eh);
 		} catch (ParserConfigurationException pce) {
 			System.err.println("An error occured during parsing");
 			System.exit(1);
@@ -209,10 +339,17 @@ public class LoaderXml{
 			System.err.println("Parsing error : "+se.getMessage());
 			System.exit(1);
 		}  catch (IOException ioe) {
-			System.err.println("Read/Write error");
+			System.err.println("Read/Write error : "+filename);
 			System.exit(1);
 		}
-		return eh.enemyProperties;
+		for(EnemyProperties enemyProperties : eh.listEnemyProperties){
+			EnemyBehavior enemyBehavior = new EnemyBehavior(enemyProperties.actions, enemyProperties.repeatTime);
+			
+			for(AppearTime appearTime : enemyProperties.appearListTmp){
+				listEnemies.add(new EnemyApparitionTime(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position));
+			}
+		}
+		return listEnemies;
 	}
 
 		/*public static void main(String[] args) {

@@ -1,9 +1,11 @@
 package factories;
 
+import java.awt.image.BufferedImage;
+
 import entities.Entities;
 import entities.ships.Player;
 import entities.ships.enemies.Enemy;
-import game.Ressources;
+import entities.ships.enemies.EnemyBehavior;
 
 public class ShipFactory extends EntityFactory {
 
@@ -18,8 +20,9 @@ public class ShipFactory extends EntityFactory {
 	}
 
 	
-	public Enemy createEnnemy(String nameImage, int x, int y, int life) {
-		Enemy enemy = new Enemy(getEntities(), Ressources.getImage(nameImage), x, y, life);
+	
+	public Enemy createEnnemy(BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
+		Enemy enemy = new Enemy(getEntities(), image, x, y, life, behavior);
 		createEntity(enemy);
 		return enemy;
 	}

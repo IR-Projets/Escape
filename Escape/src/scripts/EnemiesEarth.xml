@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<enemies>
+	<enemy id="1">
+		<life>150</life>
+		<image>ships/ship.png</image>
+
+		<appear time="10">
+			<posX>150</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="10">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="10">
+			<posX>450</posX>
+			<posY>700</posY>
+		</appear>
+
+		<actions repeattime="5">
+			<move beg="1" end="3">
+				<angle>240</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<move beg="1" end="3">
+				<angle>240</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<fire beg="1" end="3">
+				<name>Fireball</name>
+				<angle>60</angle>
+				<velocity>250</velocity>
+			</fire>
+
+		</actions>
+
+
+	</enemy>
+
+
+	<enemy id="2">
+		<life>150</life>
+		<image>ships/ship.png</image>
+
+		<appear time="5">
+			<posX>150</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="5">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="5">
+			<posX>450</posX>
+			<posY>700</posY>
+		</appear>
+
+		<actions repeattime="5">
+			<move beg="1" end="3">
+				<angle>240</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<move beg="4" end="5">
+				<angle>280</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<fire beg="1" end="3">
+				<name>Fireball</name>
+				<angle>70</angle>
+				<velocity>150</velocity>
+			</fire>
+
+		</actions>
+
+
+	</enemy>
+
+	<boss>
+		<life>150</life>
+		<image>ships/ship.png</image>
+
+		<appear time="50">
+			<posX>150</posX>
+			<posY>250</posY>
+		</appear>
+
+		<actions repeattime="5">
+			<move beg="1" end="3">
+				<angle>240</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<move beg="4" end="5">
+				<angle>160</angle>
+				<velocity>100</velocity>
+			</move>
+
+			<fire beg="1" end="3">
+				<name>Fireball</name>
+				<angle>360</angle>
+				<velocity>250</velocity>
+			</fire>
+
+		</actions>
+	</boss>
+</enemies>
+

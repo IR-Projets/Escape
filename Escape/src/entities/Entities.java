@@ -30,10 +30,12 @@ public class Entities {
 	private final World world;
 	private final Map<Body, Entity> entities = new Hashtable<>();
 	private final List<Entity> entitiesToDelete;	//All entities
+	private final List<Entity> entitiesToAdd;	//All entities
 	private EntitiesListener entitiesListener;
 	
 	public Entities(World world){
 		entitiesToDelete = new LinkedList<>();
+		entitiesToAdd = new LinkedList<>();
 		this.world = world;
 		final Body worldLimit = setWorldLimit(world);
 		world.setContactListener(new ContactListener() {
@@ -82,7 +84,7 @@ public class Entities {
 	}
 	
 	public void addEntity(Entity entity){
-		entities.put(entity.getBody(), entity);				
+		entitiesToAdd.add(entity);
 	}
 	
 	public void removeEntitie(Entity entity){
@@ -105,18 +107,25 @@ public class Entities {
 
 	public void compute() {
 		for(Entity entitie : entities.values())
-			entitie.compute();		
+			entitie.compute();
 	}	
 	
 	public void step(float timeStep, int velocityIteration, int positionIteration){
 		/*
 		 * Delete entities that were collided
 		 */
+		for(Entity entity : entitiesToAdd)
+			entities.put(entity.getBody(), entity);
+		entitiesToAdd.clear();
+		
 		for(Entity entity : entitiesToDelete){
 			world.destroyBody(entity.getBody());
 			entities.remove(entity.getBody());
 		}
 		entitiesToDelete.clear();
+		
+		
+		
 		
 		world.step(timeStep, velocityIteration, positionIteration);
 	}
