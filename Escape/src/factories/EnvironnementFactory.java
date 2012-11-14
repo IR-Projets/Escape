@@ -3,8 +3,8 @@ package factories;
 import entities.Entities;
 import entities.ships.Player;
 import game.Environnement;
+import game.Hud;
 import game.Variables;
-import hud.Hud;
 import maps.Earth;
 import maps.Jupiter;
 import maps.Map;
@@ -32,7 +32,7 @@ public class EnvironnementFactory {
 		Player playerShip = factory.createPlayer();
 
 		Map map = new Earth();
-		Environnement env = new Environnement(map, playerShip, entities);		
+		Environnement env = new Environnement(entities, map, playerShip);		
 		return env;
 	}
 
@@ -44,7 +44,7 @@ public class EnvironnementFactory {
 		Player playerShip = factory.createPlayer();
 
 		Map map = new Moon();		
-		Environnement env = new Environnement(map, playerShip, entities);		
+		Environnement env = new Environnement(entities, map, playerShip);		
 		return env;
 	}
 
@@ -56,7 +56,7 @@ public class EnvironnementFactory {
 		Player playerShip = factory.createPlayer();
 
 		Map map = new Jupiter();		
-		Environnement env = new Environnement(map, playerShip, entities);		
+		Environnement env = new Environnement(entities, map, playerShip);		
 		return env;
 	}
 

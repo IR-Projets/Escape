@@ -13,7 +13,7 @@ public class Shiboleet extends Weapon {
 	private int increase;
 	
 	public Shiboleet(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, WeaponType.Shiboleet.getImage(), x, y, firedByPlayer, 4);
+		super(entities, EntityShape.Circle, WeaponType.Shiboleet.getImage(), x, y, 4, firedByPlayer);
 		time = System.nanoTime()/1000000;
 		increase=0;
 	}

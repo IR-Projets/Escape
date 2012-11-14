@@ -17,19 +17,11 @@ public class Enemy extends Ship{
 	double lastExecution=0;
 	Random rand = new Random();
 
-	private final static int LOOP_SKIP = 64;
-
-	private int indexBehavior, loop, step, sumStep;
-	//private final EnemyBehavior behavior;
-	//private List<Behavior> listBehavior;
-	private final WeaponFactory factoryWeapon;
 
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life){	
 		super(entities, EntityShape.Square, image, x, y, life);
 
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
-		indexBehavior=loop=step=sumStep=0;
-		factoryWeapon = new WeaponFactory(entities);
 	}
 
 

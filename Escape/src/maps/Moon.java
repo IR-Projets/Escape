@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Moon extends Map{
 
 	public Moon() {
-		super(Ressources.getImage("images/maps/moon.png"), 0.2f);
+		super(Ressources.getImage("maps/moon.png"), 0.2f);
 		// TODO Auto-generated constructor stub
 	}
 

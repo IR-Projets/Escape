@@ -4,6 +4,7 @@ package factories;
 import org.jbox2d.dynamics.World;
 
 import entities.Entities;
+import entities.Entity;
 
 
 
@@ -19,5 +20,8 @@ public abstract class EntityFactory {
 		return entities;
 	}
 	
+	protected void createEntity(Entity entity){
+		entities.addEntity(entity);
+	}
 
 }

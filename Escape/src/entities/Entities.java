@@ -1,7 +1,6 @@
 package entities;
 
 //import Entity;
-import entities.Entity.EntityType;
 import game.Variables;
 
 import java.awt.Graphics2D;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import listeners.EntitiesListener;
+import listeners.EntityListener.EntityType;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -27,9 +27,9 @@ public class Entities {
 	 * Sauvegarde une association entre body et entity
 	 * Un seul World et une seule liste d'entity
 	 */	
+	private final World world;
 	private final Map<Body, Entity> entities = new Hashtable<>();
 	private final List<Entity> entitiesToDelete;	//All entities
-	private final World world;
 	private EntitiesListener entitiesListener;
 	
 	public Entities(World world){
@@ -85,9 +85,9 @@ public class Entities {
 		entities.put(entity.getBody(), entity);				
 	}
 	
-	public void removeEntitie(Entity entity, EntityType type){
+	public void removeEntitie(Entity entity){
 		entitiesToDelete.add(entity);
-		entitiesListener.entityRemoved(type);
+		entitiesListener.entityRemoved(entity.getType());
 	}
 
 	public void addEntitiesListener(EntitiesListener listener) {

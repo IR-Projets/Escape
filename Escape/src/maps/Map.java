@@ -26,7 +26,6 @@ public abstract class Map{
 	private float posY;
 	private int subImgW;
 	private int subImgH;
-	private BufferedImage imageTmp;
 	private float velocity;
 
 
@@ -51,9 +50,6 @@ public abstract class Map{
 
 	
 	public void render(Graphics2D graphics){	
-		int screenW = Variables.SCREEN_WIDTH;
-		int screenH = Variables.SCREEN_HEIGHT;
-
 		if(posY<0)
 			posY=0;
 

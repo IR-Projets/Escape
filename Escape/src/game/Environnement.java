@@ -5,16 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import listeners.EntitiesListener;
-import listeners.GameStateListener;
-import listeners.GameStateListener.GameState;
+import listeners.EntityListener.EntityType;
+import listeners.EnvironnementListener;
+import listeners.EnvironnementListener.GameState;
 import maps.Map;
 import effects.Effects;
 import entities.Entities;
-import entities.Entity.EntityType;
 import entities.ships.Player;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
-import hud.Hud;
 
 
 public class Environnement implements EntitiesListener {
@@ -26,34 +25,27 @@ public class Environnement implements EntitiesListener {
 	private Gesture gesture;		//Gesture/Event manager
 	private Player player;
 	private Hud hud;
-	private List<GameStateListener> gameListener;
+	private List<EnvironnementListener> gameListener;
 
 
 	/**
 	 * Create the environnement with the associated world 
 	 * @param world Jbox2d world
 	 */
-	public Environnement(Map map, Player player, Entities entities){
-		gameListener = new LinkedList<>();
+	public Environnement(Entities entities, Map map, Player player){
+		this.gameListener = new LinkedList<>();
 		this.map = map;
 		this.player = player;
 		this.entities=entities;
+		this.gesture = new Gesture(this);
+		this.hud = new Hud(player);
+		
 		entities.addEntitiesListener(this);
-		this.gesture = new Gesture(player);
-		hud = new Hud(player);;
 	}
 
 
-	public void addListener(GameStateListener listener) {
+	public void addListener(EnvironnementListener listener) {
 		this.gameListener.add(listener);		
-	}
-	
-	/**
-	 * Set the background (the map)
-	 * @param map the map to be rendered
-	 */
-	public void setMap(Map map){
-
 	}
 	
 	
@@ -87,7 +79,7 @@ public class Environnement implements EntitiesListener {
 			break;
 		}
 		if(newState!=null){
-			for(GameStateListener listener : gameListener){
+			for(EnvironnementListener listener : gameListener){
 				listener.stateChanged(newState);
 			}
 		}

@@ -110,7 +110,6 @@ public class Player extends Ship {
 			looping.count = ++looping.count % TICK_SKIP;
 			if(looping.count==0)
 				looping.frame--;
-			System.out.println("looping frame"+looping.frame);
 			return loopRender();
 
 		case RIGHT:
@@ -120,26 +119,6 @@ public class Player extends Ship {
 			return loopRender();
 		}
 		return null;
-	}
-
-
-	private BufferedImage loopRender(){				
-		if(looping.frame<0 || looping.frame>=loopingImages.length){
-			looping.frame = 0;
-			looping = Looping.NONE;
-			return getImage();
-		}
-
-		switch(looping){
-		case LEFT:
-			return loopingImages[looping.frame];
-		case RIGHT:
-			return loopingImages[looping.frame];
-		case NONE:
-		default:
-			break;
-		}
-		return getImage();
 	}
 
 	/*
@@ -160,6 +139,25 @@ public class Player extends Ship {
 		} 
 	}
 
+	private BufferedImage loopRender(){				
+		if(looping.frame<0 || looping.frame>=loopingImages.length){
+			looping.frame = 0;
+			looping = Looping.NONE;
+			return getImage();
+		}
+
+		switch(looping){
+		case LEFT:
+			return loopingImages[looping.frame];
+		case RIGHT:
+			return loopingImages[looping.frame];
+		case NONE:
+		default:
+			break;
+		}
+		return getImage();
+	}
+	
 	@Override
 	public EntityType getType() {
 		return EntityType.Joueur;
@@ -176,7 +174,7 @@ public class Player extends Ship {
 			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
 				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-				getEntities().removeEntitie(this, getType());
+				getEntities().removeEntitie(this);
 			}
 		break;
 	case WeaponPlayer :

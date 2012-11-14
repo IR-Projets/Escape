@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import listeners.GameStateListener;
+import listeners.EnvironnementListener;
 
 import effects.Story;
 import factories.EnvironnementFactory;
@@ -24,7 +24,7 @@ import factories.EnvironnementFactory.Level;
 import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
 
-public class Game implements GameStateListener{
+public class Game implements EnvironnementListener{
 
 	Environnement environnement;
 

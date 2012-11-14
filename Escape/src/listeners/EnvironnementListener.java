@@ -1,6 +1,6 @@
 package listeners;
 
-public interface GameStateListener {
+public interface EnvironnementListener {
 	public enum GameState{
 		Paused,
 		Loose,

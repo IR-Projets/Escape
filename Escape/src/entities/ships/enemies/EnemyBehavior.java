@@ -22,7 +22,7 @@ import game.Variables;
 
 public class EnemyBehavior {
 
-	public enum Types{
+	public enum ActionType{
 		Fire,
 		Move
 	};
@@ -33,7 +33,7 @@ public class EnemyBehavior {
 		int velocity;
 		double angle;
 		String name;
-		Types type;
+		ActionType type;
 		
 		
 		public Action(){
@@ -66,7 +66,7 @@ public class EnemyBehavior {
 			loop=0;
 			step=(step+1)%repeatTime;
 
-			for(Action action : behavior)
+			for(Action action : behavior){
 				if(step >= action.beg && step <= action.end){
 					switch(action.type){
 					case Fire:
@@ -81,6 +81,7 @@ public class EnemyBehavior {
 
 					}
 				}
+			}
 		}
 
 	}

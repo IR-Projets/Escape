@@ -6,7 +6,7 @@ import entities.Entities;
 import entities.weapons.Fireball;
 import entities.weapons.Missile;
 import entities.weapons.Shiboleet;
-import entities.weapons.ShiboleetExtension;
+import entities.weapons.ShiboleetExtended;
 import entities.weapons.Shuriken;
 import entities.weapons.Weapon;
 import game.Ressources;
@@ -66,7 +66,7 @@ public class WeaponFactory extends EntityFactory{
 			weapon = new Shiboleet(getEntities(), x, y, damagedPlayer);
 			break;
 		case ShiboleetExtended:
-			weapon = new ShiboleetExtension(getEntities(), x, y, damagedPlayer,3);
+			weapon = new ShiboleetExtended(getEntities(), x, y, damagedPlayer,5);
 			break;
 		default:
 			break;

@@ -1,7 +1,7 @@
 package listeners;
 
+import listeners.EntityListener.EntityType;
 import entities.Entity;
-import entities.Entity.EntityType;
 
 
 public interface EntitiesListener {

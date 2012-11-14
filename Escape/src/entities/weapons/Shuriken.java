@@ -10,7 +10,7 @@ public class Shuriken extends Weapon{
 	private boolean resize;
 	
 	public Shuriken(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, WeaponType.Shuriken.getImage(), x, y, firedByPlayer,2);
+		super(entities, EntityShape.Circle, WeaponType.Shuriken.getImage(), x, y, 2, firedByPlayer);
 		resize = false;
 	}
 	

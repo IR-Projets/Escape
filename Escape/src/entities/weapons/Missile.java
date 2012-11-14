@@ -8,7 +8,7 @@ public class Missile extends Weapon {
 	private boolean resize;
 	
 	public Missile(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, WeaponType.Missile.getImage(), x, y, firedByPlayer,2);
+		super(entities, EntityShape.Circle, WeaponType.Missile.getImage(), x, y, 2, firedByPlayer);
 		resize = false;
 	}
 

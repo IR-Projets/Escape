@@ -2,10 +2,6 @@ package entities.ships;
 
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-
-import listeners.ShipListener;
 
 import org.jbox2d.common.Vec2;
 
@@ -23,7 +19,6 @@ public abstract class Ship extends Entity{
 	
 	private int life;
 	private final BufferedImage image;
-	private final List<ShipListener> lifeListener = new ArrayList<ShipListener>();
 	private Weapon weapon;
 	private final WeaponFactory weaponFactory;
 	
@@ -37,10 +32,6 @@ public abstract class Ship extends Entity{
 
 	public BufferedImage getImage(){
 		return image;
-	}
-	
-	public void addListener(ShipListener listen){
-		lifeListener.add(listen);
 	}
 	
 	public void setLife(int life){
@@ -70,9 +61,7 @@ public abstract class Ship extends Entity{
 	public void explode(){
 		Vec2 pos = getScreenPostion();
 		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-		getEntities().removeEntitie(this, getType());
-		for(ShipListener shipDestruct : lifeListener)
-			shipDestruct.destroyed();
+		getEntities().removeEntitie(this);
 	}
 	
 	public void move(double angle, int velocity){

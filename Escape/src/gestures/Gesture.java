@@ -3,6 +3,7 @@ package gestures;
 import entities.ships.Player;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
+import game.Environnement;
 import game.Variables;
 import gestures.filters.ArrowMovement;
 import gestures.filters.Backoff;
@@ -49,7 +50,7 @@ public class Gesture {
 	 */
 	private final List<Filter> filters;
 	
-	private final Player player;
+	private final Environnement environnement;
 
 	/**
 	 * An enum for represents the kind of gesture the player wants : He wants to move, or to shoot
@@ -62,8 +63,8 @@ public class Gesture {
 	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...)
 	 * @param env
 	 */
-	public Gesture(Player player){
-		this.player=player;
+	public Gesture(Environnement environnement){
+		this.environnement=environnement;
 		traceStack = new TraceStack();
 		filters = initFilters();
 	}
@@ -96,7 +97,7 @@ public class Gesture {
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){
-			player.stop();
+			environnement.getPlayer().stop();
 			return;
 		}
 		traceStack.render(graphics);
@@ -113,7 +114,7 @@ public class Gesture {
 			angle = 90;
 		else
 			angle = Filters.getAngle(traceWeapon);
-		player.shootWeapon(angle, Variables.SPEED_WEAPON);
+		environnement.getPlayer().shootWeapon(angle, Variables.SPEED_WEAPON);
 		
 		/*int vitX = (int) (Math.cos(Math.toRadians(angle))*Variables.SPEED_WEAPON);
 		int vitY = (int) (Math.sin(Math.toRadians(angle))*Variables.SPEED_WEAPON);*/
@@ -134,6 +135,8 @@ public class Gesture {
 	 * @see Kind
 	 */
 	public void event(MotionEvent event){
+		Player player = environnement.getPlayer();
+		
 		switch(event.getKind()){	
 		case ACTION_UP :
 			if(action == Action.MOVE){
@@ -141,8 +144,9 @@ public class Gesture {
 					if(traceStack.check(filter))
 						filter.apply(player);
 			}
-			else if (action == Action.SHOOT)
-					shootWeapon();
+			else if (action == Action.SHOOT){
+				shootWeapon();
+			}
 			traceStack.finishCurrentTrace();
 			break;
 

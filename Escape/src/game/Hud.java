@@ -1,4 +1,4 @@
-package hud;
+package game;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -9,8 +9,6 @@ import entities.ships.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
-import game.Ressources;
-import game.Variables;
 /**
  * This class represents our Head Up Display, which manage the elements associated with the game (life, weapon).
  * 
@@ -38,29 +36,31 @@ import game.Variables;
 public class Hud {
 
 
+	private final Player player;
+	
+	
 	/**
 	 * BufferedImage for the left and right hud
 	 */
 	private final BufferedImage hudLeft, hudRight;
-
-	/**
-	 * Score of the player
-	 */
-	private int score;
+	private final BufferedImage cadreSup, cadreInf, cadreBor;
+	
 
 	/**
 	 * Boolean for know if we have to display the ItemList
 	 */
 	private boolean displayItemList;
 
-	private final BufferedImage cadreSup, cadreInf, cadreBor;
 	/**
-	 * Only for show an empty item if we ItemList is empty
+	 * Only for show an empty item if our ItemList is empty
 	 */
 	private final WeaponItem itemEmpty;
 
-
-	private final Player player;
+	/**
+	 * Player's score
+	 */
+	private int score;
+	
 
 	/**
 	 * The scale to compare one Point of life into a Percent of the Health Menu
@@ -132,36 +132,7 @@ public class Hud {
 		graphics.drawImage(cadreInf, x, y+echelleY, cadreInf.getWidth(), cadreInf.getHeight(), null);
 		
 	}
-
-	/**
-	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
-	 * @see Hud 
-	 * @param event The even to check
-	 * @param hudRightWidth the Width of the Right Hud
-	 * @param hudRightHeight the Height of the Right Hud
-	 * @return true if the event is associated with a selection of a weapon, else false.
-	 */
-	public boolean eventItemList(MotionEvent event, int hudRightWidth, int hudRightHeight){
-		int mouseX = event.getX(), mouseY = event.getY();
-		int debItemX = Variables.SCREEN_WIDTH-hudRightWidth + hudRightWidth/7;
-		int finItemX = debItemX + cadreBor.getWidth();
-		int debItemY = 6*hudRightHeight/11+cadreSup.getHeight();
-		int echelleY = cadreBor.getHeight();
-
-		if(event.getKind() != Kind.ACTION_DOWN)//Only accept on the down click of the mouse
-			return false;
-
-		for(int i=1;i<player.getWeapons().size();i++)
-			if(mouseX >= debItemX && mouseX <= finItemX)
-				if(mouseY >= debItemY+echelleY*(i-1) && mouseY <= debItemY+echelleY*i){
-					//System.out.println("mise en tete de "+itemList.get(i).getName());
-					player.getWeapons().setIndexInList(i, 0);
-					return true;
-				}
-		return false;
-	}
-
-
+	
 	/**
 	 * Draw the right hud, with the weapon associated. When click on the hud, display the weapon list
 	 * @param graphics the graphics2D to print on
@@ -183,6 +154,35 @@ public class Hud {
 
 
 	/**
+	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
+	 * @see Hud 
+	 * @param event The even to check
+	 * @param hudRightWidth the Width of the Right Hud
+	 * @param hudRightHeight the Height of the Right Hud
+	 * @return true if the event is associated with a selection of a weapon, else false.
+	 */
+	public boolean eventItemList(MotionEvent event){
+		int mouseX = event.getX(), mouseY = event.getY();
+		int debItemX = Variables.SCREEN_WIDTH-hudRight.getWidth() + hudRight.getWidth()/7;
+		int finItemX = debItemX + cadreBor.getWidth();
+		int debItemY = 6*hudRight.getHeight()/11+cadreSup.getHeight();
+		int echelleY = cadreBor.getHeight();
+
+		if(event.getKind() != Kind.ACTION_DOWN)//Only accept on the down click of the mouse
+			return false;
+
+		for(int i=1;i<player.getWeapons().size();i++)
+			if(mouseX >= debItemX && mouseX <= finItemX)
+				if(mouseY >= debItemY+echelleY*(i-1) && mouseY <= debItemY+echelleY*i){
+					//System.out.println("mise en tete de "+itemList.get(i).getName());
+					player.getWeapons().setIndexInList(i, 0);
+					return true;
+				}
+		return false;
+	}
+
+
+	/**
 	 * Display the menu of weapon when click on the right hud, and launch the eventItemList for manage the selection of weapon
 	 * @param event the MotionEvent which reprensents the event of the mouse
 	 */
@@ -191,7 +191,7 @@ public class Hud {
 		int mouseX = event.getX(), mouseY = event.getY();
 
 		/* Check the event of the list of weapon*/
-		if(displayItemList == true && eventItemList(event, hudRight.getWidth(), hudRight.getHeight()) == true)
+		if(displayItemList == true && eventItemList(event) == true)
 			displayItemList=false;
 
 		/*Displaying the menu*/

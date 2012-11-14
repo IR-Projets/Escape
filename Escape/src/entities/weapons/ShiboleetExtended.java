@@ -6,12 +6,12 @@ import entities.Entities;
 import factories.WeaponFactory;
 import factories.WeaponFactory.WeaponType;
 
-public class ShiboleetExtension extends Shiboleet{
+public class ShiboleetExtended extends Shiboleet{
 
 	private final Weapon [] child;
 	private final WeaponFactory weaponFactory;
 
-	public ShiboleetExtension(Entities entities, int x, int y, boolean firedByPlayer, int quantity) {
+	public ShiboleetExtended(Entities entities, int x, int y, boolean firedByPlayer, int quantity) {
 		super(entities, x, y, firedByPlayer);
 		weaponFactory = new WeaponFactory(entities);
 		

@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 
-import listeners.GameStateListener;
+import listeners.EnvironnementListener;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.testbed.framework.TestList;
@@ -26,7 +26,7 @@ import fr.umlv.zen2.MotionEvent.Kind;
 
 
 
-public class MainTest extends TestbedTest implements GameStateListener{
+public class MainTest extends TestbedTest implements EnvironnementListener{
 
 	private static final String COMPUTE_RATE = "Compute rate";
 	private static final String TIME_STEP = "Time step";

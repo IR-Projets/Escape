@@ -13,14 +13,14 @@ public class ShipFactory extends EntityFactory {
 
 	public Player createPlayer(){
 		Player player = new Player(getEntities());
-		getEntities().addEntity(player);
+		createEntity(player);
 		return player;
 	}
 
 	
-	public static Enemy createEnnemy(Entities entities, String nameImage, int x, int y, int life) {
-		Enemy enemy = new Enemy(entities, Ressources.getImage(nameImage), x, y, life);
-		entities.addEntity(enemy);
+	public Enemy createEnnemy(String nameImage, int x, int y, int life) {
+		Enemy enemy = new Enemy(getEntities(), Ressources.getImage(nameImage), x, y, life);
+		createEntity(enemy);
 		return enemy;
 	}
 	

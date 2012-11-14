@@ -24,7 +24,7 @@ public abstract class Weapon extends Entity{
 	private final boolean firedByPlayer;
 
 	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
-	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, boolean firedByPlayer, int damage) {
+	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, int damage, boolean firedByPlayer) {
 		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.firedByPlayer=firedByPlayer;
@@ -73,7 +73,7 @@ public abstract class Weapon extends Entity{
 	public void collision(Entity entity, EntityType type) {
 		Vec2 pos = getScreenPostion();
 		Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
-		getEntities().removeEntitie(this, getType());
+		getEntities().removeEntitie(this);
 	}
 	
 	public static BufferedImage resize(BufferedImage image, float coefSize){

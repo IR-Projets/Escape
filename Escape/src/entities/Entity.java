@@ -21,19 +21,9 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
 public abstract class Entity implements EntityListener{	
-	private Body body;
 	private Entities entities;
+	private Body body;
 
-	public enum EntityType{
-		Enemy,
-		Boss,
-		Joueur,
-		Item,
-		WeaponPlayer,
-		WeaponEnnemy, 
-		WorldLimit
-	}
-	
 	public Entity(Entities entities, Body body) {
 		this.entities = entities;
 		this.body = body;//entities.createBody(posX, posY, width, height);
@@ -82,6 +72,11 @@ public abstract class Entity implements EntityListener{
 		return body.getLinearVelocity();
 	}
 	
+
+	public void setVelocity(float speedX, float speedY){
+		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
+	}
+	
 	public Vec2 getScreenPostion(){
 		return new Vec2(toScreenSize(body.getPosition().x) - getImage().getWidth()/2, 
 				Variables.SCREEN_HEIGHT - (toScreenSize(body.getPosition().y) + getImage().getHeight()/2));
@@ -96,10 +91,6 @@ public abstract class Entity implements EntityListener{
 		Vec2 position = getScreenPostion();
 		return point.x>position.x && point.x<position.x+getImage().getWidth() &&
 				point.y>position.y && point.y<position.y+getImage().getHeight();
-	}
-
-	public void setVelocity(float speedX, float speedY){
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
 	}	
 
 	public void stop(){

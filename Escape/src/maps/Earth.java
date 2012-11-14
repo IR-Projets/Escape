@@ -15,18 +15,12 @@ import game.Variables;
 public class Earth extends Map {
 	
 	private static final int LOOP_SKIP = 200;
-	private BufferedImage imageBigCloud;
-	private BufferedImage imageMidCloud;
-	private BufferedImage imageSmallCloud;
 	int loop;
 	Random rand;
 
 	
 	public Earth(){
 		super(Ressources.getImage("images/maps/earth.png"), 0.2f);
-		imageBigCloud = Ressources.getImage("images/maps/bigCloud.png");
-		imageMidCloud = Ressources.getImage("images/maps/midCloud.png");
-		imageSmallCloud = Ressources.getImage("images/maps/smallCloud.png");
 		loop=0;
 		rand = new Random();
 	}
