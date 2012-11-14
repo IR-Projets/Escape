@@ -343,10 +343,14 @@ public class LoaderXml{
 			System.exit(1);
 		}
 		for(EnemyProperties enemyProperties : eh.listEnemyProperties){
-			EnemyBehavior enemyBehavior = new EnemyBehavior(enemyProperties.actions, enemyProperties.repeatTime);
-			
 			for(AppearTime appearTime : enemyProperties.appearListTmp){
-				listEnemies.add(new EnemyApparitionTime(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position));
+				EnemyBehavior enemyBehavior = new EnemyBehavior(enemyProperties.actions, enemyProperties.repeatTime);
+				boolean isBoss;
+				if(enemyProperties.enemyType==EnemyType.Boss)
+					isBoss=true;
+				else
+					isBoss=false;
+				listEnemies.add(new EnemyApparitionTime(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position, isBoss));
 			}
 		}
 		return listEnemies;

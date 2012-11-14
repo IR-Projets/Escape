@@ -13,14 +13,19 @@ import game.Variables;
 
 public class Enemy extends Ship{
 
-	EnemyBehavior behavior;
-	Random rand = new Random();
+	private final EnemyBehavior behavior;
+	private Random rand = new Random();
+	private final EntityType typeEnemy;
 
 
-	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
+	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior, boolean isBoss){	
 		super(entities, EntityShape.Square, image, x, y, life);
 		this.behavior=behavior;
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
+		if(isBoss)
+			typeEnemy=EntityType.Boss;
+		else
+			typeEnemy=EntityType.Enemy;
 	}
 
 	@Override
@@ -44,7 +49,6 @@ public class Enemy extends Ship{
 		default:
 			break;
 		}
-
 	}
 
 	@Override

@@ -31,6 +31,7 @@ public class WeaponFactory extends EntityFactory{
 			case "Shuriken": return Shuriken;
 			case "Fireball": return Fireball;
 			case "Shiboleet": return Shiboleet;
+			case "ShiboleetExtended": return ShiboleetExtended;
 			case "Missile": return Missile;
 			default: return null;
 			}

@@ -21,8 +21,8 @@ public class ShipFactory extends EntityFactory {
 
 	
 	
-	public Enemy createEnnemy(BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
-		Enemy enemy = new Enemy(getEntities(), image, x, y, life, behavior);
+	public Enemy createEnnemy(BufferedImage image, int x, int y, int life, EnemyBehavior behavior, boolean isBoss) {
+		Enemy enemy = new Enemy(getEntities(), image, x, y, life, behavior, isBoss);
 		createEntity(enemy);
 		return enemy;
 	}

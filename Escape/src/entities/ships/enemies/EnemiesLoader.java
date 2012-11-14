@@ -26,8 +26,9 @@ public class EnemiesLoader {
 		private int x, y, life;
 		private int time;
 		Vec2 posAppear;
+		boolean isBoss;
 		
-		public EnemyApparitionTime(BufferedImage image, EnemyBehavior behavior, int x, int y, int life, int time, Vec2 posAppear){
+		public EnemyApparitionTime(BufferedImage image, EnemyBehavior behavior, int x, int y, int life, int time, Vec2 posAppear, boolean isBoss){
 			this.image = image;
 			this.behavior = behavior;
 			this.x = x;
@@ -35,6 +36,7 @@ public class EnemiesLoader {
 			this.life = life;
 			this.time = time;
 			this.posAppear = posAppear;
+			this.isBoss = isBoss;
 		}
 		
 		public BufferedImage getImage() {
@@ -64,6 +66,10 @@ public class EnemiesLoader {
 		public Vec2 getPosAppear() {
 			return posAppear;
 		}
+		
+		public boolean isBoss(){
+			return isBoss;
+		}
 	}
 	
 	
@@ -85,7 +91,7 @@ public class EnemiesLoader {
 			while(it.hasNext()){
 				EnemyApparitionTime enemyLoad = it.next();
 				if(step > enemyLoad.getTime()){
-					shipFactory.createEnnemy(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior());
+					shipFactory.createEnnemy(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior(), enemyLoad.isBoss());
 					it.remove();
 				}
 			}

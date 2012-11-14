@@ -9,8 +9,6 @@ import game.Variables;
 
 public class EnemyBehavior {
 
-
-
 	private int loop, step;
 
 	private final List<Action> actions;
@@ -19,6 +17,7 @@ public class EnemyBehavior {
 	public EnemyBehavior(List<Action> behavior, int repeatTime){
 		this.actions = behavior;
 		this.repeatTime=repeatTime;
+		step=loop=0;
 	}
 
 	public void control(Ship ship){
@@ -39,6 +38,7 @@ public class EnemyBehavior {
 
 					case Move:
 						ship.move(action.angle, action.velocity);
+						System.out.println("Set move : "+action.angle);
 						break;
 					}
 				}
