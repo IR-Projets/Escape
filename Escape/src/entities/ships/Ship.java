@@ -42,13 +42,13 @@ public abstract class Ship extends Entity{
 		return life;
 	}
 	
-	public void loadWeapon(WeaponType weaponType){
+	public void loadWeapon(WeaponType weaponType, boolean firedByPlayer){
 		int posY;
 		if(weaponType == WeaponType.Shiboleet || weaponType == WeaponType.ShiboleetExtended)
 			posY = (int)(getPositionNormalized().y-getImage().getHeight()/2);
 		else
 			posY = (int)(getPositionNormalized().y+getImage().getHeight()/2);
-		weapon = weaponFactory.createWeapon(weaponType, (int)getPositionNormalized().x+getImage().getWidth()/2, posY, true);
+		weapon = weaponFactory.createWeapon(weaponType, (int)getPositionNormalized().x+getImage().getWidth()/2, posY, firedByPlayer);
 		}
 	
 	public void shootWeapon(double angle, int velocity){

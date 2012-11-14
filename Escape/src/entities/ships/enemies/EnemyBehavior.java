@@ -33,7 +33,7 @@ public class EnemyBehavior {
 				if(step >= action.beg && step <= action.end){
 					switch(action.type){
 					case Fire:
-						ship.loadWeapon(WeaponType.convert(action.name));
+						ship.loadWeapon(WeaponType.convert(action.name), false);
 						ship.shootWeapon(action.angle, action.velocity);
 						break;
 

@@ -188,7 +188,7 @@ public class Player extends Ship {
 	}
 
 	public void loadWeapon() {
-		loadWeapon(weaponItems.getCurrentWeaponItem().getWeaponType());
+		loadWeapon(weaponItems.getCurrentWeaponItem().getWeaponType(), true);
 	}
 
 /**
