@@ -4,31 +4,24 @@ import java.awt.image.BufferedImage;
 
 import entities.Entities;
 import entities.Entity;
-import entities.ships.Ship;
-import game.Variables;
 
-public class Boss extends Ship{
+public class Boss extends Enemy{
 
-	public Boss(Entities entities, BufferedImage image, int life) {
-		super(entities, EntityShape.Square, image, Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT, life);
-		getBody().setFixedRotation(true);		
+	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
+		super(entities, image, x, y, life, behavior);
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
 	@Override
-	public void collision(Entity entity, EntityType type) {
-		if(type==EntityType.WeaponPlayer)
-			explode();		
+	public void collision(Entity entity, EntityType entityType) {
+		if(entityType==EntityType.WeaponPlayer)
+			setLife(getLife()-entity.getDamage());
+		if(getLife() <= 0)
+			explode();
 	}
 
 	@Override
-	public void compute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public EntityType getType() {
+	public EntityType getEntityType() {
 		return EntityType.Boss;
 	}
 

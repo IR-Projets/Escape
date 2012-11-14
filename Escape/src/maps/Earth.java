@@ -20,7 +20,7 @@ public class Earth extends Map {
 
 	
 	public Earth(){
-		super(Ressources.getImage("images/maps/earth.png"), 0.2f);
+		super(Ressources.getImage("maps/earth.png"), 0.2f);
 		loop=0;
 		rand = new Random();
 	}

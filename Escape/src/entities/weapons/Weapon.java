@@ -32,7 +32,6 @@ public abstract class Weapon extends Entity{
 			getBody().getFixtureList().getFilterData().groupIndex = -2;
 		else
 			getBody().getFixtureList().getFilterData().groupIndex = -1;
-		this.damage=0;
 		isLaunch=false;
 		this.damage=damage;
 	}
@@ -63,8 +62,8 @@ public abstract class Weapon extends Entity{
 	}
 	
 	@Override
-	public EntityType getType() {
-		if(firedByPlayer)
+	public EntityType getEntityType() {
+		if(!firedByPlayer)
 			return EntityType.WeaponEnnemy;
 		return EntityType.WeaponPlayer;
 	}

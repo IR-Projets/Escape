@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import listeners.EntitiesListener;
-import listeners.EntityListener.EntityType;
+import listeners.CollisionListener.EntityType;
 import listeners.EnvironnementListener;
 import listeners.EnvironnementListener.GameState;
 import maps.Map;
@@ -28,6 +28,8 @@ public class Environnement implements EntitiesListener {
 	private final Hud hud;
 	private final List<EnvironnementListener> gameListener;
 	private final EnemiesLoader enemiesLoader;
+	private final GameState gameState;
+	private final GameState oldGameState;
 
 
 	/**
@@ -42,6 +44,8 @@ public class Environnement implements EntitiesListener {
 		this.enemiesLoader=enemiesLoader;
 		this.gesture = new Gesture(this);
 		this.hud = new Hud(player);
+		this.gameState = GameState.Run;
+		this.oldGameState = gameState;
 		entities.addEntitiesListener(this);
 	}
 
@@ -69,18 +73,18 @@ public class Environnement implements EntitiesListener {
 	 */
 	@Override
 	public void entityRemoved(EntityType entity) {
-		GameState newState = null;
+		
 		switch (entity){
 		case Boss:
-			newState = GameState.Win;
+			gameState = GameState.Win;
 			break;
 		case Joueur:
-			newState = GameState.Loose;
+			gameState = GameState.Loose;
 			break;
 		default:
 			break;
 		}
-		if(newState!=null){
+		if(gameState!=null){
 			for(EnvironnementListener listener : gameListener){
 				listener.stateChanged(newState);
 			}

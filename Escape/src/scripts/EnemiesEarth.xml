@@ -2,7 +2,7 @@
 
 <enemies>
 	<enemy id="1">
-		<life>150</life>
+		<life>50</life>
 		<image>ships/ship.png</image>
 
 		<appear time="5">

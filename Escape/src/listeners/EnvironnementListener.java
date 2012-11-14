@@ -2,6 +2,7 @@ package listeners;
 
 public interface EnvironnementListener {
 	public enum GameState{
+		Run,
 		Paused,
 		Loose,
 		Win

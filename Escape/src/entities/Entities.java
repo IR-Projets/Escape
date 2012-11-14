@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import listeners.EntitiesListener;
-import listeners.EntityListener.EntityType;
+import listeners.CollisionListener.EntityType;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -55,8 +55,8 @@ public class Entities {
 					
 				//Collision de deux entity
 				if(entityA!=null && entityB!=null){
-					entityA.collision(entityB, entityB.getType());
-					entityB.collision(entityA, entityA.getType());
+					entityA.collision(entityB, entityB.getEntityType());
+					entityB.collision(entityA, entityA.getEntityType());
 				}
 			}			
 			@Override
@@ -89,7 +89,7 @@ public class Entities {
 	
 	public void removeEntitie(Entity entity){
 		entitiesToDelete.add(entity);
-		entitiesListener.entityRemoved(entity.getType());
+		entitiesListener.entityRemoved(entity.getEntityType());
 	}
 
 	public void addEntitiesListener(EntitiesListener listener) {

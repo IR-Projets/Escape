@@ -9,7 +9,7 @@ public class Fireball extends Weapon {
 	private int increase;
 	
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
-		super(entities, EntityShape.Circle, WeaponType.Fireball.getImage(), x, y, 3,  firedByPlayer);
+		super(entities, EntityShape.Circle, WeaponType.Fireball.getImage(), x, y, 8,  firedByPlayer);
 		time = System.nanoTime()/1000000;
 		increase=0;
 	}

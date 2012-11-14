@@ -9,7 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-import listeners.EntityListener;
+import listeners.CollisionListener;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -20,7 +20,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 
-public abstract class Entity implements EntityListener{	
+public abstract class Entity implements CollisionListener{	
 	private Entities entities;
 	private Body body;
 
@@ -35,7 +35,6 @@ public abstract class Entity implements EntityListener{
 
 	public abstract BufferedImage getImage();// The Image use for render -> for action like loop, ...
 	public abstract void compute();
-	public abstract EntityType getType();
 	
 	public Entities getEntities(){
 		return entities;

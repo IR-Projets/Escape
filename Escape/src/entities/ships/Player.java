@@ -159,10 +159,15 @@ public class Player extends Ship {
 	}
 	
 	@Override
-	public EntityType getType() {
+	public EntityType getEntityType() {
 		return EntityType.Joueur;
 	}
 
+	@Override
+	public int getDamage() {
+		return 10;
+	}
+	
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		switch(type){
@@ -170,7 +175,7 @@ public class Player extends Ship {
 		case Enemy:
 		case WeaponEnnemy:
 			touched=true;
-			setLife(getLife()-10);
+			setLife(getLife()-entity.getDamage());
 			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
 				Effects.addEffect(new Explosion((int)pos.x, (int)pos.y));
@@ -183,6 +188,7 @@ public class Player extends Ship {
 
 }
 	
+	
 	public WeaponItems getWeapons(){
 		return weaponItems;
 	}
@@ -191,6 +197,8 @@ public class Player extends Ship {
 		if(!weaponItems.isEmpty())
 			loadWeapon(weaponItems.getCurrentWeaponItem().getWeaponType(), true);
 	}
+
+
 
 /**
  * Used to join the Ship to the origin point

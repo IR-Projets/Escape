@@ -91,7 +91,10 @@ public class EnemiesLoader {
 			while(it.hasNext()){
 				EnemyApparitionTime enemyLoad = it.next();
 				if(step > enemyLoad.getTime()){
-					shipFactory.createEnnemy(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior(), enemyLoad.isBoss());
+					if(enemyLoad.isBoss())
+						shipFactory.createBoss(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior());
+					else
+						shipFactory.createEnnemy(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior());
 					it.remove();
 				}
 			}

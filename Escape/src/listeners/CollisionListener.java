@@ -3,7 +3,7 @@ package listeners;
 import entities.Entity;
 
 
-public interface EntityListener {	
+public interface CollisionListener {	
 	public enum EntityType{
 		Enemy,
 		Boss,
@@ -11,10 +11,12 @@ public interface EntityListener {
 		Item,
 		WeaponPlayer,
 		WeaponEnnemy, 
-		WorldLimit
+		WorldLimit;
+		
 	}
 	
 	
-	public EntityType getType();
+	public EntityType getEntityType();
+	public int getDamage();
 	public void collision(Entity entity, EntityType type);
 }

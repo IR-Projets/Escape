@@ -33,8 +33,11 @@ public class ShiboleetExtended extends Shiboleet{
 		super.shoot(angle, velocity);
 		int diffAngle = 10;
 		double newAngle = angle-(diffAngle * (double)((child.length)/2));
+		int offset=0;
 		for(int i=0;i<child.length;i++){
-			child[i].shoot(newAngle+i*diffAngle, velocity);
+			if(i== child.length/2)
+				offset++;
+			child[i].shoot(newAngle+(i+offset)*diffAngle, velocity);
 		}
 		
 	}

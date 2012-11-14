@@ -90,7 +90,6 @@ public class Hud {
 	public void drawLife(Graphics2D graphics){
 		graphics.setColor(Variables.GREEN);
 		graphics.fillRect(2*hudLeft.getWidth()/7, 6*hudLeft.getHeight()/11, player.getLife(), hudLeft.getHeight()/4);
-		score++;
 	}
 
 	/**

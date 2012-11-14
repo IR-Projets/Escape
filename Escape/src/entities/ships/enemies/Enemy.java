@@ -15,21 +15,17 @@ public class Enemy extends Ship{
 
 	private final EnemyBehavior behavior;
 	private Random rand = new Random();
-	private final EntityType typeEnemy;
 
 
-	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior, boolean isBoss){	
+	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		super(entities, EntityShape.Square, image, x, y, life);
 		this.behavior=behavior;
+		getBody().setFixedRotation(true);
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
-		if(isBoss)
-			typeEnemy=EntityType.Boss;
-		else
-			typeEnemy=EntityType.Enemy;
 	}
 
 	@Override
-	public EntityType getType() {
+	public EntityType getEntityType() {
 		return EntityType.Enemy;
 	}
 
@@ -39,7 +35,9 @@ public class Enemy extends Ship{
 		case WeaponEnnemy:
 		case WeaponPlayer:
 		case Joueur:
-			explode();
+			setLife(getLife()-entity.getDamage());
+			if(getLife() <= 0)
+				explode();
 			break;	
 		case WorldLimit:
 			Vec2 pos = getScreenPostion();
@@ -54,6 +52,11 @@ public class Enemy extends Ship{
 	@Override
 	public void compute() {
 		behavior.control(this);
+	}
+
+	@Override
+	public int getDamage() {
+		return 10;
 	}
 
 }

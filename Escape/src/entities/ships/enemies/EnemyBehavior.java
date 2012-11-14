@@ -38,7 +38,6 @@ public class EnemyBehavior {
 
 					case Move:
 						ship.move(action.angle, action.velocity);
-						System.out.println("Set move : "+action.angle);
 						break;
 					}
 				}

@@ -1,6 +1,6 @@
 package listeners;
 
-import listeners.EntityListener.EntityType;
+import listeners.CollisionListener.EntityType;
 import entities.Entity;
 
 
