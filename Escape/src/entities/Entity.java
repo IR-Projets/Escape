@@ -82,6 +82,10 @@ public abstract class Entity implements CollisionListener{
 		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
 	}
 	
+	public void setDamping(float linearDamping){
+		body.setLinearDamping(linearDamping);
+	}
+	
 	public Vec2 getScreenPostion(){
 		return new Vec2(toScreenSize(body.getPosition().x) - getImage().getWidth()/2, 
 				Variables.SCREEN_HEIGHT - (toScreenSize(body.getPosition().y) + getImage().getHeight()/2));
@@ -173,19 +177,19 @@ public abstract class Entity implements CollisionListener{
 	
 	
 	private static Body getBody(Entities entities, Shape shape, int posX, int posY){
+		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.linearDamping=0.1f;
+		bodyDef.linearDamping=0.0f;
 		bodyDef.angularDamping=0.5f;
-		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
 		bodyDef.allowSleep = false;
+		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
 		Body body = entities.getWorld().createBody(bodyDef);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.3f;
-		
+		fixtureDef.friction = 0.3f;		
 		body.createFixture(fixtureDef);
 		
 		return body;

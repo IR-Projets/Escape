@@ -67,13 +67,13 @@ public class Drift implements Filter{
 	public void apply(Player ship) {
 		int vitX, vitY;
 		if(angle < 90 || angle > 270)
-			vitX = Variables.SPEED_MAIN_SHIP;
+			vitX = Variables.SHIP_VELOCITY;
 		else
-			vitX = -Variables.SPEED_MAIN_SHIP;
+			vitX = -Variables.SHIP_VELOCITY;
 		if(angle <180)
-			vitY = Variables.SPEED_MAIN_SHIP;
+			vitY = Variables.SHIP_VELOCITY;
 		else
-			vitY = -Variables.SPEED_MAIN_SHIP;
+			vitY = -Variables.SHIP_VELOCITY;
 		
 		ship.setVelocity(vitX, vitY);		
 	}

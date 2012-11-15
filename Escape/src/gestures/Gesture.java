@@ -114,7 +114,7 @@ public class Gesture {
 			angle = 90;
 		else
 			angle = Filters.getAngle(traceWeapon);
-		environnement.getPlayer().shootWeapon(angle, Variables.SPEED_WEAPON);
+		environnement.getPlayer().shootWeapon(angle, Variables.SHIP_BULLET_VELOCITY);
 		
 		/*int vitX = (int) (Math.cos(Math.toRadians(angle))*Variables.SPEED_WEAPON);
 		int vitY = (int) (Math.sin(Math.toRadians(angle))*Variables.SPEED_WEAPON);*/

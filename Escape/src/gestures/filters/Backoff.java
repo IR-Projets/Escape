@@ -57,7 +57,7 @@ public class Backoff implements Filter {
 
 	@Override
 	public void apply(Player ship) {
-		ship.setVelocity(0, -Variables.SPEED_MAIN_SHIP);
+		ship.setVelocity(0, -Variables.SHIP_VELOCITY);
 	}
 	
 }

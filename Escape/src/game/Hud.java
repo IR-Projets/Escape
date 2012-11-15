@@ -98,8 +98,8 @@ public class Hud {
 	 */
 	public void drawScore(Graphics2D graphics){
 		graphics.setColor(Variables.WHITE);
-		graphics.drawString("SCORE", hudLeft.getWidth()/6,2*hudLeft.getHeight()/5);
-		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2, 2*hudLeft.getHeight()/5);
+		graphics.drawString("SCORE", hudLeft.getWidth()/3,2*hudLeft.getHeight()/4);
+		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2+20, 2*hudLeft.getHeight()/4);
 	}
 
 	/**
