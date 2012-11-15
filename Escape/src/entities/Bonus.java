@@ -1,13 +1,7 @@
 package entities;
 
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageTypeSpecifier;
-
-import org.jbox2d.dynamics.Body;
 
 import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
@@ -15,25 +9,27 @@ import game.Variables;
 
 public class Bonus extends Entity {
 
-	private final BufferedImage image;
-	WeaponType type;
+	private final BufferedImage imageItem;
+	private final WeaponItem weaponItem;
 	
 	
-	public Bonus(Entities entities, WeaponType type, int posX, int posY) {
-		super(entities, getSquareBody(entities, posX, posY, type.getImage().getWidth(), type.getImage().getHeight()));
-		this.type = type;
+	public Bonus(Entities entities, WeaponItem weaponItem, int posX, int posY) {
+		super(entities, getSquareBody(entities, posX, posY, weaponItem.getImage().getWidth(), weaponItem.getImage().getHeight()));
+		this.weaponItem = weaponItem;
 		
-		BufferedImage imageTmp = type.getImage();
-		image =  new BufferedImage(imageTmp.getWidth(), imageTmp.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics = image.createGraphics();
+		BufferedImage imageTmp = weaponItem.getImage();
+		imageItem =  new BufferedImage(imageTmp.getWidth(), imageTmp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = imageItem.createGraphics();
 		
-		graphics.setColor(Variables.GREEN);
-		graphics.fillOval(0, 0, image.getWidth(), image.getHeight());
+		graphics.setColor(Variables.BLACK);
+		graphics.fillOval(0, 0, imageItem.getWidth(), imageItem.getHeight());
 		graphics.drawImage(imageTmp, 0, 0, null);
+		
+		graphics.setColor(Variables.WHITE);
+		graphics.drawString(String.valueOf(getQuantity()), 20, 23);//display the amount of the item
 		
 		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
 		getBody().getFixtureList().getFilterData().maskBits = 0x04;
-
 	}
 
 	@Override
@@ -52,11 +48,19 @@ public class Bonus extends Entity {
 
 	@Override
 	public BufferedImage getImage() {
-		return image;
+		return imageItem;
 	}
 
 	@Override
 	public void compute() {
+	}
+
+	public WeaponType getWeaponType() {
+		return weaponItem.getWeaponType();
+	}
+
+	public int getQuantity() {
+		return weaponItem.getQuantity();
 	}
 
 }

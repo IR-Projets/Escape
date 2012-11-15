@@ -19,7 +19,7 @@ public class Enemy extends Ship{
 	private final EnemyBehavior behavior;
 	private final Entities entities;
 	private Random rand = new Random();
-	private WeaponType bonusToDrop;
+	private WeaponItem bonusToDrop;
 
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		super(entities, EntityShape.Square, image, x, y, life);
@@ -40,21 +40,23 @@ public class Enemy extends Ship{
 
 	private void dropItem(int proba){
 		if(rand.nextInt() % proba == 0){
+			int quantity = rand.nextInt(4)+1;
 			switch(rand.nextInt()%4){
 			case 0:
-				bonusToDrop = WeaponType.Fireball;		
+				bonusToDrop = new WeaponItem(WeaponType.Fireball, quantity);
 				break;
 			case 1:
-				bonusToDrop = WeaponType.Missile;
+				bonusToDrop = new WeaponItem(WeaponType.Missile, quantity);
 				break;
 			case 2:
-				bonusToDrop = WeaponType.Shuriken;
+				bonusToDrop = new WeaponItem(WeaponType.ShiboleetExtended, quantity);
 				break;
 			case 3:
-				bonusToDrop = WeaponType.ShiboleetExtended;
+				bonusToDrop = new WeaponItem(WeaponType.Shuriken, quantity);
 				break;
 			}
-		}		
+		}
+		
 	}
 	
 	@Override
@@ -88,8 +90,9 @@ public class Enemy extends Ship{
 		behavior.control(this);
 		Vec2 pos = getPositionNormalized();
 		if(bonusToDrop!=null){
-			entities.addEntity(new Bonus(entities, bonusToDrop, (int)pos.x, (int)pos.y));
-			System.out.println("Entity add"+bonusToDrop);
+			Bonus bonusTmp = new Bonus(entities, bonusToDrop, (int)pos.x, (int)pos.y);
+			entities.addEntity(bonusTmp);
+			bonusTmp.setVelocity(0, -Variables.SPEED_WEAPON);
 			bonusToDrop=null;
 		}
 	}
