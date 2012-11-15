@@ -101,10 +101,10 @@ public class Game implements EnvironnementListener{
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 
-		/*if(!story.isFinished()){
+		if(false && !story.isFinished()){
 			story.render(bufferGraphics);
 		}
-		else{*/
+		else{
 			if(!paused){
 				if(next_game_tick==-1)
 					next_game_tick = System.currentTimeMillis();
@@ -119,7 +119,7 @@ public class Game implements EnvironnementListener{
 			}
 			//float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
 			environnement.render(bufferGraphics);
-		//}
+		}
 		
 
 		if(Variables.DEBUG){

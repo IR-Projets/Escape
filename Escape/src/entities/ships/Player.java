@@ -22,50 +22,72 @@ import org.jbox2d.dynamics.joints.Joint;
 
 public class Player extends Ship {
 
-	private final static int TICK_SKIP = 60;
-
+	private final WeaponItems weaponItems;
+	private BufferedImage[] invicibleImages;
 	private BufferedImage[] loopingImages;
 	private BufferedImage[] touchedImages;
-	private boolean touched;
-	
-	private final WeaponItems weaponItems;
 
-	public enum Looping{
+	
+	private final int LOOPING_STEP = 40;
+	private final int INVICIBLE_STEP = 80;
+	private final int INVICIBLE_REPEAT = 1;
+	private final int TOUCHED_STEP = 100;
+	
+	private boolean invicible;
+	private boolean touched;
+	private boolean looping;
+	
+	private int step;
+	private int repeat;
+	private int currentFrame;
+
+	public enum Direction{
 		NONE,
 		LEFT,
 		RIGHT;
-
-		//BufferedImage currentImage;
-		int frame = 0;
-		int count = 0;
 	}
-	private Looping looping;
+	private Direction loopDirection;
 
-//if ((catA & maskB) != 0 && (catB & maskA) != 0) //collide
-
+	
 	public Player(Entities entities){
-		super(entities, EntityShape.Polygon, Ressources.getImage("ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
-
-		getBody().setFixedRotation(true);
-		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
-		getBody().getFixtureList().getFilterData().maskBits = 0x06;
-		
-		//getBody().getFixtureList().getFilterData().groupIndex = -2;
-
+		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 		weaponItems = new WeaponItems();
 		
-		looping = Looping.NONE;
+		invicible = false;
+		touched = false;
+		looping = false;
 		
-
-		loopingImages = new BufferedImage[12];
-		touchedImages = new BufferedImage[2];
-		touched=false;
+		step=0;
+		currentFrame=0;
 		
+		/*
+		 * Set images here
+		 */
+		invicibleImages = new BufferedImage[5];
+		loopingImages = new BufferedImage[22];
+		touchedImages = new BufferedImage[4];
+		
+		for(int i=0; i<invicibleImages.length; i++){
+			invicibleImages[i] = Ressources.getImage("ships/playerShip/Joueur_invicible"+(i+1)+".png");	
+		}
 		for(int i=0; i<loopingImages.length; i++){
-			loopingImages[i] = Ressources.getImage("ships/player/Joueur"+(i+1)+".png");	
+			loopingImages[i] = Ressources.getImage("ships/playerShip/Joueur_loop"+(i+1)+".png");	
 		}
 		for(int i=0; i<touchedImages.length; i++){
-			touchedImages[i] = Ressources.getImage("ships/player/Joueur_red"+(i+1)+".png");
+			touchedImages[i] = Ressources.getImage("ships/playerShip/Joueur_red"+(i+1)+".png");
+		}
+		
+		getBody().setFixedRotation(true);
+		setCollisionListener(true);
+	}
+	
+	private void setCollisionListener(boolean isListener){
+		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
+		if(isListener){
+			getBody().getFixtureList().getFilterData().maskBits = 0x06;
+		}
+		else{
+			getBody().getFixtureList().getFilterData().maskBits = 0x04;
 		}
 	}
 
@@ -74,8 +96,10 @@ public class Player extends Ship {
 		Vec2 pos = getPositionNormalized();
 		Vec2 vel = getVelocity();
 		
-		//limites du monde pour empecher le joueur de sortir
-
+		
+		/*
+		 * Player limits
+		 */
 		if( (vel.x<0 && pos.x<0) ||
 				(vel.x>0 && pos.x>Variables.SCREEN_WIDTH - getImage().getWidth()))
 			vel.x=0;
@@ -87,80 +111,123 @@ public class Player extends Ship {
 		setVelocity(vel.x, vel.y);
 	}
 
-	private int touchedImage=0;
-	private int count=0;
-	@Override
-	public BufferedImage getImage() {
-		
-		switch(looping){
-		case NONE:		
-			if(touched){
-				count++;
-				BufferedImage image = touchedImages[touchedImage];
-				if(count>TICK_SKIP){
-					count=0;
-					touchedImage++;
-					if(touchedImage>=2){
-						touchedImage=0;
-						touched=false;
-					}
-				}
-				return image;
-			}
-			else
-				return super.getImage();
-
-		case LEFT:
-			looping.count = ++looping.count % TICK_SKIP;
-			if(looping.count==0)
-				looping.frame--;
-			return loopRender();
-
-		case RIGHT:
-			looping.count = ++looping.count % TICK_SKIP;
-			if(looping.count==0)
-				looping.frame++;
-			return loopRender();
-		}
-		return null;
-	}
 
 	/*
-	 * Actions
+	 * All renders
+	 * @see entities.ships.Ship#getImage()
 	 */
-	public void looping(Looping loop){
-		looping = loop;
-		switch(looping){
+	@Override
+	public BufferedImage getImage() {		
+		step++;
+		if(invicible){
+			return invincibleRender();
+		}		
+		else if(touched){
+			return touchedRender();
+		}
+		else if(looping){
+			return loopRender();
+		}		
+		else{
+			return super.getImage();
+		}
+	}
+	
+	private BufferedImage invincibleRender(){
+		BufferedImage image = invicibleImages[currentFrame];
+		if(step>INVICIBLE_STEP){
+			step=0;		
+			currentFrame++;
+			if(currentFrame>=invicibleImages.length){
+				currentFrame=0;
+				repeat++;
+			}
+			if(repeat>INVICIBLE_REPEAT){
+				repeat=0;
+				setInvicible(false);
+			}
+		}
+		return image;		
+	}
+	
+	private BufferedImage touchedRender(){
+		BufferedImage image = touchedImages[currentFrame];
+		if(step>TOUCHED_STEP){
+			step=0;			
+			currentFrame++;
+			if(currentFrame>=touchedImages.length){
+				setTouched(false);
+				setInvicible(true);
+			}
+		}
+		return image;		
+	}
+	
+	private BufferedImage loopRender(){	
+		BufferedImage image = loopingImages[currentFrame];
+		if(step>LOOPING_STEP){
+			step=0;			
+			switch(loopDirection){
+			case LEFT:
+				currentFrame--;
+				break;
+			case RIGHT:
+				currentFrame++;
+				break;
+			}
+			
+			if(currentFrame<0 || currentFrame>=loopingImages.length){
+				setLooping(Direction.NONE);
+			}
+		}
+		return image;
+	}
+	
+	
+	
+	/*
+	 * Animation setters
+	 */
+	public void setLooping(Direction direction){
+		step=0;
+		loopDirection = direction;
+		switch(direction){
 		case NONE:
-			looping.frame=0;
+			looping=false;
+			currentFrame=0;
+			setCollisionListener(true);
 			break;
 		case LEFT:
-			looping.frame= loopingImages.length-1;
+			looping=true;
+			currentFrame = loopingImages.length-1;
+			setCollisionListener(false);
 			break;
 		case RIGHT:
-			looping.frame = 0;
+			looping=true;
+			currentFrame = 0;
+			setCollisionListener(false);
 			break;
 		} 
 	}
-
-	private BufferedImage loopRender(){				
-		if(looping.frame<0 || looping.frame>=loopingImages.length){
-			looping.frame = 0;
-			looping = Looping.NONE;
-			return getImage();
-		}
-
-		switch(looping){
-		case LEFT:
-			return loopingImages[looping.frame];
-		case RIGHT:
-			return loopingImages[looping.frame];
-		case NONE:
-		default:
-			break;
-		}
-		return getImage();
+	
+	private void setInvicible(boolean invicible){
+		this.invicible=invicible;
+		currentFrame=0;
+		step=0;
+		setCollisionListener(!invicible);
 	}
+	
+	private void setTouched(boolean touched){
+		this.touched=touched;
+		currentFrame=0;
+		step=0;
+		setCollisionListener(!touched);
+	}
+	
+	
+	
+	
+
 	
 	@Override
 	public EntityType getEntityType() {
@@ -178,7 +245,7 @@ public class Player extends Ship {
 		case Boss:
 		case Enemy:
 		case WeaponEnnemy:
-			touched=true;
+			setTouched(true);
 			setLife(getLife()-entity.getDamage());
 			if(getLife()<10){
 				Vec2 pos = getScreenPostion();
@@ -186,7 +253,7 @@ public class Player extends Ship {
 				getEntities().removeEntitie(this);
 			}
 		break;
-	case Bonus :
+		case Bonus :
 		break;
 	}
 

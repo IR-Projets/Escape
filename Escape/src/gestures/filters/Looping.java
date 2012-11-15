@@ -142,10 +142,10 @@ public class Looping implements Filter {
 	public void apply(Player ship) {
 		switch(direction){
 		case LEFT:
-			ship.looping(Player.Looping.LEFT);
+			ship.setLooping(Player.Direction.LEFT);
 			break;
 		case RIGHT:
-			ship.looping(Player.Looping.RIGHT);
+			ship.setLooping(Player.Direction.RIGHT);
 			break;
 
 		}
