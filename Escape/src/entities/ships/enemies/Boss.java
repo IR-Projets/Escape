@@ -9,7 +9,6 @@ public class Boss extends Enemy{
 
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, image, x, y, life, behavior);
-		getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
 	@Override

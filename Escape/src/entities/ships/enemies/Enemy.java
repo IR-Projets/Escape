@@ -20,6 +20,7 @@ public class Enemy extends Ship{
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		super(entities, EntityShape.Square, image, x, y, life);
 		this.behavior=behavior;
+		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
 		getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}

@@ -43,13 +43,23 @@ public abstract class Ship extends Entity{
 	}
 	
 	public void loadWeapon(WeaponType weaponType, boolean firedByPlayer){
-		int posY;
-		if(weaponType == WeaponType.Shiboleet || weaponType == WeaponType.ShiboleetExtended)
-			posY = (int)(getPositionNormalized().y-getImage().getHeight()/2);
-		else
-			posY = (int)(getPositionNormalized().y+getImage().getHeight()/2);
-		weapon = weaponFactory.createWeapon(weaponType, (int)getPositionNormalized().x+getImage().getWidth()/2, posY, firedByPlayer);
+		
+		
+		//if(weaponType == WeaponType.Shiboleet || weaponType == WeaponType.ShiboleetExtended)
+			//posY = (getPositionNormalized().y-getImage().getHeight()/2);
+		//else{
+			
+		//}
+		
+		double angleRadian = getBody().getAngle();
+		
+		float posX = (float) (getPositionNormalized().x+Math.cos(angleRadian+Math.PI/2)*getImage().getWidth());
+		float posY = (float) (getPositionNormalized().y+Math.sin(angleRadian+Math.PI/2)*getImage().getHeight());
+		weapon = weaponFactory.createWeapon(weaponType,(int) posX,(int) posY, firedByPlayer);
+		
+		
 		}
+		
 	
 	public void shootWeapon(double angle, int velocity){
 		if(weapon != null){
