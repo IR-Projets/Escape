@@ -21,8 +21,8 @@ public class Variables {
 	 * Render variables
 	 */
 	public static final int TICKS_PER_SECOND = 25;
-	public static final int SKIP_TICKS = 300 / TICKS_PER_SECOND;
-	public static final int MAX_FRAMESKIP = 5;
+	public static final int SKIP_TICKS = 400 / TICKS_PER_SECOND;
+	public static final int MAX_FRAMESKIP = 10;
 	public static final int LOOP_SKIP = 32;
 	
 	
