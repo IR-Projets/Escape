@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
 import entities.ships.Player;
-import entities.ships.WeaponItem;
+import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;

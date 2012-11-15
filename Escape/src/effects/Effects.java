@@ -36,9 +36,6 @@ public abstract class Effects {
 		}
 	}
 	
-	/*
-	 * TODO: systeme de couches !!
-	 */
 	public static void addEffect(int layer, Effects effect){
 		if(layers[layer]==null)
 			layers[layer] = new ArrayList<>();

@@ -4,6 +4,7 @@ import effects.Effects;
 import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
+import entities.weapons.WeaponItems;
 import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
@@ -182,7 +183,7 @@ public class Player extends Ship {
 				getEntities().removeEntitie(this);
 			}
 		break;
-	case WeaponPlayer :
+	case Bonus :
 		break;
 	}
 

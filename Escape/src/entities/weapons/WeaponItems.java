@@ -1,4 +1,4 @@
-package entities.ships;
+package entities.weapons;
 
 import java.util.Iterator;
 import java.util.LinkedList;

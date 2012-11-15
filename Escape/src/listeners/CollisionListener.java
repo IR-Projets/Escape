@@ -11,8 +11,8 @@ public interface CollisionListener {
 		Item,
 		WeaponPlayer,
 		WeaponEnnemy, 
-		WorldLimit;
-		
+		WorldLimit, 
+		Bonus;		
 	}
 	
 	
