@@ -29,7 +29,7 @@ public class Enemy extends Ship{
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
-		addtoCollisionGroup(EntityType.Enemy);
+		setCollisionGroup(EntityType.Enemy);
 	}
 
 	@Override

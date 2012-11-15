@@ -33,9 +33,9 @@ public abstract class Weapon extends Entity{
 		isLaunch=false;
 		this.damage=damage;
 		if(firedByPlayer)
-			addtoCollisionGroup(EntityType.WeaponPlayer);
+			setCollisionGroup(EntityType.WeaponPlayer);
 		else
-			addtoCollisionGroup(EntityType.WeaponEnnemy);
+			setCollisionGroup(EntityType.WeaponEnnemy);
 	}
 
 	@Override

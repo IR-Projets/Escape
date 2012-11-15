@@ -42,7 +42,6 @@ public abstract class Entity implements CollisionListener{
 	public Entities getEntities(){
 		return entities;
 	}
-	  
 	
 	public void render(Graphics2D graphics){
 		AffineTransform tx = new AffineTransform();
@@ -74,8 +73,8 @@ public abstract class Entity implements CollisionListener{
 		return body.getLinearVelocity();
 	}
 	
-	public void addtoCollisionGroup(EntityType entityType){
-		CollisionGroup.setCollisionMask(body, entityType);
+	public void setCollisionGroup(EntityType entityType){
+		CollisionGroup.setCollisionGroup(body, entityType);
 	}
 
 	public void setVelocity(float speedX, float speedY){
