@@ -27,17 +27,18 @@ import org.jbox2d.dynamics.joints.Joint;
 public class Player extends Ship {
 
 	private final WeaponItems weaponItems;
-	private BufferedImage[] invicibleImages;
+	private BufferedImage[] invincibleImages;
 	private BufferedImage[] loopingImages;
 	private BufferedImage[] touchedImages;
 
 	
 	private final int LOOPING_STEP = 40;
-	private final int INVICIBLE_STEP = 80;
+	private final int INVICIBLE_STEP = 50;
 	private final int INVICIBLE_REPEAT = 1;
-	private final int TOUCHED_STEP = 100;
+	private final int TOUCHED_STEP = 50;
+	private final int TOUCHED_REPEAT = 3;
 	
-	private boolean invicible;
+	private boolean invincible;
 	private boolean touched;
 	private boolean looping;
 	
@@ -52,12 +53,13 @@ public class Player extends Ship {
 	}
 	private Direction loopDirection;
 
+
 	
 	public Player(Entities entities){
-		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.SHIP_LIFE);
+		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/7, Variables.SHIP_LIFE);
 		weaponItems = new WeaponItems();
 		
-		invicible = false;
+		invincible = true;
 		touched = false;
 		looping = false;
 		
@@ -67,12 +69,12 @@ public class Player extends Ship {
 		/*
 		 * Set images here
 		 */
-		invicibleImages = new BufferedImage[5];
+		invincibleImages = new BufferedImage[5];
 		loopingImages = new BufferedImage[22];
 		touchedImages = new BufferedImage[4];
 		
-		for(int i=0; i<invicibleImages.length; i++){
-			invicibleImages[i] = Ressources.getImage("ships/playerShip/Joueur_invicible"+(i+1)+".png");	
+		for(int i=0; i<invincibleImages.length; i++){
+			invincibleImages[i] = Ressources.getImage("ships/playerShip/Joueur_invincible"+(i+1)+".png");	
 		}
 		for(int i=0; i<loopingImages.length; i++){
 			loopingImages[i] = Ressources.getImage("ships/playerShip/Joueur_loop"+(i+1)+".png");	
@@ -90,10 +92,59 @@ public class Player extends Ship {
 	
 	private void setCollisionListener(boolean isListener){
 		addtoCollisionGroup(EntityType.Joueur);
-		if(isListener){
+		if(!isListener){
 			getBody().getFixtureList().getFilterData().maskBits = CollisionGroup.BONUS_COLLISION;
 		}
 	}
+	
+	/*
+	 * Animation setters
+	 */
+	public void setLooping(Direction direction){
+		step=0;
+		invincible=false;
+		touched=false;
+		loopDirection = direction;
+		
+		switch(direction){
+		case NONE:
+			looping=false;
+			currentFrame=0;
+			setCollisionListener(true);
+			break;
+		case LEFT:
+			looping=true;
+			currentFrame = loopingImages.length-1;
+			setCollisionListener(false);
+			break;
+		case RIGHT:
+			looping=true;
+			currentFrame = 0;
+			setCollisionListener(false);
+			break;
+		} 
+	}
+	
+	private void setInvicible(boolean invicible){
+		this.invincible=invicible;
+		touched=false;
+		looping=false;
+		currentFrame=0;
+		step=0;
+		
+		setCollisionListener(!invicible);
+	}
+	
+	private void setTouched(boolean touched){
+		this.touched=touched;
+		looping=false;
+		invincible=false;
+		currentFrame=0;
+		step=0;
+		setCollisionListener(!touched);
+	}
+	
+	
 
 	@Override
 	public void compute() {
@@ -123,7 +174,7 @@ public class Player extends Ship {
 	@Override
 	public BufferedImage getImage() {		
 		step++;
-		if(invicible){
+		if(invincible){
 			return invincibleRender();
 		}		
 		else if(touched){
@@ -138,11 +189,11 @@ public class Player extends Ship {
 	}
 	
 	private BufferedImage invincibleRender(){
-		BufferedImage image = invicibleImages[currentFrame];
+		BufferedImage image = invincibleImages[currentFrame];
 		if(step>INVICIBLE_STEP){
 			step=0;		
 			currentFrame++;
-			if(currentFrame>=invicibleImages.length){
+			if(currentFrame>=invincibleImages.length){
 				currentFrame=0;
 				repeat++;
 			}
@@ -160,8 +211,12 @@ public class Player extends Ship {
 			step=0;			
 			currentFrame++;
 			if(currentFrame>=touchedImages.length){
+				currentFrame=0;
+				repeat++;
+			}
+			if(repeat>TOUCHED_REPEAT){
+				repeat=0;
 				setTouched(false);
-				setInvicible(true);
 			}
 		}
 		return image;		
@@ -186,57 +241,7 @@ public class Player extends Ship {
 		}
 		return image;
 	}
-	
-	
-	
-	/*
-	 * Animation setters
-	 */
-	public void setLooping(Direction direction){
-		step=0;
-		invicible=false;
-		touched=false;
-		loopDirection = direction;
-		
-		switch(direction){
-		case NONE:
-			looping=false;
-			currentFrame=0;
-			setCollisionListener(true);
-			break;
-		case LEFT:
-			looping=true;
-			currentFrame = loopingImages.length-1;
-			setCollisionListener(false);
-			break;
-		case RIGHT:
-			looping=true;
-			currentFrame = 0;
-			setCollisionListener(false);
-			break;
-		} 
-	}
-	
-	private void setInvicible(boolean invicible){
-		this.invicible=invicible;
-		touched=false;
-		looping=false;
-		currentFrame=0;
-		step=0;
-		
-		setCollisionListener(!invicible);
-	}
-	
-	private void setTouched(boolean touched){
-		this.touched=touched;
-		currentFrame=0;
-		step=0;
-		setCollisionListener(!touched);
-	}
-	
-	
-	
-	
+
 
 	
 	@Override
