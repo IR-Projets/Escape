@@ -53,7 +53,7 @@
 
 			<fire beg="1" end="2">
 				<name>Fireball</name>
-				<angle>270</angle>
+				<angle>0</angle>
 				<velocity>200</velocity>
 			</fire>
 

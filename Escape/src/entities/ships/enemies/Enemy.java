@@ -3,6 +3,8 @@ package entities.ships.enemies;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import listeners.CollisionListener.EntityType;
+
 import org.jbox2d.common.Vec2;
 
 import entities.Bonus;
@@ -27,10 +29,7 @@ public class Enemy extends Ship{
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
-
-		getBody().getFixtureList().getFilterData().categoryBits = 0x02;
-		getBody().getFixtureList().getFilterData().maskBits = 0x04;
-		//getBody().getFixtureList().getFilterData().groupIndex = -1;
+		addtoCollisionGroup(EntityType.Enemy);
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class Enemy extends Ship{
 			break;	
 		case WorldLimit:
 			Vec2 pos = getScreenPostion();
-			if(pos.y+getImage().getHeight()>=Variables.SCREEN_HEIGHT)
+			if(pos.y+getImage().getHeight()/2>=Variables.SCREEN_HEIGHT)
 				explode();
 			break;
 		default:

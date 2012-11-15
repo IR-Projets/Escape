@@ -27,9 +27,7 @@ public class Bonus extends Entity {
 		
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString(String.valueOf(getQuantity()), 20, 23);//display the amount of the item
-		
-		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
-		getBody().getFixtureList().getFilterData().maskBits = 0x04;
+		addtoCollisionGroup(EntityType.Bonus);
 	}
 
 	@Override

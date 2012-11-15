@@ -17,66 +17,13 @@ public class EnemiesLoader {
 	private int loop, step;
 
 	
-	private final List<EnemyApparitionTime> appearList;
+	private final List<EnemyDef> enemysDef;
 	private final ShipFactory shipFactory;
 
-	public static class EnemyApparitionTime {
-		private BufferedImage image;
-		private EnemyBehavior behavior;
-		private int x, y, life;
-		private int time;
-		Vec2 posAppear;
-		boolean isBoss;
-		
-		public EnemyApparitionTime(BufferedImage image, EnemyBehavior behavior, int x, int y, int life, int time, Vec2 posAppear, boolean isBoss){
-			this.image = image;
-			this.behavior = behavior;
-			this.x = x;
-			this.y = y;
-			this.life = life;
-			this.time = time;
-			this.posAppear = posAppear;
-			this.isBoss = isBoss;
-		}
-		
-		public BufferedImage getImage() {
-			return image;
-		}
-
-		public EnemyBehavior getBehavior() {
-			return behavior;
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public int getLife() {
-			return life;
-		}
-
-		public int getTime() {
-			return time;
-		}
-
-		public Vec2 getPosAppear() {
-			return posAppear;
-		}
-		
-		public boolean isBoss(){
-			return isBoss;
-		}
-	}
-	
-	
 	public EnemiesLoader(Entities entities, String filename) {
 		this.entities=entities;
 		loop=step=0;
-		appearList = new LoaderXml().getEnemysFromXml(entities, filename);
+		enemysDef = new LoaderXml().getEnemysFromXml(entities, filename);
 		shipFactory = new ShipFactory(entities);
 	}
 
@@ -87,9 +34,9 @@ public class EnemiesLoader {
 			loop=0;
 			step++;
 			
-			Iterator <EnemyApparitionTime> it = appearList.iterator();
+			Iterator <EnemyDef> it = enemysDef.iterator();
 			while(it.hasNext()){
-				EnemyApparitionTime enemyLoad = it.next();
+				EnemyDef enemyLoad = it.next();
 				if(step > enemyLoad.getTime()){
 					if(enemyLoad.isBoss())
 						shipFactory.createBoss(enemyLoad.getImage(), enemyLoad.getX(), enemyLoad.getY(), enemyLoad.getLife(), enemyLoad.getBehavior());

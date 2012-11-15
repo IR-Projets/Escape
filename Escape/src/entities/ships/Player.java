@@ -3,6 +3,7 @@ package entities.ships;
 import effects.Effects;
 import effects.Explosion;
 import entities.Bonus;
+import entities.CollisionGroup;
 import entities.Entities;
 import entities.Entity;
 import entities.weapons.WeaponItems;
@@ -12,6 +13,8 @@ import game.Variables;
 import gestures.TraceStack;
 
 import java.awt.image.BufferedImage;
+
+import listeners.CollisionListener.EntityType;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -80,15 +83,13 @@ public class Player extends Ship {
 		
 		getBody().setFixedRotation(true);
 		setCollisionListener(true);
+		addtoCollisionGroup(EntityType.Joueur);
 	}
 	
 	private void setCollisionListener(boolean isListener){
-		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
+		addtoCollisionGroup(EntityType.Joueur);
 		if(isListener){
-			getBody().getFixtureList().getFilterData().maskBits = 0x06;
-		}
-		else{
-			getBody().getFixtureList().getFilterData().maskBits = 0x04;
+			getBody().getFixtureList().getFilterData().maskBits = CollisionGroup.BONUS_COLLISION;
 		}
 	}
 

@@ -1,7 +1,6 @@
 package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import entities.Entities;
 import entities.ships.enemies.Action.ActionType;
-import entities.ships.enemies.EnemiesLoader.EnemyApparitionTime;
 import game.Ressources;
 
 
@@ -322,10 +320,10 @@ public class LoaderXml{
 	}
 
 	
-	public List<EnemyApparitionTime> getEnemysFromXml(Entities entities, String filename) {
+	public List<EnemyDef> getEnemysFromXml(Entities entities, String filename) {
 		
 		EnemyHandler eh = new EnemyHandler();
-		List<EnemyApparitionTime> listEnemies = new LinkedList<>();
+		List<EnemyDef> listEnemies = new LinkedList<>();
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setValidating(true);
@@ -350,7 +348,7 @@ public class LoaderXml{
 					isBoss=true;
 				else
 					isBoss=false;
-				listEnemies.add(new EnemyApparitionTime(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position, isBoss));
+				listEnemies.add(new EnemyDef(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position, isBoss));
 			}
 		}
 		return listEnemies;

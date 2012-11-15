@@ -156,18 +156,19 @@ public class Entities {
 		//0,0->width,0
 		shape.setAsEdge(new Vec2(-bordure, -bordure), new Vec2(worldWidth+bordure, -bordure));
 		ground.createFixture(shape, 0.0f);
+		CollisionGroup.setCollisionMask(ground, EntityType.WorldLimit);
 		//Width,0->width,height
 		shape.setAsEdge(new Vec2(worldWidth+bordure, -bordure), new Vec2(worldWidth+bordure, worldHeight+bordure));
 		ground.createFixture(shape, 0.0f);
+		CollisionGroup.setCollisionMask(ground, EntityType.WorldLimit);
 		//width,height->0,height
 		shape.setAsEdge(new Vec2(worldWidth+bordure, worldHeight+bordure), new Vec2(-bordure, worldHeight+bordure));
 		ground.createFixture(shape, 0.0f);
+		CollisionGroup.setCollisionMask(ground, EntityType.WorldLimit);
 		//0,height->0,0
 		shape.setAsEdge(new Vec2(-bordure, worldHeight+bordure), new Vec2(-bordure, -bordure));
 		ground.createFixture(shape, 0.0f);
-		
-		ground.getFixtureList().getFilterData().categoryBits = 0x06;
-		ground.getFixtureList().getFilterData().maskBits = 0x06;		
+		CollisionGroup.setCollisionMask(ground, EntityType.WorldLimit);
 		
 		return ground;
 	}	

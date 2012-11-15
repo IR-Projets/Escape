@@ -2,6 +2,8 @@ package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
 
+import listeners.CollisionListener.EntityType;
+
 import entities.Entities;
 import entities.Entity;
 
@@ -9,6 +11,7 @@ public class Boss extends Enemy{
 
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, image, x, y, life, behavior);
+		addtoCollisionGroup(EntityType.Boss);
 	}
 
 	@Override

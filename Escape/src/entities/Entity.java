@@ -74,6 +74,9 @@ public abstract class Entity implements CollisionListener{
 		return body.getLinearVelocity();
 	}
 	
+	public void addtoCollisionGroup(EntityType entityType){
+		CollisionGroup.setCollisionMask(body, entityType);
+	}
 
 	public void setVelocity(float speedX, float speedY){
 		/*Vec2 f = getBody().getWorldVector(new Vec2(300.0f, 300.0f));

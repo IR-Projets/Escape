@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<project name="Escape IR" default="compile" basedir=".">
+	
+<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+	<property name="src" value="./src" />
+	<property name="class" value="./classes" />
+	<property name="lib" value="./lib" />
+	<property name="doc" value="docs" />
+	<property name="javadoc" value="${doc}/doc" />
+	
+	<target name="compile" >
+		<javac srcdir="${src}" destdir="${class}" includeantruntime="true" debug="true" debuglevel="lines"/>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="hello.jar" basedir="." includes="**/*.class" >
+			<manifest>
+				<attribute name="Main-Class" value="game.MainGame" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="javadoc">
+		<javadoc sourcepath="${src}" destdir="${javadoc}"/>
+		<echo message="Javadoc has correctly been generated" />
+	</target>
+	
+	<target name="clean">
+		<delete>
+			<fileset dir="${class}" includes="**/*.class"/>
+		</delete>
+		<echo message="Files .class has correctly been deleted" />
+	</target>
+	
+</project>

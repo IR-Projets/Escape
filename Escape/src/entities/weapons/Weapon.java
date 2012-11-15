@@ -4,6 +4,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import listeners.CollisionListener.EntityType;
+
 import org.jbox2d.common.Vec2;
 
 import effects.Effects;
@@ -28,22 +30,12 @@ public abstract class Weapon extends Entity{
 		super(entities, bodyForm.get(entities, x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.firedByPlayer=firedByPlayer;
-		
-		
-		if(firedByPlayer){
-			getBody().getFixtureList().getFilterData().categoryBits = 0x04;
-			getBody().getFixtureList().getFilterData().maskBits = 0x02;
-		}			
-		else{
-			getBody().getFixtureList().getFilterData().categoryBits = 0x02;
-			getBody().getFixtureList().getFilterData().maskBits = 0x04;			
-		}
-			/*
-			getBody().getFixtureList().getFilterData().groupIndex = -2;
-		else
-			getBody().getFixtureList().getFilterData().groupIndex = -1;*/
 		isLaunch=false;
 		this.damage=damage;
+		if(firedByPlayer)
+			addtoCollisionGroup(EntityType.WeaponPlayer);
+		else
+			addtoCollisionGroup(EntityType.WeaponEnnemy);
 	}
 
 	@Override
