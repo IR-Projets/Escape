@@ -27,10 +27,13 @@ public class Bonus extends Entity {
 		image =  new BufferedImage(imageTmp.getWidth(), imageTmp.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics = image.createGraphics();
 		
-		graphics.drawOval(0, 0, image.getWidth(), image.getHeight());
+		graphics.setColor(Variables.GREEN);
+		graphics.fillOval(0, 0, image.getWidth(), image.getHeight());
 		graphics.drawImage(imageTmp, 0, 0, null);
 		
-		getBody().getFixtureList().destroy();
+		getBody().getFixtureList().getFilterData().categoryBits = 0x0001;
+		getBody().getFixtureList().getFilterData().maskBits = 0x0000;
+
 	}
 
 	@Override
@@ -49,7 +52,7 @@ public class Bonus extends Entity {
 
 	@Override
 	public BufferedImage getImage() {
-		return type.getImage();
+		return image;
 	}
 
 	@Override

@@ -27,7 +27,10 @@ public class Enemy extends Ship{
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
-		getBody().getFixtureList().getFilterData().groupIndex = -1;
+
+		getBody().getFixtureList().getFilterData().categoryBits = 0x0002;
+		getBody().getFixtureList().getFilterData().maskBits = 0x0001;
+		//getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 
 	@Override
@@ -86,6 +89,7 @@ public class Enemy extends Ship{
 		Vec2 pos = getPositionNormalized();
 		if(bonusToDrop!=null){
 			entities.addEntity(new Bonus(entities, bonusToDrop, (int)pos.x, (int)pos.y));
+			System.out.println("Entity add"+bonusToDrop);
 			bonusToDrop=null;
 		}
 	}

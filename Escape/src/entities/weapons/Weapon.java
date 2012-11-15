@@ -28,10 +28,22 @@ public abstract class Weapon extends Entity{
 		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.firedByPlayer=firedByPlayer;
-		if(firedByPlayer)
+		
+		
+		if(firedByPlayer){
+			getBody().getFixtureList().getFilterData().maskBits = 0x0002;
+			getBody().getFixtureList().getFilterData().categoryBits = 0x0001;
+		}
+			
+		else{
+			getBody().getFixtureList().getFilterData().maskBits = 0x0001;
+			getBody().getFixtureList().getFilterData().categoryBits = 0x0002;
+			
+		}
+			/*
 			getBody().getFixtureList().getFilterData().groupIndex = -2;
 		else
-			getBody().getFixtureList().getFilterData().groupIndex = -1;
+			getBody().getFixtureList().getFilterData().groupIndex = -1;*/
 		isLaunch=false;
 		this.damage=damage;
 	}

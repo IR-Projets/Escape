@@ -20,6 +20,20 @@
 			<posY>700</posY>
 		</appear>
 
+		<appear time="15">
+			<posX>150</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="15">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="15">
+			<posX>450</posX>
+			<posY>700</posY>
+		</appear>
 
 		<actions repeattime="6">
 			<move beg="1" end="2">
@@ -59,7 +73,7 @@
 		<life>150</life>
 		<image>ships/boss.png</image>
 
-		<appear time="15">
+		<appear time="25">
 			<posX>50</posX>
 			<posY>700</posY>
 		</appear>

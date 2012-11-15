@@ -41,13 +41,16 @@ public class Player extends Ship {
 	}
 	private Looping looping;
 
-
+//if ((catA & maskB) != 0 && (catB & maskA) != 0) //collide
 
 	public Player(Entities entities){
 		super(entities, EntityShape.Polygon, Ressources.getImage("ships/player/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
 
 		getBody().setFixedRotation(true);
-		getBody().getFixtureList().getFilterData().groupIndex = -2;
+		getBody().getFixtureList().getFilterData().categoryBits = 0x0001;
+		getBody().getFixtureList().getFilterData().maskBits = 0x0002;
+		
+		//getBody().getFixtureList().getFilterData().groupIndex = -2;
 
 		weaponItems = new WeaponItems();
 		
