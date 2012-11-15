@@ -28,6 +28,7 @@ public class Entities {
 	 * Un seul World et une seule liste d'entity
 	 */	
 	private final World world;
+	private final Body worldLimit;
 	private final Map<Body, Entity> entities = new Hashtable<>();
 	private final List<Entity> entitiesToDelete;	//All entities
 	private final List<Entity> entitiesToAdd;	//All entities
@@ -37,7 +38,7 @@ public class Entities {
 		entitiesToDelete = new LinkedList<>();
 		entitiesToAdd = new LinkedList<>();
 		this.world = world;
-		final Body worldLimit = setWorldLimit(world);
+		worldLimit = setWorldLimit(world);
 		world.setContactListener(new ContactListener() {
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
@@ -73,6 +74,10 @@ public class Entities {
 	
 	public World getWorld(){
 		return world;
+	}
+	
+	public Body getWorldLimit(){
+		return worldLimit;
 	}
 	
 	
@@ -141,7 +146,7 @@ public class Entities {
 	 */
 	private static Body setWorldLimit(World world){
 		BodyDef bd = new BodyDef();
-		Body ground = world.createBody(bd);
+		Body ground = world.createBody(bd);		
 
 		float worldWidth = Variables.SCREEN_WIDTH/Variables.WORLD_SCALE;
 		float worldHeight = Variables.SCREEN_HEIGHT/Variables.WORLD_SCALE;
@@ -160,6 +165,9 @@ public class Entities {
 		//0,height->0,0
 		shape.setAsEdge(new Vec2(-bordure, worldHeight+bordure), new Vec2(-bordure, -bordure));
 		ground.createFixture(shape, 0.0f);
+		
+		ground.getFixtureList().getFilterData().categoryBits = 0x06;
+		ground.getFixtureList().getFilterData().maskBits = 0x06;		
 		
 		return ground;
 	}	

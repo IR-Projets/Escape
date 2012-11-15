@@ -28,8 +28,8 @@ public class Enemy extends Ship{
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
 
-		getBody().getFixtureList().getFilterData().categoryBits = 0x0002;
-		getBody().getFixtureList().getFilterData().maskBits = 0x0001;
+		getBody().getFixtureList().getFilterData().categoryBits = 0x02;
+		getBody().getFixtureList().getFilterData().maskBits = 0x04;
 		//getBody().getFixtureList().getFilterData().groupIndex = -1;
 	}
 

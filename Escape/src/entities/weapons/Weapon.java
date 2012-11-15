@@ -25,20 +25,18 @@ public abstract class Weapon extends Entity{
 
 	//TODO : LE systeme d'armement, avec l'integration de la classe Item (item extends entity??)
 	public Weapon(Entities entities, EntityShape bodyForm, BufferedImage image, int x, int y, int damage, boolean firedByPlayer) {
-		super(entities, bodyForm.get(entities.getWorld(), x, y, image.getWidth(), image.getHeight()));
+		super(entities, bodyForm.get(entities, x, y, image.getWidth(), image.getHeight()));
 		this.image = image;
 		this.firedByPlayer=firedByPlayer;
 		
 		
 		if(firedByPlayer){
-			getBody().getFixtureList().getFilterData().maskBits = 0x0002;
-			getBody().getFixtureList().getFilterData().categoryBits = 0x0001;
-		}
-			
+			getBody().getFixtureList().getFilterData().categoryBits = 0x04;
+			getBody().getFixtureList().getFilterData().maskBits = 0x02;
+		}			
 		else{
-			getBody().getFixtureList().getFilterData().maskBits = 0x0001;
-			getBody().getFixtureList().getFilterData().categoryBits = 0x0002;
-			
+			getBody().getFixtureList().getFilterData().categoryBits = 0x02;
+			getBody().getFixtureList().getFilterData().maskBits = 0x04;			
 		}
 			/*
 			getBody().getFixtureList().getFilterData().groupIndex = -2;

@@ -14,11 +14,14 @@ import listeners.CollisionListener;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.joints.FrictionJointDef;
 
 public abstract class Entity implements CollisionListener{	
 	private Entities entities;
@@ -73,7 +76,10 @@ public abstract class Entity implements CollisionListener{
 	
 
 	public void setVelocity(float speedX, float speedY){
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
+		Vec2 f = getBody().getWorldVector(new Vec2(300.0f, 300.0f));
+		Vec2 p = getBody().getWorldCenter();
+		getBody().applyForce(f, p);
+		//body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
 	}
 	
 	public Vec2 getScreenPostion(){
@@ -121,34 +127,34 @@ public abstract class Entity implements CollisionListener{
 		Circle,
 		Polygon;
 		
-		public Body get(World world, int posX, int posY, int width, int height){
+		public Body get(Entities entities, int posX, int posY, int width, int height){
 			switch(this){
 			case Square:
-				return getSquareBody(world, posX, posY, width, height);
+				return getSquareBody(entities, posX, posY, width, height);
 			case Circle:
-				return getCircleBody(world, posX, posY, width, height);
+				return getCircleBody(entities, posX, posY, width, height);
 			case Polygon:
-				return getPolygonBody(world, posX, posY, width, height);
+				return getPolygonBody(entities, posX, posY, width, height);
 			}
 			return null;
 		}
 	}
 	
-	public static Body getSquareBody(World world, int posX, int posY, int width, int height){		
+	public static Body getSquareBody(Entities entities, int posX, int posY, int width, int height){		
 		PolygonShape box = new PolygonShape();		
 		box.setAsBox(Entity.toWorldSize(width/2), Entity.toWorldSize(height/2));
-		return getBody(world, box, posX, posY);
+		return getBody(entities, box, posX, posY);
 	}
 	
 	
-	public static Body getCircleBody(World world, int posX, int posY, int width, int height){		
+	public static Body getCircleBody(Entities entities, int posX, int posY, int width, int height){		
 		CircleShape circle = new CircleShape();
 		circle.m_radius = Entity.toWorldSize(Math.min(width, height)/2);
-		return getBody(world, circle, posX, posY);
+		return getBody(entities, circle, posX, posY);
 	}
 	
 	
-	public static Body getPolygonBody(World world, int posX, int posY, int width, int height){	
+	public static Body getPolygonBody(Entities entities, int posX, int posY, int width, int height){	
 		int w = (int) Entity.toWorldSize(width)/2;
 		int h = (int) Entity.toWorldSize(height)/2;
 		
@@ -162,17 +168,26 @@ public abstract class Entity implements CollisionListener{
 		
 		PolygonShape polygon = new PolygonShape();	
 		polygon.set(vertices, 4);
-		return getBody(world, polygon, posX, posY);
+		return getBody(entities, polygon, posX, posY);
 	}
 	
 	
-	private static Body getBody(World world, Shape shape, int posX, int posY){
+	private static Body getBody(Entities entities, Shape shape, int posX, int posY){
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC;
+		bodyDef.linearDamping=0.1f;
+		bodyDef.angularDamping=0.5f;
 		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
 		bodyDef.allowSleep = false;
-		Body body = world.createBody(bodyDef);
-		body.createFixture(shape, 1.0f);
+		Body body = entities.getWorld().createBody(bodyDef);
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.3f;
+		
+		body.createFixture(fixtureDef);
+		
 		return body;
 	}
 

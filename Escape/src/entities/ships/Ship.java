@@ -23,7 +23,7 @@ public abstract class Ship extends Entity{
 	private final WeaponFactory weaponFactory;
 
 	public Ship(Entities entities, EntityShape bodyForm, BufferedImage image, int posX, int posY, int life){
-		super(entities, bodyForm.get(entities.getWorld(), posX, posY, image.getWidth(), image.getHeight()));
+		super(entities, bodyForm.get(entities, posX, posY, image.getWidth(), image.getHeight()));
 		this.image= image;
 		this.life=life;
 		weapon = null;

@@ -20,7 +20,7 @@ public class Bonus extends Entity {
 	
 	
 	public Bonus(Entities entities, WeaponType type, int posX, int posY) {
-		super(entities, getSquareBody(entities.getWorld(), posX, posY, type.getImage().getWidth(), type.getImage().getHeight()));
+		super(entities, getSquareBody(entities, posX, posY, type.getImage().getWidth(), type.getImage().getHeight()));
 		this.type = type;
 		
 		BufferedImage imageTmp = type.getImage();
@@ -31,8 +31,8 @@ public class Bonus extends Entity {
 		graphics.fillOval(0, 0, image.getWidth(), image.getHeight());
 		graphics.drawImage(imageTmp, 0, 0, null);
 		
-		getBody().getFixtureList().getFilterData().categoryBits = 0x0001;
-		getBody().getFixtureList().getFilterData().maskBits = 0x0000;
+		getBody().getFixtureList().getFilterData().categoryBits = 0x04;
+		getBody().getFixtureList().getFilterData().maskBits = 0x04;
 
 	}
 
