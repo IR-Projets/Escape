@@ -202,34 +202,4 @@ public class Player extends Ship {
 			loadWeapon(weaponItems.getCurrentWeaponItem().getWeaponType(), true);
 	}
 
-
-
-/**
- * Used to join the Ship to the origin point
- * Non used
- *
-	private void initJoin(World world){
-		Joint joint;
-		Body ground = world.createBody(new BodyDef());
-
-		DistanceJointDef jd = new DistanceJointDef();
-		Vec2 p1 = new Vec2();
-		Vec2 p2 = new Vec2();
-		Vec2 d = new Vec2();
-
-		jd.frequencyHz = Variables.LINK_FREQUENCY;
-		jd.dampingRatio = Variables.LINK_DAMPING;
-
-		jd.bodyA = ground;
-		jd.bodyB = getBody();
-		jd.localAnchorA.set(toWorldSize(Variables.SCREEN_WIDTH/2), toWorldSize(Variables.SCREEN_HEIGHT/5));
-		jd.localAnchorB.set(0,0);
-		p1 = jd.bodyA.getWorldPoint(jd.localAnchorA);
-		p2 = jd.bodyB.getWorldPoint(jd.localAnchorB);
-		d = p2.sub(p1);
-		jd.length = 0;//d.length();
-		joint = world.createJoint(jd);
-	}
- */
-
 }
