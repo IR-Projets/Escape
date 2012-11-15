@@ -54,7 +54,7 @@ public class Player extends Ship {
 
 	
 	public Player(Entities entities){
-		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.MAX_LIFE);
+		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/5, Variables.SHIP_LIFE);
 		weaponItems = new WeaponItems();
 		
 		invicible = false;
@@ -81,9 +81,11 @@ public class Player extends Ship {
 			touchedImages[i] = Ressources.getImage("ships/playerShip/Joueur_red"+(i+1)+".png");
 		}
 		
+		
 		getBody().setFixedRotation(true);
 		setCollisionListener(true);
 		addtoCollisionGroup(EntityType.Joueur);
+		setDamping(Variables.SHIP_DAMPING);
 	}
 	
 	private void setCollisionListener(boolean isListener){
@@ -192,7 +194,10 @@ public class Player extends Ship {
 	 */
 	public void setLooping(Direction direction){
 		step=0;
+		invicible=false;
+		touched=false;
 		loopDirection = direction;
+		
 		switch(direction){
 		case NONE:
 			looping=false;
@@ -214,8 +219,11 @@ public class Player extends Ship {
 	
 	private void setInvicible(boolean invicible){
 		this.invicible=invicible;
+		touched=false;
+		looping=false;
 		currentFrame=0;
 		step=0;
+		
 		setCollisionListener(!invicible);
 	}
 	

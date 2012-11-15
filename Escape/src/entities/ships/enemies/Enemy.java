@@ -91,7 +91,7 @@ public class Enemy extends Ship{
 		if(bonusToDrop!=null){
 			Bonus bonusTmp = new Bonus(entities, bonusToDrop, (int)pos.x, (int)pos.y);
 			entities.addEntity(bonusTmp);
-			bonusTmp.setVelocity(0, -Variables.SPEED_WEAPON);
+			bonusTmp.setVelocity(0, -Variables.SHIP_BULLET_VELOCITY);
 			bonusToDrop=null;
 		}
 	}

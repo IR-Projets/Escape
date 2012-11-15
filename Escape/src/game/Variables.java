@@ -39,9 +39,10 @@ public class Variables {
 	/*
 	 * Main ship
 	 */
-	public final static int SPEED_MAIN_SHIP = 150;/* Speed of the main ship */
-	public final static int SPEED_WEAPON = 200;/* Speed of the main ship */
-	public final static int MAX_LIFE = 100;
+	public final static int SHIP_VELOCITY = 1000;/* Speed of the main ship */
+	public final static int SHIP_BULLET_VELOCITY = 1000;/* Speed of the main ship */
+	public final static float SHIP_DAMPING = 0.4f;
+	public final static int SHIP_LIFE = 100;
 	
 	
 	/*

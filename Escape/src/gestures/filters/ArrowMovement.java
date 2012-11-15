@@ -58,7 +58,7 @@ public class ArrowMovement implements Filter{
 	public void apply(Player ship) {
 		
 		
-		int vitesse=Variables.SPEED_MAIN_SHIP;
+		int vitesse=Variables.SHIP_VELOCITY;
 		if(angle < 45)
 			ship.setVelocity(vitesse, 0);
 		else if (angle > 45 && angle < 135)
