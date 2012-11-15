@@ -92,7 +92,7 @@ public class WeaponItem {
 	 * @param quantity for know how many we increase it
 	 */
 	public void addQuantity(int quantity){
-		quantity+=quantity;
+		this.quantity+=quantity;
 	}
 	
 	/**

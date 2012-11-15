@@ -118,23 +118,18 @@ public class Trace {
 		Vec2 currentPoint = traceIte.next();
 		Vec2 lastPoint = null;
 		
-		//graphics.setStroke(new BasicStroke(5));// For have a bigest trace drawing
 		while(traceIte.hasNext()){
 			lastPoint = currentPoint;
 			currentPoint = traceIte.next();
 			
 			
 			graphics.fillOval((int)lastPoint.x, (int)lastPoint.y, 5, 5);
-			
+		}
+	}
 			/*graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);//The line to trace
 			
 			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.1f));//Draw a transparence line for effect
-			graphics.setStroke(new BasicStroke(12));
-			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);
-		
-			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));//Remove the transparence effect*/
 		}
-		//graphics.setStroke(new BasicStroke(1));//Remove the stroke effect
 	}
 	
 	/**

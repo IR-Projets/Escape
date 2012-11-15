@@ -2,6 +2,7 @@ package entities.ships;
 
 import effects.Effects;
 import effects.Explosion;
+import entities.Bonus;
 import entities.Entities;
 import entities.Entity;
 import entities.weapons.WeaponItems;
@@ -187,6 +188,9 @@ public class Player extends Ship {
 			}
 		break;
 	case Bonus :
+		Bonus bonus = (Bonus) (entity);
+		weaponItems.addWeaponItem(bonus.getWeaponType(), bonus.getQuantity());
+		getEntities().removeEntitie(entity);
 		break;
 	}
 
