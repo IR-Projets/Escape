@@ -28,8 +28,7 @@ public class Environnement implements EntitiesListener {
 	private final Hud hud;
 	private final List<EnvironnementListener> gameListener;
 	private final EnemiesLoader enemiesLoader;
-	private final GameState gameState;
-	private final GameState oldGameState;
+	private GameState gameState;
 
 
 	/**
@@ -45,13 +44,16 @@ public class Environnement implements EntitiesListener {
 		this.gesture = new Gesture(this);
 		this.hud = new Hud(player);
 		this.gameState = GameState.Run;
-		this.oldGameState = gameState;
 		entities.addEntitiesListener(this);
 	}
 
 
 	public void addListener(EnvironnementListener listener) {
 		this.gameListener.add(listener);		
+	}
+	
+	public void removeListener(EnvironnementListener listener) {
+		this.gameListener.remove(listener);		
 	}
 	
 	
@@ -76,9 +78,11 @@ public class Environnement implements EntitiesListener {
 		
 		switch (entity){
 		case Boss:
+			System.out.println("Boss killed");
 			gameState = GameState.Win;
 			break;
 		case Joueur:
+			System.out.println("Joueur killed");
 			gameState = GameState.Loose;
 			break;
 		default:
@@ -86,7 +90,7 @@ public class Environnement implements EntitiesListener {
 		}
 		if(gameState!=null){
 			for(EnvironnementListener listener : gameListener){
-				listener.stateChanged(newState);
+				listener.stateChanged(gameState);
 			}
 		}
 	}
@@ -130,6 +134,7 @@ public class Environnement implements EntitiesListener {
 	public void compute() {		
 		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}
+
 }
 
 

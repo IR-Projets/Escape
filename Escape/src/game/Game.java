@@ -67,11 +67,11 @@ public class Game implements EnvironnementListener{
 			paused = paused ? false : true;
 			break;
 		case Loose:
-			System.out.println("Perdu !!");
+			System.out.println("Loose !!");
 			System.exit(0);
 			break;
 		case Win:
-			//On lance le niveau suivant
+			System.out.println("Win!!");
 			switch(level){
 			case Jupiter:
 				level = Level.Moon;
@@ -82,7 +82,8 @@ public class Game implements EnvironnementListener{
 			case Earth:
 				System.out.println("Jeu fini!! pas encore implémenté");
 				break;
-			}			
+			}	
+			environnement.removeListener(this);
 			environnement = EnvironnementFactory.factory(level);
 			environnement.addListener(this);
 			break;

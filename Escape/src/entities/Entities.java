@@ -48,9 +48,9 @@ public class Entities {
 				Entity entityB = getEntitie(bodyB);
 				
 				//Collision avec les bordures
-				if(bodyA==worldLimit)
+				if(bodyA==worldLimit && entityB!=null)
 					entityB.collision(null, EntityType.WorldLimit);
-				if(bodyB==worldLimit)
+				if(bodyB==worldLimit && entityA!=null)
 					entityA.collision(null, EntityType.WorldLimit);
 					
 				//Collision de deux entity
@@ -89,7 +89,6 @@ public class Entities {
 	
 	public void removeEntitie(Entity entity){
 		entitiesToDelete.add(entity);
-		entitiesListener.entityRemoved(entity.getEntityType());
 	}
 
 	public void addEntitiesListener(EntitiesListener listener) {
@@ -121,6 +120,7 @@ public class Entities {
 		for(Entity entity : entitiesToDelete){
 			world.destroyBody(entity.getBody());
 			entities.remove(entity.getBody());
+			entitiesListener.entityRemoved(entity.getEntityType());
 		}
 		entitiesToDelete.clear();
 		

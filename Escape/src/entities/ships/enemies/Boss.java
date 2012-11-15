@@ -14,10 +14,11 @@ public class Boss extends Enemy{
 
 	@Override
 	public void collision(Entity entity, EntityType entityType) {
-		if(entityType==EntityType.WeaponPlayer)
+		if(entityType==EntityType.WeaponPlayer){
 			setLife(getLife()-entity.getDamage());
-		if(getLife() <= 0)
-			explode();
+			if(getLife() <= 0)
+				explode();
+		}
 	}
 
 	@Override
