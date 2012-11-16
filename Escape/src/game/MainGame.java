@@ -50,8 +50,8 @@ public class MainGame {
 					/*
 					 * Events
 					 */
-					final MotionEvent event = context.pollMotion();
-					if (event != null) {
+					MotionEvent event;
+					while((event=context.pollMotion()) != null) {
 						game.event(event);
 					}
 					
