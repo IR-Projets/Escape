@@ -3,6 +3,7 @@ package entities.ships.enemies;
 import java.awt.image.BufferedImage;
 
 import entities.Entities;
+import entities.Entity;
 
 /**
  * The Boss class is used for specify an enemy as a Boss, which is uses for determine the end of a level, with his death.
@@ -41,7 +42,7 @@ public class Boss extends Enemy{
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, EntityShape.Square, image, x, y, life, behavior);
 		setCollisionGroup(EntityType.Boss);
-		setVelocity(0, -200);//Arrivee brutale du boss....
+		setVelocity(0, -40);
 	}
 	
 	/**

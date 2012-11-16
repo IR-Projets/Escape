@@ -5,32 +5,32 @@
 		<life>50</life>
 		<image>ships/ship.png</image>
 
-		<appear time="5">
+		<appear time="25">
 			<posX>150</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="5">
+		<appear time="25">
 			<posX>250</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="5">
+		<appear time="25">
 			<posX>450</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="10">
+		<appear time="30">
 			<posX>150</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="10">
+		<appear time="30">
 			<posX>250</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="10">
+		<appear time="30">
 			<posX>450</posX>
 			<posY>700</posY>
 		</appear>
@@ -71,11 +71,11 @@
 
 	<boss>
 		<life>400</life>
-		<image>ships/boss.png</image>
+		<image>ships/boss2.png</image>
 
-		<appear time="15">
-			<posX>190</posX>
-			<posY>1100</posY>
+		<appear time="1">
+			<posX>250</posX>
+			<posY>720</posY>
 		</appear>
 
 		<actions repeattime="8">
