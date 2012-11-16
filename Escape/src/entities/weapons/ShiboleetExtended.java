@@ -1,7 +1,5 @@
 package entities.weapons;
 
-import java.util.Random;
-
 import entities.Entities;
 import factories.WeaponFactory;
 import factories.WeaponFactory.WeaponType;
@@ -30,6 +28,8 @@ public class ShiboleetExtended extends Shiboleet{
 	
 	@Override
 	public void shoot(double angle, int velocity) {
+		if(child.length%2 == 1)
+			angle-=5;
 		super.shoot(angle, velocity);
 		int diffAngle = 10;
 		double newAngle = angle-(diffAngle * (double)((child.length)/2));

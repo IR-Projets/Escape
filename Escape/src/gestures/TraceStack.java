@@ -8,7 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 /**
- * The TraceStack is the list of Trace, for displays all and manage their validation.
+ * The TraceStack is compose by a list of Trace.
+ * This class does the render of all trace, and manages their states.
  * @author Quentin Bernard et Ludovic Feltz
  */
 

@@ -41,7 +41,7 @@ public class Environnement implements EntitiesListener {
 		this.player = player;
 		this.entities=entities;
 		this.enemiesLoader=enemiesLoader;
-		this.gesture = new Gesture(this);
+		this.gesture = new Gesture(player);
 		this.hud = new Hud(player);
 		this.gameState = GameState.Run;
 		entities.addEntitiesListener(this);

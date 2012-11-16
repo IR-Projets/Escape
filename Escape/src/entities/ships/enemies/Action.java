@@ -30,7 +30,7 @@ public class Action {
 	 * Enum type, for knows what kind of actions we have : Shoot or Move.
 	 *
 	 */
-	public enum ActionType{
+	public static enum ActionType{
 		SHOOT,
 		MOVE
 	};

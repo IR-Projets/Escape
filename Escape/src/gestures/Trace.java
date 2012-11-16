@@ -3,8 +3,6 @@ package gestures;
 import game.Variables;
 import gestures.filters.Filter;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,39 +33,30 @@ import org.jbox2d.common.Vec2;
  *
  */
 public class Trace {
+	
+	/**
+	 * The number maximum of point that the trace accept.
+	 */
 	private static final int MAX_SIZE_LIST = 200;
 
 	/**
-	 * Our current trace, which are represents by a List of Vec2
+	 * Our current trace, which are represents by a List of Vec2.
 	 */
 	private final List<Vec2> trace;
 	
 	/**
-	 * A boolean, to stock if the trace is valid or not
+	 * A boolean, to stock if the trace is valid or not.
 	 */
 	private boolean valid;
 
+	/**
+	 * Default constructor
+	 */
 	public Trace() {
 		trace = new LinkedList<>();
 		valid = false;
 	}
-
-	/**
-	 * Return if the trace is correctly valid. Be careful, you have to call checkTrace before you call this methods, else no garrantly of results.
-	 * @return
-	 */
-	public boolean isValid() {
-		return valid;
-	}
 	
-	/**
-	 * Set the valid parameter of a trace
-	 * @param valid
-	 */
-	public void setValid(boolean valid) {//Only uses by the validation of weapon
-		this.valid = valid;
-	}
-
 	/**
 	 * Check if the current trace is empty or not
 	 * @return
@@ -86,6 +75,47 @@ public class Trace {
 	}
 	
 	/**
+	 * Add a vec2 to our current trace
+	 * @param vec
+	 */
+	public void addPoint(Vec2 vec){
+		if(trace.size()<= MAX_SIZE_LIST)
+		trace.add(vec);
+	}
+	
+	/**
+	 * Check if a Trace is correctly recognized by our movement, defined by the interface Filter
+	 * All trace are managed By Gesture.
+	 * @see Filter
+	 * @see Gesture
+	 */
+	public boolean checkTrace(Filter filter) {
+		if(filter.check(trace)){
+			valid = true;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Return true if the trace is correctly valid. Be careful, you have to call checkTrace before you call this methods, else no garrantly of results.
+	 * @return true if the trace is valid, and false if not, but only if checkTrace has been called before this methode. Else, return always false.
+	 */
+	public boolean isValid() {
+		return valid;
+	}
+	
+	/**
+	 * Set the valid parameter of a trace
+	 * @param valid - the boolean to set the current state of the trace.
+	 */
+	public void setValid(boolean valid) {//Only uses by the validation of weapon
+		this.valid = valid;
+	}
+
+
+	
+	/**
 	 * Remove the lastPoint of trace, which is the first display by the player
 	 */
 	public void removeLastPoint(){
@@ -94,15 +124,6 @@ public class Trace {
 		Random rand = new Random();// Removing the queue, point by point
 		if(rand.nextInt()%Variables.TRACE_DELETE_RATE == 0)//RATE_DELETE_TRACE is the speed Rate for delete the trace
 			trace.remove(0);
-	}
-	
-	/**
-	 * Add a vec2 to our current trace
-	 * @param vec
-	 */
-	public void addPoint(Vec2 vec){
-		if(trace.size()<= MAX_SIZE_LIST)
-		trace.add(vec);
 	}
 	
 	/**
@@ -126,25 +147,4 @@ public class Trace {
 			graphics.fillOval((int)lastPoint.x, (int)lastPoint.y, 5, 5);
 		}
 	}
-			/*graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);//The line to trace
-			
-			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.1f));//Draw a transparence line for effect
-		}
-	}
-	
-	/**
-	 * Check if a Trace is correctly recognized by our movement, defined by the interface Filter
-	 * All trace are managed By Gesture.
-	 * @see Filter
-	 * @see Gesture
-	 */
-	
-	public boolean checkTrace(Filter filter) {
-		if(filter.check(trace)){
-			valid = true;
-			return true;
-		}
-		return false;
-	}
-
 }

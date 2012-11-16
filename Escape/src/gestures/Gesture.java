@@ -1,9 +1,9 @@
 package gestures;
 
 import entities.ships.Player;
+import entities.ships.enemies.Action.ActionType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
-import game.Environnement;
 import game.Variables;
 import gestures.filters.ArrowMovement;
 import gestures.filters.Backoff;
@@ -54,21 +54,23 @@ public class Gesture {
 	
 	/**
 	 * An enum for represents the kind of gesture the player wants : He wants to move, or to shoot.
+	 * @see ActionType
 	 */
-	private enum Action{ MOVE, SHOOT };
-	private Action action;
+	private ActionType actionType;
 
-	private final Environnement environnement;
+	/**
+	 * The player who's gonna move or shoot depending on where he has begin his gesture
+	 */
+	private final Player player;
 	/**
 	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...).
 	 * @param env
 	 */
-	public Gesture(Environnement environnement){
-		this.environnement = environnement;
+	public Gesture(Player player){
+		this.player = player;
 		traceStack = new TraceStack();
 		filters = initFilters();
 	}
-
 
 	/**
 	 * Initialize all filters, which implements Filter Interface.
@@ -83,19 +85,17 @@ public class Gesture {
 		return filtersList;
 	}
 
-
 	/**
 	 * Display the Gesture, which is a trace of the movement printing by the mouse.
 	 * @param Graphics2D graphics.
 	 */
 	public void render(Graphics2D graphics){
-		if(traceStack.isEmpty()){
-			environnement.getPlayer().stop();
+		if(traceStack.isEmpty()){// if we have finish the movement, we ask the player to stop
+			player.stop();
 			return;
 		}
 		traceStack.render(graphics);
 	}
-
 
 	/**
 	 * Shoot the weapon created by the player, which are in his lists of weapons.
@@ -107,10 +107,7 @@ public class Gesture {
 			angle = 90;
 		else
 			angle = Filters.getAngle(traceWeapon);
-		environnement.getPlayer().shootWeapon(angle, Variables.SHIP_BULLET_VELOCITY);
-		
-		/*int vitX = (int) (Math.cos(Math.toRadians(angle))*Variables.SPEED_WEAPON);
-		int vitY = (int) (Math.sin(Math.toRadians(angle))*Variables.SPEED_WEAPON);*/
+		player.shootWeapon(angle, Variables.SHIP_BULLET_VELOCITY);
 		traceStack.getCurrentTrace().setValid(true);
 	}
 
@@ -120,29 +117,27 @@ public class Gesture {
 	 * @see Kind
 	 */
 	public void event(MotionEvent event){
-		Player player = environnement.getPlayer();
-		
 		switch(event.getKind()){	
-		case ACTION_UP :
-			if(action == Action.MOVE){
+		case ACTION_UP : // End of the gesture
+			if(actionType == ActionType.MOVE){//the player want to move, so we check if he has make a good gesture, and apply the movement
 				for(Filter filter : filters)
 					if(traceStack.check(filter))
 						filter.apply(player);
 			}
-			else if (action == Action.SHOOT){
+			else if (actionType == ActionType.SHOOT){
 				shootWeapon();
 			}
 			traceStack.finishCurrentTrace();
 			break;
 
-		case ACTION_DOWN :
-			if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && !player.getWeapons().isEmpty()){
+		case ACTION_DOWN : // Begin of the gesture
+			if(player.isOnSprite(new Vec2(event.getX(), event.getY())) && !player.getWeapons().isEmpty()){//the player want to shoot, so we load the weapon.
 				player.getWeapons().removeCurrentItem();
 				player.loadWeapon();
-				action = Action.SHOOT;
+				actionType = ActionType.SHOOT;
 			}
 			else
-				action = Action.MOVE;
+				actionType = ActionType.MOVE;
 			break;
 
 		case ACTION_MOVE :
