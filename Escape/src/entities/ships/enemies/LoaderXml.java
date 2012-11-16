@@ -14,13 +14,38 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import entities.Entities;
 import entities.ships.enemies.Action.ActionType;
 import game.Ressources;
 
+/**
+ * This class is used for load an XML files into an EnemyDef class.
+ * This is a XML Parser, adapted to our class
+ * 
+ *  * @author Quentin Bernard et Ludovic Feltz
+ */
 
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 public class LoaderXml{
-	public enum EnemyType{Enemy, Boss};
+	
+	//Little inner class for facility the work of the handler
+	
+	private enum EnemyType{Enemy, Boss};
 
 	private class EnemyProperties{
 		public BufferedImage image=null;
@@ -34,10 +59,13 @@ public class LoaderXml{
 	private class AppearTime{
 		int time=-1;
 		Vec2 position=new Vec2(-1,-1);
-
 	}
-	/*
-	 * Le handler XML
+
+	//XML Handler
+	/**
+	 * Default Handler uses for load XML Files into our data
+	 * @author kiouby
+	 *
 	 */
 	public class EnemyHandler extends DefaultHandler {
 		private StringBuilder sb;
@@ -102,7 +130,7 @@ public class LoaderXml{
 					actionTmp = new Action();
 					actionTmp.setBeg(Integer.parseInt(attributes.getValue("beg")));
 					actionTmp.setEnd(Integer.parseInt(attributes.getValue("end")));
-					actionTmp.setType(ActionType.Move);
+					actionTmp.setType(ActionType.MOVE);
 				} catch (Exception e){
 					throw new SAXException("Error while parsing actions move: beg or end attributes");
 				}
@@ -116,7 +144,7 @@ public class LoaderXml{
 					actionTmp = new Action();
 					actionTmp.setBeg(Integer.parseInt(attributes.getValue("beg")));
 					actionTmp.setEnd(Integer.parseInt(attributes.getValue("end")));
-					actionTmp.setType(ActionType.Fire);
+					actionTmp.setType(ActionType.SHOOT);
 				} catch (Exception e){
 					throw new SAXException("Error while parsing actions move: beg or end attributes");
 				}
@@ -156,13 +184,9 @@ public class LoaderXml{
 						enemyPropertiesTmp.appearListTmp = new LinkedList<>();
 						appearTmp = new AppearTime();
 						appearTmp.time = Integer.parseInt(attributes.getValue("time"));
-
-						//appearTmp.position=new Vec2(Integer.parseInt(attributes.getValue("posX")), Integer.parseInt(attributes.getValue("posY")));
-						//enemyPropertiesTmp.appearListTmp.add(appearTmp);
 				}catch (Exception e){
 					throw new SAXException("Error while parsing appear : time, posX or posY attributes");
 				}
-
 				return;
 			}
 
@@ -184,7 +208,6 @@ public class LoaderXml{
 
 			if (qName.equals("enemies"))
 				return;
-
 			throw new SAXException("Unknown XML attribute: " + qName);
 		}
 
@@ -237,7 +260,7 @@ public class LoaderXml{
 			}
 
 			if (qName.equals("move")){
-				if (enemyPropertiesTmp == null || actionTmp.getAngle() == Integer.MAX_VALUE || actionTmp.getVelocity()==Integer.MAX_VALUE|| actionTmp.getBeg() == -1 || actionTmp.getEnd() == -1 || actionTmp.getType() != ActionType.Move) 
+				if (enemyPropertiesTmp == null || actionTmp.getAngle() == Integer.MAX_VALUE || actionTmp.getVelocity()==Integer.MAX_VALUE|| actionTmp.getBeg() == -1 || actionTmp.getEnd() == -1 || actionTmp.getType() != ActionType.MOVE) 
 					throw new SAXException("Move tag missformated : angle, velocity, beg or end not renseigned");
 				enemyPropertiesTmp.actions.add(actionTmp);
 				actionTmp=null;
@@ -245,7 +268,7 @@ public class LoaderXml{
 			}
 
 			if (qName.equals("fire")){
-				if (enemyPropertiesTmp == null || actionTmp.getAngle() == Integer.MAX_VALUE || actionTmp.getVelocity()==Integer.MAX_VALUE|| actionTmp.getName() == null || actionTmp.getBeg() == -1 || actionTmp.getEnd() == -1 || actionTmp.getType() != ActionType.Fire) 
+				if (enemyPropertiesTmp == null || actionTmp.getAngle() == Integer.MAX_VALUE || actionTmp.getVelocity()==Integer.MAX_VALUE|| actionTmp.getName() == null || actionTmp.getBeg() == -1 || actionTmp.getEnd() == -1 || actionTmp.getType() != ActionType.SHOOT) 
 					throw new SAXException("Move tag missformated : angle, velocity, beg or end not renseigned");
 				enemyPropertiesTmp.actions.add(actionTmp);
 				actionTmp=null;
@@ -320,7 +343,12 @@ public class LoaderXml{
 	}
 
 
-	public List<EnemyDef> getEnemysFromXml(Entities entities, String filename) {
+	/**
+	 * Return a list of EnemyDef which contains all data for launch the creation of enemies
+	 * @param filename - the emplacement of the XML file to load into our data
+	 * @return - the list of EnemyDef which contains all data for launch the creation of enemies
+	 */
+	public List<EnemyDef> getEnemysFromXml(String filename) {
 
 		EnemyHandler eh = new EnemyHandler();
 		List<EnemyDef> listEnemies = new LinkedList<>();
@@ -348,7 +376,7 @@ public class LoaderXml{
 					isBoss=true;
 				else
 					isBoss=false;
-				listEnemies.add(new EnemyDef(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, appearTime.position, isBoss));
+				listEnemies.add(new EnemyDef(enemyProperties.image,  enemyBehavior, (int)appearTime.position.x, (int)appearTime.position.y, enemyProperties.life, appearTime.time, isBoss));
 			}
 		}
 		return listEnemies;

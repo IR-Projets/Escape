@@ -20,17 +20,17 @@
 			<posY>700</posY>
 		</appear>
 
-		<appear time="15">
+		<appear time="35">
 			<posX>150</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="15">
+		<appear time="35">
 			<posX>250</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="15">
+		<appear time="35">
 			<posX>450</posX>
 			<posY>700</posY>
 		</appear>
