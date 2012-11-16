@@ -75,6 +75,7 @@ public class Boss extends Enemy{
 	
 	@Override
 	public void collision(Entity entity, EntityType type) {
+		super.collision(entity, type);
 		switch (type) {
 		case Joueur:
 		case WeaponPlayer:
