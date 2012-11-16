@@ -113,9 +113,10 @@ public class WeaponItem {
 		int widthItem = getImage().getWidth(), heighItem = getImage().getHeight();
 		
 		graphics.drawImage(getImage(), x, y, null);//display image of the item
-		graphics.setColor(Variables.BLACK);
+		graphics.setColor(Variables.RED);
 		graphics.drawRect(x+2, y, widthItem-4, heighItem-1);//border of the item image
-		graphics.drawString(weaponType.toString(), x+30, y+15);//Name of the item
+		graphics.setColor(Variables.ORANGE);
+		graphics.drawString(weaponType.toString(), x+26, y+15);//Name of the item
 		
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString(String.valueOf(getQuantity()), x+20, y+23);//display the amount of the item

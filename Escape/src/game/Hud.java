@@ -114,7 +114,7 @@ public class Hud {
 		int echelleY = cadreSup.getHeight();
 		graphics.drawImage(cadreSup, x, y, cadreSup.getWidth(), cadreSup.getHeight(), null);
 		
-		graphics.setColor(Variables.BLACK);
+		graphics.setColor(Variables.WHITE);
 		graphics.drawString("Weapon", x+22, y+20);
 
 		Iterator<WeaponItem> it = player.getWeapons().iterator();
