@@ -71,32 +71,32 @@
 
 	<boss>
 		<life>400</life>
-		<image>ships/boss.png</image>
+		<image>ships/boss2.png</image>
 
 		<appear time="15">
-			<posX>190</posX>
-			<posY>950</posY>
+			<posX>150</posX>
+			<posY>910</posY>
 		</appear>
 
-		<actions repeattime="8">
-			<move beg="1" end="2">
+		<actions repeattime="10">
+			<move beg="1" end="3">
 				<angle>-90</angle>
-				<velocity>50</velocity>
+				<velocity>70</velocity>
 			</move>
 			
-			<move beg="3" end="4">
+			<move beg="4" end="5">
 				<angle>0</angle>
-				<velocity>50</velocity>
+				<velocity>100</velocity>
 			</move>
 			
-			<move beg="7" end="8">
+			<move beg="6" end="8">
 				<angle>90</angle>
-				<velocity>50</velocity>
+				<velocity>70</velocity>
 			</move>
 			
-			<move beg="5" end="6">
+			<move beg="9" end="10">
 				<angle>180</angle>
-				<velocity>50</velocity>
+				<velocity>100</velocity>
 			</move>
 			
 

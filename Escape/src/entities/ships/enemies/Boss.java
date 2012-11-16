@@ -47,7 +47,7 @@ public class Boss extends Enemy{
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, EntityShape.Square, image, x, y, life, behavior);
 		setCollisionGroup(EntityType.Boss);
-		setVelocity(0, -1000);//Arrivee brutale du boss....
+		setVelocity(0, -1500);
 	}
 	
 	/**
