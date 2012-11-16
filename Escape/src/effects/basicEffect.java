@@ -20,7 +20,7 @@ public class basicEffect extends Effects {
 		this.velocity = velocity;		
 		image = Ressources.getImage(fileName);
 		posY = - image.getHeight();
-		posX= rand.nextInt(Variables.SCREEN_WIDTH) - image.getWidth()/2;
+		posX= rand.nextInt(Variables.SCREEN_WIDTH + 10 - image.getWidth()/2) - 10;
 	}
 	
 	@Override
@@ -32,6 +32,8 @@ public class basicEffect extends Effects {
 	@Override
 	public void computeEffect(){
 		posY+=velocity;
+		Random rand = new Random();
+		int n;
 	}
 
 	
