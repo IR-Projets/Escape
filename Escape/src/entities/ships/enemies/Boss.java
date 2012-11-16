@@ -39,7 +39,7 @@ public class Boss extends Enemy{
 	 * @param behavior - the EnemyBehavior of a Boss, which specify his behavior during the game
 	 */
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
-		super(entities, image, x, y, life, behavior);
+		super(entities, EntityShape.Polygon, image, x, y, life, behavior);
 		setCollisionGroup(EntityType.Boss);
 	}
 	

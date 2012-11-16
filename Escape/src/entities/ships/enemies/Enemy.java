@@ -42,23 +42,27 @@ public class Enemy extends Ship{
 	private final Entities entities;
 	private final Random rand = new Random();
 	private WeaponItem bonusToDrop;
-
-	/**
-	 * Default constructor, which create the enemy. Be care,  An enemy is add in the Jbox World by his factory. 
+	
+	/*
 	 * @param entities
+	 * @param shape
 	 * @param image
 	 * @param x
 	 * @param y
 	 * @param life
 	 * @param behavior
 	 */
-	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
-		super(entities, EntityShape.Square, image, x, y, life);
+	public Enemy(Entities entities, EntityShape shape, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
+		super(entities, shape, image, x, y, life);
+
 		this.behavior=behavior;
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
 		setCollisionGroup(EntityType.Enemy);
+	}
+	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
+		this(entities, EntityShape.Square, image, x, y, life, behavior);
 	}
 
 	@Override
