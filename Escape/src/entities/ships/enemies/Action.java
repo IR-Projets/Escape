@@ -27,13 +27,12 @@ package entities.ships.enemies;
 
 public class Action {
 	/**
-	 * Enum type, for knows what kind of actions we have
-	 * @author kiouby
+	 * Enum type, for knows what kind of actions we have : Shoot or Move
 	 *
 	 */
 	public enum ActionType{
-		Fire,
-		Move
+		SHOOT,
+		MOVE
 	};
 
 	private int beg;
@@ -56,50 +55,98 @@ public class Action {
 		setName(null);
 	}
 
+	/**
+	 * Returns the begin step of this action
+	 * @return the begin step of this action
+	 */
 	public int getBeg() {
 		return beg;
 	}
 
+	/**
+	 * Set the begin step of this action
+	 * @param beg - the new begin step of this action
+	 */
 	public void setBeg(int beg) {
 		this.beg = beg;
 	}
 
+	/**
+	 * Returns the end step of this action
+	 * @return the end step of this action
+	 */
 	public int getEnd() {
 		return end;
 	}
 
+	/**
+	 * Set the end step of this action
+	 * @param end - the new end step of this action
+	 */
 	public void setEnd(int end) {
 		this.end = end;
 	}
 
+	/**
+	 * Returns the velocity of this action
+	 * @return the velocity of this action
+	 */
 	public int getVelocity() {
 		return velocity;
 	}
 
+	/**
+	 * Set the velocity of this action
+	 * @param velocity - the new velocity of this action
+	 */
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
 
+	/**
+	 * Returns the angle of this action, in degree
+	 * @return the angle of this action, in degree
+	 */
 	public double getAngle() {
 		return angle;
 	}
 
+	/**
+	 * Set the angle of this action
+	 * @param angle - the new angle of this action
+	 */
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
+	/**
+	 * Returns the type of the action
+	 * @return the type of the action
+	 */
 	public ActionType getType() {
 		return type;
 	}
 
+	/**
+	 * Set the type of the action
+	 * @param type - the new type of the action
+	 */
 	public void setType(ActionType type) {
 		this.type = type;
 	}
 
+	/**
+	 * Returns the name of this action, if it's a Shoot, so the name of the weapon. Be care, return null if the action is a movement
+	 * @return the name of the weapon if the action is a movement, else return null
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Set the name of the action, only uses for Shoot. Don't use it for movement.
+	 * @param name - the new name of the action
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}

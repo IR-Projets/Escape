@@ -3,8 +3,6 @@ package entities.ships.enemies;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import listeners.CollisionListener.EntityType;
-
 import org.jbox2d.common.Vec2;
 
 import entities.Bonus;
@@ -15,14 +13,45 @@ import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import game.Variables;
 
+/**
+ * the Enemy class represents an Entity for JBox, which is an enemy ship that the player has to kill.
+ * He can also drop item.
+ *  * @author Quentin Bernard et Ludovic Feltz
+ */
 
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 public class Enemy extends Ship{
 
 	private final EnemyBehavior behavior;
 	private final Entities entities;
-	private Random rand = new Random();
+	private final Random rand = new Random();
 	private WeaponItem bonusToDrop;
 
+	/**
+	 * Default constructor, which create the enemy. Be care,  An enemy is add in the Jbox World by his factory. 
+	 * @param entities
+	 * @param image
+	 * @param x
+	 * @param y
+	 * @param life
+	 * @param behavior
+	 */
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		super(entities, EntityShape.Square, image, x, y, life);
 		this.behavior=behavior;
@@ -36,7 +65,12 @@ public class Enemy extends Ship{
 	public EntityType getEntityType() {
 		return EntityType.Enemy;
 	}
-
+	
+	/**
+	 * DropItem method, which try to create a new randomly item.
+	 * Be case, more is high, and less objects appear.
+	 * @param proba - the proba applied for know if we drop an item.
+	 */
 	private void dropItem(int proba){
 		if(rand.nextInt() % proba == 0){
 			int quantity = rand.nextInt(4)+1;
@@ -61,7 +95,7 @@ public class Enemy extends Ship{
 	@Override
 	public void explode(){
 		super.explode();
-		dropItem(2);
+		dropItem(1);//50% of luck to win an object
 	}
 	
 	@Override
