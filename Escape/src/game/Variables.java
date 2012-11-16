@@ -34,6 +34,7 @@ public class Variables {
 	public final static Color BLUE = new Color(0,0,255);
 	public final static Color WHITE = new Color(255,255,255);
 	public final static Color BLACK = new Color(0,0,0);
+	public final static Color ORANGE = new Color(255,165,0);
 	
 	
 	/*
@@ -48,7 +49,7 @@ public class Variables {
 	/*
 	 * Gesture variables
 	 */
-	public final static int TRACE_DELETE_RATE = 5;/*If we increase the value, the delete time of Trace become lower*/
+	public final static int TRACE_DELETE_RATE = 10;/*If we increase the value, the delete time of Trace become lower*/
 	public final static double TRACE_VARIATION_MAX = 40;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_LENGTH_MIN = 4;
 	

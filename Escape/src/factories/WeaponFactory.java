@@ -48,6 +48,20 @@ public class WeaponFactory extends EntityFactory{
 			default: return null;
 			}
 		}
+		
+		@Override
+		public String toString(){
+			switch(this){
+			case Shuriken: return "Shuriken";
+			case Fireball: return "Fireball";
+			case Shiboleet: 
+			case ShiboleetExtended: return "Shiboleet";
+			case Missile: return "Missile";
+			case Null : return "No weapon";
+			default: return null;
+			}
+		}
+		
 	};
 	
 	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
