@@ -7,33 +7,18 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Cloud extends Effects {
+public class basicEffect extends Effects {
 
 	float posX;
 	float posY;
 	float velocity;
 	BufferedImage image;
 	
-	public enum CloudType{
-		Big,
-		Midlle,
-		Small		
-	}
-	public Cloud(CloudType type, float velocity){
+	
+	public basicEffect(String fileName, float velocity){
 		Random rand = new Random();
 		this.velocity = velocity;		
-		
-		switch(type){
-		case Big:
-			image = Ressources.getImage("maps/bigCloud.png");
-			break;			
-		case Midlle:
-			image = Ressources.getImage("maps/midCloud.png");
-			break;
-		case Small:
-			image = Ressources.getImage("maps/smallCloud.png");
-			break;
-		}
+		image = Ressources.getImage(fileName);
 		posY = - image.getHeight();
 		posX= rand.nextInt(Variables.SCREEN_WIDTH) - image.getWidth()/2;
 	}
