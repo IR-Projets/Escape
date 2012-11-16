@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2;
 
 import entities.Entities;
 import entities.Entity;
+import game.Ressources;
 import game.Variables;
 
 /**
@@ -35,6 +36,12 @@ import game.Variables;
 
 public class Boss extends Enemy{
 
+	private final BufferedImage[] touchedImages;
+	private boolean touched;
+	private int step;
+	private int INVICIBLE_STEP = 30;
+	private int currentFrame;
+	
 	/**
 	 * Create a boss, which is an extension of an enemy. Be care, A boss enemy is add in the Jbox World by his factory. 
 	 * @param entities - class which represents our world
@@ -46,8 +53,15 @@ public class Boss extends Enemy{
 	 */
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, EntityShape.Square, image, x, y, life, behavior);
+		
+		touched=false;
+		touchedImages = new BufferedImage[3];
+		for(int i=0; i<touchedImages.length; i++){
+			touchedImages[i] = Ressources.getImage("ships/boss1/boss_red"+(i+1)+".png");
+		}
+		
 		setCollisionGroup(EntityType.Boss);
-		setVelocity(0, -1500);
+		setVelocity(0, -500);
 	}
 	
 	/**
@@ -62,25 +76,39 @@ public class Boss extends Enemy{
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		switch (type) {
-		case WeaponEnnemy:
-		case WeaponPlayer:
 		case Joueur:
-			break;
-		case WorldLimit:
-			int catBoss = getBody().getFixtureList().getFilterData().categoryBits;
-			int maskBoss = getBody().getFixtureList().getFilterData().maskBits;
-			
-			int catOther = getEntities().getWorldLimit().getFixtureList().getFilterData().categoryBits;
-			int maskOther = getEntities().getWorldLimit().getFixtureList().getFilterData().maskBits;
-			
-			System.out.println("Collision");
-			System.out.println("Boss: cat:" +catBoss+ " mask: "+maskBoss );
-			System.out.println("other: cat:" +catOther+ " mask: "+maskOther );
-			
+		case WeaponPlayer:
+			touched=true;
 			break;
 		default:
 			break;
 		}
+	}
+	
+	
+	@Override
+	public BufferedImage getImage() {		
+		step++;
+		if(touched){
+			return touchedRender();
+		}
+		else{
+			return super.getImage();
+		}
+	}
+
+	private BufferedImage touchedRender() {
+		BufferedImage image = touchedImages[currentFrame];
+		if(step>INVICIBLE_STEP){
+			step=0;		
+			currentFrame++;
+			if(currentFrame>=touchedImages.length){
+				currentFrame=0;
+				step=0;
+				touched=false;
+			}
+		}
+		return image;
 	}
 
 }

@@ -17,7 +17,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import story.Story;
-import story.Story2;
+import story.Story;
 
 import listeners.EnvironnementListener;
 
@@ -44,7 +44,7 @@ public class Game implements EnvironnementListener{
 	private long next_game_tick;
 	private boolean paused;
 
-	private Story2 story;
+	private Story story;
 	private Level level;
 	/*
 	 * TODO: C'est ici que va �tre g�rer tout les evenements du jeux (mort, gagn�, ...)
@@ -57,7 +57,7 @@ public class Game implements EnvironnementListener{
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
 		bufferGraphics = offscreen.createGraphics();
-		story = new Story2();
+		story = new Story();
 		paused=false;
 		next_game_tick = -1;
 	}

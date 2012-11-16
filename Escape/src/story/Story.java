@@ -4,137 +4,166 @@ import game.Ressources;
 import game.Variables;
 
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Story {
 
+	/*
+	 * Crée un couple temps/render
+	 * Sert a l'affichage d'un narrateur
+	 */
+	public abstract class Couple{
+		int time;
+		public Couple(int time){ this.time=time; }
+		public abstract void render(Graphics2D g);
+	}
+		
 
-	private static final int TEXT_SCALE = 10;
-	private int textY = 200;
-
-	private int textSirudX = 50;
-	private int textXaroffX = Variables.SCREEN_WIDTH-textSirudX-150;
-
-	private int TICK_SKIP=50;
-	private int clock=0;
-	private int totalClock=0;
-
-	private int imagesY = 50;
-	private int imagesSize = 100;
-
-	private BufferedImage[] Xaroff;
-	private BufferedImage[] Sirud;
-
-	private int imgXaroff;	
-	private int imgSirud;
-
-	private int SirudX=50;
-	private int XaroffX=Variables.SCREEN_WIDTH-SirudX-imagesSize;
-
-
-	private boolean finished = false;
-
-	private BufferedImage offscreen;
-	private Graphics2D bufferGraphics;
-	private long next_game_tick;
-
+	private static final int TEXT_SCALE = 20;
+	private long time, lastTime;
 	
-	public Story(){
-		imgSirud=0;
-		imgXaroff=0;
-		Xaroff = new BufferedImage[2];
-		Sirud = new BufferedImage[2];
-		Xaroff[0] = Ressources.getImage("story/Xaroff1.png");
-		Xaroff[1] = Ressources.getImage("story/Xaroff2.png");
-		Sirud[0] = Ressources.getImage("story/Sirud1.png");
-		Sirud[1] = Ressources.getImage("story/Sirud2.png");
+	
+	
+	//La sequence
+	List<Couple> sequence;
+	
+	
+	
+	//Images
+	private BufferedImage[] imgXaroff;
+	private BufferedImage[] imgSirud;
+	private BufferedImage[] imgHero;
+	final Narator sirud;
+	final Narator xaroff;
+	final Narator hero;
 
-		offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
-		bufferGraphics = offscreen.createGraphics();
-		next_game_tick = System.currentTimeMillis();
+
+	private boolean finished;
+	
+	
+	
+	
+	
+	public Story(){	
+		finished=false;
+		time = 0;
+		lastTime=0;
+		
+		/*
+		 * Narrator's images 
+		 */
+		imgXaroff = new BufferedImage[2];
+		imgXaroff[0] = Ressources.getImage("story/Xaroff1.png");
+		imgXaroff[1] = Ressources.getImage("story/Xaroff2.png");
+		
+		imgSirud = new BufferedImage[2];
+		imgSirud[0] = Ressources.getImage("story/Sirud1.png");
+		imgSirud[1] = Ressources.getImage("story/Sirud2.png");
+		
+		imgHero = new BufferedImage[1];
+		imgHero[0] = Ressources.getImage("story/hero.png");
+		
+		
+		/*
+		 * Narators( image, posX, posY )
+		 */
+		sirud = new Narator(imgSirud, 50, 50);
+		xaroff = new Narator(imgXaroff, Variables.SCREEN_WIDTH-150, 50);
+		hero = new Narator(imgHero, Variables.SCREEN_WIDTH/2-50, 270);
+		
+		
+		/*
+		 *	The sequence 
+		 */
+		sequence = new LinkedList<>();
+		sequence.add(new Couple(1){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Ou est tu encore passé?\n");				
+			}			
+		});
+		sequence.add(new Couple(1){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Ta mission suicide sur la planète\nalien c'est bien passée?");
+				hero.speak(g, "...");				
+			}			
+		});
+		sequence.add(new Couple(1){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "HaHaHA je l'ai capturé!\n");
+				sirud.draw(g);				
+			}			
+		});
+		sequence.add(new Couple(1){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Relache le!");
+				xaroff.draw(g);				
+			}			
+		});
+		sequence.add(new Couple(1){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Non!");
+				sirud.draw(g);				
+			}			
+		});
+		sequence.add(new Couple(2){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
+				//xaroff.draw(g);				
+			}			
+		});
+		sequence.add(new Couple(10){
+			float posY=0;
+			@Override
+			public void render(Graphics2D g) {
+				drawText(g, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, posY+=0.1f);			
+			}			
+		});
 	}
-
-
-	private void XaroffSpeak(Graphics2D graphics, String string){
-		drawText(graphics, string, textXaroffX, textY);
-		drawXaroff(graphics, true);
-	}
-
-	private void SirudSpeak(Graphics2D graphics, String string){
-		drawText(graphics, string, textSirudX, textY);
-		drawSirud(graphics, true);
-	}
-
-	private void drawText(Graphics2D graphics, String string, int x, int y){
-		String [] lines = string.split("\n");
+	
+	
+	private void drawText(Graphics2D graphics, String text, float x, float y){
+		String [] lines = text.split("\n");
 		for(int i=0; i<lines.length; i++){
 			graphics.drawString(lines[i], x, y+i*(TEXT_SCALE+10));
 		}	
 	}
-
-	private void drawXaroff(Graphics2D graphics, boolean speak){
-		graphics.drawImage(Xaroff[imgXaroff], XaroffX, imagesY, imagesSize, imagesSize, null);
-		if(speak && clock>TICK_SKIP){
-			clock=0;
-			imgXaroff = (imgXaroff+1) % Xaroff.length;
+	
+	public void render(Graphics2D graphics){		
+		if(sequence.size()==0){
+			finish();
+			return;
 		}
-	}	
-	private void drawSirud(Graphics2D graphics, boolean speak){
-		graphics.drawImage(Sirud[imgSirud], SirudX, imagesY, imagesSize, imagesSize, null);
-		if(speak && clock>TICK_SKIP){
-			clock=0;
-			imgSirud = (imgSirud+1) % Sirud.length;
+		
+		Couple couple = sequence.get(0);
+		couple.render(graphics);
+		
+		if(lastTime==0)
+			lastTime=System.nanoTime();
+		time=System.nanoTime();
+		if(couple.time<(time-lastTime)/1000000000){
+			lastTime = time;
+			sequence.remove(0);
 		}
 	}
-
-
-	public void render(Graphics2D graphics){
-		totalClock++;
-		clock++;
-
-		long currentTime = System.currentTimeMillis();
-		if(currentTime>next_game_tick){
-			next_game_tick += 1;
-			
-			bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
-			bufferGraphics.setColor(Variables.WHITE);
-			if(totalClock<250){
-				SirudSpeak(bufferGraphics, "Ou est tu encore passé?\n");
-			}
-			else if(totalClock<500){
-				SirudSpeak(bufferGraphics, "Ta mission suicide sur la planète\nalien c'est bien passée?");
-			}
-			else if(totalClock<800){
-				XaroffSpeak(bufferGraphics, "HaHaHA je l'ai capturé!");
-				drawSirud(bufferGraphics, false);
-			}
-			else if(totalClock<1100){
-				SirudSpeak(bufferGraphics, "Relache le!");
-				drawXaroff(bufferGraphics, false);
-			}
-			else if(totalClock<1400){
-				XaroffSpeak(bufferGraphics, "Non!");
-				drawSirud(bufferGraphics, false);
-			}
-			else if(totalClock<2000){
-				SirudSpeak(bufferGraphics, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
-			}
-			else if(totalClock<3300){
-				drawText(bufferGraphics, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, 50);
-			}
-			else{
-				finished=true;
-			}
-		}
-		graphics.drawImage(offscreen, 0, 0, null);
-	}
-
+	
 	public boolean isFinished(){
-		return finished;		
+		return finished;
 	}
 
+
+	public void finish() {
+		finished=true;
+	}
+	
+	
+	
+	
 }
