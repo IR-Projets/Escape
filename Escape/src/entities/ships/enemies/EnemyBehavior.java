@@ -68,6 +68,7 @@ public class EnemyBehavior {
 						break;
 
 					case MOVE:
+						System.out.println(action.getAngle() + " " + action.getVelocity());
 						enemy.move(action.getAngle(), action.getVelocity());
 						break;
 					}

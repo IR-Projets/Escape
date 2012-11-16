@@ -5,6 +5,21 @@
 		<life>50</life>
 		<image>ships/ship.png</image>
 
+		<appear time="1">
+			<posX>150</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="1">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="1">
+			<posX>450</posX>
+			<posY>700</posY>
+		</appear>
+
 		<appear time="5">
 			<posX>150</posX>
 			<posY>700</posY>
@@ -20,22 +35,7 @@
 			<posY>700</posY>
 		</appear>
 
-		<appear time="35">
-			<posX>150</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="35">
-			<posX>250</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="35">
-			<posX>450</posX>
-			<posY>700</posY>
-		</appear>
-
-		<actions repeattime="6">
+		<actions repeattime="4">
 			<move beg="1" end="2">
 				<angle>270</angle>
 				<velocity>100</velocity>
@@ -70,18 +70,18 @@
 
 
 	<boss>
-		<life>300</life>
+		<life>400</life>
 		<image>ships/boss.png</image>
 
-		<appear time="25">
-			<posX>50</posX>
+		<appear time="15">
+			<posX>100</posX>
 			<posY>700</posY>
 		</appear>
 
 		<actions repeattime="8">
 			<move beg="1" end="2">
 				<angle>180</angle>
-				<velocity>50</velocity>
+				<velocity>55</velocity>
 			</move>
 
 			<move beg="3" end="4">
