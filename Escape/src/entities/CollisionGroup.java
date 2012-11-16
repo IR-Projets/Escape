@@ -14,7 +14,7 @@ public class CollisionGroup {
 	public final static int BONUS_COLLISION = 32;
 	public final static int WORLD_LIMIT_COLLISION = 64;
 	
-	public static void setCollisionMask(Body body, EntityType entityType){
+	public static void setCollisionGroup(Body body, EntityType entityType){
 		switch (entityType) {
 		case Joueur:
 			body.getFixtureList().getFilterData().categoryBits = PLAYER_COLLISION;

@@ -10,8 +10,8 @@ import entities.Entity;
 public class Boss extends Enemy{
 
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
-		super(entities, image, x, y, life, behavior);
-		addtoCollisionGroup(EntityType.Boss);
+		super(entities, EntityShape.Polygon, image, x, y, life, behavior);
+		setCollisionGroup(EntityType.Boss);
 	}
 
 	@Override

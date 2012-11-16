@@ -1,4 +1,4 @@
-package effects;
+package story;
 
 import game.Ressources;
 import game.Variables;

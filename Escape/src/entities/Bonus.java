@@ -27,7 +27,7 @@ public class Bonus extends Entity {
 		
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString(String.valueOf(getQuantity()), 20, 23);//display the amount of the item
-		addtoCollisionGroup(EntityType.Bonus);
+		setCollisionGroup(EntityType.Bonus);
 	}
 
 	@Override
@@ -42,6 +42,8 @@ public class Bonus extends Entity {
 
 	@Override
 	public void collision(Entity entity, EntityType type) {
+		if(type == EntityType.WorldLimit)
+			getEntities().removeEntitie(this);
 	}
 
 	@Override

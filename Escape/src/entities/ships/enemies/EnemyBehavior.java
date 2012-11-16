@@ -29,15 +29,15 @@ public class EnemyBehavior {
 			step=(step+1)%repeatTime;
 
 			for(Action action : actions){
-				if(step >= action.beg && step <= action.end){
-					switch(action.type){
+				if(step >= action.getBeg() && step <= action.getEnd()){
+					switch(action.getType()){
 					case Fire:
-						ship.loadWeapon(WeaponType.convert(action.name), false);
-						ship.shootWeapon(action.angle, action.velocity);
+						ship.loadWeapon(WeaponType.convert(action.getName()), false);
+						ship.shootWeapon(action.getAngle(), action.getVelocity());
 						break;
 
 					case Move:
-						ship.move(action.angle, action.velocity);
+						ship.move(action.getAngle(), action.getVelocity());
 						break;
 					}
 				}

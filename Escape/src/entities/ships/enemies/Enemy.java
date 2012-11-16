@@ -23,13 +23,16 @@ public class Enemy extends Ship{
 	private Random rand = new Random();
 	private WeaponItem bonusToDrop;
 
-	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
-		super(entities, EntityShape.Square, image, x, y, life);
+	public Enemy(Entities entities, EntityShape shape, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
+		super(entities, shape, image, x, y, life);
 		this.behavior=behavior;
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
-		addtoCollisionGroup(EntityType.Enemy);
+		setCollisionGroup(EntityType.Enemy);
+	}
+	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
+		this(entities, EntityShape.Square, image, x, y, life, behavior);
 	}
 
 	@Override

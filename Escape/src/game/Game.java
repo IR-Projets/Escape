@@ -16,9 +16,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import story.Story;
+import story.Story2;
+
 import listeners.EnvironnementListener;
 
-import effects.Story;
 import factories.EnvironnementFactory;
 import factories.EnvironnementFactory.Level;
 import fr.umlv.zen2.Application;
@@ -42,7 +44,7 @@ public class Game implements EnvironnementListener{
 	private long next_game_tick;
 	private boolean paused;
 
-	private Story story;
+	private Story2 story;
 	private Level level;
 	/*
 	 * TODO: C'est ici que va �tre g�rer tout les evenements du jeux (mort, gagn�, ...)
@@ -55,7 +57,7 @@ public class Game implements EnvironnementListener{
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
 		bufferGraphics = offscreen.createGraphics();
-		story = new Story();
+		story = new Story2();
 		paused=false;
 		next_game_tick = -1;
 	}
@@ -101,7 +103,7 @@ public class Game implements EnvironnementListener{
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
 
-		if(false && !story.isFinished()){
+		if(!story.isFinished()){
 			story.render(bufferGraphics);
 		}
 		else{
@@ -150,6 +152,8 @@ public class Game implements EnvironnementListener{
 	}
 
 	public void event(MotionEvent event) {
+		if(!story.isFinished())
+			story.finish();
 		environnement.event(event);
 	}
 
