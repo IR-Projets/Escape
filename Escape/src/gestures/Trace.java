@@ -3,6 +3,8 @@ package gestures;
 import game.Variables;
 import gestures.filters.Filter;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -143,8 +145,15 @@ public class Trace {
 			lastPoint = currentPoint;
 			currentPoint = traceIte.next();
 			
+			graphics.setStroke(new BasicStroke(4));// For have a bigest trace drawing
+			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);//The line to trace
 			
-			graphics.fillOval((int)lastPoint.x, (int)lastPoint.y, 5, 5);
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.1f));//Draw a transparence line for effect
+			graphics.setStroke(new BasicStroke(12));
+			graphics.drawLine((int)lastPoint.x, (int)lastPoint.y, (int)currentPoint.x, (int)currentPoint.y);
+		
+			graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));//Remove the transparence effect
 		}
-	}
+		graphics.setStroke(new BasicStroke(1));//Remove the stroke effect
+		}
 }

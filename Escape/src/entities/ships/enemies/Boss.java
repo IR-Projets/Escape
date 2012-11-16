@@ -2,14 +2,9 @@ package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
 
-import listeners.CollisionListener.EntityType;
-
-import org.jbox2d.common.Vec2;
-
 import entities.Entities;
 import entities.Entity;
 import game.Ressources;
-import game.Variables;
 
 /**
  * The Boss class is used for specify an enemy as a Boss, which is uses for determine the end of a level, with his death.

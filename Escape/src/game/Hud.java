@@ -52,11 +52,6 @@ public class Hud {
 	private boolean displayItemList;
 
 	/**
-	 * Only for show an empty item if our ItemList is empty
-	 */
-	private final WeaponItem itemEmpty;
-
-	/**
 	 * Player's score
 	 */
 	private int score;
@@ -78,7 +73,6 @@ public class Hud {
 		score = 0;
 		
 		displayItemList = false;
-		itemEmpty = new WeaponItem(WeaponType.Null, 0);
 	}
 
 	public void increaseScore(int score) {
@@ -147,11 +141,8 @@ public class Hud {
 
 		if(displayItemList == true)//Display menu on click, which is represents by this boolean
 			drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
-
-		if(player.getWeapons().isEmpty())//Drawing actual item in the Right Hud 
-			itemEmpty.drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
-		else
-			player.getWeapons().getCurrentWeaponItem().drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
+		
+		player.getWeapons().getCurrentWeaponItem().drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 		//ONLY FOR TEST -> DRAW THE SIZE OF THE EVENT
 		//graphics.drawRect(beginLeftHud, 10, hudRight.getWidth()-20, hudRight.getHeight()-10);
 	}

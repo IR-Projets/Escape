@@ -21,12 +21,13 @@ public class Bonus extends Entity {
 		imageItem =  new BufferedImage(imageTmp.getWidth(), imageTmp.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D graphics = imageItem.createGraphics();
 		
-		graphics.setColor(Variables.BLACK);
-		graphics.fillOval(0, 0, imageItem.getWidth(), imageItem.getHeight());
-		graphics.drawImage(imageTmp, 0, 0, null);
-		
 		graphics.setColor(Variables.WHITE);
 		graphics.drawString(String.valueOf(getQuantity()), 20, 23);//display the amount of the item
+		
+		graphics.drawImage(imageTmp, 0, 0, null);
+		graphics.setColor(Variables.BLACK);
+		graphics.drawOval(0, 0, imageItem.getWidth()-1, imageItem.getHeight()-1);
+		
 		setCollisionGroup(EntityType.Bonus);
 	}
 

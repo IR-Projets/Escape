@@ -37,12 +37,11 @@ public class WeaponItems {
 
 	public WeaponItems() {
 		weaponItems = new LinkedList<>();
-
-		//TODO
-		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 20));
-		weaponItems.add(new WeaponItem(WeaponType.Fireball, 20));
 		weaponItems.add(new WeaponItem(WeaponType.Missile, 20));
+		weaponItems.add(new WeaponItem(WeaponType.Fireball, 20));
 		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 20));
+		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 20));
+
 	}
 
 	/**
@@ -56,11 +55,11 @@ public class WeaponItems {
 	/*public List<WeaponItem> getWeaponItems() {
 		return weaponItems;
 	}*/
-	
+
 	public WeaponItem getCurrentWeaponItem(){
 		return weaponItems.get(0);
 	}
-	
+
 
 	public void addWeaponItem(WeaponType weaponType, int quantity){
 		for(WeaponItem item: weaponItems){
@@ -80,8 +79,11 @@ public class WeaponItems {
 		WeaponItem weaponItem = weaponItems.get(0);
 		if(weaponItem.getQuantity()>0)
 			weaponItem.removeQuantity();
-		else
+		else{
 			weaponItems.remove(0);
+			if (weaponItems.size() == 0)
+				weaponItems.add(new WeaponItem(WeaponType.Missile, 0));
+		}
 		return weaponItem;
 	}
 
@@ -92,7 +94,7 @@ public class WeaponItems {
 	public int size() {
 		return weaponItems.size();
 	}
-	
+
 	public void setIndexInList(int indexOld, int indexNew){
 		weaponItems.add(indexNew, weaponItems.remove(indexOld));
 	}
