@@ -59,8 +59,8 @@ public class EnemiesLoader {
 	 */
 	public void compute(){
 		loop++;
-		if(loop>Variables.LOOP_SKIP){
-			
+		
+		if(loop>Variables.LOOP_SKIP){			
 			loop=0;
 			step++;
 			

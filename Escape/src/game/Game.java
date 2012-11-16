@@ -119,16 +119,15 @@ public class Game implements EnvironnementListener{
 					loops++;
 				}
 			}
-			//float interpolation = (float) (currentTime + Variables.SKIP_TICKS - next_game_tick) / (float)Variables.SKIP_TICKS;
 			environnement.render(bufferGraphics);
 		}
 		
 
+		graphics.drawImage(offscreen, 0, 0, null);
 		if(Variables.DEBUG){
-			drawFPS(bufferGraphics);
+			drawFPS(graphics);
 		}
 
-		graphics.drawImage(offscreen, 0, 0, null);
 	}
 
 

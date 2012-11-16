@@ -28,15 +28,16 @@ import fr.umlv.zen2.MotionEvent.Kind;
 
 public class MainTest extends TestbedTest implements EnvironnementListener{
 
-	private static final String COMPUTE_RATE = "Compute rate";
-	private static final String TIME_STEP = "Time step";
-	private static final String VELOCITY_OP = "Velocity operation";
-	private static final String POSITION_IT = "Position Iteration";
+	private static final String SKIP_TICKS = "Skip ticks";
+	private static final String MAX_FRAMESKIP = "Max frameSkip";
+	private static final String LAG = "Lag";
+	
+	
 	private Environnement env = null;
 	//reflexion pour avoir accès au constructeur protected de MotionEvent
-	Constructor eventConstructor;
+	private Constructor eventConstructor;
 	Level level;
-	
+
 	@Override
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
@@ -44,9 +45,9 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 		level = Level.Moon;
 		env = EnvironnementFactory.factory(getWorld(), level);
 		env.addListener(this);
-		this.setCamera(new Vec2( (Variables.SCREEN_WIDTH/2)/Variables.WORLD_SCALE, (Variables.SCREEN_HEIGHT/2)/Variables.WORLD_SCALE), Variables.WORLD_SCALE*0.5f);	
-		
-		
+		this.setCamera(new Vec2( Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/2), 0.5f);	
+
+
 		try {
 			eventConstructor = MotionEvent.class.getDeclaredConstructor(int.class, int.class, Kind.class);
 			eventConstructor.setAccessible(true);
@@ -56,7 +57,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 			e.printStackTrace();
 		}		
 	}
-	
+
 
 	@Override
 	public void stateChanged(GameState state) {
@@ -83,31 +84,38 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 			break;
 		}		
 	}
-	
-	int count=0;
-	  @Override
-	  public void step(TestbedSettings settings) {
-	    super.step(settings); // make sure we update the engine!
-	    
-	    TestbedSetting computeRate = settings.getSetting(COMPUTE_RATE); // grab our setting
-	    TestbedSetting timeStep = settings.getSetting(TIME_STEP); // grab our setting
-	    TestbedSetting velocityIterations = settings.getSetting(VELOCITY_OP); // grab our setting
-	    TestbedSetting positionIterations = settings.getSetting(POSITION_IT); // grab our setting
-	    
-	    count++;
-	    if(count>computeRate.value){
-	    	count=0;
-		    env.compute(timeStep.value/60.f, velocityIterations.value, positionIterations.value);
-	    }	  
-	    
-	  }
-	 
+
+	long currentTime, next_game_tick=-1;
+	@Override
+	public void step(TestbedSettings settings) {	
+		super.step(settings); // make sure we update the engine!
+		
+		TestbedSetting skipTicks = settings.getSetting(SKIP_TICKS); // grab our setting
+		TestbedSetting maxFrameSkip = settings.getSetting(MAX_FRAMESKIP); // grab our setting
+		TestbedSetting lag = settings.getSetting(LAG); // grab our setting
+
+		if(next_game_tick==-1)
+			next_game_tick = System.currentTimeMillis();
+
+		int loops = 0;
+		long currentTime = System.currentTimeMillis();
+		while(currentTime > next_game_tick && loops < maxFrameSkip.value) {
+			next_game_tick += skipTicks.value;
+			loops++;
+			env.compute();
+		}	
+		//Simule the lag (simulate Environnement.render() time)
+		try {
+			Thread.sleep(lag.value);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void event(int x, int y, Kind kind){		
 		if(x<0 || y<0)
 			return;
-		
-		x = (int) (x * Variables.WORLD_SCALE);
-		y = Variables.SCREEN_HEIGHT - (int)(y * Variables.WORLD_SCALE);
+		y = Variables.SCREEN_HEIGHT - y;
 
 		MotionEvent event = null;
 		try {
@@ -117,8 +125,8 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 		}
 		env.event(event);
 	}
-	
-	  
+
+
 	boolean clicked = false;
 	@Override
 	public void mouseUp(Vec2 p){	
@@ -135,39 +143,38 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 		if(clicked)
 			event((int)p.x, (int)p.y, Kind.ACTION_MOVE);
 	}
-	  
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	@Override
 	public String getTestName() {
 		return "#### TEST #####";
 	}
-	
+
 
 	public static void main(String args[]){
 		final TestbedModel model = new TestbedModel();         	// create our model
 
 		MainTest test = new MainTest();
-		
+
 		// add tests
 		model.addCategory("Tests personnels");             // add a category
 		model.addTest(test);                		   // add our test
 		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
-		
-		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
-		model.getSettings().addSetting(new TestbedSetting(COMPUTE_RATE, SettingType.ENGINE, 1, 1, 50));
-		model.getSettings().addSetting(new TestbedSetting(TIME_STEP, SettingType.ENGINE, 1, 1, 60));
-		model.getSettings().addSetting(new TestbedSetting(VELOCITY_OP, SettingType.ENGINE, 0, 0, 10));
-		model.getSettings().addSetting(new TestbedSetting(POSITION_IT, SettingType.ENGINE, 0, 0, 10));
 
-		
+		// add our custom setting "My Range Setting", with a default value of X, between Y and Z
+		model.getSettings().addSetting(new TestbedSetting(SKIP_TICKS, SettingType.ENGINE, Variables.SKIP_TICKS, 1, 50));
+		model.getSettings().addSetting(new TestbedSetting(MAX_FRAMESKIP, SettingType.ENGINE, Variables.MAX_FRAMESKIP, 1, 60));
+		model.getSettings().addSetting(new TestbedSetting(LAG , SettingType.ENGINE, Variables.TEST_LAG, 0, 100));
+
+
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
 
 		JFrame testbed = new TestbedFrame(model, panel); // put both into our testbed frame
-		
+
 		// etc
 		testbed.setVisible(true);
 		testbed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

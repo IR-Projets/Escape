@@ -120,19 +120,13 @@ public class Environnement implements EntitiesListener {
 	/**
 	 * Methode compute appellée par TestBed: step()
 	 */
-	public void compute(float timeStep, int velocityIteration, int positionIteration) {
+	public void compute() {
 		gesture.compute();
 		entities.compute();
-		entities.step(timeStep, velocityIteration, positionIteration);
+		entities.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);
 		enemiesLoader.compute();
 		map.compute();
 		Effects.compute();
-	}
-	/**
-	 * Methode compute appellée par Game: run()
-	 */
-	public void compute() {		
-		compute(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);		
 	}
 
 }

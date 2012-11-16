@@ -81,7 +81,7 @@ public abstract class Entity implements CollisionListener{
 		/*Vec2 f = getBody().getWorldVector(new Vec2(300.0f, 300.0f));
 		Vec2 p = getBody().getWorldCenter();
 		getBody().applyForce(f, p);*/
-		body.setLinearVelocity(new Vec2(toWorldSize(speedX)*Variables.WORLD_SCALE, toWorldSize(speedY)*Variables.WORLD_SCALE));
+		body.setLinearVelocity(new Vec2(speedX, speedY));
 	}
 	
 	public void setDamping(float linearDamping){
@@ -89,13 +89,17 @@ public abstract class Entity implements CollisionListener{
 	}
 	
 	public Vec2 getScreenPostion(){
-		return new Vec2(toScreenSize(body.getPosition().x) - getImage().getWidth()/2, 
-				Variables.SCREEN_HEIGHT - (toScreenSize(body.getPosition().y) + getImage().getHeight()/2));
+		return new Vec2(body.getPosition().x - getImage().getWidth()/2, 
+				Variables.SCREEN_HEIGHT - (body.getPosition().y + getImage().getHeight()/2));
 	}
 
 	public Vec2 getPositionNormalized(){
-		return new Vec2(toScreenSize(body.getPosition().x) - getImage().getWidth()/2, 
-				toScreenSize(body.getPosition().y) + getImage().getHeight()/2);
+		return new Vec2(body.getPosition().x - getImage().getWidth()/2, 
+				body.getPosition().y + getImage().getHeight()/2);
+	}
+	
+	public Vec2 getWorldPosition(){
+		return body.getPosition();
 	}
 
 	public boolean isOnSprite(Vec2 point){
@@ -110,18 +114,6 @@ public abstract class Entity implements CollisionListener{
 	
 	public void setSensor(boolean isSensor){
 		body.getFixtureList().setSensor(isSensor);
-	}
-	
-	
-	/*
-	 * Methodes utiles statiques
-	 */
-	public static int toScreenSize(float val){
-		return (int) (val * Variables.WORLD_SCALE);
-	}
-
-	public static float toWorldSize(float val){
-		return val / Variables.WORLD_SCALE;
 	}
 	
 	
@@ -146,23 +138,23 @@ public abstract class Entity implements CollisionListener{
 		}
 	}
 	
-	public static Body getSquareBody(Entities entities, int posX, int posY, int width, int height){		
+	private static Body getSquareBody(Entities entities, int posX, int posY, int width, int height){		
 		PolygonShape box = new PolygonShape();		
-		box.setAsBox(Entity.toWorldSize(width/2), Entity.toWorldSize(height/2));
+		box.setAsBox(width/2, height/2);
 		return getBody(entities, box, posX, posY);
 	}
 	
 	
-	public static Body getCircleBody(Entities entities, int posX, int posY, int width, int height){		
+	private static Body getCircleBody(Entities entities, int posX, int posY, int width, int height){		
 		CircleShape circle = new CircleShape();
-		circle.m_radius = Entity.toWorldSize(Math.min(width, height)/2);
+		circle.m_radius = Math.min(width, height)/2;
 		return getBody(entities, circle, posX, posY);
 	}
 	
 	
-	public static Body getPolygonBody(Entities entities, int posX, int posY, int width, int height){	
-		int w = (int) Entity.toWorldSize(width)/2;
-		int h = (int) Entity.toWorldSize(height)/2;
+	private static Body getPolygonBody(Entities entities, int posX, int posY, int width, int height){	
+		int w = (int) width/2;
+		int h = (int) height/2;
 		
 		Vec2[] vertices = new Vec2[]
 		{
@@ -185,7 +177,7 @@ public abstract class Entity implements CollisionListener{
 		bodyDef.linearDamping=0.0f;
 		bodyDef.angularDamping=0.5f;
 		bodyDef.allowSleep = false;
-		bodyDef.position.set(Entity.toWorldSize(posX), Entity.toWorldSize(posY));
+		bodyDef.position.set(posX, posY);
 		Body body = entities.getWorld().createBody(bodyDef);
 		
 		FixtureDef fixtureDef = new FixtureDef();

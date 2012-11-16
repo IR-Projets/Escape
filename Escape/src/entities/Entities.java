@@ -148,9 +148,9 @@ public class Entities {
 		BodyDef bd = new BodyDef();
 		Body ground = world.createBody(bd);		
 
-		float worldWidth = Variables.SCREEN_WIDTH/Variables.WORLD_SCALE;
-		float worldHeight = Variables.SCREEN_HEIGHT/Variables.WORLD_SCALE;
-		float bordure = Variables.WORLD_BORDER/Variables.WORLD_SCALE;
+		float worldWidth = Variables.SCREEN_WIDTH;
+		float worldHeight = Variables.SCREEN_HEIGHT;
+		float bordure = Variables.WORLD_BORDER;
 		
 		PolygonShape shape = new PolygonShape();
 		//0,0->width,0

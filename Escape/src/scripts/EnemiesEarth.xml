@@ -75,29 +75,30 @@
 
 		<appear time="15">
 			<posX>190</posX>
-			<posY>1100</posY>
+			<posY>950</posY>
 		</appear>
 
 		<actions repeattime="8">
 			<move beg="1" end="2">
-				<angle>0</angle>
-				<velocity>20</velocity>
+				<angle>-90</angle>
+				<velocity>50</velocity>
 			</move>
-
+			
 			<move beg="3" end="4">
+				<angle>0</angle>
+				<velocity>50</velocity>
+			</move>
+			
+			<move beg="7" end="8">
 				<angle>90</angle>
-				<velocity>20</velocity>
+				<velocity>50</velocity>
 			</move>
 			
 			<move beg="5" end="6">
 				<angle>180</angle>
-				<velocity>20</velocity>
+				<velocity>50</velocity>
 			</move>
 			
-			<move beg="7" end="8">
-				<angle>-90</angle>
-				<velocity>20</velocity>
-			</move>
 
 			<fire beg="2" end="4">
 				<name>ShiboleetExtended</name>

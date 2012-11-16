@@ -55,7 +55,6 @@ public class EnemyBehavior {
 		loop++;
 
 		if(loop>Variables.LOOP_SKIP){
-
 			loop=0;
 			step=(step+1)%repeatTime;
 

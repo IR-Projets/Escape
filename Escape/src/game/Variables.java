@@ -57,7 +57,6 @@ public class Variables {
 	/*
 	 * World variables
 	 */
-	public final static float WORLD_SCALE = 1;
 	public static final float WORLD_GRAVITY_X = 0;
 	public static final float WORLD_GRAVITY_Y = 0;
 
@@ -67,6 +66,11 @@ public class Variables {
 
 	public static final float WORLD_BORDER = 50;
 
+	
+	/*
+	 * Test
+	 */
+	public static final int TEST_LAG = 35;
 	
 	
 	

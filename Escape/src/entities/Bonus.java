@@ -14,7 +14,7 @@ public class Bonus extends Entity {
 	
 	
 	public Bonus(Entities entities, WeaponItem weaponItem, int posX, int posY) {
-		super(entities, getSquareBody(entities, posX, posY, weaponItem.getImage().getWidth(), weaponItem.getImage().getHeight()));
+		super(entities, EntityShape.Square.get(entities, posX, posY, weaponItem.getImage().getWidth(), weaponItem.getImage().getHeight()));
 		this.weaponItem = weaponItem;
 		
 		BufferedImage imageTmp = weaponItem.getImage();

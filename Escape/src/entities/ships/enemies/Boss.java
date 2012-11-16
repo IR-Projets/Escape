@@ -2,7 +2,13 @@ package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
 
+import listeners.CollisionListener.EntityType;
+
+import org.jbox2d.common.Vec2;
+
 import entities.Entities;
+import entities.Entity;
+import game.Variables;
 
 /**
  * The Boss class is used for specify an enemy as a Boss, which is uses for determine the end of a level, with his death.
@@ -41,7 +47,7 @@ public class Boss extends Enemy{
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, EntityShape.Square, image, x, y, life, behavior);
 		setCollisionGroup(EntityType.Boss);
-		setVelocity(0, -200);//Arrivee brutale du boss....
+		setVelocity(0, -1000);//Arrivee brutale du boss....
 	}
 	
 	/**
@@ -50,6 +56,31 @@ public class Boss extends Enemy{
 	@Override
 	public EntityType getEntityType() {
 		return EntityType.Boss;
+	}
+	
+	
+	@Override
+	public void collision(Entity entity, EntityType type) {
+		switch (type) {
+		case WeaponEnnemy:
+		case WeaponPlayer:
+		case Joueur:
+			break;
+		case WorldLimit:
+			int catBoss = getBody().getFixtureList().getFilterData().categoryBits;
+			int maskBoss = getBody().getFixtureList().getFilterData().maskBits;
+			
+			int catOther = getEntities().getWorldLimit().getFixtureList().getFilterData().categoryBits;
+			int maskOther = getEntities().getWorldLimit().getFixtureList().getFilterData().maskBits;
+			
+			System.out.println("Collision");
+			System.out.println("Boss: cat:" +catBoss+ " mask: "+maskBoss );
+			System.out.println("other: cat:" +catOther+ " mask: "+maskOther );
+			
+			break;
+		default:
+			break;
+		}
 	}
 
 }

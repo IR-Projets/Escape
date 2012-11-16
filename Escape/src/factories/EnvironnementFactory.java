@@ -70,8 +70,8 @@ public class EnvironnementFactory {
 		}
 		else{
 			world.setGravity(new Vec2(Variables.WORLD_GRAVITY_X, Variables.WORLD_GRAVITY_Y));
-			world.setAllowSleep(DO_SLEEP);
 		}		
+		world.setAllowSleep(DO_SLEEP);
 
 		switch(level){
 		case Earth:
