@@ -18,7 +18,8 @@ import java.util.List;
 
 import org.jbox2d.common.Vec2;
 /**
- * The Gesture is the class which manage the Gesture effect, for move the player or launch a weapon.
+ * The Gesture is the class which manage the Gesture effect, associated with the player.
+ * He manage the control of all gesture launch by the player, and launch the correction action (move or shoot).
  * @author Quentin Bernard et Ludovic Feltz
  */
 
@@ -42,44 +43,36 @@ import org.jbox2d.common.Vec2;
 public class Gesture {
 
 	/**
-	 * Our TraceStack, which reprents all Trace created by the player during the game
+	 * Our TraceStack, which represents all Trace created by the player during the game.
 	 */
 	private final TraceStack traceStack;
+	
 	/**
-	 * Represents all filters uses for knows if a trace is correctly set
+	 * Represents all filters uses for knows if a trace is correctly set.
 	 */
 	private final List<Filter> filters;
 	
-	private final Environnement environnement;
-
 	/**
-	 * An enum for represents the kind of gesture the player wants : He wants to move, or to shoot
+	 * An enum for represents the kind of gesture the player wants : He wants to move, or to shoot.
 	 */
 	private enum Action{ MOVE, SHOOT };
 	private Action action;
 
-
+	private final Environnement environnement;
 	/**
-	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...)
+	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...).
 	 * @param env
 	 */
 	public Gesture(Environnement environnement){
-		this.environnement=environnement;
+		this.environnement = environnement;
 		traceStack = new TraceStack();
 		filters = initFilters();
 	}
 
-	//TODO !!
-	public void compute() {
-		/*
-		 * LF:
-		 * C'est la qu'on fait tout les calculs! 
-		 * render se charge uniquement de l'affichage!!!		
-		 */		
-	}
-	/*
-	 * Pourait être implémenté dans une factory...
-	 * Il faut trouver un moyen d'initialier la liste
+
+	/**
+	 * Initialize all filters, which implements Filter Interface.
+	 * @return the list of filter initialize with all filters.
 	 */
 	public List <Filter> initFilters(){
 		List<Filter> filtersList = new ArrayList<>();
@@ -92,8 +85,8 @@ public class Gesture {
 
 
 	/**
-	 * Display the Gesture, which is a trace of the movement printing by the mouse
-	 * @param Graphics2D graphics
+	 * Display the Gesture, which is a trace of the movement printing by the mouse.
+	 * @param Graphics2D graphics.
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){
@@ -121,17 +114,9 @@ public class Gesture {
 		traceStack.getCurrentTrace().setValid(true);
 	}
 
-
-	
-	/*public Weapon createSelectedWeapon(Entities entities, int x, int y, boolean damagedPlayer){
-		WeaponFactory factory = new WeaponFactory(entities);
-		return factory.createWeapon(env.getHud().getItemList().removeCurrentItem().getWeaponType(), x, y, damagedPlayer);
-	}*/
-	
-
 	/**
-	 * The event launched by the mouse, which is described by zen2 Libraries
-	 * @param MotionEvent event : the event of the mouse
+	 * The event launched by the mouse, which is described by zen2 Libraries.
+	 * @param MotionEvent event : the event of the mouse.
 	 * @see Kind
 	 */
 	public void event(MotionEvent event){

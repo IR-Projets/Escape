@@ -85,6 +85,8 @@ public class Environnement implements EntitiesListener {
 			System.out.println("Joueur killed");
 			gameState = GameState.Loose;
 			break;
+		case Enemy : 
+			hud.increaseScore(50);
 		default:
 			break;
 		}
@@ -121,7 +123,6 @@ public class Environnement implements EntitiesListener {
 	 * Methode compute appellee par TestBed: step()
 	 */
 	public void compute() {
-		gesture.compute();
 		entities.compute();
 		entities.step(Variables.WORLD_TIME_STEP, Variables.WORLD_VELOCITY_ITERATION, Variables.WORLD_POSITION_ITERATION);
 		enemiesLoader.compute();

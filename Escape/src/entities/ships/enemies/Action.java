@@ -27,7 +27,7 @@ package entities.ships.enemies;
 
 public class Action {
 	/**
-	 * Enum type, for knows what kind of actions we have : Shoot or Move
+	 * Enum type, for knows what kind of actions we have : Shoot or Move.
 	 *
 	 */
 	public enum ActionType{

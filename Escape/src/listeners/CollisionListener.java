@@ -19,4 +19,5 @@ public interface CollisionListener {
 	public EntityType getEntityType();
 	public int getDamage();
 	public void collision(Entity entity, EntityType type);
+	
 }

@@ -81,8 +81,10 @@ public class Hud {
 		itemEmpty = new WeaponItem(WeaponType.Null, 0);
 	}
 
-
-
+	public void increaseScore(int score) {
+		this.score += score;
+	}
+	
 	/**
 	 * Draw the life of the player
 	 * @param graphics the graphics2D to print on
@@ -101,6 +103,9 @@ public class Hud {
 		graphics.drawString("SCORE", hudLeft.getWidth()/3,2*hudLeft.getHeight()/4);
 		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2+20, 2*hudLeft.getHeight()/4);
 	}
+
+
+
 
 	/**
 	 * display the item list of this object on the graphics
