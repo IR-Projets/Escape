@@ -118,7 +118,7 @@ public class Environnement implements EntitiesListener {
 
 	
 	/**
-	 * Methode compute appellée par TestBed: step()
+	 * Methode compute appellee par TestBed: step()
 	 */
 	public void compute() {
 		gesture.compute();

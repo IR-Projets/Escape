@@ -34,7 +34,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 	
 	
 	private Environnement env = null;
-	//reflexion pour avoir accès au constructeur protected de MotionEvent
+	//reflexion pour avoir acces au constructeur protected de MotionEvent
 	private Constructor eventConstructor;
 	Level level;
 
@@ -67,7 +67,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 			System.exit(0);
 			break;
 		case Win:
-			System.out.println("Gagné !!");
+			System.out.println("Gagne !!");
 			//le niveau que l'on vient de gagner
 			switch(level){
 			case Jupiter:
@@ -77,7 +77,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 				env = EnvironnementFactory.factory(Level.Earth);
 				break;
 			case Earth:
-				System.out.println("Jeu fini!! pas encore implémenté");
+				System.out.println("Jeu fini!! pas encore implemente");
 				break;
 			}			
 			env.addListener(this);
@@ -163,7 +163,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 		// add tests
 		model.addCategory("Tests personnels");             // add a category
 		model.addTest(test);                		   // add our test
-		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test décommenter)
+		TestList.populateModel(model);                   // populate the provided testbed tests (Si on veut tout les test decommenter)
 
 		// add our custom setting "My Range Setting", with a default value of X, between Y and Z
 		model.getSettings().addSetting(new TestbedSetting(SKIP_TICKS, SettingType.ENGINE, Variables.SKIP_TICKS, 1, 50));

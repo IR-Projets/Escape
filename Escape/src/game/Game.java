@@ -47,7 +47,7 @@ public class Game implements EnvironnementListener{
 	private Story2 story;
 	private Level level;
 	/*
-	 * TODO: C'est ici que va ï¿½tre gï¿½rer tout les evenements du jeux (mort, gagnï¿½, ...)
+	 * TODO: C'est ici que va etre gerer tout les evenements du jeux (mort, gagner, ...)
 	 */
 
 	public Game() throws IOException{		
@@ -82,7 +82,7 @@ public class Game implements EnvironnementListener{
 				level = Level.Earth;
 				break;
 			case Earth:
-				System.out.println("Jeu fini!! pas encore implémenté");
+				System.out.println("Jeu fini!! pas encore implemente");
 				break;
 			}	
 			environnement.removeListener(this);
@@ -134,11 +134,11 @@ public class Game implements EnvironnementListener{
 
 	public void drawFPS(Graphics2D graphics){
 		ite++;
-		if(ite>fps_refreshRate){	//1er image: On récupère le temps
+		if(ite>fps_refreshRate){	//1er image: On recupere le temps
 			ite=0;
 			time = System.nanoTime();
 		}
-		else if(ite==1){			//2e image: On calcul le temps écoulé depuis la 1er image
+		else if(ite==1){			//2e image: On calcul le temps ecoule depuis la 1er image
 			double now = System.nanoTime();
 			fps = 1000000000 / (now-time);
 			time = now;

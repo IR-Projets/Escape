@@ -103,13 +103,13 @@ public class Story {
 			bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 			bufferGraphics.setColor(Variables.WHITE);
 			if(totalClock<250){
-				SirudSpeak(bufferGraphics, "Ou est tu encore passé?\n");
+				SirudSpeak(bufferGraphics, "Ou est tu encore passe?\n");
 			}
 			else if(totalClock<500){
-				SirudSpeak(bufferGraphics, "Ta mission suicide sur la planète\nalien c'est bien passée?");
+				SirudSpeak(bufferGraphics, "Ta mission suicide sur la planete\nalien c'est bien passee?");
 			}
 			else if(totalClock<800){
-				XaroffSpeak(bufferGraphics, "HaHaHA je l'ai capturé!");
+				XaroffSpeak(bufferGraphics, "HaHaHA je l'ai capture!");
 				drawSirud(bufferGraphics, false);
 			}
 			else if(totalClock<1100){
@@ -121,10 +121,10 @@ public class Story {
 				drawSirud(bufferGraphics, false);
 			}
 			else if(totalClock<2000){
-				SirudSpeak(bufferGraphics, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
+				SirudSpeak(bufferGraphics, "J'ai bien peur que tu doive te debrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
 			}
 			else if(totalClock<3300){
-				drawText(bufferGraphics, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, 50);
+				drawText(bufferGraphics, "Les personnages et les situations de ce recit etant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existe sont tout sauf fortuite.", 10, 50);
 			}
 			else{
 				finished=true;

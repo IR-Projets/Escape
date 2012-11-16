@@ -11,7 +11,7 @@ import java.util.List;
 public class Story2 {
 
 	/*
-	 * Crée un couple temps/render
+	 * Cree un couple temps/render
 	 * Sert a l'affichage d'un narrateur
 	 */
 	public abstract class Couple{
@@ -66,21 +66,21 @@ public class Story2 {
 		sequence.add(new Couple(1){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Ou est tu encore passé?\n");
+				sirud.speak(g, "Ou est tu encore passe?\n");
 				xaroff.draw(g);				
 			}			
 		});
 		sequence.add(new Couple(1){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Ta mission suicide sur la planète\nalien c'est bien passée?");
+				sirud.speak(g, "Ta mission suicide sur la planete\nalien c'est bien passee?");
 				xaroff.draw(g);				
 			}			
 		});
 		sequence.add(new Couple(1){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "HaHaHA je l'ai capturé!\n");
+				xaroff.speak(g, "HaHaHA je l'ai capture!\n");
 				sirud.draw(g);				
 			}			
 		});
@@ -101,7 +101,7 @@ public class Story2 {
 		sequence.add(new Couple(2){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
+				sirud.speak(g, "J'ai bien peur que tu doive te debrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
 				//xaroff.draw(g);				
 			}			
 		});
@@ -109,7 +109,7 @@ public class Story2 {
 			float posY=0;
 			@Override
 			public void render(Graphics2D g) {
-				drawText(g, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, posY+=0.1f);			
+				drawText(g, "Les personnages et les situations de ce recit etant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existe sont tout sauf fortuite.", 10, posY+=0.1f);			
 			}			
 		});
 	}

@@ -1,37 +1,66 @@
 <?xml version="1.0"?>
 
+<!-- Made by BERNARD Quentin & FELTZ Ludovic -->
+
 <project name="Escape IR" default="compile" basedir=".">
 	
-<taskdef resource="net/sf/antcontrib/antlib.xml"/>
-
+	<!-- Our definition of our constant directory -->
 	<property name="src" value="./src" />
 	<property name="class" value="./classes" />
 	<property name="lib" value="./lib" />
 	<property name="doc" value="docs" />
 	<property name="javadoc" value="${doc}/doc" />
+	<property name="jar" value="robot-master-mind.jar" />
 	
+	<!-- Our library classpath -->
+	<path id="lib.classpath">
+		<fileset dir="${lib}" includes="*.jar" />
+	</path>
+	
+	<!-- Target compile, which compil all project -->
 	<target name="compile" >
-		<javac srcdir="${src}" destdir="${class}" includeantruntime="true" debug="true" debuglevel="lines"/>
+		<javac srcdir="${src}" destdir="${class}" classpathref="lib.classpath" includeantruntime="true" debug="true" debuglevel="lines"/>
+		<echo message="Escape IR has correctly been compiled" />
 	</target>
 
+	<!-- Target jar, which make the jar -->
 	<target name="jar" depends="compile">
-		<jar destfile="hello.jar" basedir="." includes="**/*.class" >
+		
+		<!-- We keep our classpath of library into the jar -->
+		<manifestclasspath property="jar.classpath" jarfile="hello.jar">
+			<classpath refid="lib.classpath"/>
+		</manifestclasspath>
+		
+		<!-- We copy images & XML files -->
+		<jar destfile="${jar}" basedir="${class}">
+			<fileset dir="${src}">
+				<include name="images**/**/*.png" />
+				<include name="scripts**/*.xml" />
+			</fileset>
+			
+			<!--  Manifest of the jar -->
 			<manifest>
 				<attribute name="Main-Class" value="game.MainGame" />
+				<attribute name="Class-Path" value="${jar.classpath}" />
 			</manifest>
 		</jar>
+		<echo message="${jar} has correctly been created" />
 	</target>
 	
+	<!-- Target javadoc, for generate the javadoc -->
 	<target name="javadoc">
 		<javadoc sourcepath="${src}" destdir="${javadoc}"/>
 		<echo message="Javadoc has correctly been generated" />
 	</target>
 	
+	<!-- Target clean, which delete the javadoc and all class -->
 	<target name="clean">
-		<delete>
-			<fileset dir="${class}" includes="**/*.class"/>
+		<delete includeemptydirs="true">
+			<fileset dir="${class}" includes="**/*" defaultexcludes="false"/>
+			<fileset dir="${javadoc}" includes="**/*" defaultexcludes="false"/>
 		</delete>
 		<echo message="Files .class has correctly been deleted" />
+		<echo message="Javadoc has correctly been deleted" />
 	</target>
 	
 </project>
