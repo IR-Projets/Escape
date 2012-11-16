@@ -5,21 +5,6 @@
 		<life>50</life>
 		<image>ships/ship.png</image>
 
-		<appear time="1">
-			<posX>150</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="1">
-			<posX>250</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="1">
-			<posX>450</posX>
-			<posY>700</posY>
-		</appear>
-
 		<appear time="5">
 			<posX>150</posX>
 			<posY>700</posY>
@@ -35,7 +20,22 @@
 			<posY>700</posY>
 		</appear>
 
-		<actions repeattime="4">
+		<appear time="10">
+			<posX>150</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="10">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="10">
+			<posX>450</posX>
+			<posY>700</posY>
+		</appear>
+
+		<actions repeattime="6">
 			<move beg="1" end="2">
 				<angle>270</angle>
 				<velocity>100</velocity>
@@ -74,31 +74,32 @@
 		<image>ships/boss.png</image>
 
 		<appear time="15">
-			<posX>100</posX>
-			<posY>700</posY>
+			<posX>190</posX>
+			<posY>1100</posY>
 		</appear>
 
 		<actions repeattime="8">
 			<move beg="1" end="2">
-				<angle>180</angle>
-				<velocity>55</velocity>
+				<angle>0</angle>
+				<velocity>20</velocity>
 			</move>
 
 			<move beg="3" end="4">
-				<angle>0</angle>
-				<velocity>50</velocity>
-			</move>
-			
-			<move beg="5" end="6">
 				<angle>90</angle>
 				<velocity>20</velocity>
 			</move>
+			
+			<move beg="5" end="6">
+				<angle>180</angle>
+				<velocity>20</velocity>
+			</move>
+			
 			<move beg="7" end="8">
 				<angle>-90</angle>
 				<velocity>20</velocity>
 			</move>
 
-			<fire beg="1" end="2">
+			<fire beg="2" end="4">
 				<name>ShiboleetExtended</name>
 				<angle>270</angle>
 				<velocity>250</velocity>

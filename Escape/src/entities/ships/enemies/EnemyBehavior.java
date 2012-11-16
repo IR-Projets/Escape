@@ -66,9 +66,7 @@ public class EnemyBehavior {
 						enemy.loadWeapon(WeaponType.convert(action.getName()), false);
 						enemy.shootWeapon(action.getAngle(), action.getVelocity());
 						break;
-
 					case MOVE:
-						System.out.println(action.getAngle() + " " + action.getVelocity());
 						enemy.move(action.getAngle(), action.getVelocity());
 						break;
 					}
