@@ -85,7 +85,7 @@ public class Enemy extends Ship{
 	 */
 	private void dropItem(int proba){
 		if(rand.nextInt() % proba == 0){
-			int quantity = rand.nextInt(4)+1;
+			int quantity = rand.nextInt(6)+1;//Random quantity, between 1 and 6
 			switch(rand.nextInt()%4){
 			case 0:
 				bonusToDrop = new WeaponItem(WeaponType.Fireball, quantity);

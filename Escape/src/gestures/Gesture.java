@@ -141,7 +141,8 @@ public class Gesture {
 			break;
 
 		case ACTION_MOVE :
-			traceStack.getCurrentTrace().addPoint(new Vec2(event.getX(), event.getY()));
+			if(traceStack.size() <= 3)//limit the number max of gesture display by 3
+				traceStack.getCurrentTrace().addPoint(new Vec2(event.getX(), event.getY()));
 			break;
 
 		default:

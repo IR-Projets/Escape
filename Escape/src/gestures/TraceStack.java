@@ -108,6 +108,17 @@ public class TraceStack {
 		oldTraces.add(currentTrace);
 		currentTrace = new Trace();
 	}
+
+	/**
+	 * Return the size of the number of trace in process, including the current Trace.
+	 * @return the size of the number of trace in process
+	 */
+	public int size() {
+		if(!currentTrace.isEmpty())
+			return oldTraces.size() + 1 ;
+		else
+			return 0;//No currentTrace, so no OldTrace
+	}
 	
 	
 }
