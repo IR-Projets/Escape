@@ -6,11 +6,13 @@ import org.jbox2d.common.Vec2;
 
 import effects.Effects;
 import effects.Explosion;
-import entities.Bonus;
 import entities.CollisionGroup;
 import entities.Entities;
 import entities.Entity;
+import entities.weapons.Bonus;
+import entities.weapons.WeaponItem;
 import entities.weapons.WeaponItems;
+import factories.WeaponFactory.WeaponType;
 import game.Ressources;
 import game.Variables;
 
@@ -131,7 +133,12 @@ public class Player extends Ship {
 	public Player(Entities entities){
 		super(entities, EntityShape.Polygon, Ressources.getImage("ships/playerShip/Joueur.png"), Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/7, Variables.SHIP_LIFE);
 		weaponItems = new WeaponItems();
-
+		
+		weaponItems.add(new WeaponItem(WeaponType.Missile, 10));
+		weaponItems.add(new WeaponItem(WeaponType.Fireball, 25));
+		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 25));
+		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 30));
+		
 		invincible = true;
 		touched = false;
 		looping = false;

@@ -5,10 +5,10 @@ import java.util.Random;
 
 import org.jbox2d.common.Vec2;
 
-import entities.Bonus;
 import entities.Entities;
 import entities.Entity;
 import entities.ships.Ship;
+import entities.weapons.Bonus;
 import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import game.Variables;

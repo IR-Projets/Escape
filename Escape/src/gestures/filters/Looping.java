@@ -149,6 +149,8 @@ public class Looping implements Filter {
 		case RIGHT:
 			ship.setLooping(Player.Direction.RIGHT);
 			break;
+		default:
+			break;
 
 		}
 	}

@@ -42,10 +42,6 @@ public class WeaponItems {
 	 */
 	public WeaponItems() {
 		weaponItems = new LinkedList<>();
-		weaponItems.add(new WeaponItem(WeaponType.Missile, 10));
-		weaponItems.add(new WeaponItem(WeaponType.Fireball, 25));
-		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 25));
-		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 30));
 	}
 	
 	/**
@@ -93,7 +89,7 @@ public class WeaponItems {
 				return;
 			}
 		}
-		weaponItems.add(new WeaponItem(weaponType, quantity));
+		add(new WeaponItem(weaponType, quantity));
 	}
 
 	/**
@@ -120,5 +116,13 @@ public class WeaponItems {
 	 */
 	public void setIndexInList(int indexOld, int indexNew){
 		weaponItems.add(indexNew, weaponItems.remove(indexOld));
+	}
+
+	/**
+	 * Add a weaponItem to the list of weapons.
+	 * @param weaponItem - the weaponItem to add
+	 */
+	public void add(WeaponItem weaponItem) {
+		weaponItems.add(weaponItem);
 	}
 }
