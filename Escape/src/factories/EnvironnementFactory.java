@@ -96,7 +96,7 @@ public class EnvironnementFactory {
 	 */
 	private static Environnement Jupiter(World world){
 		Entities entities = new Entities(world);
-		EnemiesLoader ennemyloader = new EnemiesLoader(entities, "scripts/EnemiesEarth.xml");//xml of ennemies of the jupiter
+		EnemiesLoader ennemyloader = new EnemiesLoader(entities, "scripts/EnemiesJupiter.xml");//xml of ennemies of the jupiter
 
 		ShipFactory factory = new ShipFactory(entities);
 		Player playerShip = factory.createPlayer();
