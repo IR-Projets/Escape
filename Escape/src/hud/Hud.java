@@ -36,6 +36,9 @@ import game.Variables;
  */
 public class Hud {
 
+	/**
+	 * A hud is a singleton, we can only instance once
+	 */
 	private static Hud instance=null;
 	public static Hud get() {
 		if(instance==null){
@@ -86,6 +89,10 @@ public class Hud {
 		displayItemList = false;
 	}
 
+	/**
+	 * Set the current player of the hud
+	 * @param player - the current player to set
+	 */
 	public void setPlayer(Player player){
 		this.player=player;
 	}
