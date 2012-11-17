@@ -3,7 +3,7 @@
 <enemies>
 	
 	<enemy id="enemy1">
-		<life>50</life>
+		<life>15</life>
 		<image>ships/enemy1.png</image>
 
 		<appear time="35">
@@ -27,26 +27,6 @@
 		</appear>
 
 		<appear time="5">
-			<posX>400</posX>
-			<posY>700</posY>
-		</appear>
-		
-		<appear time="55">
-			<posX>100</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="55">
-			<posX>200</posX>
-			<posY>700</posY>
-		</appear>
-		
-		<appear time="55">
-			<posX>300</posX>
-			<posY>700</posY>
-		</appear>
-
-		<appear time="55">
 			<posX>400</posX>
 			<posY>700</posY>
 		</appear>
@@ -88,7 +68,7 @@
 	</enemy>
 	
 	<enemy id="enemy2">
-		<life>100</life>
+		<life>25</life>
 		<image>ships/enemy2.png</image>
 
 		<appear time="15">
@@ -163,10 +143,10 @@
 	</enemy>
 
 	<boss>
-		<life>400</life>
+		<life>300</life>
 		<image>ships/boss1/boss.png</image>
 
-		<appear time="65">
+		<appear time="50">
 			<posX>150</posX>
 			<posY>950</posY>
 		</appear>

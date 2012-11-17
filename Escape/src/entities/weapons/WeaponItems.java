@@ -70,7 +70,7 @@ public class WeaponItems {
 
 	/**
 	 * Return the size of the list of WeaponItems.
-	 * @return
+	 * @return the size of the list of WeaponItems
 	 */
 	public int size() {
 		return weaponItems.size();

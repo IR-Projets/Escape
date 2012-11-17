@@ -83,8 +83,15 @@ public class Environnement implements EntitiesListener {
 
 
 	/**
-	 * Create the environment with the associated world .
+	 * 
 	 * @param world Jbox2d world
+	 */
+	/**
+	 * Create the environment with the associated world .
+	 * @param entities - our world
+	 * @param map - the map associated
+	 * @param player - player associated
+	 * @param enemiesLoader - enemies loader associated
 	 */
 	public Environnement(Entities entities, Map map, Player player, EnemiesLoader enemiesLoader){
 		this.gameListener = new LinkedList<>();
@@ -131,7 +138,7 @@ public class Environnement implements EntitiesListener {
 	
 	/**
 	 * Entities Listener: detect the death of each Entity
-	 * @see entities.EntitiesListener#entityRemoved(entities.Entity.EntityType)
+	 * @see EntityType
 	 */
 	@Override
 	public void entityRemoved(EntityType type) {

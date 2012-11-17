@@ -170,9 +170,7 @@ public class Hud {
 	/**
 	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
 	 * @see Hud 
-	 * @param event The even to check
-	 * @param hudRightWidth the Width of the Right Hud
-	 * @param hudRightHeight the Height of the Right Hud
+	 * @param event - The even to check
 	 * @return true if the event is associated with a selection of a weapon, else false.
 	 */
 	public boolean eventItemList(MotionEvent event){

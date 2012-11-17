@@ -41,7 +41,7 @@ public class WeaponFactory extends EntityFactory{
 	/**
 	 * Default constructor.
 	 * Initialize our factory with the world entities.
-	 * @param entity - class which represents our world
+	 * @param entities - class which represents our world
 	 */
 	public WeaponFactory(Entities entities) {
 		super(entities);
@@ -106,7 +106,7 @@ public class WeaponFactory extends EntityFactory{
 	
 	/**
 	 * Create a Weapon into our world. 
-	 * @param type - the WeaponType ti create
+	 * @param type - the WeaponType type create
 	 * @param x - the coordinate associated with x position
 	 * @param y - the coordinate associated with y position
 	 * @param firedbyPlayer - If the weapon is fired by player
@@ -129,7 +129,7 @@ public class WeaponFactory extends EntityFactory{
 			weapon = new Shiboleet(getEntities(), x, y, firedbyPlayer);
 			break;
 		case ShiboleetExtended:
-			weapon = new ShiboleetExtended(getEntities(), x, y, firedbyPlayer,5);
+			weapon = new ShiboleetExtended(getEntities(), x, y, firedbyPlayer,4);
 			break;
 		default:
 			break;

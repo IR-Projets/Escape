@@ -3,7 +3,7 @@
 <enemies>
 
 	<enemy id="ship">
-		<life>10</life>
+		<life>25</life>
 		<image>ships/ship_big.png</image>
 
 		<appear time="5">
@@ -20,7 +20,46 @@
 			<posX>450</posX>
 			<posY>700</posY>
 		</appear>
+		
+		<appear time="55">
+			<posX>100</posX>
+			<posY>700</posY>
+		</appear>
 
+		<appear time="55">
+			<posX>200</posX>
+			<posY>700</posY>
+		</appear>
+		
+		<appear time="55">
+			<posX>300</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="55">
+			<posX>400</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="15">
+			<posX>100</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="15">
+			<posX>200</posX>
+			<posY>700</posY>
+		</appear>
+		
+		<appear time="35">
+			<posX>300</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="35">
+			<posX>400</posX>
+			<posY>700</posY>
+		</appear>
 		<actions repeattime="6">
 			<move beg="1" end="2">
 				<angle>270</angle>
@@ -52,20 +91,20 @@
 	</enemy>
 	
 	<enemy id="enemy1">
-		<life>50</life>
+		<life>35</life>
 		<image>ships/enemy1.png</image>
 
-		<appear time="10">
+		<appear time="20">
 			<posX>150</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="10">
+		<appear time="20">
 			<posX>250</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="10">
+		<appear time="20">
 			<posX>450</posX>
 			<posY>700</posY>
 		</appear>
@@ -101,7 +140,7 @@
 	</enemy>
 	
 	<enemy id="enemy2">
-		<life>100</life>
+		<life>45</life>
 		<image>ships/enemy2.png</image>
 
 		<appear time="15">
@@ -151,7 +190,7 @@
 	
 	
 	<enemy id="enemy3">
-		<life>200</life>
+		<life>65</life>
 		<image>ships/enemy3.png</image>
 
 		<appear time="20">
@@ -204,7 +243,7 @@
 		<life>400</life>
 		<image>ships/boss1/boss.png</image>
 
-		<appear time="25">
+		<appear time="70">
 			<posX>150</posX>
 			<posY>950</posY>
 		</appear>

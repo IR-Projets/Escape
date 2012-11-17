@@ -95,7 +95,6 @@ public abstract class Weapon extends Entity{
 
 	/**
 	 * Set the damage inflicted by the weapon.
-	 * @param damage - the damage inflicted by the weapon
 	 */
 	public void setDamage(int damage) {
 		this.damage = damage;

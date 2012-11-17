@@ -213,7 +213,6 @@ public abstract class Entity implements CollisionListener{
 		 * Return the body associated with this entityShape.
 		 * 
 		 * @param entities - class which represents our world
-		 * @param weaponItem - the WeaoponItem associated with this bonus
 		 * @param x - the coordinate associated with x position
 		 * @param y - the coordinate associated with y position
 		 * @param width - the width associated with this body
@@ -259,10 +258,10 @@ public abstract class Entity implements CollisionListener{
 	 * @param height - the width associated with this body
 	 * @return the body created in our world, as a circle.
 	 */
-	private static Body getCircleBody(Entities entities, int posX, int posY, int width, int height){		
+	private static Body getCircleBody(Entities entities, int x, int y, int width, int height){		
 		CircleShape circle = new CircleShape();
 		circle.m_radius = Math.min(width, height)/2;
-		return getBody(entities, circle, posX, posY);
+		return getBody(entities, circle, x, y);
 	}
 
 	/**
@@ -275,7 +274,7 @@ public abstract class Entity implements CollisionListener{
 	 * @param height - the width associated with this body
 	 * @return the body created in our world, as a polygon.
 	 */
-	private static Body getPolygonBody(Entities entities, int posX, int posY, int width, int height){	
+	private static Body getPolygonBody(Entities entities, int x, int y, int width, int height){	
 		int w = (int) width/2;
 		int h = (int) height/2;
 
@@ -289,7 +288,7 @@ public abstract class Entity implements CollisionListener{
 
 		PolygonShape polygon = new PolygonShape();	
 		polygon.set(vertices, 4);
-		return getBody(entities, polygon, posX, posY);
+		return getBody(entities, polygon, x, y);
 	}
 
 	

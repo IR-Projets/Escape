@@ -11,6 +11,7 @@
 	<property name="doc" value="docs" />
 	<property name="javadoc" value="${doc}/doc" />
 	<property name="jar" value="robot-master-mind.jar" />
+	<property name="jarTest" value="robot-master-mindTest.jar" />
 	
 	<!-- Our library classpath -->
 	<path id="lib.classpath">
@@ -27,11 +28,6 @@
 
 	<!-- Target jar, which make the jar -->
 	<target name="jar" depends="compile">
-		
-		<!-- We keep our classpath of library into the jar -->
-		<manifestclasspath property="jar.classpath" jarfile="${jar}">
-			<classpath refid="lib.classpath"/>
-		</manifestclasspath>
 		
 		<!-- We copy images & XML files -->
 		<jar destfile="${jar}" basedir="${class}">
@@ -62,14 +58,42 @@
 		<echo message="${jar} has correctly been created" />
 	</target>
 	
+	<!-- Target jarTest, which make the jarTest -->
+	<target name="jarTest" depends="compile">
+		
+		<!-- We copy images & XML files -->
+		<jar destfile="${jarTest}" basedir="${class}">
+			<fileset dir="${src}">
+				<include name="images**/**/*.png" />
+				<include name="images**/**/*.jpg" />
+				<include name="scripts**/*.xml" />
+			</fileset>
+			
+			<zipfileset dir="${lib}" includes="**/*.jar" /> 
+			
+			<!--  Manifest of the jar -->
+			<manifest>
+				<attribute name="Main-Class" value="game.MainTest" />
+				<attribute name="Created-By" value="${authorsName}" />
+			</manifest>
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips >
+						<fileset dir="${lib}">
+							<include name="*.jar" />
+						</fileset>
+					</zips>
+				</archives>
+			</restrict>
+		</jar>
+		<echo message="${jarTest} has correctly been created" />
+	</target>
+	
 	<!-- Target javadoc, for generate the javadoc -->
 	<target name="javadoc">
 		<javadoc sourcepath="${src}" destdir="${javadoc}"/>
 		<echo message="Javadoc has correctly been generated" />
-	</target>
-	
-	<target name="run" depends="jar" description="Run the jar file">
-		<java jar="${jar}" fork="true"/>
 	</target>
 		
 	

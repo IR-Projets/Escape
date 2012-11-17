@@ -46,7 +46,7 @@ public abstract class EntityFactory {
 	
 	/**
 	 * Return our world.
-	 * @return
+	 * @return our world
 	 */
 	protected Entities getEntities(){
 		return entities;

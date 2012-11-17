@@ -81,12 +81,12 @@
 			<posY>700</posY>
 		</appear>
 
-		<appear time="25">
+		<appear time="30">
 			<posX>200</posX>
 			<posY>700</posY>
 		</appear>
 
-		<appear time="25">
+		<appear time="30">
 			<posX>400</posX>
 			<posY>700</posY>
 		</appear>
@@ -201,7 +201,7 @@
 		<life>200</life>
 		<image>ships/enemy3.png</image>
 
-		<appear time="50">
+		<appear time="60">
 			<posX>150</posX>
 			<posY>700</posY>
 		</appear>

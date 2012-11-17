@@ -43,7 +43,6 @@ public class Filters{
 	 * Return the angle of a Trace
 	 * @param trace
 	 * @return return the double value in degree (0-360) where 0 is a right to the right, and 180 a right ro the left 
-	 * @see Trace
 	 */
 	public static double getAngle(List<Vec2> trace){
 		return getAngle(trace.get(0), trace.get(trace.size()-1));

@@ -36,7 +36,6 @@ public class ArrowMovement implements Filter{
 
 	/**
 	 * Check if the angle of the Right is correctly for an Arrow Movement : (0,90,180) degree +- FILTER_BORNES
-	 * @param data.angle
 	 * @return true if the angle is correct
 	 */
 	private boolean checkAngle() {

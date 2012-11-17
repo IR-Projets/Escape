@@ -92,7 +92,6 @@ public class WeaponItem {
 	
 	/**
 	 * Decrease the quantity of the item
-	 * @return the item
 	 */
 	public void removeQuantity(){
 		quantity --;

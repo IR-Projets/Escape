@@ -38,7 +38,7 @@ public class ShipFactory extends EntityFactory {
 	/**
 	 * Default constructor.
 	 * Initialize our factory with the world entities.
-	  * @param entity - class which represents our world
+	  * @param entities - class which represents our world
 	 */
 	public ShipFactory(Entities entities) {
 		super(entities);

@@ -3,7 +3,6 @@ package gestures;
 import entities.ships.Player;
 import entities.ships.enemies.Action.ActionType;
 import fr.umlv.zen2.MotionEvent;
-import fr.umlv.zen2.MotionEvent.Kind;
 import game.Variables;
 import gestures.filters.ArrowMovement;
 import gestures.filters.Backoff;
@@ -63,8 +62,8 @@ public class Gesture {
 	 */
 	private final Player player;
 	/**
-	 * Public constructor. You have to precised an environnement for instanciate a gesture, for knows entities of the game (player, items...).
-	 * @param env
+	 * Public constructor. You have to precize a player to instantiate the gesture.
+	 * @param player - the player associated with the gesture
 	 */
 	public Gesture(Player player){
 		this.player = player;
@@ -87,7 +86,7 @@ public class Gesture {
 
 	/**
 	 * Display the Gesture, which is a trace of the movement printing by the mouse.
-	 * @param Graphics2D graphics.
+	 * @param graphics - Graphics2D graphics.
 	 */
 	public void render(Graphics2D graphics){
 		if(traceStack.isEmpty()){// if we have finish the movement, we ask the player to stop
@@ -113,8 +112,7 @@ public class Gesture {
 
 	/**
 	 * The event launched by the mouse, which is described by zen2 Libraries.
-	 * @param MotionEvent event : the event of the mouse.
-	 * @see Kind
+	 * @param event - the event of the mouse.
 	 */
 	public void event(MotionEvent event){
 		switch(event.getKind()){	

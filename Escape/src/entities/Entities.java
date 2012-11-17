@@ -179,7 +179,7 @@ public class Entities {
 	
 	/**
 	 * Do the render of each entity in our world.
-	 * @param - graphics the graphics2D to print on
+	 * @param graphics - graphics the graphics2D to print on
 	 */
 	public void render(Graphics2D graphics) {
 		for(Entity entitie : entities.values())

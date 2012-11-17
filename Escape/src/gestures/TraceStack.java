@@ -78,7 +78,7 @@ public class TraceStack {
 
 	/**
 	 * Check if there are no Trace in process
-	 * @return
+	 * @return true is there are no trace in process, else false
 	 */
 	public boolean isEmpty() {
 		return currentTrace.isEmpty() && oldTraces.isEmpty();
@@ -86,7 +86,7 @@ public class TraceStack {
 	
 	/**
 	 * Return the current Trace
-	 * @return
+	 * @return the current Trace
 	 */
 	public Trace getCurrentTrace(){
 		return currentTrace;

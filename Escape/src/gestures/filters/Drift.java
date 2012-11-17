@@ -45,7 +45,6 @@ public class Drift implements Filter{
 	 * a low right drift : drift from right to left and from top to bottom ( New movement!)
 	 * 
 	 * Refuse the horizontal and vertical angles, with the bornes TRACE_DRIFT_BORNES.
-	 * @param data.angle
 	 * @return true if the angle is correct
 	 */
 	public boolean checkAngle(){

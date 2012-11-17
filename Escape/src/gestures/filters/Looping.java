@@ -68,7 +68,7 @@ public class Looping implements Filter {
 	/**
 	 * Return the direction of a circle, depending of the angle of the firsts points of the trace
 	 * @param trace
-	 * @return
+	 * @return the direction of a circle
 	 */
 	public Direction getDirection(List<Vec2> trace){
 		if(trace.size() < 1)
@@ -84,7 +84,7 @@ public class Looping implements Filter {
 	 * Return the Vec2 which represents the Vec2 the farthest from the first point of the Trace 
 	 * Use for know the centre and the diamater of a trace
 	 * @param trace
-	 * @return
+	 * @return the Vec2 which represents the Vec2 the farthest from the first point of the Trace 
 	 */
 	public Vec2 vecDistMax(List<Vec2> trace){
 		Iterator<Vec2> it = trace.iterator();
