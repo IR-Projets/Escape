@@ -43,7 +43,7 @@ public class Action {
 	private String name;
 
 	/**
-	 * Construct an Action, with parameter initialize with wrong value 
+	 * Construct an Action, with parameter initialize with wrong value.
 	 * (begin and end time to -1)
 	 */
 	public Action(){
@@ -56,7 +56,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the begin step of this action
+	 * Returns the begin step of this action.
 	 * @return the begin step of this action
 	 */
 	public int getBeg() {
@@ -64,7 +64,7 @@ public class Action {
 	}
 
 	/**
-	 * Set the begin step of this action
+	 * Set the begin step of this action.
 	 * @param beg - the new begin step of this action
 	 */
 	public void setBeg(int beg) {
@@ -72,7 +72,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the end step of this action
+	 * Returns the end step of this action.
 	 * @return the end step of this action
 	 */
 	public int getEnd() {
@@ -80,7 +80,7 @@ public class Action {
 	}
 
 	/**
-	 * Set the end step of this action
+	 * Set the end step of this action.
 	 * @param end - the new end step of this action
 	 */
 	public void setEnd(int end) {
@@ -88,7 +88,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the velocity of this action
+	 * Returns the velocity of this action.
 	 * @return the velocity of this action
 	 */
 	public int getVelocity() {
@@ -96,7 +96,7 @@ public class Action {
 	}
 
 	/**
-	 * Set the velocity of this action
+	 * Set the velocity of this action.
 	 * @param velocity - the new velocity of this action
 	 */
 	public void setVelocity(int velocity) {
@@ -104,7 +104,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the angle of this action, in degree
+	 * Returns the angle of this action, in degree.
 	 * @return the angle of this action, in degree
 	 */
 	public double getAngle() {
@@ -112,7 +112,7 @@ public class Action {
 	}
 
 	/**
-	 * Set the angle of this action
+	 * Set the angle of this action.
 	 * @param angle - the new angle of this action
 	 */
 	public void setAngle(double angle) {
@@ -120,7 +120,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the type of the action
+	 * Returns the type of the action.
 	 * @return the type of the action
 	 */
 	public ActionType getType() {
@@ -128,7 +128,7 @@ public class Action {
 	}
 
 	/**
-	 * Set the type of the action
+	 * Set the type of the action.
 	 * @param type - the new type of the action
 	 */
 	public void setType(ActionType type) {
@@ -136,7 +136,7 @@ public class Action {
 	}
 
 	/**
-	 * Returns the name of this action, if it's a Shoot, so the name of the weapon. Be care, return null if the action is a movement
+	 * Returns the name of this action, if it's a Shoot, so the name of the weapon. Be care, return null if the action is a movement.
 	 * @return the name of the weapon if the action is a movement, else return null
 	 */
 	public String getName() {

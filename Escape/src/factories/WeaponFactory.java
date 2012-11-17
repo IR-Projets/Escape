@@ -11,14 +11,44 @@ import entities.weapons.Shuriken;
 import entities.weapons.Weapon;
 import game.Ressources;
 
+/**
+ * This class is a factory of weapon, and make all weapons of ships.
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
+
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class WeaponFactory extends EntityFactory{
 
-	
+	/**
+	 * 
+	 * @param entities
+	 */
 	public WeaponFactory(Entities entities) {
 		super(entities);
 	}
 
+	/**
+	 * 
+	 */
 	public enum WeaponType{
 		Shuriken,
 		Fireball, 
@@ -26,6 +56,11 @@ public class WeaponFactory extends EntityFactory{
 		ShiboleetExtended, 
 		Missile,
 		Null;
+		/**
+		 * 
+		 * @param weaponName
+		 * @return
+		 */
 		public static WeaponType convert(String weaponName){
 			switch(weaponName){
 			case "Shuriken": return Shuriken;
@@ -37,6 +72,10 @@ public class WeaponFactory extends EntityFactory{
 			}
 		}
 			
+		/**
+		 * 
+		 * @return
+		 */
 		public BufferedImage getImage(){
 			switch(this){
 			case Shuriken: return Ressources.getImage("weapons/shuriken.png");
@@ -64,6 +103,14 @@ public class WeaponFactory extends EntityFactory{
 		
 	};
 	
+	/**
+	 * 
+	 * @param type
+	 * @param x
+	 * @param y
+	 * @param damagedPlayer
+	 * @return
+	 */
 	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
 		Weapon weapon = null;
 		
