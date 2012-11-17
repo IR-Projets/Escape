@@ -44,33 +44,40 @@ public class Enemy extends Ship{
 	private final Random rand = new Random();
 	private WeaponItem bonusToDrop;
 	
-	/*
-	 * @param entities
-	 * @param shape
-	 * @param image
-	 * @param x
-	 * @param y
-	 * @param life
-	 * @param behavior
+	/**
+	 * Our Main constructor, which instantiate an enemy with the EntityShape given as parameter.
+	 * @param entities - class which represents our world
+	 * @param shape - the shape of the enemy
+	 * @param image - the image of the weapon
+	 * @param x - the coordinate associated with x position
+	 * @param y - the coordinate associated with y position
+	 * @param life - the life of the enemy
+	 * @param behavior - the enemyBehavior associated with this enemy
+	 * @see EnemyBehavior
 	 */
 	public Enemy(Entities entities, EntityShape shape, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		super(entities, shape, image, x, y, life);
-
 		this.behavior=behavior;
 		this.entities=entities;
 		getBody().setTransform(new Vec2(x,y), (float) Math.toRadians(180));
 		getBody().setFixedRotation(true);
 		setCollisionGroup(EntityType.Enemy);
 	}
+	
+	/**
+	 * Our default constructor, which instantiate an enemy with the EntityShape Square.
+	 * @param entities - class which represents our world
+	 * @param image - the image of the weapon
+	 * @param x - the coordinate associated with x position
+	 * @param y - the coordinate associated with y position
+	 * @param life - the life of the enemy
+	 * @param behavior - the enemyBehavior associated with this enemy
+	 * @see EnemyBehavior
+	 */
 	public Enemy(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior){	
 		this(entities, EntityShape.Square, image, x, y, life, behavior);
 	}
 
-	@Override
-	public EntityType getEntityType() {
-		return EntityType.Enemy;
-	}
-	
 	/**
 	 * DropItem method, which try to create a new randomly item.
 	 * Be case, more is high, and less objects appear.
@@ -97,6 +104,19 @@ public class Enemy extends Ship{
 	}
 	
 	
+	@Override
+	public EntityType getEntityType() {
+		return EntityType.Enemy;
+	}
+	
+	@Override
+	public int getDamage() {
+		return 5;
+	}
+	
+	/**
+	 * Create a bonus randomly.
+	 */
 	@Override
 	public void explode(){
 		super.explode();
@@ -133,11 +153,6 @@ public class Enemy extends Ship{
 			bonusTmp.setVelocity(0, -Variables.SHIP_BULLET_VELOCITY);
 			bonusToDrop=null;
 		}
-	}
-
-	@Override
-	public int getDamage() {
-		return 5;
 	}
 
 }

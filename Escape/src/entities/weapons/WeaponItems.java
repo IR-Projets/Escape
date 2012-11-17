@@ -6,7 +6,7 @@ import java.util.List;
 
 import factories.WeaponFactory.WeaponType;
 /**
- * This class represents a list of Item, which contains the main function for show it on a Graphics, and for manage the event with it.
+ * This class represents a list of Item, which contains the main function for manage the event with it.
  * 
  * @author Quentin Bernard et Ludovic Feltz
  */
@@ -31,17 +31,29 @@ import factories.WeaponFactory.WeaponType;
  */
 public class WeaponItems {
 
-
+	/**
+	 * Our list of items.
+	 */
 	private final List<WeaponItem> weaponItems;
 
 
+	/**
+	 * Default constructor.
+	 */
 	public WeaponItems() {
 		weaponItems = new LinkedList<>();
-		weaponItems.add(new WeaponItem(WeaponType.Missile, 20));
-		weaponItems.add(new WeaponItem(WeaponType.Fireball, 20));
-		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 100));
-		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 20));
-
+		weaponItems.add(new WeaponItem(WeaponType.Missile, 10));
+		weaponItems.add(new WeaponItem(WeaponType.Fireball, 25));
+		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 25));
+		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 30));
+	}
+	
+	/**
+	 * Return the WeaponItem which is at the first position of our list.
+	 * @return the current WeaponItem
+	 */
+	public WeaponItem getCurrentWeaponItem(){
+		return weaponItems.get(0);
 	}
 
 	/**
@@ -52,15 +64,28 @@ public class WeaponItems {
 		return weaponItems.isEmpty();
 	}
 
-	/*public List<WeaponItem> getWeaponItems() {
-		return weaponItems;
-	}*/
-
-	public WeaponItem getCurrentWeaponItem(){
-		return weaponItems.get(0);
+	/**
+	 * Return an iterator of WeaponItem.
+	 * @return the iterator of the WeaponItem
+	 */
+	public Iterator<WeaponItem> iterator() {
+		return weaponItems.iterator();
 	}
 
-
+	/**
+	 * Return the size of the list of WeaponItems.
+	 * @return
+	 */
+	public int size() {
+		return weaponItems.size();
+	}
+	
+	/**
+	 * Add a weaponType, associated with his quantity, to our list of WeaponItems.
+	 * If we already have this items, this only increase his quantity.
+	 * @param weaponType - the weaponType to add
+	 * @param quantity - the quantity to add
+	 */
 	public void addWeaponItem(WeaponType weaponType, int quantity){
 		for(WeaponItem item: weaponItems){
 			if(item.weaponType==weaponType){
@@ -73,6 +98,7 @@ public class WeaponItems {
 
 	/**
 	 * Remove the CurrentItem, by removing the quantity by One, or removing totally the item, depending on his quantity
+	 * Be care, we continue to add the Missile if we doesn't have more item, to force the player to continue to play.
 	 * @return the Item remove
 	 */
 	public WeaponItem removeCurrentItem() {
@@ -87,14 +113,11 @@ public class WeaponItems {
 		return weaponItem;
 	}
 
-	public Iterator<WeaponItem> iterator() {
-		return weaponItems.iterator();
-	}
-
-	public int size() {
-		return weaponItems.size();
-	}
-
+	/**
+	 * Put at the position indexNew the WeaponItem associated at the the position indexOld. 
+	 * @param indexOld - the index of the old value.
+	 * @param indexNew - the index of the new value.
+	 */
 	public void setIndexInList(int indexOld, int indexNew){
 		weaponItems.add(indexNew, weaponItems.remove(indexOld));
 	}

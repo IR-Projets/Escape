@@ -4,11 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import factories.WeaponFactory.WeaponType;
-import game.Ressources;
 import game.Variables;
 /**
  * This class represents an item, which contains the main function for initialize it and show it on a Graphics.
- * An item is represents by a name, an image and a number, which represents the number on the inventory.
+ * An item is represents by a quantity, an image and a kind of weapon, because all of our items are weapons.
  * 
  * @author Quentin Bernard et Ludovic Feltz
  */
@@ -33,7 +32,6 @@ import game.Variables;
  */
 public class WeaponItem {
 	
-
 	/**
 	 * The image associated with the item
 	 */
@@ -51,10 +49,8 @@ public class WeaponItem {
 	
 	/**
 	 * The default constructor
-	 * @param type type of the weapon associated with the item
-	 * @param name name of the item
-	 * @param nameImage name of the image of the item
-	 * @param nbItem number of item
+	 * @param weaponType - the type of the weapon associated with the item
+	 * @param quantity - the quantity of the number of item
 	 */
 	public WeaponItem(WeaponType weaponType, int quantity) {
 		this.weaponType = weaponType;
@@ -69,7 +65,6 @@ public class WeaponItem {
 	public WeaponType getWeaponType(){
 		return weaponType;
 	}
-	
 	
 	/**
 	 * Return the Image of the Item

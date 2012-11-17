@@ -2,10 +2,10 @@ package entities.weapons;
 
 import entities.Entities;
 import factories.WeaponFactory.WeaponType;
+import game.Variables;
 
 /**
- * This class is used for load an XML files into an EnemyDef class.
- * This is a XML Parser, adapted to our class
+ * This class represents a fireball. This weapon can grow, depending of the time of load.
  * 
  *  * @author Quentin Bernard et Ludovic Feltz
  */
@@ -30,26 +30,39 @@ import factories.WeaponFactory.WeaponType;
 
 public class Fireball extends Weapon {
 
-	private long time;
-	private int increase;
+	private int loop;//local variable use for launch the creation during all the game
 	
+	private int increase;//the number of increase 
+	
+	/**
+	 * Default constructor of a fireball.
+	 * @param entities - class which represents our world
+	 * @param x - the coordinate associated with x position
+	 * @param y - the coordinate associated with y position
+	 * @param firedByPlayer - a boolean, which is true if the weapon is fired by the player
+	 */
 	public Fireball(Entities entities, int x, int y, boolean firedByPlayer) {
 		super(entities, EntityShape.Circle, WeaponType.Fireball.getImage(), x, y, 8,  firedByPlayer);
-		time = System.nanoTime()/1000000;
 		increase=0;
 	}
 
-	
+	/**
+	 * Do the growth of the fireball, if the weapon is not launch
+	 */
 	@Override
 	public void compute() {
-		long diffTime = (System.nanoTime()/1000000 - time);
 		if(isLaunch())
 			return;
-		if(diffTime > 300 && increase <3){
-			setImage(Weapon.resize(getImage(), 1.5f));
-			increase++;
-			setDamage(getDamage()*2);
-			time=System.nanoTime()/1000000;
+		loop++;
+		
+		if(loop>Variables.LOOP_SKIP/4){			
+			loop=0;
+			if(increase <3){
+				setImage(Weapon.resize(getImage(), 1.5f));
+				increase++;
+				setDamage(getDamage()*2);
+			}
 		}
+		
 	}
 }
