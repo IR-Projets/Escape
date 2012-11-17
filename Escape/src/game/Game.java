@@ -1,5 +1,8 @@
 package game;
 
+import hud.Button;
+import hud.Button.ButtonType;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -43,46 +46,57 @@ public class Game implements EnvironnementListener{
 	private int ite = 0;
 	private long next_game_tick;
 	private boolean paused;
+	private boolean finished;
 
 	private Story story;
 	private Level level;
+	private Button pauseButton;
 	/*
 	 * TODO: C'est ici que va etre gerer tout les evenements du jeux (mort, gagner, ...)
 	 */
 
 	public Game() throws IOException{		
-		this.level = Level.Jupiter;
+		this.level = Level.Jupiter;		
 		environnement = EnvironnementFactory.factory(level);
 		environnement.addListener(this);
 		//offscreen = new BufferedImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		offscreen = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT, Transparency.OPAQUE);
 		bufferGraphics = offscreen.createGraphics();
 		story = new Story();
+		story.loadStory1();
 		paused=false;
+		finished=false;
 		next_game_tick = -1;
+		
+		pauseButton=new Button(ButtonType.PAUSE, Variables.SCREEN_WIDTH/2-32, 10){
+			@Override
+			public void pressed() {
+				pause();
+			}			
+		};
 	}
 
 	@Override
 	public void stateChanged(GameState state) {
 		switch(state){
-		case Paused:
-			paused = paused ? false : true;
-			break;
 		case Loose:
-			System.out.println("Loose !!");
-			System.exit(0);
+			story.loadStory_Loose();
+			finished=true;
+			environnement.removeListener(this);
 			break;
 		case Win:
-			System.out.println("Win!!");
 			switch(level){
 			case Jupiter:
+				story.loadStory_WinJupiter();
 				level = Level.Moon;
 				break;
 			case Moon:
+				story.loadStory_WinMoon();
 				level = Level.Earth;
 				break;
 			case Earth:
-				System.out.println("Jeu fini!! pas encore implemente");
+				finished=true;
+				story.loadStory_WinEarth();
 				break;
 			}	
 			environnement.removeListener(this);
@@ -102,15 +116,19 @@ public class Game implements EnvironnementListener{
 	public void run(Graphics2D graphics) {				
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
-
-		if(!story.isFinished()){
+				
+		if(story.isLoaded()){
 			story.render(bufferGraphics);
+			next_game_tick=-1;
+		}
+		else if(finished){
+			System.exit(0);
 		}
 		else{
 			if(!paused){
 				if(next_game_tick==-1)
 					next_game_tick = System.currentTimeMillis();
-				
+
 				int loops = 0;
 				long currentTime = System.currentTimeMillis();
 				while(currentTime > next_game_tick && loops < Variables.MAX_FRAMESKIP) {
@@ -120,8 +138,8 @@ public class Game implements EnvironnementListener{
 				}
 			}
 			environnement.render(bufferGraphics);
+			pauseButton.render(bufferGraphics);
 		}
-		
 
 		graphics.drawImage(offscreen, 0, 0, null);
 		if(Variables.DEBUG){
@@ -130,7 +148,10 @@ public class Game implements EnvironnementListener{
 
 	}
 
-
+	public void pause(){
+		paused = paused ? false : true;
+		next_game_tick=-1;		
+	}
 
 	public void drawFPS(Graphics2D graphics){
 		ite++;
@@ -151,9 +172,13 @@ public class Game implements EnvironnementListener{
 	}
 
 	public void event(MotionEvent event) {
-		if(!story.isFinished())
-			story.finish();
-		environnement.event(event);
+
+		if(story.isLoaded())
+			story.event(event);
+		else{
+			environnement.event(event);
+			pauseButton.event(event);
+		}
 	}
 
 

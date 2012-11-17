@@ -1,7 +1,10 @@
 package story;
 
+import fr.umlv.zen2.MotionEvent;
 import game.Ressources;
 import game.Variables;
+import hud.Button;
+import hud.Button.ButtonType;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -12,6 +15,7 @@ public class Story {
 
 	/*
 	 * Crée un couple temps/render
+	 * time: in ms
 	 * Sert a l'affichage d'un narrateur
 	 */
 	public abstract class Couple{
@@ -25,31 +29,47 @@ public class Story {
 	private long time, lastTime;
 	
 	
+	//The backGround
+	private BackGround backGround;
 	
 	//La sequence
-	List<Couple> sequence;
+	private List<Couple> sequence;
 	
+	//Skip button
+	private Button skipButton;
 	
 	
 	//Images
 	private BufferedImage[] imgXaroff;
 	private BufferedImage[] imgSirud;
 	private BufferedImage[] imgHero;
-	final Narator sirud;
-	final Narator xaroff;
-	final Narator hero;
+	private final Narator sirud;
+	private final Narator xaroff;
+	private final Narator hero;
+	private int cadre1_x, cadre1_y;
+	private int cadre2_x, cadre2_y;
 
-
-	private boolean finished;
+	private boolean loaded;
 	
 	
 	
 	
 	
 	public Story(){	
-		finished=false;
+		loaded=false;
 		time = 0;
-		lastTime=0;
+		lastTime=-1;
+		
+		backGround = new BackGround("story/solarSystem.jpg");
+		
+		//The button and the event
+		skipButton = new Button(ButtonType.SKIP, Variables.SCREEN_WIDTH/2-32, 10){
+			@Override
+			public void pressed() {
+				finish();
+			}			
+		};
+		
 		
 		/*
 		 * Narrator's images 
@@ -69,9 +89,9 @@ public class Story {
 		/*
 		 * Narators( image, posX, posY )
 		 */
-		sirud = new Narator(imgSirud, 50, 50);
-		xaroff = new Narator(imgXaroff, Variables.SCREEN_WIDTH-150, 50);
-		hero = new Narator(imgHero, Variables.SCREEN_WIDTH/2-50, 270);
+		sirud = new Narator(imgSirud, 60, 10);
+		xaroff = new Narator(imgXaroff, Variables.SCREEN_WIDTH-160, 10);
+		hero = new Narator(imgHero, Variables.SCREEN_WIDTH/2-50, 160);
 		
 		
 		/*
@@ -81,57 +101,320 @@ public class Story {
 	}
 	
 	
+	/*
+	 * 		The Begin scene
+	 */
 	public void loadStory1(){
-		sequence.add(new Couple(1){
+		loaded = true;
+		sequence.add(new Couple(1000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Ou est tu encore passé?\n");				
+				sirud.speak(g, "Reveil toi...\n");				
 			}			
 		});
-		sequence.add(new Couple(1){
+		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Ta mission suicide sur la planète\nalien c'est bien passée?");
-				hero.speak(g, "...");				
+				sirud.draw(g);		
 			}			
 		});
-		sequence.add(new Couple(1){
+		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "HaHaHA je l'ai capturé!\n");
-				sirud.draw(g);				
+				sirud.speak(g, "Ta mission suicide sur la planète\nalien à été un echec");		
+				hero.draw(g);	
+			}			
+		});		
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Il va falloir que tu trouve un moyen de te rattraper");	
+				hero.draw(g);	
 			}			
 		});
-		sequence.add(new Couple(1){
+		sequence.add(new Couple(500){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Relache le!");
+				sirud.draw(g);
+				hero.draw(g);	
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Tu pourra te servir de l'attraction\nde mars pour augmenter ta moyenne");	
+				hero.draw(g);	
+			}			
+		});
+
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "HaHaHA Tu ne partira jamais\nde cette planete!");			
+				hero.draw(g);	
+			}			
+		});
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Mes Lambda vont t'arreter!");			
+				hero.draw(g);	
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Abandonne!");	
+				hero.draw(g);	
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Jamais!");
 				xaroff.draw(g);				
 			}			
 		});
-		sequence.add(new Couple(1){
+		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "Non!");
-				sirud.draw(g);				
+				hero.speak(g, "même si je dois arreter\nde dormir pour ça!");
+				xaroff.draw(g);				
+			}			
+		});	
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
 			}			
 		});
-		sequence.add(new Couple(2){
+		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
-				hero.draw(g);				
+				hero.speak(g, "Bon j'ai trouver un vaisseau...");		
 			}			
 		});
-		sequence.add(new Couple(10){
-			float posY=0;
+		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				drawText(g, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, posY+=0.1f);			
+				hero.speak(g, "Il semble être assez simple a utiliser");		
 			}			
-		});		
+		});	
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Il suffit de tracer un trait\nsur son ecran tactile...");		
+			}			
+		});	
+		sequence.add(new Couple(500){
+			@Override
+			public void render(Graphics2D g) {
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(2500){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Un trait partant du vaisseau lance une arme");		
+			}			
+		});
+		sequence.add(new Couple(2500){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Un trait a coté du vaisseau lance un deplacement");		
+			}			
+		});	
+		sequence.add(new Couple(2500){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "On peut changer d'arme avec la liste\ndéroulante en haut de l'écran");		
+			}			
+		});	
+		sequence.add(new Couple(500){
+			@Override
+			public void render(Graphics2D g) {
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "C'est parti...");		
+			}			
+		});	
 	}
 	
+	
+	
+	/*
+	 * 		Win Jupiter
+	 */
+	public void loadStory_WinJupiter(){
+		loaded=true;
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Mes félicitations tu à passé le premier grade!\n");
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Niveau suivant,\nattention les partiels arrivent!\n");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Tu ne depassera jamais\nla moyenne lune...\n");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+			}			
+		});
+	}
+	
+	
+	/*
+	 * 		Win Moon
+	 */
+	public void loadStory_WinMoon(){
+		loaded=true;
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Mes félicitations tu à passé le deuxième grade!\n");
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Niveau suivant,\nattention les partiels arrivent!\n");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Tu ne passera jamais\nle dernier grade");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+			}			
+		});
+	}
+	
+	
+	/*
+	 * 		Win Earth
+	 */
+	public void loadStory_WinEarth(){
+		loaded=true;
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Mes félicitations tu à passé le dernier grade!\n");
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Tu est enfin revenu sur terre\n");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Aller va dormir tu l'a mérité\n");		
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+			}			
+		});
+	}
+	
+	
+	/*
+	 * 	LOOSE
+	 */	
+	public void loadStory_Loose() {
+		loaded=true;
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "Un protocole inconnu\nà détruit ton vaisseau");
+				xaroff.draw(g);
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "La Thread principale\nn'a pas tenu");
+				sirud.draw(g);
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(1000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.speak(g, "Je t'ai eu!");
+				sirud.draw(g);
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(2000){
+			@Override
+			public void render(Graphics2D g) {
+				xaroff.draw(g);
+				sirud.draw(g);
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(5000){
+			@Override
+			public void render(Graphics2D g) {
+				sirud.speak(g, "A l'année prochaine...");
+				xaroff.speak(g, "Bye!");
+				hero.draw(g);
+			}			
+		});
+		sequence.add(new Couple(3000){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Bon bah...");
+			}			
+		});
+		sequence.add(new Couple(5000){
+			@Override
+			public void render(Graphics2D g) {
+				hero.speak(g, "Je vais aller taffer\nau McDo...");
+			}			
+		});
+		sequence.add(new Couple(5000){
+			@Override
+			public void render(Graphics2D g) {
+			}			
+		});
+	}
+	
+	
+	/*
+	 * 	Methods utils
+	 */	
 	private void drawText(Graphics2D graphics, String text, float x, float y){
 		String [] lines = text.split("\n");
 		for(int i=0; i<lines.length; i++){
@@ -145,26 +428,35 @@ public class Story {
 			return;
 		}
 		
+		backGround.render(graphics);
+		skipButton.render(graphics);
+		
 		Couple couple = sequence.get(0);
 		couple.render(graphics);
 		
-		if(lastTime==0)
-			lastTime=System.nanoTime();
 		time=System.nanoTime();
-		if(couple.time<(time-lastTime)/1000000000){
+		if(lastTime==-1)
+			lastTime=System.nanoTime();
+		if(couple.time<(time-lastTime)/1000000){
 			lastTime = time;
 			sequence.remove(0);
 		}
 	}
 	
-	public boolean isFinished(){
-		return finished;
+	public boolean isLoaded(){
+		return loaded;
 	}
 
 
 	public void finish() {
-		finished=true;
+		loaded=false;
 		sequence.clear();
+		lastTime=-1;
+	}
+
+
+	public void event(MotionEvent event) {
+		skipButton.event(event);		
 	}
 	
 	

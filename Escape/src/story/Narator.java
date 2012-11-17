@@ -7,7 +7,7 @@ public class Narator{
 	
 	private static int IMAGE_SIZE = 100;
 	private static int TEXT_SIZE = 5;
-	private static long TIME_SKIP = 1*1000000000;
+	private static long TIME_SKIP = 150*1000000;
 	
 	
 	private BufferedImage[] images;

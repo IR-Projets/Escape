@@ -1,10 +1,15 @@
 package entities.ships.enemies;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
+import effects.Effects;
+import effects.Explosion;
 import entities.Entities;
 import entities.Entity;
 import game.Ressources;
+import game.Variables;
+import hud.Hud;
 
 /**
  * The Boss class is used for specify an enemy as a Boss, which is uses for determine the end of a level, with his death.
@@ -34,8 +39,13 @@ public class Boss extends Enemy{
 	private final BufferedImage[] touchedImages;
 	private boolean touched;
 	private int step;
-	private int INVICIBLE_STEP = 30;
+	private int TOUCHED_STEP = 100;
 	private int currentFrame;
+	
+	private boolean destroyed;
+	private final int destroyedStepMax = 1000;
+	private int destroyedStep;
+	private Random rand;
 	
 	/**
 	 * Create a boss, which is an extension of an enemy. Be care, A boss enemy is add in the Jbox World by his factory. 
@@ -48,7 +58,9 @@ public class Boss extends Enemy{
 	 */
 	public Boss(Entities entities, BufferedImage image, int x, int y, int life, EnemyBehavior behavior) {
 		super(entities, EntityShape.Square, image, x, y, life, behavior);
-		
+		rand = new Random();
+		destroyed=false;
+		destroyedStep=0;
 		touched=false;
 		touchedImages = new BufferedImage[3];
 		for(int i=0; i<touchedImages.length; i++){
@@ -67,14 +79,21 @@ public class Boss extends Enemy{
 		return EntityType.Boss;
 	}
 	
+	@Override
+	public void explode(){
+		destroyed=true;
+	}
 	
 	@Override
 	public void collision(Entity entity, EntityType type) {
-		super.collision(entity, type);
 		switch (type) {
 		case Joueur:
 		case WeaponPlayer:
 			touched=true;
+			Hud.get().increaseScore(50);
+			setLife(getLife()-entity.getDamage());
+			if(getLife() <= 0)
+				explode();
 			break;
 		default:
 			break;
@@ -88,14 +107,31 @@ public class Boss extends Enemy{
 		if(touched){
 			return touchedRender();
 		}
+		else if(destroyed){
+			return destroyedRender();
+		}
 		else{
 			return super.getImage();
 		}
 	}
 
+	private BufferedImage destroyedRender() {
+		destroyedStep++;
+		if(destroyedStep<destroyedStepMax){
+			if(rand.nextInt()%4==0)
+				Effects.addEffect(new Explosion(rand.nextInt(Variables.SCREEN_WIDTH)-12, rand.nextInt(150)-12));
+			return touchedRender();
+		}
+		else{
+			destroyed=false;
+			super.explode();
+			return getImage();
+		}	
+	}
+
 	private BufferedImage touchedRender() {
 		BufferedImage image = touchedImages[currentFrame];
-		if(step>INVICIBLE_STEP){
+		if(step>TOUCHED_STEP){
 			step=0;		
 			currentFrame++;
 			if(currentFrame>=touchedImages.length){

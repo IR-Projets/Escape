@@ -24,7 +24,7 @@ public class Player extends Ship {
 	
 	private final int LOOPING_STEP = 40;
 	private final int INVICIBLE_STEP = 50;
-	private final int INVICIBLE_REPEAT = 1;
+	private final int INVICIBLE_REPEAT = 3;
 	private final int TOUCHED_STEP = 50;
 	private final int TOUCHED_REPEAT = 3;
 	

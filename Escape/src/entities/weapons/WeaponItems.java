@@ -39,7 +39,7 @@ public class WeaponItems {
 		weaponItems = new LinkedList<>();
 		weaponItems.add(new WeaponItem(WeaponType.Missile, 20));
 		weaponItems.add(new WeaponItem(WeaponType.Fireball, 20));
-		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 20));
+		weaponItems.add(new WeaponItem(WeaponType.ShiboleetExtended, 100));
 		weaponItems.add(new WeaponItem(WeaponType.Shuriken, 20));
 
 	}

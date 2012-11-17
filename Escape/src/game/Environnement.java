@@ -15,6 +15,7 @@ import entities.ships.Player;
 import entities.ships.enemies.EnemiesLoader;
 import fr.umlv.zen2.MotionEvent;
 import gestures.Gesture;
+import hud.Hud;
 
 
 public class Environnement implements EntitiesListener {
@@ -25,7 +26,6 @@ public class Environnement implements EntitiesListener {
 	private final Entities entities;
 	private final Gesture gesture;		//Gesture/Event manager
 	private final Player player;
-	private final Hud hud;
 	private final List<EnvironnementListener> gameListener;
 	private final EnemiesLoader enemiesLoader;
 	private GameState gameState;
@@ -42,8 +42,7 @@ public class Environnement implements EntitiesListener {
 		this.entities=entities;
 		this.enemiesLoader=enemiesLoader;
 		this.gesture = new Gesture(player);
-		this.hud = new Hud(player);
-		this.gameState = GameState.Run;
+		Hud.get().setPlayer(player);
 		entities.addEntitiesListener(this);
 	}
 
@@ -61,10 +60,6 @@ public class Environnement implements EntitiesListener {
 		return player;
 	}
 
-	public Hud getHud() {
-		return hud;
-	}
-
 	public Entities getEntities() {
 		return entities;
 	}
@@ -74,20 +69,17 @@ public class Environnement implements EntitiesListener {
 	 * @see entities.EntitiesListener#entityRemoved(entities.Entity.EntityType)
 	 */
 	@Override
-	public void entityRemoved(EntityType entity) {
+	public void entityRemoved(EntityType type) {
 		
-		switch (entity){
+		switch (type){
 		case Boss:
-			System.out.println("Boss killed");
 			gameState = GameState.Win;
 			break;
 		case Joueur:
-			System.out.println("Joueur killed");
 			gameState = GameState.Loose;
 			break;
-		case Enemy : 
-			hud.increaseScore(50);
 		default:
+			gameState=null;
 			break;
 		}
 		if(gameState!=null){
@@ -106,7 +98,7 @@ public class Environnement implements EntitiesListener {
 		entities.render(graphics);			//All the entities (player too)
 		gesture.render(graphics);			//Gesture movements (circle)
 		Effects.render(graphics);			//Effect (explosion, cloud, ..)
-		hud.render(graphics);				//Health, score, amo
+		Hud.get().render(graphics);				//Health, score, amo
 	}
 
 	/**
@@ -115,7 +107,7 @@ public class Environnement implements EntitiesListener {
 	 */
 	public void event(MotionEvent event) {
 		gesture.event(event);
-		hud.event(event);
+		Hud.get().event(event);
 	}
 
 	

@@ -4,7 +4,7 @@
 
 	<enemy id="ship">
 		<life>10</life>
-		<image>ships/ship.png</image>
+		<image>ships/ship_big.png</image>
 
 		<appear time="5">
 			<posX>150</posX>

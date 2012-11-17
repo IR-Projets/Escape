@@ -39,7 +39,7 @@ public class basicEffect extends Effects {
 	
 	@Override
 	public boolean terminated() {
-		return posX>Variables.SCREEN_WIDTH || posX<-image.getWidth() ||	posY>Variables.SCREEN_WIDTH+image.getHeight();
+		return posX>Variables.SCREEN_WIDTH || posX<-image.getWidth() ||	posY>Variables.SCREEN_HEIGHT+image.getHeight();
 	}
 
 }

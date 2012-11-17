@@ -1,4 +1,4 @@
-package game;
+package hud;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -9,6 +9,8 @@ import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
+import game.Ressources;
+import game.Variables;
 /**
  * This class represents our Head Up Display, which manage the elements associated with the game (life, weapon).
  * 
@@ -35,8 +37,16 @@ import fr.umlv.zen2.MotionEvent.Kind;
  */
 public class Hud {
 
+	private static Hud instance=null;
+	public static Hud get() {
+		if(instance==null){
+			instance = new Hud();
+		}
+		return instance;
+	}
+	
 
-	private final Player player;
+	private Player player;
 	
 	
 	/**
@@ -61,7 +71,7 @@ public class Hud {
 	 * The scale to compare one Point of life into a Percent of the Health Menu
 	 */
 
-	public Hud(Player player){
+	public Hud(){
 		cadreSup = Ressources.getImage("hud/fontWeaponTop.png");
 		cadreInf = Ressources.getImage("hud/fontWeaponBot.png");
 		cadreBor = Ressources.getImage("hud/fontWeapon.png");
@@ -69,12 +79,15 @@ public class Hud {
 		hudLeft = Ressources.getImage("hud/hudLeft.png");
 		hudRight = Ressources.getImage("hud/hudRight.png");
 
-		this.player = player;
 		score = 0;
 		
 		displayItemList = false;
 	}
 
+	public void setPlayer(Player player){
+		this.player=player;
+	}
+	
 	public void increaseScore(int score) {
 		this.score += score;
 	}

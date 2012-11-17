@@ -42,7 +42,7 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 	public void initTest(boolean argDeserialized) {
 		setTitle("#### TEST #####");
 
-		level = Level.Moon;
+		level = Level.Jupiter;
 		env = EnvironnementFactory.factory(getWorld(), level);
 		env.addListener(this);
 		this.setCamera(new Vec2( Variables.SCREEN_WIDTH/2, Variables.SCREEN_HEIGHT/2), 0.5f);	

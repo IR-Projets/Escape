@@ -12,6 +12,7 @@ import entities.ships.Ship;
 import entities.weapons.WeaponItem;
 import factories.WeaponFactory.WeaponType;
 import game.Variables;
+import hud.Hud;
 
 /**
  * the Enemy class represents an Entity for JBox, which is an enemy ship that the player has to kill.
@@ -92,9 +93,9 @@ public class Enemy extends Ship{
 				bonusToDrop = new WeaponItem(WeaponType.Shuriken, quantity);
 				break;
 			}
-		}
-		
+		}	
 	}
+	
 	
 	@Override
 	public void explode(){
@@ -105,16 +106,16 @@ public class Enemy extends Ship{
 	@Override
 	public void collision(Entity entity, EntityType type) {
 		switch (type) {
-		case WeaponEnnemy:
 		case WeaponPlayer:
 		case Joueur:
+			Hud.get().increaseScore(50);
 			setLife(getLife()-entity.getDamage());
 			if(getLife() <= 0)
 				explode();
 			break;	
 		case WorldLimit:
 			Vec2 pos = getScreenPostion();
-			if(pos.y+getImage().getHeight()/2>=Variables.SCREEN_HEIGHT)
+			if(pos.y+getImage().getHeight()>=Variables.SCREEN_HEIGHT)
 				explode();
 			break;
 		default:
