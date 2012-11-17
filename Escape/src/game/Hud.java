@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import entities.ships.Player;
 import entities.weapons.WeaponItem;
-import factories.WeaponFactory.WeaponType;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 /**
@@ -35,7 +34,9 @@ import fr.umlv.zen2.MotionEvent.Kind;
  */
 public class Hud {
 
-
+	/**
+	 * Our current player, for knows the life to display and the items.
+	 */
 	private final Player player;
 	
 	
@@ -75,12 +76,16 @@ public class Hud {
 		displayItemList = false;
 	}
 
+	/**
+	 * Increase the score display on the hud.
+	 * @param score - the score to add to the global score
+	 */
 	public void increaseScore(int score) {
 		this.score += score;
 	}
 	
 	/**
-	 * Draw the life of the player
+	 * Draw the life of the player.
 	 * @param graphics the graphics2D to print on
 	 */
 	public void drawLife(Graphics2D graphics){
@@ -89,7 +94,7 @@ public class Hud {
 	}
 
 	/**
-	 * Draw the score of the player
+	 * Draw the score of the player.
 	 * @param graphics the graphics2D to print on
 	 */
 	public void drawScore(Graphics2D graphics){
@@ -102,9 +107,9 @@ public class Hud {
 
 
 	/**
-	 * display the item list of this object on the graphics
-	 * The first element displayed is the second, because the first element is already displays on the hud
-	 * Drawing a wallpaper behind item, for have a best render
+	 * Display the item list of this object on the graphics.
+	 * The first element displayed is the second element of the list, because the first element is already displays on the hud.
+	 * Drawing a wallpaper behind item, for have a best render.
 	 * @param graphics the graphics2D to print on
 	 * @param x the begin of the drawing of the listItem, at position x
 	 * @param y the begin of the drawing of the listItem, at position y
@@ -143,8 +148,6 @@ public class Hud {
 			drawItemList(graphics, Variables.SCREEN_WIDTH-hudRight.getWidth() + 2*hudRight.getWidth()/9, 6*hudRight.getHeight()/11);
 		
 		player.getWeapons().getCurrentWeaponItem().drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
-		//ONLY FOR TEST -> DRAW THE SIZE OF THE EVENT
-		//graphics.drawRect(beginLeftHud, 10, hudRight.getWidth()-20, hudRight.getHeight()-10);
 	}
 
 
@@ -169,7 +172,6 @@ public class Hud {
 		for(int i=1;i<player.getWeapons().size();i++)
 			if(mouseX >= debItemX && mouseX <= finItemX)
 				if(mouseY >= debItemY+echelleY*(i-1) && mouseY <= debItemY+echelleY*i){
-					//System.out.println("mise en tete de "+itemList.get(i).getName());
 					player.getWeapons().setIndexInList(i, 0);
 					return true;
 				}
