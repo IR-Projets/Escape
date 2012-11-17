@@ -54,7 +54,7 @@ public class Shiboleet extends Weapon {
 			return;
 		loop++;
 
-		if(loop>Variables.LOOP_SKIP/4){			
+		if(loop>Variables.LOOP_SKIP/2){			
 			loop=0;
 			if(increase <2){
 				setImage(Weapon.resize(getImage(), 1.5f));	

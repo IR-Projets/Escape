@@ -2,9 +2,12 @@ package gestures.filters;
 
 
 import entities.ships.Player;
+import entities.ships.Player.Direction;
 import game.Variables;
+
 import java.util.Iterator;
 import java.util.List;
+
 import org.jbox2d.common.Vec2;
 /**
  * The Looping is a circle movement, accept with rate of error.
@@ -60,7 +63,6 @@ public class Looping implements Filter {
 	/**
 	 * For know the direction of the circle (right or left)
 	 */
-	private enum Direction {LEFT, RIGHT};
 	private Direction direction;
 
 	/**
