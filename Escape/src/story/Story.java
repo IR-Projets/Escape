@@ -78,6 +78,10 @@ public class Story {
 		 *	The sequence 
 		 */
 		sequence = new LinkedList<>();
+	}
+	
+	
+	public void loadStory1(){
 		sequence.add(new Couple(1){
 			@Override
 			public void render(Graphics2D g) {
@@ -116,7 +120,7 @@ public class Story {
 			@Override
 			public void render(Graphics2D g) {
 				sirud.speak(g, "J'ai bien peur que tu doive te débrouiller tout seul...\nTrouve un vaisseau et enfui toi...");
-				//xaroff.draw(g);				
+				hero.draw(g);				
 			}			
 		});
 		sequence.add(new Couple(10){
@@ -125,9 +129,8 @@ public class Story {
 			public void render(Graphics2D g) {
 				drawText(g, "Les personnages et les situations de ce récit étant moyennement fictifs,\ntoute ressemblance avec des personnes ou des situations existantes\nou ayant existé sont tout sauf fortuite.", 10, posY+=0.1f);			
 			}			
-		});
+		});		
 	}
-	
 	
 	private void drawText(Graphics2D graphics, String text, float x, float y){
 		String [] lines = text.split("\n");
@@ -161,6 +164,7 @@ public class Story {
 
 	public void finish() {
 		finished=true;
+		sequence.clear();
 	}
 	
 	

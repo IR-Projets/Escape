@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class Variables {
 
-	public final static boolean DEBUG = true;
+	public final static boolean DEBUG = false;
 	
 	/*
 	 * Application variables
