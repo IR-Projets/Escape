@@ -208,6 +208,31 @@
 			<posY>700</posY>
 		</appear>
 
+		<appear time="70">
+			<posX>250</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="75">
+			<posX>100</posX>
+			<posY>700</posY>
+		</appear>
+		
+		<appear time="75">
+			<posX>200</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="75">
+			<posX>300</posX>
+			<posY>700</posY>
+		</appear>
+
+		<appear time="75">
+			<posX>400</posX>
+			<posY>700</posY>
+		</appear>
+		
 		<actions repeattime="6">
 			<move beg="1" end="2">
 				<angle>270</angle>
@@ -243,7 +268,7 @@
 		<life>400</life>
 		<image>ships/boss1/boss.png</image>
 
-		<appear time="70">
+		<appear time="85">
 			<posX>150</posX>
 			<posY>950</posY>
 		</appear>
