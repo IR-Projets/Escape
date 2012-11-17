@@ -33,7 +33,7 @@ public class Variables {
 	/**
 	 * Debug mode.
 	 */
-	public final static boolean DEBUG = false;
+	public final static boolean DEBUG = true;
 	
 	/*
 	 * Application variables
