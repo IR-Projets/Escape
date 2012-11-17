@@ -5,31 +5,48 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.awt.image.WritableRaster;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.util.Hashtable;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.jbox2d.dynamics.Body;
 
-import entities.Entity;
+/**
+ * This class represents our Ressources, class, which load files and images by a classloader.
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
+
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class Ressources {
 	
+	/**
+	 * We use a map for avoid to initialize the same image twice.
+	 */
 	private static final Map<String, BufferedImage> images = new Hashtable<>();
 	
 	/**
-	 * Load a BufferedImage
+	 * Load a BufferedImage;
 	 * @param fileName Image to be loaded (must be in a package)
 	 * @param optimized Set the optimisation, usefull for big image without transparency (default false)
 	 * @return BufferedImage
@@ -60,7 +77,7 @@ public class Ressources {
 	}
 	
 	/**
-	 * Load a BufferedImage (non optimized, for transparent or small images)
+	 * Load a BufferedImage (non optimized, for transparent or small images).
 	 * @param url Image to be loaded (must be in a package)
 	 * @return BufferedImage
 	 */
@@ -75,7 +92,7 @@ public class Ressources {
 	}
 	
 	/**
-	 * Optimise the Image with device param
+	 * Optimize the Image with device param.
 	 * @param image to be optimized
 	 * @return An optimize image
 	 */

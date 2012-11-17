@@ -14,7 +14,9 @@
 	
 	<!-- Our library classpath -->
 	<path id="lib.classpath">
-		<fileset dir="${lib}" includes="*.jar" />
+		<fileset dir="${lib}" >
+			<include name="*.jar" />
+		</fileset>
 	</path>
 	
 	<!-- Target compile, which compil all project -->
@@ -27,7 +29,7 @@
 	<target name="jar" depends="compile">
 		
 		<!-- We keep our classpath of library into the jar -->
-		<manifestclasspath property="jar.classpath" jarfile="hello.jar">
+		<manifestclasspath property="jar.classpath" jarfile="${jar}">
 			<classpath refid="lib.classpath"/>
 		</manifestclasspath>
 		
@@ -35,14 +37,27 @@
 		<jar destfile="${jar}" basedir="${class}">
 			<fileset dir="${src}">
 				<include name="images**/**/*.png" />
+				<include name="images**/**/*.jpg" />
 				<include name="scripts**/*.xml" />
 			</fileset>
+			
+			<zipfileset dir="${lib}" includes="**/*.jar" /> 
 			
 			<!--  Manifest of the jar -->
 			<manifest>
 				<attribute name="Main-Class" value="game.MainGame" />
-				<attribute name="Class-Path" value="${jar.classpath}" />
+				<attribute name="Created-By" value="${authorsName}" />
 			</manifest>
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips >
+						<fileset dir="${lib}">
+							<include name="*.jar" />
+						</fileset>
+					</zips>
+				</archives>
+			</restrict>
 		</jar>
 		<echo message="${jar} has correctly been created" />
 	</target>
@@ -52,6 +67,11 @@
 		<javadoc sourcepath="${src}" destdir="${javadoc}"/>
 		<echo message="Javadoc has correctly been generated" />
 	</target>
+	
+	<target name="run" depends="jar" description="Run the jar file">
+		<java jar="${jar}" fork="true"/>
+	</target>
+		
 	
 	<!-- Target clean, which delete the javadoc and all class -->
 	<target name="clean">

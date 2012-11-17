@@ -39,15 +39,16 @@ import game.Ressources;
 public class WeaponFactory extends EntityFactory{
 
 	/**
-	 * 
-	 * @param entities
+	 * Default constructor.
+	 * Initialize our factory with the world entities.
+	 * @param entity - class which represents our world
 	 */
 	public WeaponFactory(Entities entities) {
 		super(entities);
 	}
 
 	/**
-	 * 
+	 * An enum that represent all type of wepaon.
 	 */
 	public enum WeaponType{
 		Shuriken,
@@ -57,9 +58,9 @@ public class WeaponFactory extends EntityFactory{
 		Missile,
 		Null;
 		/**
-		 * 
-		 * @param weaponName
-		 * @return
+		 * Return the weaponType corresponding to the name given as parameter.
+		 * @param weaponName - the String of the weapon we want the association
+		 * @return the weaponType corresponding to the name given as parameter.
 		 */
 		public static WeaponType convert(String weaponName){
 			switch(weaponName){
@@ -73,8 +74,8 @@ public class WeaponFactory extends EntityFactory{
 		}
 			
 		/**
-		 * 
-		 * @return
+		 * Return the image corresponding to the Weapon.
+		 * @return the image corresponding to the weapon
 		 */
 		public BufferedImage getImage(){
 			switch(this){
@@ -104,31 +105,31 @@ public class WeaponFactory extends EntityFactory{
 	};
 	
 	/**
-	 * 
-	 * @param type
-	 * @param x
-	 * @param y
-	 * @param damagedPlayer
-	 * @return
+	 * Create a Weapon into our world. 
+	 * @param type - the WeaponType ti create
+	 * @param x - the coordinate associated with x position
+	 * @param y - the coordinate associated with y position
+	 * @param firedbyPlayer - If the weapon is fired by player
+	 * @return the new weapon created
 	 */
-	public Weapon createWeapon(WeaponType type, int x, int y, boolean damagedPlayer) {
+	public Weapon createWeapon(WeaponType type, int x, int y, boolean firedbyPlayer) {
 		Weapon weapon = null;
 		
 		switch(type){
 		case Shuriken:
-			weapon =new Shuriken(getEntities(), x, y, damagedPlayer);
+			weapon =new Shuriken(getEntities(), x, y, firedbyPlayer);
 			break;
 		case Fireball:
-			weapon = new Fireball(getEntities(), x, y, damagedPlayer);
+			weapon = new Fireball(getEntities(), x, y, firedbyPlayer);
 			break;
 		case Missile:
-			weapon = new Missile(getEntities(), x, y, damagedPlayer);
+			weapon = new Missile(getEntities(), x, y, firedbyPlayer);
 			break;
 		case Shiboleet:
-			weapon = new Shiboleet(getEntities(), x, y, damagedPlayer);
+			weapon = new Shiboleet(getEntities(), x, y, firedbyPlayer);
 			break;
 		case ShiboleetExtended:
-			weapon = new ShiboleetExtended(getEntities(), x, y, damagedPlayer,5);
+			weapon = new ShiboleetExtended(getEntities(), x, y, firedbyPlayer,5);
 			break;
 		default:
 			break;

@@ -1,24 +1,36 @@
 package maps;
 
-import game.Ressources;
 import game.Variables;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.imageio.ImageIO;
 
 
+/**
+ * This class represents an Abstract map, which render the scroll of the map.
+ * Has to be implements to in order to generate map.
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
 
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public abstract class Map{
 
@@ -28,9 +40,17 @@ public abstract class Map{
 	private int subImgH;
 	private float velocity;
 
+	/**
+	 * The time of a loop for the method computeMap.
+	 */
+	public static final int LOOP_SKIP = 300;
 
-
-	public Map(BufferedImage ground, float velocity){			                               
+	/**
+	 * Initialise a map and his scrolling, depending of an image, and a velocity.
+	 * @param ground - image to scrolling
+	 * @param velocity - velocity of scrolling
+	 */
+	public Map(BufferedImage ground, float velocity){
 		this.ground = ground;
 		this.velocity=velocity;
 		float ratio = 1f; //Doit etre inferieur a 1
@@ -48,7 +68,10 @@ public abstract class Map{
 			posY=0;
 	}
 
-	
+	/**
+	 * Do the scroll of the map.
+	 * @param graphics - the graphics to draw on
+	 */
 	public void render(Graphics2D graphics){	
 		if(posY<0)
 			posY=0;
@@ -57,6 +80,9 @@ public abstract class Map{
 	}
 	
 
+	/**
+	 * the compute method call to decrease the position in Y coordinate.
+	 */
 	public void compute() {
 		posY-=velocity;
 		computeMap();

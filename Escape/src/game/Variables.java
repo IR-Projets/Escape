@@ -3,9 +3,36 @@ package game;
 import java.awt.Color;
 
 
+/**
+ * This class represents all our Global Variables, used during the game.
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
+
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class Variables {
 
+	/**
+	 * Debug mode.
+	 */
 	public final static boolean DEBUG = false;
 	
 	/*
@@ -16,7 +43,6 @@ public class Variables {
 	public static final int SCREEN_HEIGHT = 700;
 	public static final String IMAGES_URL = "images/";
 	
-	
 	/*
 	 * Render variables
 	 */
@@ -24,7 +50,6 @@ public class Variables {
 	public static final int SKIP_TICKS = 350 / TICKS_PER_SECOND;
 	public static final int MAX_FRAMESKIP = 20;
 	public static final int LOOP_SKIP = 60;
-	
 	
 	/*
 	 * Some static colors
@@ -36,7 +61,6 @@ public class Variables {
 	public final static Color BLACK = new Color(0,0,0);
 	public final static Color ORANGE = new Color(255,165,0);
 	
-	
 	/*
 	 * Main ship
 	 */
@@ -45,14 +69,12 @@ public class Variables {
 	public final static float SHIP_DAMPING = 0.4f;
 	public final static int SHIP_LIFE = 100;
 	
-	
 	/*
 	 * Gesture variables
 	 */
 	public final static int TRACE_DELETE_RATE = 5;/*If we increase the value, the delete time of Trace become lower*/
 	public final static double TRACE_VARIATION_MAX = 40;/* The limit intervalle to accept movement -> Angle Bornes */
 	public static final int TRACE_LENGTH_MIN = 4;
-	
 	
 	/*
 	 * World variables
@@ -65,7 +87,6 @@ public class Variables {
 	public static final int WORLD_POSITION_ITERATION = 8;
 
 	public static final float WORLD_BORDER = 50;
-
 	
 	/*
 	 * Test

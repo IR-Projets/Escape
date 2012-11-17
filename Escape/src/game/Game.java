@@ -5,56 +5,110 @@ import hud.Button.ButtonType;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.awt.image.ComponentSampleModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.Raster;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import story.Story;
-import story.Story;
-
 import listeners.EnvironnementListener;
-
+import story.Story;
 import factories.EnvironnementFactory;
 import factories.EnvironnementFactory.Level;
-import fr.umlv.zen2.Application;
 import fr.umlv.zen2.MotionEvent;
+
+
+/**
+ * This class represents our Game, which launch all levels, and manage the state of the player (if he died, kill a boss, ...)
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
+
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class Game implements EnvironnementListener{
 
+	/**
+	 * The environment of the game.
+	 */
 	Environnement environnement;
 
-	/*
+	/**
 	 * For the double buffered method
 	 */
 	private BufferedImage offscreen;
 	private Graphics2D bufferGraphics; 
 
-
+	/**
+	 * The number of fps for refresh the rate.
+	 */
 	private final int fps_refreshRate = 20;
+	
+	/**
+	 * The number of fps.
+	 */
 	private double fps;
+	
+	/**
+	 * the time of the game.
+	 */
 	private double time = 0;
-	private int ite = 0;
+	
+	/**
+	 * the number of loop for the FPS.
+	 */
+	private int loop = 0;
+	
+	/**
+	 * Next iteration to do the render.
+	 */
 	private long next_game_tick;
+	
+	/**
+	 * A boolean is the game is paused
+	 */
 	private boolean paused;
+	
+	/**
+	 * A boolean to know if the game is finished
+	 */
 	private boolean finished;
 
-	private Story story;
-	private Level level;
-	private Button pauseButton;
-	/*
-	 * TODO: C'est ici que va etre gerer tout les evenements du jeux (mort, gagner, ...)
+	/**
+	 * Our little story.
 	 */
+	private Story story;
+	
+	/**
+	 * The current level of the game.
+	 */
+	private Level level;
+	
+	/**
+	 * The pause Button
+	 */
+	private Button pauseButton;
 
+	/**
+	 * Initialise our game.
+	 * @throws IOException
+	 */
 	public Game() throws IOException{		
 		this.level = Level.Jupiter;		
 		environnement = EnvironnementFactory.factory(level);
@@ -106,13 +160,10 @@ public class Game implements EnvironnementListener{
 		}
 
 	}
-
-
-	public void init(Graphics2D graphics) {
-		
-	}
-
-
+	/**
+	 * Launch the game by render it.
+	 * @param graphics - the graphics to print on
+	 */
 	public void run(Graphics2D graphics) {				
 		bufferGraphics.clearRect(0,0,Variables.SCREEN_WIDTH, Variables.SCREEN_HEIGHT); 
 		bufferGraphics.setBackground(new Color(0));
@@ -148,18 +199,25 @@ public class Game implements EnvironnementListener{
 
 	}
 
+	/**
+	 * Do a break on the game.
+	 */
 	public void pause(){
 		paused = paused ? false : true;
 		next_game_tick=-1;		
 	}
 
+	/**
+	 * Draw a frame per second into the graphics
+	 * @param graphics - the graphics to print on
+	 */
 	public void drawFPS(Graphics2D graphics){
-		ite++;
-		if(ite>fps_refreshRate){	//1er image: On recupere le temps
-			ite=0;
+		loop++;
+		if(loop>fps_refreshRate){	//1er image: On recupere le temps
+			loop=0;
 			time = System.nanoTime();
 		}
-		else if(ite==1){			//2e image: On calcul le temps ecoule depuis la 1er image
+		else if(loop==1){			//2e image: On calcul le temps ecoule depuis la 1er image
 			double now = System.nanoTime();
 			fps = 1000000000 / (now-time);
 			time = now;
@@ -171,23 +229,16 @@ public class Game implements EnvironnementListener{
 		graphics.scale(0.5, 0.5);	
 	}
 
+	/**
+	 * The event of the game, to launch the game or the environment.
+	 * @param event - the MotionEvent, to launch the environment or the story with the event
+	 */
 	public void event(MotionEvent event) {
-
 		if(story.isLoaded())
 			story.event(event);
 		else{
 			environnement.event(event);
 			pauseButton.event(event);
 		}
-	}
-
-
-
-	long now;
-	public void beginTime(){
-		now = System.currentTimeMillis();
-	}
-	public void endTime(String description){
-		System.out.println(description + ": " + (System.currentTimeMillis() - now + "ms"));
 	}
 }

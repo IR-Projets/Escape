@@ -14,7 +14,7 @@ import java.util.List;
 public class Story {
 
 	/*
-	 * Crée un couple temps/render
+	 * Cree un couple temps/render
 	 * time: in ms
 	 * Sert a l'affichage d'un narrateur
 	 */
@@ -25,7 +25,7 @@ public class Story {
 	}
 		
 
-	private static final int TEXT_SCALE = 20;
+	//private static final int TEXT_SCALE = 20;
 	private long time, lastTime;
 	
 	
@@ -46,9 +46,6 @@ public class Story {
 	private final Narator sirud;
 	private final Narator xaroff;
 	private final Narator hero;
-	private int cadre1_x, cadre1_y;
-	private int cadre2_x, cadre2_y;
-
 	private boolean loaded;
 	
 	
@@ -121,7 +118,7 @@ public class Story {
 		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Ta mission suicide sur la planète\nalien à été un echec");		
+				sirud.speak(g, "Ta mission suicide sur la planete\nalien a ete un echec");		
 				hero.draw(g);	
 			}			
 		});		
@@ -150,14 +147,14 @@ public class Story {
 		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "HaHaHA Tu ne partira jamais\nde cette planete!");			
+				xaroff.speak(g, "HaHaHA Tu ne partiras jamais\nde cette planete!");			
 				hero.draw(g);	
 			}			
 		});
 		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "Mes Lambda vont t'arreter!");			
+				xaroff.speak(g, "Mes Lambdas vont t'arreter!");			
 				hero.draw(g);	
 			}			
 		});
@@ -178,7 +175,7 @@ public class Story {
 		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				hero.speak(g, "même si je dois arreter\nde dormir pour ça!");
+				hero.speak(g, "meme si je dois arreter\nde dormir pour ca!");
 				xaroff.draw(g);				
 			}			
 		});	
@@ -196,7 +193,7 @@ public class Story {
 		sequence.add(new Couple(2000){
 			@Override
 			public void render(Graphics2D g) {
-				hero.speak(g, "Il semble être assez simple a utiliser");		
+				hero.speak(g, "Il semble etre assez simple a utiliser");		
 			}			
 		});	
 		sequence.add(new Couple(2000){
@@ -220,13 +217,13 @@ public class Story {
 		sequence.add(new Couple(2500){
 			@Override
 			public void render(Graphics2D g) {
-				hero.speak(g, "Un trait a coté du vaisseau lance un deplacement");		
+				hero.speak(g, "Un trait a cote du vaisseau lance un deplacement");		
 			}			
 		});	
 		sequence.add(new Couple(2500){
 			@Override
 			public void render(Graphics2D g) {
-				hero.speak(g, "On peut changer d'arme avec la liste\ndéroulante en haut de l'écran");		
+				hero.speak(g, "On peut changer d'arme avec la liste\nderoulante en haut de l'ecran");		
 			}			
 		});	
 		sequence.add(new Couple(500){
@@ -253,7 +250,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Mes félicitations tu à passé le premier grade!\n");
+				sirud.speak(g, "Mes felicitations tu a passe le premier grade!\n");
 				hero.draw(g);
 			}			
 		});
@@ -267,7 +264,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "Tu ne depassera jamais\nla moyenne lune...\n");		
+				xaroff.speak(g, "Tu ne depasseras jamais\nla moyenne lune...\n");		
 				hero.draw(g);
 			}			
 		});
@@ -287,7 +284,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Mes félicitations tu à passé le deuxième grade!\n");
+				sirud.speak(g, "Mes felicitations tu a passes le deuxieme grade!\n");
 				hero.draw(g);
 			}			
 		});
@@ -321,7 +318,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Mes félicitations tu à passé le dernier grade!\n");
+				sirud.speak(g, "Mes felicitations tu a passes le dernier grade!\n");
 				hero.draw(g);
 			}			
 		});
@@ -335,7 +332,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				xaroff.speak(g, "Aller va dormir tu l'a mérité\n");		
+				xaroff.speak(g, "Aller va dormir tu l'as merite\n");		
 				hero.draw(g);
 			}			
 		});
@@ -355,7 +352,7 @@ public class Story {
 		sequence.add(new Couple(3000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "Un protocole inconnu\nà détruit ton vaisseau");
+				sirud.speak(g, "Un protocole inconnu\na detruit ton vaisseau");
 				xaroff.draw(g);
 				hero.draw(g);
 			}			
@@ -387,7 +384,7 @@ public class Story {
 		sequence.add(new Couple(5000){
 			@Override
 			public void render(Graphics2D g) {
-				sirud.speak(g, "A l'année prochaine...");
+				sirud.speak(g, "A l'annee prochaine...");
 				xaroff.speak(g, "Bye!");
 				hero.draw(g);
 			}			
@@ -415,13 +412,15 @@ public class Story {
 	/*
 	 * 	Methods utils
 	 */	
+	
+	/*
 	private void drawText(Graphics2D graphics, String text, float x, float y){
 		String [] lines = text.split("\n");
 		for(int i=0; i<lines.length; i++){
 			graphics.drawString(lines[i], x, y+i*(TEXT_SCALE+10));
 		}	
 	}
-	
+	*/
 	public void render(Graphics2D graphics){		
 		if(sequence.size()==0){
 			finish();

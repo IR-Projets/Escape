@@ -24,7 +24,30 @@ import factories.EnvironnementFactory.Level;
 import fr.umlv.zen2.MotionEvent;
 import fr.umlv.zen2.MotionEvent.Kind;
 
+/**
+ * This class represents our mainTest, which launch the JBox Test, and no render.
+ * 
+ * @author Quentin Bernard et Ludovic Feltz
+ */
 
+
+/* <This program is an Shoot Them up space game, called Escape-IR, made by IR students.>
+ *  Copyright (C) <2012>  <BERNARD Quentin & FELTZ Ludovic>
+
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 public class MainTest extends TestbedTest implements EnvironnementListener{
 
@@ -34,8 +57,13 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 	
 	
 	private Environnement env = null;
-	//reflexion pour avoir acces au constructeur protected de MotionEvent
-	private Constructor eventConstructor;
+	
+	//reflexion to have acces to the constructeur protected of MotionEvent
+	private Constructor<MotionEvent> eventConstructor;
+	
+	/**
+	 * Level of our main test.
+	 */
 	Level level;
 
 	@Override
@@ -68,7 +96,6 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 			break;
 		case Win:
 			System.out.println("Gagne !!");
-			//le niveau que l'on vient de gagner
 			switch(level){
 			case Jupiter:
 				env = EnvironnementFactory.factory(Level.Moon);
@@ -112,6 +139,13 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 		}
 	}
 
+	/**
+	 * The event of the mouse.
+	 * 
+	 * @param x - position at the coordonate x
+	 * @param y - position at the coordonate y
+	 * @param kind - kind of mouse
+	 */
 	public void event(int x, int y, Kind kind){		
 		if(x<0 || y<0)
 			return;
@@ -144,17 +178,15 @@ public class MainTest extends TestbedTest implements EnvironnementListener{
 			event((int)p.x, (int)p.y, Kind.ACTION_MOVE);
 	}
 
-
-
-
-
-
 	@Override
 	public String getTestName() {
 		return "#### TEST #####";
 	}
 
-
+	/**
+	 * Main of test.
+	 * @param args
+	 */
 	public static void main(String args[]){
 		final TestbedModel model = new TestbedModel();         	// create our model
 

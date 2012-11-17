@@ -123,9 +123,6 @@ public class Hud {
 		graphics.drawString(Integer.toString(score), hudLeft.getWidth()/2+20, 2*hudLeft.getHeight()/4);
 	}
 
-
-
-
 	/**
 	 * Display the item list of this object on the graphics.
 	 * The first element displayed is the second element of the list, because the first element is already displays on the hud.
@@ -170,7 +167,6 @@ public class Hud {
 		player.getWeapons().getCurrentWeaponItem().drawItem(graphics, beginLeftHud+hudRight.getWidth()/4, hudRight.getHeight()/4);
 	}
 
-
 	/**
 	 * The event whose checking we select an item in our item list. Be care, doesn't checks if the Item is displayed! The Hud does this work
 	 * @see Hud 
@@ -198,7 +194,6 @@ public class Hud {
 		return false;
 	}
 
-
 	/**
 	 * Display the menu of weapon when click on the right hud, and launch the eventItemList for manage the selection of weapon
 	 * @param event the MotionEvent which reprensents the event of the mouse
@@ -217,7 +212,6 @@ public class Hud {
 				if(event.getKind() == Kind.ACTION_DOWN)
 					displayItemList=(displayItemList==true)?false:true;
 	}
-
 
 	/**
 	 * Display the HUD, which is compone of several elements : the left hud with the life and score, the right hud with the weapon.
