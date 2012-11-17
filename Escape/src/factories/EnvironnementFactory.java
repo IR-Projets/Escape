@@ -39,7 +39,7 @@ public class EnvironnementFactory {
 
 	private static Environnement Moon(World world){
 		Entities entities = new Entities(world);		
-		EnemiesLoader ennemyloader = new EnemiesLoader(entities, "scripts/EnemiesEarth.xml");//xml of ennemies of the moon
+		EnemiesLoader ennemyloader = new EnemiesLoader(entities, "scripts/EnemiesMoon.xml");//xml of ennemies of the moon
 
 		ShipFactory factory = new ShipFactory(entities);
 		Player playerShip = factory.createPlayer();
