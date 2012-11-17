@@ -38,14 +38,14 @@
 			</move>
 
 			<fire beg="1" end="2">
-				<name>Missile</name>
-				<angle>260</angle>
+				<name>Fireball</name>
+				<angle>265</angle>
 				<velocity>200</velocity>
 			</fire>
 
 			<fire beg="5" end="6">
 				<name>Shiboleet</name>
-				<angle>240</angle>
+				<angle>275</angle>
 				<velocity>200</velocity>
 			</fire>			
 		</actions>		
@@ -88,13 +88,13 @@
 
 			<fire beg="1" end="2">
 				<name>Fireball</name>
-				<angle>0</angle>
+				<angle>300</angle>
 				<velocity>200</velocity>
 			</fire>
 
 			<fire beg="5" end="6">
 				<name>Shiboleet</name>
-				<angle>270</angle>
+				<angle>250</angle>
 				<velocity>200</velocity>
 			</fire>			
 		</actions>		
@@ -137,13 +137,13 @@
 
 			<fire beg="1" end="2">
 				<name>Fireball</name>
-				<angle>0</angle>
+				<angle>250</angle>
 				<velocity>200</velocity>
 			</fire>
 
 			<fire beg="5" end="6">
 				<name>Shiboleet</name>
-				<angle>270</angle>
+				<angle>300</angle>
 				<velocity>200</velocity>
 			</fire>			
 		</actions>		
@@ -187,13 +187,13 @@
 
 			<fire beg="1" end="2">
 				<name>Fireball</name>
-				<angle>0</angle>
+				<angle>300</angle>
 				<velocity>200</velocity>
 			</fire>
 
 			<fire beg="5" end="6">
 				<name>Shiboleet</name>
-				<angle>270</angle>
+				<angle>250</angle>
 				<velocity>200</velocity>
 			</fire>			
 		</actions>		
