@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+
+<!-- Made by BERNARD Quentin & FELTZ Ludovic -->
+
+<project name="Escape IR" default="compile" basedir=".">
+	
+	<!-- Our definition of our constant directory -->
+	<property name="src" value="./src" />
+	<property name="class" value="./classes" />
+	<property name="lib" value="./lib" />
+	<property name="doc" value="docs" />
+	<property name="javadoc" value="${doc}/doc" />
+	<property name="jar" value="robot-master-mind.jar" />
+	<property name="jarTest" value="robot-master-mindTest.jar" />
+	
+	<!-- Our library classpath -->
+	<path id="lib.classpath">
+		<fileset dir="${lib}" >
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	
+	<!-- Target compile, which compil all project -->
+	<target name="compile" >
+		<javac srcdir="${src}" destdir="${class}" classpathref="lib.classpath" includeantruntime="true" debug="true" debuglevel="lines"/>
+		<echo message="Escape IR has correctly been compiled" />
+	</target>
+
+	<!-- Target jar, which make the jar -->
+	<target name="jar" depends="compile">
+		
+		<!-- We copy images & XML files -->
+		<jar destfile="${jar}" basedir="${class}">
+			<fileset dir="${src}">
+				<include name="images**/**/*.png" />
+				<include name="images**/**/*.jpg" />
+				<include name="scripts**/*.xml" />
+			</fileset>
+			
+			<zipfileset dir="${lib}" includes="**/*.jar" /> 
+			
+			<!--  Manifest of the jar -->
+			<manifest>
+				<attribute name="Main-Class" value="game.MainGame" />
+				<attribute name="Created-By" value="${authorsName}" />
+			</manifest>
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips >
+						<fileset dir="${lib}">
+							<include name="*.jar" />
+						</fileset>
+					</zips>
+				</archives>
+			</restrict>
+		</jar>
+		<echo message="${jar} has correctly been created" />
+	</target>
+	
+	<!-- Target jarTest, which make the jarTest -->
+	<target name="jarTest" depends="compile">
+		
+		<!-- We copy images & XML files -->
+		<jar destfile="${jarTest}" basedir="${class}">
+			<fileset dir="${src}">
+				<include name="images**/**/*.png" />
+				<include name="images**/**/*.jpg" />
+				<include name="scripts**/*.xml" />
+			</fileset>
+			
+			<zipfileset dir="${lib}" includes="**/*.jar" /> 
+			
+			<!--  Manifest of the jar -->
+			<manifest>
+				<attribute name="Main-Class" value="game.MainTest" />
+				<attribute name="Created-By" value="${authorsName}" />
+			</manifest>
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips >
+						<fileset dir="${lib}">
+							<include name="*.jar" />
+						</fileset>
+					</zips>
+				</archives>
+			</restrict>
+		</jar>
+		<echo message="${jarTest} has correctly been created" />
+	</target>
+	
+	<!-- Target javadoc, for generate the javadoc -->
+	<target name="javadoc">
+		<javadoc sourcepath="${src}" destdir="${javadoc}" private="true" classpath="${lib.classpath}"/>
+		<echo message="Javadoc has correctly been generated" />
+	</target>
+		
+	
+	<!-- Target clean, which delete the javadoc and all class -->
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${class}" includes="**/*" defaultexcludes="false"/>
+			<fileset dir="${javadoc}" includes="**/*" defaultexcludes="false"/>
+		</delete>
+		<echo message="Files .class has correctly been deleted" />
+		<echo message="Javadoc has correctly been deleted" />
+	</target>
+	
+</project>
